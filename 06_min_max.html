@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>6. Ordering, min, and max.</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="05_swap.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="07_min_range.html">next</a>
+]
+</span>
+
+
+
+<a name="L6.-Ordering-2c--min-2c--and-max."></a>
+<h1>6. Ordering, min, and max.</h1>
+
+<a name="Learning-to-design-code"></a>
+<h2>Learning to design code</h2>
+
+<p>Sometime it feels like I should just tell you what&rsquo;s in STL.
+But, I don&rsquo;t want to do that.
+I want to teach
+you to think so that you could design something equal or better.
+So most of the algorithms we are looking at are in STL,
+but they are not exposed.
+They&rsquo;re beyond what the standard Committee would ever consider.
+You might say, &ldquo;Alex this is a simple problem. Couldn&rsquo;t you show us how
+to build a search engine?&rdquo;
+Not in a class.</p>
+
+<a name="Reviewing-Total-Orderings"></a>
+<h2>Reviewing Total Orderings</h2>
+
+<p>Programmers need to know mathematics.
+They have to know certain fundamental things.
+When we talked about <code>Regular</code> and <code>TotallyOrdered</code> types we defined the
+<code>&lt;</code> operator
+and some axioms it must satisfy.</p>
+
+<p><strong>Axiom 1:</strong> Anti-reflexive (also called <strong>strict</strong>): <code>!(a &lt; a)</code></p>
+
+<p>This property is what distinguishes <code>&lt;</code> from <code>&lt;=</code>.</p>
+
+<p>Recall that from <code>&lt;</code> and <code>==</code> we defined all other comparison operators
+<code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>!=</code>.
+Why did I pick <code>&lt;</code> (the <strong>strict</strong> operator) to be primary in the STL,
+instead of <code>&lt;=</code>?
+It&rsquo;s important to note that this was a choice I made.
+They give you roughly the same universe of things, so you could design
+it around either.
+But, somewhow I felt <code>&lt;</code> is a more fundamental relation.
+<code>&lt;</code> requires a little less typing.
+There are other reasons, too.</p>
+
+<p><strong>Axiom 2:</strong> Transitive: If <code>a &lt; b</code> and <code>b &lt; c</code> then <code>a &lt; c</code>.</p>
+
+<p>Why is it important?
+Think about sorting.
+If I checked that <code>b</code> wins over <code>a</code>.
+Then I check that <code>c</code> wins over <code>b</code>, I don&rsquo;t have to do the third check.
+It&rsquo;s guaranteed.</p>
+
+<p><strong>Axiom 3:</strong> Anti-symmetric: If <code>a &lt; b</code> then <code>!(b &lt; a)</code>.</p>
+
+<p><strong>Axiom 4:</strong> If <code>a != b</code> then <code>a &lt; b</code> or <code>b &gt; a</code>.</p>
+
+<p>This is also called the trichomoty law,
+because for all elements, exactly one of three things must be true<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>:</p>
+
+<pre><code>(a &lt; b) or (b &lt; a) or (a = b)
+</code></pre>
+
+<p>There is a fundamental connection between <code>&lt;</code> and <code>==</code>.
+If <code>!(b &lt; a)</code> then it must be the case that <code>b &gt;= a</code>.</p>
+
+<a name="Weak-orderings"></a>
+<h2>Weak orderings</h2>
+
+<p>Our goal is to write the <code>min</code> component.
+We could write it for <code>TotallyOrdered</code> types,
+but there are other types and orderings it will work on as well.
+Specifically, <code>TotallyOrdered</code> is a bit too strong, and not required.
+&ldquo;Partial ordering&rdquo; may come to mind, but that&rsquo;s tricky
+to work with.
+A partial ordering is one that cannot always be used to compare elements.
+It is not defined for all elements in the domain<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+We won&rsquo;t talk too much about them.</p>
+
+<p>Consider a <code>struct</code> with several fields, and we want to order based on them.
+For example, ordering employee records by last name.
+If you&rsquo;re in China there will be many people in the same buckets
+because the set of last names is small
+and the number of people is very large.
+There will be people which are
+not less, nor equal, nor greater but they&rsquo;re not equal.
+They are <em>equivalent but not equal</em>.</p>
+
+<p>The concept we need is called <code>StrictWeakOrdering</code>.
+A <code>StrictWeakOrdering</code> is exactly the same as total ordering but in a total ordering,
+trichotomy says it&rsquo;s greater or less or equal.
+In case of weak ordering it says it&rsquo;s greater, or less, or <em>equivalent</em>.
+There is some equivalence relation, such as last name.</p>
+
+<p>Some people would say, well equal is a kind of equivalence,
+so  let&rsquo;s define <code>&lt;</code> to just be weak ordering.
+I say it&rsquo;s evil.
+Why?
+Because for <code>TotallyOrdered</code> we need to be able to know</p>
+
+<pre><code>!(a &lt; b)  &lt;=&gt; (a &gt;= b)
+</code></pre>
+
+<p>The <code>==</code> is equality, not another equivalence relation.
+We can&rsquo;t conclude that with a weak ordering.
+We must overloaded symbols for what they commonly mean.</p>
+
+<a name="Min"></a>
+<h2>Min</h2>
+
+<p>What we will do is write an incorrect version
+and then fix it.
+We will start with <code>TotallyOrdered</code> because
+we are more familiar:</p>
+
+<pre><code>template &lt;typename T&gt;
+// T is TotallyOrdered
+inline
+const T&amp; min(const T&amp; a, const T&amp; b) {
+  if (a &lt; b) {
+    return a;
+  } else {
+    return b; 
+  }
+}
+</code></pre>
+
+<p>Notice that we need to pass things by <code>const</code> reference.
+We want to be able to write <code>min(5, 3)</code>,
+and 5 and 3 are literals which are constant.</p>
+
+<a name="When-elements-are-equal"></a>
+<h3>When elements are equal</h3>
+
+<p>What should we return when <code>a == b</code>?
+It seems it doesn&rsquo;t matter.
+But, that&rsquo;s the problem.
+Everywhere in programming you do something and it seems to be correct.
+But, you have to think deeply and then you discover a problem.
+There is nothing little in programming.</p>
+
+<p>Let me construct a proof for you.
+When we sort a range which is already sorted,
+we should not do any operations.
+Nothing should be swapped.
+It&rsquo;s a good requirement.</p>
+
+<p>Another requirement is if I sort two things,
+The first guy should be the <code>min</code> afterwards
+and the second guy should be the <code>max</code>.
+We agreed that default ordering for sorting should be ascending.
+Zero, one, two, three is natural.
+Three, two, one, zero is when you launch missiles.
+So what we can conclude is that <code>min</code> on two equal arguments
+should return the first. We will see more of this later.</p>
+
+<p>So let&rsquo;s correct it, so we don&rsquo;t swap unless necessary.</p>
+
+<pre><code>if (b &lt; a) {
+  return b;
+} else {
+  return a; 
+}
+</code></pre>
+
+<p>When you design a function you often think about just this
+function, and ignore how it interacts with other parts of your API.
+Then you discover inconsistencies which can be very subtle but painful.
+There are several profound mistakes in STL
+They are still in the standard, despite all my attempts to change them.
+It&rsquo;s very easy to make a mistake and it&rsquo;s really hard to fix it.</p>
+
+<a name="Correct-implementation"></a>
+<h3>Correct implementation</h3>
+
+<p>Now we have a correct version for <code>TotallyOrdered</code>, let&rsquo;s generalize it
+ for <code>StrictWeakOrdering</code>.
+We no longer can rely on the <code>&lt;</code> operator on the type, as there may be many
+orderings and equivalence relations on a type.</p>
+
+<pre><code>template &lt;typename T, typename Compare&gt;
+// Compare is StrictWeakOrdering on type T
+inline
+const T&amp; min(const T&amp; a, const T&amp; b, Compare cmp) {
+  if (cmp(b, a)) {
+    return a;
+  } else {
+    return b; 
+  }
+}
+</code></pre>
+
+<p>Why do we pass compare as a generic type argument instead of a function pointer?
+There are two reasons:</p>
+
+<ol>
+<li><p><strong>Functionality:</strong> Making it a type would allow it to have state. Pointers to functions have no state.</p></li>
+<li><p><strong>Performance:</strong> If we were passing a pointer it would have to do a function call through the pointer.
+The function call has to save and restore registers.
+It&rsquo;s slow especially if it sits inside a loop and is called a gazallion times.</p></li>
+</ol>
+
+
+<a name="Less-than-function-object"></a>
+<h2>Less than function object</h2>
+
+<p>It&rsquo;s somewhat inconvenient to pass <code>cmp</code> when you actually want to use a <code>TotallyOrdered</code> type.
+Therefore there should be a version of <code>min</code> which doesn&rsquo;t take that parameter.
+The wrong way is to use a default template argument.
+Sometimes you want to get a pointer to function the function <code>min</code>
+with a comparison function inserted.
+For example:</p>
+
+<pre><code>min&lt;int, std::less&lt;int&gt;&gt;
+</code></pre>
+
+<p>We also want to be able to say:</p>
+
+<pre><code>min&lt;int&gt;
+</code></pre>
+
+<p>So we write a second interface:</p>
+
+<pre><code>const T&amp; min(const T&amp; a, const T&amp; b) {
+    return min(a, b, std::less&lt;T&gt;());
+}
+</code></pre>
+
+<p>Let&rsquo;s implement a standard class called <a href="https://en.cppreference.com/w/cpp/utility/functional/less"><code>std::less</code></a>.
+It overrides the evaluation operator so it can be called just like a function<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+
+<pre><code>template&lt;typename T&gt;
+// T is TotallyOrdered
+struct less {
+    bool operator()(const T&amp; a, const T&amp; b) const {
+        return a &lt; b;
+    }
+};
+</code></pre>
+
+<p>Function objects are a very important technique to allow you to pass things to template algorithms.
+It will literally be inlined at compile time.
+It is very good to be inlined like this.
+Instead of a function call it will be one instruction,
+which is most likely going to be done in parallel with some other instructions.
+It is free.</p>
+
+<p>Here is an example of how to use it:</p>
+
+<pre><code>int a[] = { 4, 9, 3, 1, 4 };
+std::sort(a, a + 5, std::less&lt;int&gt;());
+</code></pre>
+
+<p>Notice that we aren&rsquo;t passing a type, we are actually creating an object<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+You can write your own function objects.
+If you have a record and you want to do sorting, or min, or max on the second field you could
+write one which compares the second field of the record.
+It will be inlined.
+Remember the faster computers get, the slower function calls are.</p>
+
+<a name="Max"></a>
+<h2>Max</h2>
+
+<p>Let us try to do <code>max</code>.
+It is a hard one.
+I got it wrong in STL and only realized after it was accepted as an international standard.
+I started this campaign on changing it to the correct one.
+The campaign has been going on close to twenty years without any success.
+So, the one in the standard is still broken.
+Let us see why.</p>
+
+<p>It seems that <code>max</code> is just <code>min</code> with <code>&gt;</code>.
+So wh do we need it?
+We still want to provide what is convenient for the customer.
+When they think <code>max</code> and go looking for it, it should somehow work.
+But, its a little bit more.</p>
+
+<a name="Sort2"></a>
+<h3>Sort2</h3>
+
+<p>We previously said that <code>min</code>, <code>max</code>, and <code>sort</code> should work together naturally.<br/>
+To see how they should all work, let&rsquo;s write <code>sort2</code>, which sorts two things.</p>
+
+<pre><code>template&lt;typename T, typename Compare&gt;
+// requires Compare is a StrictWeakOrdering on T
+inline
+void sort2(T&amp; a, T&amp; b, Compare cmp) {
+  if (cmp(b, a)) {
+    swap(a, b);
+  }
+}
+</code></pre>
+
+<p>It&rsquo;s always preferrable to sort in-place because we can obtain a composable
+one by first copying, and then applying the in-place algorithm.</p>
+
+<p>Note once again the order of comparison.
+We have to be careful that aren&rsquo;t going to swap when they are equal.
+I want the following invariant, after <code>sort2</code>
+<code>a</code> contains min and <code>b</code> contains max.
+It&rsquo;s very natural.
+But, we have to ensure it works, even when the two parameters
+are equivalent.</p>
+
+<a name="Implementation"></a>
+<h3>Implementation</h3>
+
+<p>So, if we define <code>max</code> with <code>min</code> and <code>&lt;</code>
+it&rsquo;s not going to work.
+Suppose we have <code>a == b</code> (they are both equivalent), then</p>
+
+<pre><code>min(a, b) = a
+max(a, b) = a
+</code></pre>
+
+<p>You actually want <code>min</code> and <code>max</code>
+to do different things because they&rsquo;re both useful.
+When there are two equivalent things, <code>min</code> will return the first,
+and <code>max</code> will do the opposite and return the last.</p>
+
+<pre><code>template&lt;typename T, typename Compare&gt;
+// requires Compare is a StrictWeakOrdering on T
+inline
+const T&amp; max(const T&amp; a, const T&amp; b, Compare cmp) {
+  if (cmp(b, a)) {
+    return a;
+  } else {
+    return b;
+  }
+}
+</code></pre>
+
+<p>The naive user will never even know about what happens to equal.
+This is for sophisticated guys like you who write complicated and relevant algorithms.
+You need to understand the finer things of programming.</p>
+
+<p>Every time I talk to one member of the standard
+committee he always says, &ldquo;Alex you are too theoretical&rdquo;.
+I guess I am because I pay attention to
+these little details.
+But I claim to be able to to show you that
+things like that will matter.</p>
+
+<p>Later we will generalize it on a bunch of things.
+Sometimes I want to find the first min, sometimes I want
+to find the last min, and the same for max.</p>
+
+<p><strong>Exercise</strong>: Define a version of <code>max</code> that uses <code>TotalOrdering</code> instead of <code>Compare</code>, like we did for <code>min</code>.</p>
+
+<a name="Fundamental-logical-laws-are-not-always-obeyed"></a>
+<h2>Fundamental logical laws are not always obeyed</h2>
+
+<p>We have to address an issue which will cause lots of trouble.
+The people at Google encountered it and they couldn&rsquo;t figure out.
+Certain thing should always work, such as the following:</p>
+
+<pre><code>a = a
+
+a &lt; b or b &gt;= a
+</code></pre>
+
+<p>We assume these statements are true,
+but it&rsquo;s not true.
+There are exceptions whic cause enourmous amounts of harm
+and break all the laws of equality and ordering.</p>
+
+<pre><code>double x(0.0/0.0);
+std::cout &lt;&lt; (x == x ? "yes" : "no") &lt;&lt; std::endl;
+</code></pre>
+
+<p>This should always print &ldquo;yes&rdquo;, but it prints, &ldquo;no&rdquo;.</p>
+
+<p>You could say, &ldquo;Only total idiots will write code like that&rdquo;.
+The problem is much harsher problem.
+You could have a floating-point computation which leads to this result
+and is utterly invisible to you.
+The problem actually appears when people do complicated things.
+Perhaps they do millions of computations and then sort them.
+Sort assumes that equality and inequality work like
+they should  and bad things happen.</p>
+
+<p>The <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE floating point standard</a> is one of the great accomplishments of
+computer science. One of the top five.
+From my point of view, we haven&rsquo;t got that many accomplished.
+We might have six altogether.
+It was terrible before it.
+But somehow they decided to
+indicate undetermined floating-point value by breaking fundamental logical axioms.</p>
+
+<p>They are also not <code>!=</code> which is weird too:</p>
+
+<pre><code>double x(0.0/0.0);
+std::cout &lt;&lt; (x &lt; x || x &gt;= x ? "yes" : "no") &lt;&lt; std::endl;
+</code></pre>
+
+<p>Prints &ldquo;no&rdquo;.
+Law of excluded middle doesn&rsquo;t work anymore,
+and this is sad.
+You can&rsquo;t make reasonable assumptions.</p>
+
+<p>What&rsquo;s the solution?
+There are two solutions</p>
+
+<ol>
+<li>abandoning the laws.</li>
+<li>putting a wall around bad values.</li>
+</ol>
+
+
+<p>I&rsquo;m advocating the second one.
+We keep the laws and define singularities.
+If there are singular values, the universe collapses,
+you know  nothing applies.
+you have to assure that singular values do not appear in your computation.</p>
+
+<a name="Final-code"></a>
+<h2>Final code</h2>
+
+<ul>
+<li><a href="code/minmax.h">minmax.h</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+Alex recommends chapter 4 of &ldquo;Elements of Programming&rdquo;
+to learn more about this subject.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+The classic example of a partial ordering
+is the relation subset on the domain of sets.
+The set <code>{ 1 }</code> is a subset of  <code>{ 1, 2, 3 }</code>
+But, <code>{ 1, 4 }</code> is not a subset of <code>{ 1, 2, 3 }</code>.
+Neither is <code>{ 1, 2, 3 }</code> a subset of <code>{ 1, 4 }</code>.
+The two elements are incomparable.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+Function objects like this in C++ fulfill
+the same role as <a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-21.html#%_sec_3.2">closures or lambdas</a>.
+They capture variables or state, and then use them to evaluate the function.
+The main difference is that their saved context is explicit rather
+than implicit.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+Alex:
+How big is this object?
+You might say it&rsquo;s empty.
+But, sadly enough, there is a great secret.
+There are no empty things.
+They are still one byte because C doesn&rsquo;t want us to allocate two objects at the same
+address.
+If you have zero size you will be able to just pile objects on top
+of each other so you do use one byte.
+Does it matter?
+Not at all.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="05_swap.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="07_min_range.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

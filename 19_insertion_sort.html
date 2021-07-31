@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>19. Linear insertion sort</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="18_binary_insertion_sort.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="">next</a>
+]
+</span>
+
+
+
+<a name="L19.-Linear-insertion-sort"></a>
+<h1>19. Linear insertion sort</h1>
+
+<a name="Thank-you-2c--noble-art."></a>
+<h2>Thank you, noble art.</h2>
+
+<p>Last time we started with <a href="https://www.youtube.com/watch?v=sIIS-UgixGE">&ldquo;The Organ Grinder&rdquo;</a> (Der Liermann)
+which explains how it feels to stand outside in the cold with an empty tray
+being barked at by stray dogs.
+That&rsquo;s how it feels when I start here (joke).</p>
+
+<p>Today, I decided to play another short song which addresses
+another aspect of what we do.
+This is a song by <a href="https://en.wikipedia.org/wiki/Franz_Schubert">Schubert</a> again, called <a href="https://en.wikipedia.org/wiki/An_die_Musik">&ldquo;To Music&rdquo;</a>
+(An die Musik).
+It&rsquo;s a very short song which gives thanks to this great art which lifts us in
+the grayest times of our lives.
+That&rsquo;s basically the words.
+In this video the words will be first introduced by a great English pianist <a href="https://en.wikipedia.org/wiki/Gerald_Moore">Gerald Moore</a>, who accompanied many great singers in Schubert songs.
+<a href="https://en.wikipedia.org/wiki/Elisabeth_Schwarzkopf">Elisabeth Schwarzkopf</a> was probably the greatest soprano of the last century.
+She is also a beautiful woman.
+Let us proceed&hellip; (<a href="https://www.youtube.com/watch?v=Bm_AKMV0ME0">Video here</a>).</p>
+
+<p>Shuebert was 18 years old when he composed it.
+<em>If I had a choice between founding Facebook or writing this song, as my lifetime
+accomplishment, I would not hesitate one second, and it&rsquo;s not going to be the
+Facebook</em>.
+What was the point?
+Why did I want to play this song?
+Because I actually believe, against all odds, and in spite of the many terrible evidence to
+the contrary, that the words which I used there for music; the noble art, actually
+applies to programming.
+In spite of all the terrible things which I
+had to witness over my life, I am grateful.
+I share the same attitude.
+The song concludes with the words, &ldquo;thank you, noble art.&rdquo;
+The only thing I could say is thank you.
+It was wonderful that I was able to write code.
+I think we need to learn to share this attitude.</p>
+
+<a name="Linear-insertion-sort"></a>
+<h2>Linear insertion sort</h2>
+
+<p>It&rsquo;s not clear whether binary insertion sort is the right algorithm to use at all.
+If we have <code>BidirectionalIterator</code>, we could use regular insertion sort which is a
+very good algorithm and we&rsquo;ll need it later in the course.
+It&rsquo;s a very important component to be used in multiple places.
+For example, when implementing quicksort.
+Plus, we will be able to investigate
+several interesting techniques  and discover one deep problem on this very
+simple sorting algorithm.
+Binary search is not always a good thing to do.</p>
+
+<p>Remember insertion sort is good  when things are almost sorted.
+They are pretty close to where they should be.
+Binary search is going to poke far away.
+It&rsquo;s going to do a little poking, logarithmic poking,
+but it&rsquo;s going to poke potentially far away.
+Since in many cases we are going to be using
+insertion sort in the context where things are pretty close,
+doing linear insertion might be a good thing to do.
+Linear search is of course best on arrays that are already sorted.
+You just look to the next guy, and do nothing.
+It&rsquo;s one comparison per element.</p>
+
+<a name="Linear-insert"></a>
+<h3>Linear insert</h3>
+
+<p>How do you make code beautiful?
+We find the main loop invariant.
+In order to be able to do the right thing, we need to see what we need to accomplish.</p>
+
+<p>Our goal (like binary insert) is to
+insert an element into the portion
+at the front of the range.
+We first copy the element <code>value</code> out to insert,
+and create a hole where it was left.
+We then move the hole from the right,
+as far left as possible (requiring <code>BidirectionalIterator</code>).</p>
+
+<pre><code>[            | ]
+^            ^
+first        hole
+</code></pre>
+
+<p>When are we allowed to move the hole?
+What is the condition?
+The first is that <code>hole != first</code>.
+If this happens, we cannot move any further.
+The other condition is:</p>
+
+<pre><code>prev(hole) &lt; value
+</code></pre>
+
+<p>If both hold, we continue to move left.
+Eventually, one of the conditions will not hold.
+We can even prove it.
+There are only finitely many things in the range,
+so after so many iterations it will be exhausted.
+These termination proofs are not usually very profound.</p>
+
+<p>In our code we will call <code>hole</code>, <code>current</code>:</p>
+
+<pre><code>template &lt;typename I, typename R&gt;
+// I is BidirectionalIterator
+// R is WeakStrictOrdering on the value type of I 
+I linear_insert(I first, I current, R r) {
+  // precondition: is_sorted(first, current, r) &amp;&amp; current is a valid iterator
+  typedef typename std::iterator_traits&lt;I&gt;::value_type T;
+  T value = *current;
+  while (first != current &amp;&amp; r(value, *predecessor(current))) {
+    *current = *predecessor(current);
+    --current;
+  }
+  *current = value; 
+  return current;
+}
+</code></pre>
+
+<p>When <code>first == current</code> at the start, it will swap.
+Would a check be better?
+As we have talked about it before, this is a case that seldom happens
+whereas adding an explicit check would slow down every other case.</p>
+
+<p>Of course, we need to define predecessor:</p>
+
+<pre><code>template &lt;typename I&gt;
+// requires I is BidirectionalIterator
+inline
+I predecessor(I x) { return --x; }
+</code></pre>
+
+<a name="Insertion-sort"></a>
+<h3>Insertion sort</h3>
+
+<p>Now linear insertion sort is about identical to binary insertion sort,
+we just use <code>linear_insert</code>, instead of <code>binary_insert</code>.</p>
+
+<pre><code>template &lt;typename I, typename N, typename R&gt;
+// I is BidirectionalIterator
+// N is Integral
+// R is WeakStrictOrdering on the value type of I 
+I linear_insertion_sort_n(I first, N n, R r) {
+  if (n == N(0)) return first;
+  I current = first;
+  ++current;
+  N i(1);
+  while (i &lt; n) {
+    // invariant: is_sorted_n(first, i, r) &amp;&amp; std::distance(first, current) == i
+    linear_insert(first, current++, r);
+    ++i;
+  }
+  return current;
+}
+</code></pre>
+
+<p>Let&rsquo;s write the version for bounded ranges.
+It&rsquo;s very easy.
+As a base case in our induction, an empty range, and a one
+element range are both sorted.</p>
+
+<pre><code>// I is BidirectionalIterator
+// R is WeakStrictOrdering on the value type of I 
+void linear_insertion_sort(I first, I last, R r) {
+  if (first == last) return; 
+  I current = first;
+  ++current;
+  while (current != last) {
+    linear_insert(first, current, r);     
+    ++current;
+  }
+}
+</code></pre>
+
+<a name="Sentinel-version"></a>
+<h2>Sentinel version</h2>
+
+<p>I think we can optimize it further.
+You might argue we don&rsquo;t need to.
+But, let me tell you one of the most humiliating times in my life.
+I was giving a talk at <a href="https://en.wikipedia.org/wiki/Stanford_University">Stanford</a> and a certain professor walked into the talk
+and when I showed my code, roughly like what we just wrote.
+It was a little different, but same idea.
+I said, it&rsquo;s obviously optimal.
+This professor interrupted
+and said, no it&rsquo;s not.
+The trouble is his name was Donald Knuth.
+When somebody like Don Knuth says that your code is not optimal you are in a difficult situation.
+His argument was that we do this conditional check:</p>
+
+<pre><code>while (first != current ...)
+</code></pre>
+
+<p><code>n</code> times, when we don&rsquo;t need to.
+If you&rsquo;re really into performance you have to put a <a href="https://en.wikipedia.org/wiki/Sentinel_value">sentinel</a> in the back.
+I was using sentinels before, but from that point on I decided
+to make an effort to use them more.</p>
+
+<p>This is a valid argument.
+We are not here to impose some theoretical conditions on algorithms we are here to
+take existing efficient algorithms and find how to express them.
+We have to write whatever we write to enable this code to work.
+What this means is that we sometimes have to reject or ignore
+other notions of &ldquo;good software engineering&rdquo; in order to get
+the efficient algorithms.
+This is a very simple loop, so literally every instruction counts.
+Could we eliminate that condition?
+Can we assure that we don&rsquo;t need to perform it?
+We cheat by changing the precondition.
+What condition would allow us not to check?</p>
+
+<p>Somehow we assure that the first element is always
+smaller than the one we want to insert.
+So copy paste our previous <code>linear_insert</code>
+and let&rsquo;s rewrite the precondition.</p>
+
+<pre><code>  // precondition: is_sorted(first, current, r) &amp;&amp;
+  //               current is a valid iterator &amp;&amp;
+  //               first != current &amp;&amp;
+  //               !r(*current, *first)
+</code></pre>
+
+<p>Now we can remove the condition:</p>
+
+<pre><code>template &lt;typename I, typename R&gt;
+// I is BidirectionalIterator
+// R is WeakStrictOrdering on the value type of I 
+I linear_insert_with_sentinel(I first, I current, R r) {
+  // precondition: is_sorted(first, current, r) &amp;&amp;
+  //               current is a valid iterator &amp;&amp;
+  //               first != current &amp;&amp;
+  //               !r(*current, *first)
+  typedef typename std::iterator_traits&lt;I&gt;::value_type T;
+  T value = *current;
+
+  while (r(value, *predecessor(current))) {
+    *current = *predecessor(current);
+    --current;
+  }
+  *current = value; 
+  return current;
+}
+</code></pre>
+
+<a name="Insertion-sort-in-quicksort"></a>
+<h3>Insertion sort in quicksort</h3>
+
+<p>Now we need to write a new insertion sort
+which guarantees this condition.
+Before we get there, let&rsquo;s see if we can
+make 1 or 2 additional components out of it that will help us sort.</p>
+
+<p>Eventually we hope to study a very important algorithm called quicksort.
+A long time ago the person who invented it, <a href="https://en.wikipedia.org/wiki/Tony_Hoare">Tony Hoare</a>
+observed that quicksort becomes inefficient towards the end
+of recursion, when you start doing partitions of very small things.
+He suggested that we run insertion sort, down there at the lower
+levels of recursion.
+Originally, people thought they would just wait for the range
+to get small, and then call insertion sort every time.
+But, Hoare observed you really don&rsquo;t need to call insertion sort many times.
+You can just stop the recursion when quicksort sorts things up to a certain size,
+and then run one pass of insertion sort, over the whole thing.
+Remember, we talked about how insertion sort is good when things are
+almost where they should be.</p>
+
+<p>Let&rsquo;s assume we are sorting a million elements.
+After we are done with quicksort we have a threshold,
+say <code>k</code>, and all the elements are partitioned
+into blocks, or sub ranges of this size.</p>
+
+<pre><code>[      |            ...            ]
+^      ^                        
+first  first + k
+</code></pre>
+
+<p>What I realized is that the elements in that first sub range <code>[first, first + k)</code>
+are all natural sentinels for all the others.
+What we can do is use non-sentinel insertion sort for the first sub range.
+But, then we can take the smallest and use it as a sentinel for all past it.</p>
+
+<p>For example, when we stop quicksort early we might have:</p>
+
+<pre><code>[ 1, 3, 5 | 2, 11, 17 ... ]
+</code></pre>
+
+<p>How can we have 2 on the right side? We don&rsquo;t know exactly
+where quicksort stopped, just that it&rsquo;s in some threshold.
+5 is not a sentinel for the right side, because 2 is smaller.
+1 is the sentinel.
+Now that is quicksort, but we will design our components in a way to support it.</p>
+
+<p>Let&rsquo;s write a function that assumes we have a prefix that is sorted
+and contains a sentinel.</p>
+
+<pre><code>template &lt;typename I, typename R&gt;
+// I is BidirectionalIterator
+// R is WeakStrictOrdering on the value type of I 
+void insertion_sort_suffix(I first, I last, R r) {
+  // precondition: one of -
+  // (1) a valid range before first is sorted with respect to r and contains a sentinel
+  // (2) *first is a sentinel
+  if (first == last) return; 
+  I current = first;
+  ++current;
+  while (current != last) {
+    linear_insert_with_sentinel(first, current, r);     
+    ++current;
+  }
+}
+</code></pre>
+
+<p>So let us copy <code>linear_insertion_sort</code> and make our definitive <code>insertion_sort</code>.</p>
+
+<pre><code>template &lt;typename I, typename R&gt;
+// I is BidirectionalIterator
+// R is WeakStrictOrdering on the value type of I 
+void insertion_sort(I first, I last, R r) {
+  if (first == last) return; 
+  I current = first;
+  ++current;
+  if (current == last) return;
+  // create a sentinel 
+  rotate_right_by_one(first, ++std::min_element(first, last, r));
+  insertion_sort_suffix(current, last, r);
+}
+</code></pre>
+
+<p>Copy paste, and make the unstable version
+by replacing rotate with swap.</p>
+
+<pre><code>template &lt;typename I, typename R&gt;
+// I is BidirectionalIterator
+// R is WeakStrictOrdering on the value type of I 
+void insertion_sort_unstable(I first, I last, R r) {
+  if (first == last) return; 
+  I current = first;
+  ++current;
+  if (current == last) return;
+  // create a sentinel 
+  std::swap(*first, *std::min_element(first, last, r));
+  insertion_sort_suffix(current, last, r);
+}
+</code></pre>
+
+<a name="Selection-sort"></a>
+<h2>Selection sort</h2>
+
+<p>This leads us to another classical sort,
+it&rsquo;s very slow, but since it&rsquo;s classical and takes only a few lines
+we will discovery it.</p>
+
+<p>What&rsquo;s the idea of selection sort?
+You find the min, put him in the first place.
+You find the min of the remaining range, put him in the next place,
+and so on.
+Could we write it?</p>
+
+<pre><code>template &lt;typename I, typename R&gt;
+// I is ForwardIterator
+// R is WeakStrictOrdering on the value type of I 
+void selection_sort(I first, I last, R r) {
+  while (first != last) {
+    std::swap(*first, *std::min_element(first, last, r));
+    ++first;
+  }
+}
+</code></pre>
+
+<p>It&rsquo;s not stable, but it&rsquo;s not hard to fix.
+The problem is swap might skip over lot&rsquo;s of equal guys.</p>
+
+<pre><code>template &lt;typename I, typename R&gt;
+// I is ForwardIterator
+// R is WeakStrictOrdering on the value type of I 
+void stable_selection_sort(I first, I last, R r) {
+  while (first != last) {
+    rotate_right_by_one(first, ++std::min_element(first, last, r));
+    ++first;
+  }
+}
+</code></pre>
+
+<p>Comparison is typically fast, but swap we tend to think of as slow.
+Imagine they are big buildings that need to be carried.
+The unstable is actually amazing in that it just does <code>n - 1</code> swaps,
+always.
+Merge sort, quicksort, the do like <code>n log(n)</code>.
+Is it practically important? No.
+Not once have I needed it.
+However, it shows us how to create a sentinel.</p>
+
+<a name="Preconditions-are-essential"></a>
+<h2>Preconditions are essential</h2>
+
+<p>There&rsquo;s this advertising company you might have heard in Mountain view called Google.
+They have bright young things, and one of them decided that he wants to randomly shuffle a vector.
+It&rsquo;s a reasonable thing.
+He decided that the correct way of doing that is the following:
+you implement a comparison function which throws a coin.
+It randomly generates true or false.
+Then take <code>std::sort</code> and pass this function to it,
+because it will obviously create a randomly shuffled thing.
+Low and behold to everybody&rsquo;s amazement it caused
+segmentation fault.
+There were messages throughout Google saying STL is
+totally broken.
+Obviously, because it brings Google down.
+Let&rsquo;s argue why he shouldn&rsquo;t do what he did.</p>
+
+<ol>
+<li><p>There is an algorithm in stl called <a href="https://en.cppreference.com/w/cpp/algorithm/random_shuffle"><code>std::random_shuffle</code></a>.
+Why not use that?</p></li>
+<li><p>Somebody more advanced, would say, even if it worked, it wouldn&rsquo;t
+be a uniform random shuffle.
+It is screwed up, but it requires probability theory or Knuth.
+These people at Google just don&rsquo;t read.
+ The brightest people do not need to read (joke).</p></li>
+<li><p>My dear friend Dave Musser who was on sabbatical at Google ventured to post
+that he did not satisfy the preconditions.
+ Random true/false is not a weak strict ordering,
+or any ordering whatsoever.
+ He tried to explain, but they said no.
+ It should work with whatever I pass to it.</p></li>
+</ol>
+
+
+<p>As you can imagine, we cannot rely on any properties, like sentinel with this
+going on.
+For a while there were a bunch of postings on the internet saying,
+do not use <code>std::sort</code> because it requires <code>WeakStrictOrdering</code>.
+It&rsquo;s provably the weakest possible requirement.
+I thought it was good, but they turned it around and said no.
+Use <code>std::stable_sort</code>.
+I still see this in code, people use it when they don&rsquo;t need
+stability because they read these discussions.</p>
+
+<p>Apparently it is an expectation of a modern
+programmer that you don&rsquo;t have to satisfy any precondition.
+Things should do something and never cause a segmentation fault.
+It is a tricky thing.
+Nowadays I wonder.
+What should we do when we build components?
+Should we assume that we build them the fastest way and carefully
+specify preconditions?
+Or should we build idiot-proof or Google quality components.
+This is a difficult question.
+I do not know the answer.</p>
+
+<a name="Final-project"></a>
+<h2>Final project</h2>
+
+<p>Write the fastest version of stable sort that you can, utilizing the ideas
+in these tools.
+We have all the algorithmic ideas we need.
+But, I invite you to read books.
+I invite you to test and measure.
+If you want you can even go read old STL code I wrote.
+It&rsquo;s a competition, consider teaming up and sharing ideas.</p>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/insertion_sort.h">insertion_sort.h</a></li>
+<li><a href="code/test_insertion_sort.cpp">test_insertion_sort.cpp</a></li>
+</ul>
+
+
+<span style="float: right">
+[
+<a href="18_binary_insertion_sort.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

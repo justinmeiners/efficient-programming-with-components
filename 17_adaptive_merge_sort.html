@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>17. Adaptive merge sort</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="16_optimizing_stable_sort.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="18_binary_insertion_sort.html">next</a>
+]
+</span>
+
+
+
+<a name="L17.-Adaptive-merge-sort"></a>
+<h1>17. Adaptive merge sort</h1>
+
+<a name="L-22-temporary-22--buffers-in-STL"></a>
+<h2>&ldquo;temporary&rdquo; buffers in STL</h2>
+
+<p>When I was implementing STL
+I said that the OS vendor should know how much extra storage is available.
+So, I&rsquo;m going to have this function called <code>get_temporary_buffer</code>
+which allocates as much physical memory is available at this moment.
+It&rsquo;s the only outside hook which STL will use.
+But, it is vendor specific, you cannot do it as a client.
+There is actually no call in UNIX which tells you how much physical memory
+you have, how much is used, it&rsquo;s just impossible.
+But, I needed to ship it, and in order to do that, I couldn&rsquo;t just
+require them to add a hook.
+So I wrote the following thing:</p>
+
+<pre><code>// ask for n, system gives you as much as it can, but not more than n.
+std::pair&lt;void*, size_t&gt; get_temporary_buffer(size_t n) { 
+  // this is bogus code and needs to be replaced
+  void* buffer = malloc(n);
+  while (!buffer &amp;&amp; n) {
+    n = n &gt;&gt; 1;
+    buffer = malloc(n);
+  }
+  return std::make_pair(buffer, n);
+}
+</code></pre>
+
+<p>So it binary searches for a buffer small enough to fit<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
+Is it a useful piece of code? No.
+But, I had to ship.
+Guess what happened after that.
+You might think they didn&rsquo;t change it.
+You&rsquo;re wrong, they did change it.
+They removed my comment.</p>
+
+<p>Every implementation, UNIX, Microsoft, Apple,
+does the same binary search.
+I have been telling this story for decades, nothing.
+Therefore, my function always returns whatever you ask, because
+it just allocates <a href="https://en.wikipedia.org/wiki/Virtual_memory">virtual memory</a><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+It used to be a problem when we had 16-bit address spaces.
+But, we have 64 bit address spaces.</p>
+
+<p>If it was correct, I think it would be useful.
+You want as much physical memory as the system has.
+There is virtual memory but virtual memory is actually useless unless it&rsquo;s backed by physical memory.
+It&rsquo;s useful for remapping things<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+But, it is a figment of imagination.
+It does not exist.
+As <a href="https://en.wikipedia.org/wiki/Seymour_Cray">Seymour Cray</a> used to say, &ldquo;You cant&rsquo;t simulate what you do
+not have&rdquo;<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+If your algorithm working set doesn&rsquo;t fit into physical memory,
+it will not just <a href="https://en.wikipedia.org/wiki/Thrashing_(computer_science)">thrash</a>, your program will not terminate,
+because your memory starts working at the speed of a disk.
+That&rsquo;s not good enough.</p>
+
+<p>It just shows you how imperfect life is.</p>
+
+<a name="Merge-with-buffer"></a>
+<h2>Merge with buffer</h2>
+
+<p>The first thing we are going
+to write is <code>merge_with_buffer</code>.
+Let&rsquo;s assume that this buffer is big enough.
+Eventually we will have to figure out how to deal with limited buffers.
+Right, now let&rsquo;s assume whoever is going to call is going to assure it.
+What we do is copy from the first range into our buffer,
+then we merge back into the original buffer.</p>
+
+<p>For now we can rely on <a href="https://en.cppreference.com/w/cpp/algorithm/merge"><code>std::merge</code></a>,
+but later we will write a better one.</p>
+
+<pre><code>template &lt;typename I, typename R, typename B&gt;
+// requires I is ForwardIterator
+// requires R is StrictWeakOrdering
+// requires B is ForwardIterator
+void merge_with_buffer(I first, I middle, I last, R r, B buffer) {
+    B buffer_last = std::copy(first, middle, buffer);
+    std::merge(buffer, buffer_last, middle, last, first, r);
+}
+</code></pre>
+
+<p>Even though we aren&rsquo;t worry about it now, we can see the buffer
+will need to be big enough to copy the entire left half in,
+so about size <code>n/2</code>.</p>
+
+<p>Note that the buffer doens&rsquo;t have to match the type of the container.
+We will probably use an array for buffer,
+but <code>I</code> could be an iterator for a linked list.
+This is a general principle, relax type requirements.</p>
+
+<p>Let&rsquo;s grab our in-place sort from before and modify it.
+It&rsquo;s identical to our other,
+except it uses our new <code>merge_with_buffer</code>.
+Should this function allocate the buffer?
+No because it is recursive.</p>
+
+<pre><code>template &lt;typename I, typename N, typename R, typename B&gt;
+// I is ForwardIterator
+// N is Integral
+// R is WeakStrictOrdering on the value type of I 
+I sort_inplace_n_with_buffer(I first, N n, R r, B buffer) {
+  if (!n) return first;
+  N half = n &gt;&gt; 1;
+  if (!half) return ++first;
+  I middle = sort_inplace_n_with_buffer(first, half, r, buffer);
+  I last   = sort_inplace_n_with_buffer(middle, n - half, r, buffer);
+  merge_with_buffer(first, middle, last, r, buffer);
+  return last;
+}
+</code></pre>
+
+<p>Note we put the buffer argument at the end, because
+we are extending the interface of the previous sort.</p>
+
+<p>Now to use it in our framework we need a more convienent interface.
+We have too many parameters, so we need to somehow get rid of all of them.
+We write a wrapper.</p>
+
+<pre><code>template &lt;typename I&gt;
+// I is ForwardIterator
+inline
+void sort_inplace_with_buffer(I first, I last) {
+    typedef typename std::iterator_traits&lt;I&gt;::value_type T;
+    typedef typename std::iterator_traits&lt;I&gt;::difference_type N;
+    N n = std::distance(first, last);
+    std::vector&lt;T&gt; buffer(n &gt;&gt; 1);
+    sort_inplace_n_with_buffer(first, n, std::less&lt;T&gt;(), buffer.begin());
+}
+</code></pre>
+
+<a name="Performance-test"></a>
+<h3>Performance test</h3>
+
+<p>Let&rsquo;s give it a try in the same timing framework we had before<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.</p>
+
+<pre><code>Sorting double from 8 up to 2097152 elements generated with iota at: Mon Jun 28 21:02:41 2021
+        size    stable  inplace with_buffer 
+           8        14      20      16  
+          16         8      28      19  
+          32         8      39      19  
+          64        10      48      22  
+         128        10      59      25  
+         256        13      78      29  
+         512        17     107      36  
+        1024        27     136      39  
+        2048        34     147      49  
+        4096        45     172      59  
+        8192        54     192      67  
+       16384        62     209      75  
+       32768        67     227      81  
+       65536        72     245      86  
+      131072        76     263      92  
+      262144        82     282      97  
+      524288        88     303     104  
+     1048576        94     323     109  
+     2097152        98     343     115
+</code></pre>
+
+<p>Look at how fast that is.
+It&rsquo;s already within 10% of our goal.
+It shows us the spectrum of what&rsquo;s possible.</p>
+
+<a name="Adaptive-merge"></a>
+<h2>Adaptive merge</h2>
+
+<p>We play the copy and paste game with our work from before.
+The function <code>merge_inplace_left_subproblem</code>
+and the right variant, do not need to be changed,
+so they can be included.</p>
+
+<pre><code>template &lt;typename I, typename N, typename R, typename B&gt;
+// I is ForwardIterator
+// N is Integral
+// R is WeakStrictOrdering on the value type of I 
+void merge_adaptive_n(I  f0,   N  n0,
+                      I  f1,   N  n1,   R r, B buffer, N buffer_size) {
+  // precondition std::distance(f0, f1) == n0
+  // precondition is_sorted_n(f0, n0, r) &amp;&amp; is_sorted(f1, n1, r)
+  if (!n0 || !n1) return;
+  if (n0 &lt;= buffer_size) {
+    I last = f1;
+    std::advance(last, n1);
+    merge_with_buffer(f0, f1, last, r, buffer);
+    return;
+  }
+  I f0_0, f0_1, f1_0, f1_1;
+  N n0_0, n0_1, n1_0, n1_1;
+  if (n0 &lt; n1)  merge_inplace_left_subproblem(f0,   n0,
+                                              f1,   n1,
+                                              f0_0, n0_0,
+                                              f0_1, n0_1,
+                                              f1_0, n1_0,
+                                              f1_1, n1_1,
+                                              r);
+  else         merge_inplace_right_subproblem(f0,   n0,
+                                              f1,   n1,
+                                              f0_0, n0_0,
+                                              f0_1, n0_1,
+                                              f1_0, n1_0,
+                                              f1_1, n1_1,
+                                              r);
+
+  merge_adaptive_n(f0_0, n0_0, f0_1, n0_1, r, buffer, buffer_size);
+  merge_adaptive_n(f1_0, n1_0, f1_1, n1_1, r, buffer, buffer_size);
+}
+</code></pre>
+
+<p>Now we know the drill to turn this into sort.
+I will just show the sort so we can see the buffer allocation:</p>
+
+<pre><code>template &lt;typename I&gt;
+// I is ForwardIterator
+inline
+void sort_1_8(I first, I last) {
+  typedef typename std::iterator_traits&lt;I&gt;::value_type T;
+  typedef typename std::iterator_traits&lt;I&gt;::difference_type N;
+  N n = std::distance(first, last);
+  std::vector&lt;T&gt; buffer(n &gt;&gt; 3);
+  sort_adaptive_n(first, n, std::less&lt;T&gt;(), buffer.begin(), N(buffer.size()));
+}
+</code></pre>
+
+<a name="Performance-test"></a>
+<h3>Performance test</h3>
+
+<p>How does this one do?
+Worse than before,
+but we are also using about 10x less memory.</p>
+
+<pre><code>Sorting double from 8 up to 2097152 elements generated with iota at: Mon Jun 28 21:32:08 2021
+        size    stable  inplace merging 1_8th   
+           8        13      19      13      20  
+          16         7      24      12      23  
+          32         7      38      17      27  
+          64         9      44      17      25  
+         128         9      54      21      27  
+         256        12      72      25      29  
+         512        15      99      29      34  
+        1024        25     129      37      41  
+        2048        36     158      48      51  
+        4096        46     181      60      62  
+        8192        56     209      71      73  
+       16384        64     225      80      83  
+       32768        93     240      84      88  
+       65536        74     261      90      92  
+      131072        78     280      97     108  
+      262144        96     314     101     104  
+      524288        91     322     107     110  
+     1048576        99     343     113     116  
+     2097152       102     403     120     123
+</code></pre>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/merge.h">merge.h</a></li>
+<li><a href="code/test_sort.cpp">test_sort.cpp</a></li>
+<li><a href="code/test_sort.h">test_sort.h</a></li>
+<li><a href="code/test_temp_buffer.cpp">test_temp_buffer.cpp</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<code>malloc</code> returns <code>null</code> when it fails to allocate,
+so this function uses that as an indicator that the requested buffer
+was too large, and continues attempting smaller and smaller buffers.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+Virtual memory let&rsquo;s you allocate more memory
+than is available. Based on my testing on Linux,
+the kernel will let you malloc about the total physical memory size.
+So for any reasonable amount a program asks for
+it will just return <code>malloc(n)</code>.
+Try his code out on your machine.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+Memory mapping is one such application.
+It allows you to read and write to a file with pointers
+as if it was loaded into memory.
+I have seen Alex use it in his code before.
+See <a href="https://man7.org/linux/man-pages/man2/mmap.2.html">mmap(2)</a> for details.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+I cannot find a reference to this quotation.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
+AMD Ryzen 5 2400G (8 core, 3.6 GHz). GCC 9.3.0<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="16_optimizing_stable_sort.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="18_binary_insertion_sort.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

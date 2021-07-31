@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>5. Swap: a fundamental component </title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="04_instrumented.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="06_min_max.html">next</a>
+]
+</span>
+
+
+
+<a name="L5.-Swap:-a-fundamental-component-"></a>
+<h1>5. Swap: a fundamental component </h1>
+
+<a name="The-magic-spoon"></a>
+<h2>The magic spoon</h2>
+
+<p><em>At this point in the course, Alex changes the classroom
+format to require class members to write code and answer questions.
+To facilitate this process, he passes around a &ldquo;magic spoon&rdquo; which
+elects participants.</em></p>
+
+<p>I have this magical spoon.
+This is truly a very important spoon.
+It says &ldquo;BTL&rdquo;, Bell Telephone laboratories.
+When we were young Bell Telephone Company didn&rsquo;t
+trust its researchers not to steal spoons, so that&rsquo;s why they marked it.
+For all we know <a href="https://en.wikipedia.org/wiki/Claude_Shannon">Claude Shannon</a> and <a href="https://en.wikipedia.org/wiki/Arno_Allan_Penzias">Arno Penzias</a>
+and <a href="https://en.wikipedia.org/wiki/Ken_Thompson">Ken Thompson</a> and <a href="https://en.wikipedia.org/wiki/Dennis_Ritchie">Dennis Ritchie</a> had their great inspirations after they touched this spoon.
+It&rsquo;s a very rare spoon.
+It might be the only one in the world.
+At some point they got rid of them.
+That was the last spoon and I stole it.
+I couldn&rsquo;t resist.</p>
+
+<a name="What-is-a-component-3f-"></a>
+<h2>What is a component?</h2>
+
+<p>When we started this course we said it was about components.
+What is a component? One view of a component
+is you take a piece of code and rip it out, or something similar.
+Well, no. That&rsquo;s not a component.
+If you rip a piece of meat out of my leg,
+it&rsquo;s not a functioning component.
+It&rsquo;s a pound of flesh.</p>
+
+<p>A component is something which solves a problem in a general way.
+It&rsquo;s something which is not specific and could be used by all the
+applications which need this particular problem solved.
+Then comes another important question.
+People comes to me and say &ldquo;why don&rsquo;t we use <a href="https://en.wikipedia.org/wiki/Go_(programming_language)">Go</a>, or <a href="https://en.wikipedia.org/wiki/Scala_(programming_language)">Scala</a>,
+and many others?&rdquo;
+Let us discuss
+ what components are in terms of a programming language.
+I claim that a programming language is suitable for component programming if it satisfies the
+following two conditions.</p>
+
+<ol>
+<li>You can describe general-purpose components.</li>
+<li>Without losing efficiency.</li>
+</ol>
+
+
+<a name="Relative-and-absolute-efficiency"></a>
+<h3>Relative and absolute efficiency</h3>
+
+<p>Obviously in any
+<a href="https://en.wikipedia.org/wiki/Turing_completeness">Turing complete</a> language you can describe just about anything, but it might be very slow.
+There are many languages which claim to possess powerful abstraction
+facilities but if you start using these facilities everywhere,
+for example deciding to use <code>integer</code> instead of <code>int32</code> everywhere (made up example)
+your performance is going to collapse.
+It&rsquo;s not that you are just going to be slow,
+you&rsquo;re going to be <em>slow compared with the stuff written in the same language</em> without abstraction.
+Efficiency is a two-fold concept:</p>
+
+<ol>
+<li><p>A component is <strong>relatively efficient</strong> if when instantiated it&rsquo;s as efficient
+as a non-generic non-component written in the same language.</p></li>
+<li><p>A component is <strong>absolutely efficient</strong> if when instantiated it is as efficient as anything
+which could be done on a given machine.
+Basically you know it&rsquo;s as fast as assembly language.</p></li>
+</ol>
+
+
+<p>These are two fundamental and different kinds of efficiency.</p>
+
+<p>People say, &ldquo;Alex you use C++ because you sold out to dark forces&rdquo;.
+If I sold out to dark forces, I wouldn&rsquo;t be working at my age.
+I didn&rsquo;t sell out, so why did I start programming in C++?
+After all, I didn&rsquo;t start with C++.
+I still program in C++ because as far as I could ascertain it&rsquo;s the only language which allows me
+generality and absolute efficiency.
+I can program as general as I like.
+I can talk about things like <a href="https://en.wikipedia.org/wiki/Monoid">monoids</a> and <a href="https://en.wikipedia.org/wiki/Semigroup">semi-groups</a>.
+When it compiles I could look at assembly code and see it is good.
+It is absolutely efficient.</p>
+
+<a name="Three-tests-of-a-language-27-s-ability-to-write-components"></a>
+<h3>Three tests of a language&rsquo;s ability to write components</h3>
+
+<p>So now we get to an interesting question,
+ how do we know that a language is powerful enough to write components?
+You might say a language is good, if you could implement a major operating system.
+This is a hard test.
+It&rsquo;s a big project.
+It also has a lot of ambiguity.
+You obviously don&rsquo;t know whether you meant it in a general way or not.</p>
+
+<p>A long time ago I came up with a very simple test
+of whether a language is good enough.
+I still use it to determine whether a language is suitable for what I want to do or not.
+There are three programs which I need to
+implement in a general way to know that the language is suitable these three
+programs are:</p>
+
+<ol>
+<li><code>swap</code>: takes two things and swaps them.</li>
+<li><code>min</code>: takes two things and figure out which one is smaller.</li>
+<li><code>linear search</code>. goes through a bunch of stuff and finds the one you want.</li>
+</ol>
+
+
+<p>Aren&rsquo;t these too simple?
+If we cannot do simple things, it is very unlikely we will be able to do hard things.
+People always say, &ldquo;I don&rsquo;t really know how to solve those problems, but I could do
+something much more complicated&rdquo;.
+I say, look I&rsquo;m not interested, because I want to see solutions to simple problems.
+But people always think that exciting things have to be complicated.
+I claim exciting things tend to be very simple and basic.</p>
+
+<p>So you say,  &ldquo;Alex, why don&rsquo;t we use a new language?&rdquo;
+Go try implementing these three program in your favorite language.
+Do them in a general way.
+If they&rsquo;re at least relatively efficient, that is, they are not slower than specific things
+written in the language, then let us talk.
+If you cannot do it, let us stick with C++.
+I&rsquo;m just explaining the reasoning behind my my choice of C++.</p>
+
+<a name="Swap"></a>
+<h2>Swap</h2>
+
+<p>Let us look at these three programs.
+Why they are important?
+Why is swap important? What does it deal with?
+Apparently it&rsquo;s not self-evident.
+Once upon a time I was talking to a very famous program,
+supposedly the best programmer A9 ever had.
+I told him about these three things and  he looks at me
+and said, &ldquo;I never had to use swap in my life&rdquo;.
+I don&rsquo;t know&hellip; I was very impressed because
+you swap for sorting,
+for reversing the sequence,
+for rotating the sequence,
+for all kind of operations.
+Basically, if you do something with a
+sequence you swap.
+ so it is very important practically.
+But, it also happens to be very important
+theoretically because a long time ago when people were starting group theory<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>
+They discovered that any permutation of a sequence could be generated out of swap<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+Swap is the most primitive operation.
+the reason is sequence, and any other
+permutation, can be constructed out of swap.</p>
+
+<p>But, apparently not everyone, even famous programmers,
+realized that.
+Well, he had to claim that the language he thought was
+the greatest language was great, and since it couldn&rsquo;t do swap,
+what do you?
+You deny the utility of swap.</p>
+
+<a name="General-swap"></a>
+<h3>General swap</h3>
+
+<p>Let&rsquo;s write it.
+The only type requirement is <code>SemiRegular</code> because
+we just do copy and assignment</p>
+
+<pre><code>template&lt;typename T&gt;
+// T is Semi-Regular
+inline
+void swap(T&amp; a, T&amp; b) {
+  T tmp(a);
+  a = b;
+  b = tmp;
+}
+</code></pre>
+
+<p>Why do we put <code>inline</code> on the line before?
+It doesn&rsquo;t affect the type signature of the function, and when you search
+for it, you don&rsquo;t want to worry about whether <code>inline</code> is on the front or not.</p>
+
+<a name="Specialized-swap"></a>
+<h3>Specialized swap</h3>
+
+<p>For some types, this <code>swap</code> will perform poorly.
+Could you give an example of it is horribly inefficient?
+What about a large container?
+Consider:</p>
+
+<pre><code>std::vector&lt;int&gt; a(1000000);
+std::vector&lt;int&gt; b(1000000);
+swap(a, b);
+</code></pre>
+
+<p>It will construct a temporary vector and copy
+every single element into that temporary, and then back
+(several million operations)<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+
+<p>So we have generic code which works everywhere, except it&rsquo;s very slow.
+What should we do if someone says, &ldquo;I have a wonderful generic solution, very abstract, but it takes a million iterations when there should be three.&rdquo;?
+Throw him out.
+There is no excuse.
+Then he says, &ldquo;oh, but I could use <a href="https://en.wikipedia.org/wiki/Tropical_semiring">tropical semirings</a>&rdquo;,
+take tropical semirings and do something to him and them<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
+
+<p>If you think about the algorithm that needs to take place,
+it requires <em>knowledge of how vector actually stores data</em>.
+The header (the vector itself) can be copied,
+but the pointers to their contents should be swapped.</p>
+
+<p>A central feature of a container is ownership of the elements.
+So the elements and container go together.
+For things of this kind, we nee to write a special swap.</p>
+
+<pre><code>template&lt;typename T&gt;
+// T is Semi-Regular
+inline
+void swap(std::vector&lt;T&gt;&amp; a, std::vector&lt;T&gt;&amp; b) {
+  // swap headers of a and b
+  // fix back pointers (for things like linked lists)
+}
+</code></pre>
+
+<p>It would be wonderful to be able to just type those comments and the
+and compiler will do it for us sadly enough we&rsquo;re not there yet.</p>
+
+<p>When we write a special version of this function,
+it is called <strong>partial template specialization</strong>.
+It&rsquo;s partial because we will write for all <code>std::vector&lt;T&gt;</code>,
+and the <code>T</code> parameter is still generic.</p>
+
+<a name="XOR-swap"></a>
+<h2>XOR swap</h2>
+
+<p>What if we don&rsquo;t have an extra memory location?
+Could we write swap?
+Yes, there is a <a href="https://en.wikipedia.org/wiki/XOR_swap_algorithm">beautiful algorithm</a> using XOR<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.</p>
+
+<pre><code>template&lt;typename T&gt;
+// T is UnsignedIntegral
+inline
+void swap_xor(T&amp; a, T&amp; b) {
+  a = a ^ b;
+  b = a ^ b; 
+  a = a ^ b;
+}
+</code></pre>
+
+<p><strong>Exercise:</strong> Prove <code>swap_xor</code> is correct. To do this you will need to discover
+    some basic properties of <code>^</code>. (See solution<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.)</p>
+
+<p>What are the requirements for this algorithm?
+Specifically, what types have an <code>XOR</code> operator <code>^</code>.
+Could we use it on <code>int</code>? Yes, but it&rsquo;s a bad idea.
+The language standard says that the
+result of <code>XOR</code> for the signed bit is not defined.
+If it is a positive integer you know what is going on for the sign bits.
+When it&rsquo;s negative you have no idea.</p>
+
+<p>So use it for <code>unsigned int</code>, or <code>char</code>.
+Basically, unsigned integral types.
+So, it&rsquo;s not particularly useful.</p>
+
+<p>But, there is a case where it doesn&rsquo;t work,
+which is weird because we have a proof it does work (if you did the exercise above).
+But, in our proof we made the
+small assumption that <code>x</code> and <code>y</code> are different objects.
+Because if they happen to be the same object, the value it contains at
+the end of this function will be always be zero.
+Every bit will be zapped completely totally and absolutely.</p>
+
+<p>We could fix this by wrapping the body in:</p>
+
+<pre><code>if (&amp;a != &amp;b) {
+    ...
+}
+</code></pre>
+
+<p>Is it a good idea?
+In this case, it&rsquo;s important for correctness.
+But, be careful.
+We should never add it to the other swap
+because it adds more work to the common case.</p>
+
+<p>Sometimes we are very tempted to say, &ldquo;if it&rsquo;s five, I have a fast path&rdquo;.
+So you add to your code:</p>
+
+<pre><code>if (a == 5) {
+    // do fast path
+} else {
+    // do normal path
+}
+</code></pre>
+
+<p>But, if you optimize for 5, and you have more than three integers,
+it will seldom be 5 and you will be doing the check all the time.</p>
+
+<p>So two rules:</p>
+
+<ol>
+<li><p>Don&rsquo;t do things unless necessary</p></li>
+<li><p>Don&rsquo;t optimize uncommon cases</p></li>
+</ol>
+
+
+<a name="Is-the-inline-keyword-important-3f-"></a>
+<h2>Is the inline keyword important?</h2>
+
+<p><code>inline</code> is one of the things which will go away.
+There are certain things in C and C++ which are there because compiler technology was imperfect.
+When I started in C++ in 1986
+I had to write the keyword <a href="https://en.cppreference.com/w/c/language/storage_duration"><code>register</code></a> everywhere because believe it or
+not compilers wouldn&rsquo;t use registers<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup> unless you specifically indicated that something goes into the register.
+Of course if it went into
+the register you could never use address operator <code>&amp;</code> because obviously registers do not have addresses.
+It was a very special thing you needed to worry about.
+It was important in my measurements at the time.
+Stripping <code>register</code> declarations from fundamental algorithms caused a slow down by a factor of three.
+Why?
+For every call to <code>++</code> the assembly code first did a load
+and then after it stored the result.
+At that time computers used to do one thing at the time.
+So by adding a load and store around everything, it basically tripled the time.</p>
+
+<p>This is no longer true, meaning that computers no longer
+execute one operation at a time, as we will discover.
+For sure, you never need to worry about registers.
+In modern computers, this is utterly idiotic you should never do it.
+In the same way the compiler is perfectly  theoretically capable
+of figuring out what needs to be <code>inline</code>, much more than you.</p>
+
+<p>But, we&rsquo;re living in
+this  transition time.
+I think about five years from now you will never need
+to write <code>inline</code>.
+Compilers will do it.
+Right now it still makes a difference.
+You remove this <code>inline</code> and you
+could get enormous performance difference.
+It could be a factor of 10 for something like swap.
+The problem is that the function call sequences,
+is a bad sequence.</p>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/swap.h">swap.h</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p><a href="https://en.wikipedia.org/wiki/Group_theory">Group theory</a>
+is one of the main subjects of abstract algebra.
+The key idea is that many mathematical structures behave similarly.
+You can add and subtract numbers, you can add and subtract vectors and matrices.
+Can we study all structures which can add and subtract all together?
+It turns out you can, and one such structure is a group.</p>
+
+<p>Alex&rsquo;s ideas about generic programming are inspired
+by abstract algebra.</p><a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+<p>A <a href="https://en.wikipedia.org/wiki/Permutation_group">permutation</a>
+is a bijection (1-1, onto) map from a set to itself.
+For example we can define the following permutation on the first
+3 integers:</p>
+
+<pre><code>f: { 1, 2, 3 } -&gt; { 1, 2, 3 }
+f(1) = 2
+f(2) = 3
+f(3) = 1
+</code></pre>
+
+<p>Permutations of a set form a group under the operation of composition.
+A basic theorem about permutations
+is that any permutation can be formed by composing transpositions (swaps).
+For example, the permutation above is a composition
+of two swaps:</p>
+
+<pre><code>f(n) = g(h(n))
+
+where g(1) = 3 and g(3) = 1
+and h(1) = 2 and h(2) = 1.
+</code></pre><a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+<p>Since C++11 this issue has been addressed by <a href="https://en.cppreference.com/w/cpp/language/move_constructor">move semantics</a>
+and even the swap as we have written it may perform well.</p>
+
+<p>Essentially, the compiler can detect that we are doing an assignment while
+simultaneously throwing away the source data.
+It can then invoke a special move assignment operator or move
+constructor.
+This can then contain the logic Alex described for swapping pointers.</p>
+
+<p>Whether this is a good solution, or one that Alex would endorse isn&rsquo;t clear.
+On one hand, move semantics are a great source of confusion and complexity.
+One has to not only be able to read explicit code, but also
+infer the implicit details about how the compiler will treat statements which depends heavily on context.
+You also have to write move versions of many operators.</p>
+
+<p>On the other hand, it solves this problem generally, so that one does not need
+to write custom swaps for every data structure.
+It shifts the responsbility to the data structure author,
+instead of every algorithm which might use it.</p><a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+Alex himself uses Tropical semi-rings to describe
+several algorithms in his book &ldquo;From Mathematics to Generic Programming&rdquo; (See chapter 8.6).
+So his issue here is not algebraic abstractions, but pursing abstraction
+with enormous cost.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
+<p>The ^ symbol is  bitwise <a href="https://en.wikipedia.org/wiki/Exclusive_or">exclusive or</a>.
+The statement <code>a XOR b</code> means  a is true, or b is true, but not both.
+It is defined by the following truth table:</p>
+
+<pre><code>a | b | a XOR b
+----------------
+0   0   0
+1   0   1
+0   1   1
+1   1   0
+</code></pre><a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
+<p>We need to use the fact that XOR is associative and commutative.</p>
+
+<p>Proof:</p>
+
+<pre><code>1. a = (a ^ b)        b = b
+2. a = (a ^ b)        b = (a ^ b) ^ b
+                        = a ^ (b ^ b)
+                        = a ^ 0
+                        = a
+
+3. a = (a ^ b) ^ a    b = a
+     = b ^ (a ^ a)
+     = b ^ 0
+     = b
+</code></pre><a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<li id="fn:7">
+<p>Registers are a fundamental component in CPU architecture.
+Each register stores a single value (typically 32 bit or 64 bits).
+Almost all CPU operations are confined to operating on values in registers.
+For example, an <code>add</code> instruction adds the value in one register,
+to another register, and then stores the value in a third register.</p>
+
+<p>Typically a CPU has only a handful (fewer than 50) of register, so a large part of the program
+is spent moving values from memory into registers so they can be operated on,
+and then transferring the results back to main memory.</p>
+
+<p>The terms &ldquo;load&rdquo; and &ldquo;store&rdquo; refer to instructions
+which move a single value between a register and a location in memory.</p><a href="#fnref:7" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="04_instrumented.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="06_min_max.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

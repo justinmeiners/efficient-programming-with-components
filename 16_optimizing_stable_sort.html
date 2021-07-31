@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>16. Optimizing stable sort</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="15_merge_inplace.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="17_adaptive_merge_sort.html">next</a>
+]
+</span>
+
+
+
+<a name="L16.-Optimizing-stable-sort"></a>
+<h1>16. Optimizing stable sort</h1>
+
+<a name="The-measure-of-a-good-programmer"></a>
+<h2>The measure of a good programmer</h2>
+
+<p>With algorithms and components you have to know the bunch.
+It&rsquo;s like a toolchest.
+A good woodworker doesn&rsquo;t just have one kind of tool.
+You have a bunch of tools, whether making a door or whatever,
+and then you find the right tools.
+The <em>goodness, or best measure of a programmer
+is the number of tools, or algorithms, he is fluent with</em>.
+There is an erroneous view that good programmer is someone
+who can invent new algorithms.
+This is good, but most people don&rsquo;t need to.
+A carpenter doesn&rsquo;t invent new tools.
+You can be an exceptionally good, or world class carpenter, without
+ever introducing a new woodworking tool.
+One of the things you need to know is existing tools.</p>
+
+<p>I constantly hear, &ldquo;I never needed __ algorithm&rdquo;.
+This might be true.
+A carpenter doesn&rsquo;t use every tool in a given day.
+Nevertheless, they have a large tool chest for those
+cases when they need it.
+Larger the tool chest, better off you are,
+easier it is going to be to solve problems.
+Moreover, if the tools are known to everyone,
+they can understand what you do.</p>
+
+<p>This is why I try to come up with a set of systematic components.
+I think programming is a wonderful thing if you know many algorithms
+and data structures and just use them.</p>
+
+<a name="How-good-is-our-stable-sort-3f-"></a>
+<h2>How good is our stable sort?</h2>
+
+<p>The merge sort algorithm we wrote last week is in
+many respects good code.
+It&rsquo;s a good example of a stable sort.
+It&rsquo;s a good basis on which we could get fast results and figure out how to make it very fast.
+We will do measurements.</p>
+
+<p>The current algorithm has <code>log(n)</code> recursive levels.
+At every level we have a merge which is <code>O(n log(n))</code>.
+so the overall complexity is <code>O(n log^2(n))</code>.
+It&rsquo;s better than bubble sort and shell sort.
+So how bad is it?
+I made a test harness<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>:</p>
+
+<pre><code>Sorting double from 8 up to 2097152 elements generated with iota at: Sun Jun 27 20:29:54 2021
+    size    stable  inplace 
+       8        12      18  
+      16         8      25  
+      32         8      35  
+      64         9      40  
+     128         9      49  
+     256        12      66  
+     512        14      94  
+    1024        23     124  
+    2048        34     150  
+    4096        46     175  
+    8192        54     197  
+   16384        63     218  
+   32768        68     234  
+   65536        73     255  
+  131072        77     276  
+  262144        87     355  
+  524288        92     321  
+ 1048576       100     343  
+ 2097152       102     364
+</code></pre>
+
+<p>Stable here is <a href="https://en.cppreference.com/w/cpp/algorithm/stable_sort"><code>std::stable_sort</code></a>
+which is highly optimized library code.
+So it tells us we can do better.
+The numbers are nano-seconds per element.
+Our merge sort is called <code>inplace</code>.
+We start off ok, and then gradually get slower and slower in comparison.
+Obviously, as the size increase you have to do more work.
+It&rsquo;s not linear.
+But, ours is clearly 3-4x slower than that.</p>
+
+<a name="A-plan-for-improvement."></a>
+<h2>A plan for improvement.</h2>
+
+<p>We are going to write a faster one.
+I am going to work with the class but I will not always tell you
+the truth.
+Let us derive together and have a conversation but if you go on a wrong path I might not
+necessarily stop you.
+In real life I&rsquo;m not going to be there to stop you when you write code.
+So let us try together.</p>
+
+<a name="Requirements"></a>
+<h3>Requirements</h3>
+
+<p>First we will decide our requirements.
+These might be more strict than possible,
+so we can remove them later if needed.</p>
+
+<ol>
+<li><p>Maintain stability.</p>
+
+<p> Otherwise we would just write quicksort.</p></li>
+<li><p>Requires only <code>ForwardIterator</code>.</p>
+
+<p> <code>InputIterator</code> is the only weaker thing, and it&rsquo;s not enough for
+ sorting.</p></li>
+<li><p>Use limited extra memory.</p>
+
+<p> The requirement of no extra memory at all is bogus.
+ With modern systems we often have more memory than we need.
+ But, we often have to parallelize stuff,
+ so, we cannot put too much data on the processor.
+ We want data to be able to fit in the cache.
+ One way to do that is by exposing control.</p></li>
+<li><p>Fast.</p>
+
+<p> What would be good?
+ Within 5-10% of the <code>std::stable_sort</code>.
+ What would be great?
+ Observe STL also has <a href="https://en.cppreference.com/w/cpp/algorithm/sort"><code>std::sort</code></a> because it&rsquo;s faster.
+ If it&rsquo;s as fast as sort<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.</p></li>
+</ol>
+
+
+<a name="Ideas-to-explore"></a>
+<h3>Ideas to explore</h3>
+
+<p>So we are going to try to make it fast, using all kinds of brilliant algorithm
+ideas.
+Let me tell you one great secret.
+When designing algorithms there is a huge space of possible inputs.
+You might have really big structure.
+Or very expensive comparisons.
+Should you concentrate on those?
+No. First, make your algorithm
+work really fast for what I call a common case, such as <code>double</code>.
+You don&rsquo;t know how big integers are, but
+the size of double is fixed for centuries to come,
+by IEEE standard.
+But, integers, doubles, and pointers are all good.
+<em>Always make your algorithms as fast as possible
+for the most common case</em>.
+Then, you can look at bigger things and make other tradeoffs.</p>
+
+<p>What ideas can we come up with?</p>
+
+<p><strong>Using insertion sort for small cases</strong></p>
+
+<p>In <a href="https://en.wikipedia.org/wiki/Insertion_sort">insertion sort</a> you build up a sorted list by inserting elements
+one at a time.
+One part of the list is always sorted.
+We take an element which is not inserted,
+and linear search to find where it belongs.</p>
+
+<pre><code>[  sorted       | not sorted ]
+</code></pre>
+
+<p>What is the complexity of insertion sort?
+It&rsquo;s <code>O(n^2)</code>.
+What is the complexity of merge sort, in terms of comparisons?
+<code>O(n log(n))</code>.
+What is the specific coefficient for insertion sort?
+The sorted portion is on average half the length of the original input.
+In addition, on average when we an insert an element we
+only have to go half the length before finding it&rsquo;s location.
+Therefore the complexity
+is roughly: <code>n^2/4</code>.</p>
+
+<p>Now we will solve for when it&rsquo;s better to do one than the other.</p>
+
+<pre><code>n^2/4 &lt; n log(n)
+    n &lt; 4 log(n)
+  2^n &lt; n^4
+</code></pre>
+
+<p>So the cutoff is <code>n = 16</code>:</p>
+
+<pre><code>2^16 = 65536 = 16^4
+</code></pre>
+
+<p>That&rsquo;s what theory tells us.
+What should we really do?
+We should measure.
+But, the theory tells us around which numbers to try (around 16).</p>
+
+<p><strong>Binary insertion sort</strong></p>
+
+<p>We can also binary search to find where to insert the element.
+That will also make the cutoff point larger.
+Is it going to be dramatically better?
+In insertion sort, we already have to do a linear complexity
+shift to make room.</p>
+
+<p><strong>Get rid of recursion</strong></p>
+
+<p>Perhaps we can use <code>binary_counter</code>.</p>
+
+<p><strong>Write an excellent merge</strong></p>
+
+<p>Basically we need an algorithm that will say,
+&ldquo;do this version if we have enough memory,
+otherwise do that&rdquo;.
+The term is <em>adaptive</em>.</p>
+
+<p>You might think everybody can write a good merge.
+If you Google &ldquo;std merge` it shows you <a href="https://web.archive.org/web/20130812111552/https://www.cplusplus.com/reference/algorithm/merge/">this</a>:
+Since you&rsquo;re a normal programmer
+you migth say, "oh it&rsquo;s on the web, therefore I can copy and paste and use
+it in my code.&rdquo;</p>
+
+<pre><code>template &lt;class InputIterator1, class InputIterator2, class OutputIterator&gt;
+OutputIterator merge (InputIterator1 first1, InputIterator1 last1,
+    InputIterator2 first2, InputIterator2 last2,
+    OutputIterator result)
+{
+  while (true) {
+    *result++ = (*first2&lt;*first1)? *first2++ : *first1++;
+    if (first1==last1) return std::copy(first2,last2,result);
+    if (first2==last2) return std::copy(first1,last1,result);
+  }
+}
+</code></pre>
+
+<p>This is a broken piece of code.
+An empty range will melt the computer.</p>
+
+<p><strong>Faster rotate</strong></p>
+
+<p>What is the complexity of <code>std::rotate</code>?
+It&rsquo;s tricky, because it depends on the kind of iterators which you have.
+With <code>RandomAccessIterator</code> the best theoretical algorithm
+does <code>n + gcd(n1, n2)</code> assignments, not swaps.
+On average GCD is small, but larger than one.
+So we can get almost to <code>n</code> assignments, which is a lot better
+than <code>n</code> swaps.
+For ForwardIterators it happens to be <code>n - gcd(n1, n2)</code> swaps.
+It is roughly <code>n</code> for bidirectional iterators.</p>
+
+<p>As we will observe, we can use a faster rotate than the rotate in STL
+because we have this additional storage.
+If you want to rotate and you have enough storage,
+then you only need <code>n + n1</code> assignments,
+which is for sure less than <code>3n</code>.</p>
+
+<a name="First-steps"></a>
+<h3>First steps</h3>
+
+<p>There&rsquo;s lots of things to do.
+How should we go about it?
+The problem the problem with programming, specifically designing components
+and decomposing the system is that you do not know what is right in isolation.
+You never know what the correct interface is
+until you see it in other algorithms,
+and you see how those are used.
+This is why you just have to try things, and ideas start emerging.
+You might think it&rsquo;s an infinite process.
+No it&rsquo;s not infinite, that&rsquo;s the wonderful thing about life.
+It sort of terminates (I cannot prove it of course).
+In practice if you start fitting things together you sort of discover what
+you need to return,
+what you need to pass,
+what is the right thing to do, and that&rsquo;s what
+I am trying to teach.</p>
+
+<p>When should we try insertion point?
+As a rule we want to fix the asmyptotic complexity.
+Doing insertion sort at the bottom won&rsquo;t help that.
+Right now we have a problem with our asymptotic complexity.
+It&rsquo;s <code>O(n log^2(n))</code> we want to get rid of that square
+as fast as possible.</p>
+
+<p>I&rsquo;m very lazy.
+So, we saw how fast we can get using no memory.
+What about if we had infinite memory?
+How much extra memory do I really need?
+I think we can do it in <code>n/2</code>.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+AMD Ryzen 5 2400G (8 core, 3.6 GHz). GCC 9.3.0<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+Alex: It has been my dream for decades
+to make stable sort as fast as sort,
+at which point I could throw away the other and just have one sort.
+But, I make progress with stable sort, then I make progress with sort.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="15_merge_inplace.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="17_adaptive_merge_sort.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>7. Minimum selection on ranges</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="06_min_max.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="08_lisp.html">next</a>
+]
+</span>
+
+
+
+<a name="L7.-Minimum-selection-on-ranges"></a>
+<h1>7. Minimum selection on ranges</h1>
+
+<a name="The-standard-is-not-a-limitation-on-ideas"></a>
+<h2>The standard is not a limitation on ideas</h2>
+
+<p>When I joined A9 I wrote a little generic function and it
+was not using STL iterators, it used some other iterator like
+thing, but, totally different.
+We wrote it, tested it, sent it in and one of
+the wise people who works for us looked at it and sent back
+the reply, &ldquo;you guys have to learn about STL iterators&rdquo;,
+which I really appreciate.
+In Silicon Valley you have to be careful about saying you&rsquo;re
+an expert. You might be talking to the guy who invented it.</p>
+
+<p>That guy&rsquo;s attitude is that if
+there is something in the standard, that&rsquo;s the only thing you should use.
+This is false.
+Use STL only when it fits.
+If you come up with some other idea (many ideas in the world)
+try it.</p>
+
+<a name="Minimum-element-in-a-range"></a>
+<h2>Minimum element in a range</h2>
+
+<p>Now we want to apply <code>min</code> to a range.
+Suppose we want to find an item with smallest price.
+We need an interface which allows us to take as many items as you like and find the minimum.
+In STL it&rsquo;s called <a href="https://en.cppreference.com/w/cpp/algorithm/min_element"><code>std::min_element</code></a></p>
+
+<p>The algorithm is very simple, but there are details we need
+to learn about ranges.
+We will show an implementation and then talk about it:</p>
+
+<pre><code>template &lt;typename I, typename Compare&gt;
+// I is a ForwardIterator
+// Compare is StrictWeakOrdering on ValueType(I)
+I min_element(I first, I last, Compare cmp) {
+  if (first == last) {
+    return last;
+  }
+
+  I min_el = first;
+  ++first;
+
+  while (first != last) {
+    if (cmp(*first, *min_el)) {
+      min_el = first;
+    }
+    ++first;
+  }
+
+  return min_el;
+}
+</code></pre>
+
+<a name="Iterator-conventions"></a>
+<h3>Iterator conventions</h3>
+
+<p>We need to talk about iterator conventions.
+Notice that <code>min_element</code> doesn&rsquo;t return the value itself,
+but the iterator pointing to the minimum element.
+Why?
+We probably want to update the value.</p>
+
+<p>Suppose, I&rsquo;m a manager I want to look for the
+worst-performing guy and then fire him (joke).
+I don&rsquo;t want his value, I want a handle on him.
+I want an iterator.
+Do you see my point?
+You very often want to do
+things with what you find.</p>
+
+<p>There is another reason.
+The range might be empty<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
+In which case we return last iterator.</p>
+
+<p><code>first</code> and <code>last</code> are maybe bad names, but that&rsquo;s what they are.
+They are hard to change, because I called them that everywhere.
+<code>last</code> actual doesn&rsquo;t mean last.
+<code>last</code> means one after the last element.
+In order to define a sequence you need to point  past the last.
+Because you want to able to work with empty ranges.</p>
+
+<pre><code>        a b c d
+first   ^
+last    ^
+</code></pre>
+
+<p>Suppose <code>last</code> is actually last and you point to the same place.
+That indicates a range of one element.
+There is no way to do zero.</p>
+
+<p>Later, we will look at algorithms for partitioning.
+We want to partition good people from bad people.
+After the partition we will return a pointer which separates good from bad.
+There will be first, last, and middle.
+The middle partitions between
+the first bad and first good.
+But there may be no good, or no bad elements.
+We need to able to return an empty range.</p>
+
+<p>In C++ this is a standard convention some
+people in the world of Java and Python are slowly realizing that maybe it
+has something to do with mathematics not with C++.
+But, it will take decades before people fully realize that you have to always go
+passed the end.
+Mathematically you need <a href="https://mathworld.wolfram.com/Half-ClosedInterval.html">semi-open intervals</a>.
+They are denoted like so:</p>
+
+<pre><code>[i, j)
+</code></pre>
+
+<p>Or in our terms:</p>
+
+<pre><code>[first, last)
+</code></pre>
+
+<a name="Forward-iterator"></a>
+<h3>Forward iterator</h3>
+
+<p>What kind of thing is <code>I</code>.
+We indicated it was a <code>ForwardIterator</code>.
+There is also <code>InputIterator</code>.
+Both are for iterating forward,
+as opposed to random jumps.
+What is an <code>InputIterator</code>?
+Input iterators describe algorithms
+which go through the river once<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+It&rsquo;s like they&rsquo;re reading stuff from the wire<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+Imagine the various kinds of streams<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
+
+<p>But, in our algorithm we store a previous position in the variable <code>min_el</code>.
+Therefore the things which go through the wire will not work.
+So it must be a <code>ForwardIterator</code>.</p>
+
+<a name="Finding-min-and-max-together"></a>
+<h2>Finding min and max together</h2>
+
+<p>How many comparisons do we need to to find the min of five elements?
+Four.
+In general why do we need <code>n - 1</code> comparisons.
+Why no more? We don&rsquo;t need to compare an element with itself.
+Why no fewer?
+Maybe we could do it
+in <code>n - 2</code> with a clever algorithm.
+The simple argument to
+remember is that <code>n - 1</code> guys have to lose.
+We&rsquo;re finding a winner in our competition.
+If person didn&rsquo;t play in a competition, if he didn&rsquo;t lose,
+we cannot eliminate him.
+We need to eliminate all but one.</p>
+
+<p>How many comparisons if we need to find minimum and maximum together?
+Obviously we could do <code>2n - 2</code>,
+what about fewer<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>?
+The idea is very simple.
+Assume that  we worked up to the middle of
+of our range and we have a running min and a running max.
+The temptation is take the next element compare him with min and with max.
+That&rsquo;s very sad because very often we will do two comparisons and then discount the other.
+So for one element we will be doing two comparisons.
+The trick is to pick two new elements,
+the next element, and the one after next.
+We know nothing about them.
+We compare them with one comparison.
+Then we know that one of them is a potential min
+and the other is a potential max.
+Then we compare potential min with the current min
+and potential max with current max.
+So we need to do three comparisons for every pair, so roughly
+speaking we need <code>3n/2</code>.</p>
+
+<p>Let&rsquo;s do it.
+This can be a little bit tricky.
+Do not start writing things from the beginning because
+you don&rsquo;t know what goes in the beginning.
+Try to write code from the middle.
+Try to write the body of the loop.
+That&rsquo;s where I described the algorithm
+to start with.
+Then go back and make the loop invariants on which we depend true.</p>
+
+<pre><code>template &lt;typename I, typename Compare&gt;
+// I is a ForwardIterator
+// Compare is StrictWeakOrdering on ValueType(I)
+std::pair&lt;I, I&gt; minmax_element(I first, I last, Compare cmp) {
+  if (first == last) {
+    return std::make_pair(last, last);
+  }
+
+  I min_el = first;
+  ++first;
+  if (first == last) {
+    return std::make_pair(min_el, min_el);
+  }
+
+  I max_el = first;
+  I next = first;
+  ++next;
+
+  if (cmp(*max_el, *min_el)) {
+    std::swap(min_el, max_el);
+  }
+
+  while (first != last &amp;&amp; next != last) {
+    // min_el contains the current min
+    // max_el contains the current max
+    // next and first and the next pair of elements to examine
+    I potential_min = first;
+    I potential_max = next;
+
+    if (cmp(*potential_max, *potential_min)) {
+      std::swap(potential_max, potential_min);
+    }
+
+    if (cmp(*potential_min, *min_el)) {
+      min_el = potential_min;
+    }
+
+    if (!cmp(*potential_max, *max_el)) {
+      max_el = potential_max;
+    }
+
+    ++next;
+    first = next;
+    ++next;
+  }
+
+  if (first != last) {
+    // odd elements, one left over
+
+    if (cmp(*first, *min_el)) {
+      min_el = first;
+      // first &lt; min_el &lt;= max_el, so we don't need to check the next case
+    } else if (!cmp(*first, *max_el)) {
+      max_el = first;
+    }
+  }
+
+  return std::make_pair(min_el, max_el);
+}
+</code></pre>
+
+<p>Example:</p>
+
+<pre><code>int a[] = { 1, 2, 3, 4, 5, 4, 3, 2, 1, 8, 7, 6, 2 };
+size_t n = sizeof(a) / sizeof(int);
+auto pair = minmax_element(a, a + n, std::less&lt;int&gt;());
+</code></pre>
+
+<p>This algorithm was invented by <a href="https://users.soe.ucsc.edu/~pohl/bio.htm">Ira Pohl</a><sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup> of UC Santa Cruz, in the mid-seventies.
+He also proved it was optimal.
+It&rsquo;s also practically good.
+It was <a href="https://en.cppreference.com/w/cpp/algorithm/minmax_element">added to</a> the standard in C++11.</p>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/minmax_range.h">minmax_range.h</a></li>
+<li><a href="code/test_minmax.cpp">test_minmax.cpp</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>Many languages struggle with empty ranges because they prefer their algorithms
+to work with values instead of iterators.
+For example, they might return <code>nil</code> or a boolean which indicates
+whether the value was found or not.</p>
+
+<p>Of course, unless they are dealing with a nice language, this adds a few lines of code,
+or the possiblity that you forget to check for the nil case, and perhaps
+restricts the algorithm to reference types only.</p><a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+&ldquo;No man ever steps in the same river twice.&rdquo; - Heraclitus<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+&ldquo;Through the wire&rdquo; refers to receiving data from a communication
+device, such as the internet.
+You read packets as they arrive, and they aren&rsquo;t stored anywhere,
+so once you read them, they are gone.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+<p>Another example of the <code>InputIterator</code> concept is UNIX pipes.
+Consider the command:</p>
+
+<pre><code>head -c 500 /dev/urandom | gzip
+</code></pre>
+
+<p>Head will read 500 random characters, but that data isn&rsquo;t stored anywhere,
+it&rsquo;s immediately passed to <code>stdout</code>,
+which is <code>stdin</code> for <a href="https://linux.die.net/man/1/gzip">gzip</a>.
+gzip reads data from <code>stdin</code>.
+It can only read data as it comes in.
+It can&rsquo;t seek back earlier in the input.
+Once it is read, it is gone.</p>
+
+<p>This is one of the reasons why gzip is so useful.
+It compresses data on the fly, without being able to see the incoming data,
+or re-analyzing what came before.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
+First time find the min (<code>n - 1</code> comparisons). Then find the max (<code>n - 1</code> comparisons).
+       <code>(n - 1) + (n - 1) = 2n - 2</code>.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
+Alex has written more about Ira and this algorithm <a href="http://stepanovpapers.com/IraPohlFest.pdf">here</a><a href="#fnref:6" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="06_min_max.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="08_lisp.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>18. Binary insertion sort</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="17_adaptive_merge_sort.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="19_insertion_sort.html">next</a>
+]
+</span>
+
+
+
+<a name="L18.-Binary-insertion-sort"></a>
+<h1>18. Binary insertion sort</h1>
+
+<a name="The-Organ-Grinder"></a>
+<h2>The Organ Grinder</h2>
+
+<p>I would like to occasionally introduce three minutes of culture.
+I used to tell you stories but right now I decided
+I&rsquo;ll just occasionally share a song or something like that
+which would indicate what mood I&rsquo;m in.
+This is a very great song by <a href="https://en.wikipedia.org/wiki/Franz_Schubert">Franz Schubert</a> but it also
+perfectly reflects will go on with the course in how I feel.
+The song is called <a href="https://www.britannica.com/topic/Winterreise">&ldquo;The Organ Grinder&rdquo;</a> (Der Liermann).
+The singer is <a href="https://en.wikipedia.org/wiki/Dietrich_Fischer-Dieskau">Dietrich fischer-dieskau</a> maybe the greatest
+leader, or art song singer of the last 50, 60, or 70 years.
+He started singing in the late forties.
+Let us spend a couple of minutes and listen to it&hellip; (<a href="https://www.youtube.com/watch?v=sIIS-UgixGE">Video here</a>)</p>
+
+<a name="Strategy"></a>
+<h2>Strategy</h2>
+
+<p>Let&rsquo;s try our <a href="https://en.wikipedia.org/wiki/Insertion_sort">insertion sort</a> idea.
+We are going to learn more about insertion sort then
+you ever wanted to know.
+First we will review the basic idea of algorithm.
+Always start with a picture:</p>
+
+<pre><code>|   sorted piece |  unsorted piece |
+</code></pre>
+
+<p>We start with an empty range on the left which is the sorted portion.
+We basically want to grow it, one element at a time,
+while ensuring it stays sorted.
+By repeating it inductively, eventually the whole range is sorted.
+So, main idea is to pick an element in the unsorted piece,
+ find where the element goes, and insert it there.</p>
+
+<a name="Insertion-sort-variations"></a>
+<h3>Insertion sort variations</h3>
+
+<p>How many algorithmic versions of insertion sort are there?
+Finding where it could go be done with either:</p>
+
+<ol>
+<li>Linear search</li>
+<li>Binary search</li>
+</ol>
+
+
+<p>There is another version which was invented,
+as was everything else, by <a href="https://en.wikipedia.org/wiki/Tony_Hoare">Tony Hoare</a>.
+He realized that in the inner loop of
+insertion sort you have to do two things:</p>
+
+<ol>
+<li>You have to guard that you&rsquo;re not crossing by size</li>
+<li>Guard that you&rsquo;re not crossing the first</li>
+</ol>
+
+
+<p>This makes the insertion sort  do two comparisons per cycle.
+You could have an insertion sort with a guard,
+assume that somebody puts (by hook or by crook)
+the smallest element first.
+In other words, if you can guarantee
+smallest is up front, then you can simplify the inner loop, just going through the algorithm.
+Since we wrote the machinery for binary search in previous lessons,
+let&rsquo;s start by writing that.</p>
+
+<a name="When-is-insertion-sort-useful-3f-"></a>
+<h3>When is insertion sort useful?</h3>
+
+<p>When should one use insertion sort?
+This is an interesting point we should discuss.</p>
+
+<ol>
+<li><p>We already talked about when <code>n</code> is small.
+How small? We already proved it was when <code>n = 16</code>.
+Is it the exact? No, it&rsquo;s not.
+But, it&rsquo;s a good rule of thumb.</p></li>
+<li><p>If we just have a few things
+to add to a sorted list, that would be good.
+In other words, most of the list is sorted,
+but 16 or so elements are out of order.</p></li>
+<li><p>Insertion sort is going to move an element
+from where it is, to where it should be,
+one step at a time.
+So another case is when the average distance
+from where it is, to where it should be,
+is small.
+It&rsquo;s &ldquo;nearly sorted&rdquo;.</p></li>
+</ol>
+
+
+<p>There are some considerations where you want to look at the relative cost but they are not important for asymptotic assessment.
+A quadratic algorithm,
+regardless of the ratio between move and compare
+is still a quadratic algorithm.</p>
+
+<a name="Naming-insertion-sort-function"></a>
+<h3>Naming insertion sort function</h3>
+
+<p>Unfortunately, STL does not have insertion sort.
+Should it?
+Yes, it should.
+But, they threw it out from the public library<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
+At least put it in your library.
+It might not be called insertion sort.
+Maybe we should call it something else.
+What&rsquo;s a good name?
+This is not a bogus question.
+Finding a good name is important,
+because we want to lead people to use it when
+these three conditions are met.
+Maybe, <code>sort_almost_sorted</code>.
+Only few of them are out of order or it&rsquo;s just perturbed
+everywhere, but not by much.
+However, we will find it works well in that case only when the thing
+to sort isn&rsquo;t enormous.
+So instead we will settle on <code>binary_insertion_sort</code>.</p>
+
+<p>Naming is extremely hard, but very important.
+The goal is to name components so people can actually understand
+what they mean, it helps people.
+We have to discuss nomenclature.
+Respectable sciences spend most of their time discussing
+nomenclature.
+Chemists, physicists, they know what to call things.
+It&rsquo;s only computer science that doesn&rsquo;t.</p>
+
+<p>I have to tell you a story <a href="https://sean-parent.stlab.cc/papers-and-presentations/">Sean Parent</a>
+shared with me.
+When STL was introduced, people at Apple decided to try it.
+They tried it and found it absolutely unacceptable because they replaced their <code>list</code> with STL
+<code>std::list</code> and everything became extremely slow.
+The problem is their list
+was what is still called a vector.
+They didn&rsquo;t realize linked lists are called &ldquo;linked lists&rdquo;.
+It sort of works, you know, slowly.</p>
+
+<a name="Binary-insertion-sort"></a>
+<h2>Binary insertion sort</h2>
+
+<p>First, let&rsquo;s see how we will use it,
+specifically where we can stick it in our code.
+We added a minimum size for which our merge switches
+algorithms and uses the extra buffer.
+Now, we can add a similar check to our sort to switch
+algorithms.</p>
+
+<pre><code>const size_t INSERT_SORT_CUTOFF = 16;
+
+template &lt;typename I, typename N, typename R, typename B&gt;
+// I is ForwardIterator
+// N is Integral
+// R is WeakStrictOrdering on the value type of I 
+I sort_adaptive_n(I first, N n, R r, B buffer, N buffer_size) {
+  if (!n) return first;
+  if (n &lt; INSERT_SORT_CUTOFF) return binary_insertion_sort_n(first, n, r); // HERE
+  N half = n &gt;&gt; 1;
+  if (!half) return ++first;
+  I middle = sort_adaptive_n(first, half, r, buffer, buffer_size);
+  I last   = sort_adaptive_n(middle, n - half, r, buffer, buffer_size);
+  merge_adaptive_n(first, half, middle, n - half, r, buffer, buffer_size);
+  return last;
+}
+</code></pre>
+
+<p>We have a few decisions to make for insertion sort.
+Should we use <code>upper_bound</code> or <code>lower_bound</code> for binary search?
+If we use <code>lower_bound</code> and we have equal guys at the end,
+then it will move too far beyond them.
+So we want <code>upper_bound</code>.</p>
+
+<p>Since our sort only requires <code>ForwardIterator</code>,
+we should aim to make insertion sort use <code>ForwardIterator</code>.
+Using <code>ForwardIterator</code> is actually a piece of cake for the binary search,
+but we have to be careful.
+You might want to use the <code>upper_bound</code> we wrote together.
+But, remember it calls <code>std::distance</code> which is linear for <code>ForwardIterator</code>.
+So let&rsquo;s use <code>upper_bound_n</code></p>
+
+<p>What we will first write a function for finding where an element
+goes and placing it there.
+Then we will structure our loop<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> around that.</p>
+
+<pre><code>template &lt;typename I, typename N, typename R&gt;
+// I is ForwardIterator
+// N is Integral
+// R is WeakStrictOrdering on the value type of I 
+I binary_insert_n(I first, N n, I current, R r) {
+  // precondition: is_sorted(first, current, r) &amp;&amp; current is a valid iterator
+  //            &amp;&amp; std::distance(first, current) == n
+  I insertion_point = upper_bound_n(first, n, *current, r);
+  rotate_right_by_one(insertion_point, ++current);
+  return insertion_point; 
+}
+</code></pre>
+
+<p><code>rotate_right_by_one</code> will be discussed in just a bit.
+It&rsquo;s important to return here, in case someone
+else wants to use this function.</p>
+
+<p>To write the loop that calls this function,
+I suggest that we carefully write invariants.
+We have the range:</p>
+
+<pre><code>[first, i)
+</code></pre>
+
+<p>It&rsquo;s semi-open, so <code>i</code> is past the end.
+What we want is:</p>
+
+<pre><code>is_sorted_n(first, i, r) &amp;&amp; std::distance(first, current) == i
+</code></pre>
+
+<p>That&rsquo;s the invariant on which we rely.</p>
+
+<pre><code>template &lt;typename I, typename N, typename R&gt;
+// I is ForwardIterator
+// N is Integral
+// R is WeakStrictOrdering on the value type of I 
+I binary_insertion_sort_n(I first, N n, R r) {
+  if (n == N(0)) return first;
+  I current = first;
+  ++current;
+  N i(1);
+  while (i &lt; n) {
+    // invariant: is_sorted_n(first, i, r) &amp;&amp; std::distance(first, current) == i
+    binary_insert_n(first, i++, current++, r);
+  }
+  return current;
+}
+</code></pre>
+
+<a name="Rotate"></a>
+<h2>Rotate</h2>
+
+<a name="Rotate-for-bidirectional-iterators"></a>
+<h3>Rotate for bidirectional iterators</h3>
+
+<p>Once we find where it goes, how do we make room for it?
+We &ldquo;rotate&rdquo; to the right by one.
+If it was a bidirectional iterator there is a beautiful algorithm.
+Copy is the wrong thing, because it will overwrite everything
+with the same value.
+What we want is copying from the back.
+The algorithm is called: <a href="https://en.cppreference.com/w/cpp/algorithm/copy_backward"><code>std::copy_backward</code></a>.</p>
+
+<pre><code>template &lt;typename I&gt;
+// I is BidirectionalIterator
+void rotate_right_by_one(I first, I last, std::bidirectional_iterator_tag) {
+  typedef typename std::iterator_traits&lt;I&gt;::value_type T;
+  T butlast = last;
+  --butlast;
+  std::copy_backward(first, butlast, last);
+  *first = x;
+}
+</code></pre>
+
+<a name="Rotate-for-forward-iterators"></a>
+<h3>Rotate for forward iterators</h3>
+
+<p>For forward iterator we have to shift all the elements up,
+we move one out of the way, to make room,
+and continue up the array until we find an empty place to put it.</p>
+
+<p>I think the problem is quite instructive not just because
+it&rsquo;s a useful algorithm, which it is, but because of the method for
+deriving it.
+Before coding, let us do a bit of mathematics.
+You can always &ldquo;haircut&rdquo;
+code, but remember mathematics?
+I used to talk about it before they told me to switch to programming.
+Deriving mathematically is a good thing.</p>
+
+<p>We want to rotate a sequence right by one.
+If we have an empty sequence. What do we do?
+We are done.
+If we have a one-element sequence <code>a_0</code> and we want to rotate it,
+how do we do it?
+Done.
+That allows us to consider an inductive solution.
+Somehow, by hook or crook we have an algorithm which knows how to shift things
+<code>n</code> things,
+such as the range:</p>
+
+<pre><code>a_{0}, ..., a_{n-1}
+</code></pre>
+
+<p>Then the question is, how could we get an algorithm for</p>
+
+<pre><code>a_{0}, ..., a_{n-1}, a_{n}
+</code></pre>
+
+<p>How do we add one additional element?
+After the shift the first <code>n</code> elements (leaving <code>a_{n}</code> fixed) we have:</p>
+
+<pre><code>a_{n-1}, a_{0}, ... a_{n-2}, a_{n} 
+</code></pre>
+
+<p>What do we need to do to solve the problem?
+Just swap <code>a_{n-1}</code> and <code>a_{n}</code>.
+In general, swap last and first.</p>
+
+<p>Here is an example with 3 elements:</p>
+
+<pre><code>1 2 3
+</code></pre>
+
+<p>We first rotate the one element range <code>1</code>. It&rsquo;s all done,</p>
+
+<pre><code>[1] 2 3
+</code></pre>
+
+<p>To rotate the two element range,
+swap the first element, and the one following our range:</p>
+
+<pre><code>[2 1] 3
+</code></pre>
+
+<p>Now we have the first two rotated.
+To rotate the full sequence
+we once again swap the first and last:</p>
+
+<pre><code>[3 1 2]
+</code></pre>
+
+<p>Done!
+It might not be the fastest, but it is going to be much more elegant.</p>
+
+<pre><code>template &lt;typename I&gt;
+// I is ForwardIterator
+void rotate_right_by_one(I first, I last, std::forward_iterator_tag) {
+    if (first == last) return;
+    I current = first;
+    while (++current != last) std::swap(first, current);
+}
+</code></pre>
+
+<p>Let&rsquo;s write a dispatch for both versions,
+it will compile to no code<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+
+<pre><code>template &lt;typename I&gt;
+inline
+void rotate_right_by_one(I first, I butlast, I last) {
+  rotate_right_by_one(first, butlast, last, typename std::iterator_traits&lt;I&gt;::iterator_category());
+}
+</code></pre>
+
+<a name="Should-we-support-forward-iterator-3f-"></a>
+<h3>Should we support forward iterator?</h3>
+
+<p>Someone brought up that <code>ForwardIterator</code> doesn&rsquo;t
+really make sense for this algorithm<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>,
+because if we have something like a linked list, we don&rsquo;t need to rotate
+or shift elements around,
+we can just insert it where it belongs.
+That&rsquo;s a good idea, but maybe some measurements
+will show us otherwise.
+We already implemented optimal linked list sort.
+Later we need to compare whether it&rsquo;s actually
+faster to use our list sort, or to use our method
+we develop.</p>
+
+<p>Why do you think I say that?
+List sort destroys locality.
+If at every <code>cdr</code> (next), you get to a different cache
+line, that&rsquo;s a problem.
+In our sort we constantly re-link
+next, so eventually you get to a point where everything is scattered
+all over memory.</p>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/binary_insertion_sort.h">binary_insertion_sort.h</a></li>
+<li><a href="code/test_insertion_sort.cpp">test_insertion_sort.cpp</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>Alex: Of course, STL still has it on the inside.
+It has to.
+So insertion sort was in the library and is still used by the library, but they took it out.
+The argument was, &ldquo;we have too many sorts&rdquo;.
+Is it a good argument?
+No, you need to have as many sorts as people might need
+when they practical things.
+How many sorts are in STL?</p>
+
+<ol>
+<li><a href="https://en.cppreference.com/w/cpp/algorithm/sort"><code>std::sort</code></a> the fastest sort.</li>
+<li><a href="https://en.cppreference.com/w/cpp/algorithm/stable_sort"><code>std::stable_sort</code></a>, this is merge sort, the one we are trying to write.</li>
+<li><a href="https://en.cppreference.com/w/cpp/algorithm/partial_sort"><code>std::partial_sort</code></a> sort the first thousand, out of a million,
+ something you frequently do in search engines.</li>
+<li><a href="https://en.cppreference.com/w/cpp/algorithm/nth_element"><code>std::nth_element</code></a>.
+ Not quite a sort, but it&rsquo;s sort related.
+ What it does is pin, for example the 30th percentile
+ element, and put all the smaller before, adn all the larger.
+ If I want to find another one, I can pin again, and sort inbetween, etc.</li>
+</ol>
+<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+Alex: Could we use a <code>for</code> loop instead of a <code>while</code>?
+Yes, but I hate <code>for</code> loops.
+Why? Because the semantics have changed about 6 times,
+since I started C++, <code>while</code> loops never changed.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+Alex: Someday we will get concepts
+in the C++ standard and not have to write these things.
+But that will be at least 5 years and I won&rsquo;t be programming.
+I&rsquo;m like an old man planting an Apple tree.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+<p>Alex:
+I actually drop this requirement in STL and require
+<code>RandomAccessIterator</code>, for all the sorts.
+It wasn&rsquo;t the standard committee&rsquo;s fault just me.
+I am not sure if I agree with myself.</p>
+
+<p>The reasoning went like so.
+Most people of course, don&rsquo;t know anything.
+Therefore if you give them things which sort
+<code>ForwardIterator</code>s, they will attempt to use
+them on things like linked lists.
+It&rsquo;s so much slower that they would be better off copying into a vector,
+sort stuff there, and then copy back.</p>
+
+<p>I could do the more general case,
+but programmers are immature.
+This &ldquo;nanny&rdquo; control is not necessarily a good thing.
+I am of two minds here.
+I am trying to not be a nanny here.
+I&rsquo;m trying to show you the spectrum.
+Sometimes you have to sort linked lists because you have
+no extra memory.
+It doesn&rsquo;t happen often, probably will never happen in your life,
+but it just might.</p>
+
+<p>As I have recommended before, the advice I typically give
+is just use vectors, unless you are absolutely positive
+you need something else. (C array is fine too.)</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Herb_Sutter">Herb Sutter</a> used to recommend to the world
+to use <a href="https://en.cppreference.com/w/cpp/container/deque"><code>std::deque</code></a>.
+I&rsquo;m not making it up.
+He thought, that it supports more operations than vector.
+He was wrong, I wrote both.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="17_adaptive_merge_sort.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="19_insertion_sort.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>13. Searching</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="12_merge_sort.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="14_binary_search.html">next</a>
+]
+</span>
+
+
+
+<a name="L13.-Searching"></a>
+<h1>13. Searching</h1>
+
+<a name="History-of-binary-search"></a>
+<h2>History of binary search</h2>
+
+<p>The first time binary search was described as an algorithm,
+it was done by a great American computer scientist and engineer <a href="https://en.wikipedia.org/wiki/John_Mauchly">John Mauchly</a>.
+Of course, you have never heard of him.
+He was the guy who invented first general purpose computer, but we
+don&rsquo;t remember people like that.
+In 1946 he gave a brilliant series of
+lectures at the <a href="https://en.wikipedia.org/wiki/Moore_School_of_Electrical_Engineering">Moore School</a> at <a href="https://en.wikipedia.org/wiki/University_of_Pennsylvania">Pennsylvania University</a>
+on programming.
+For the first time,
+he described things like merge, merge sort, and binary search,
+This is not a bad thing to be the first person to describe.
+He designed <a href="https://en.wikipedia.org/wiki/ENIAC">ENIAC</a> which should make him very famous.
+Indeed, he did some very fundamental work.</p>
+
+<p>Then comes this interesting fact (from &ldquo;The Art of Computer Programming&rdquo;)
+It takes about 15 years for people to come up with binary search
+which sort of works for all possible inputs.
+Apparently people didn&rsquo;t have trouble coding binary search when  the length is
+of the form <code>2^(n-1)</code>.
+Because it&rsquo;s easy, you take the middle element and
+then both sides will be of the same form
+and you can keep dividing.
+Apparently people couldn&rsquo;t do it.
+Knuth claims that the first correct implementation was done by
+<a href="https://en.wikipedia.org/wiki/D._H._Lehmer">D.H. Lehmer</a>.
+He is someone you should know about
+as a very great computer scientist.
+He did amazing amount of work on computational number theory,
+things like sieves for discovering large primes and many other
+important things.
+Among other things, he published a binary search which at least
+always terminated.</p>
+
+<p>I actually disagree with Knuth slightly
+and claim that the first correct binary search was published roughly at the same time,
+but a couple of years after,
+by a German computer science.
+Once again, he is unjustly forgotten.
+He does not appear on Wikipedia<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
+His name is <a href="https://en.wikipedia.org/wiki/Hermann_Bottenbruch">Herman Bottenbruch</a><br/>
+His claim to fame is he was one of their people who invented <a href="https://en.wikipedia.org/wiki/ALGOL_58">Algol 58</a> the predecessor
+of Algol 60.
+He is one of the people who tried unsuccessfully to convince American
+delegates to Algol 58 committee that they should introduce block structures.
+He was one of the inventors of blocks.
+American representatives which included such brilliant people as <a href="https://en.wikipedia.org/wiki/John_Backus">John Backus</a>
+and <a href="https://en.wikipedia.org/wiki/Alan_Perlis">Alan Perlis</a> actually reject it as too hard to implement.
+They didn&rsquo;t know how to do stacks.
+Buut sadly enough he doesn&rsquo;t get much credit,
+especially credit for correct binary search.
+We will be actually studying his version.</p>
+
+<a name="bsearch-is-wrong"></a>
+<h2>bsearch is wrong</h2>
+
+<p>If we think about merging two sequences of roughly the same length,
+or rather exactly the same length <code>n</code>, the expected number of comparison
+is going to be a to <code>2n - 1</code>.
+From which  follows a conjecture.
+If we have sequences
+of size <code>n</code> and size <code>m</code> the number of comparisons should be <code>n + m - 1</code>.
+Not every conjecture is true however, this one is definitely false.
+Here is a simple counter example.
+Take a sequence of length 1000
+and a sequence of length 1.
+We only need <code>log(1000)</code> because
+we can binary search for it&rsquo;s index.</p>
+
+<p>So there  is a fundamental possibility
+for using binary search for merging, dramatically reducing the number of comparisons.
+<code>log(n)</code> is much smaller than <code>n</code>.</p>
+
+<p>You might think we can just use binary search from
+a standard library, such as C <a href="https://man7.org/linux/man-pages/man3/bsearch.3.html"><code>bsearch(3)</code></a>.
+Sounds like a plausible idea.
+It was written by great UNIX guys.
+They know something about programming, so let us see what they provide us with,
+by quoting the man page:</p>
+
+<pre><code>void* bsearch(
+    const void* key,
+    const void* base,
+    size_t nmemb,
+    size_t size,
+    int (*compare)(const void*, const void*)
+);
+</code></pre>
+
+<p>Notice it takes all these parameters,
+and it&rsquo;s a little messy because it&rsquo;s C.
+It&rsquo;s hard for them<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+Nevermind what it takes.
+What&rsquo;s interesting is what it returns.</p>
+
+<blockquote><p>returns a pointer to a matching member of the array, or NULL if no match is found.</p></blockquote>
+
+<p>So for our merge, it will most often return <code>NULL</code> .
+At which point, you will have to do linear search.
+So observe, ancient interface,
+done by brilliant people,
+in the standard library and it&rsquo;s utterly useless.</p>
+
+<p>Even if, we are so fortunte as to get a pointer to an element back.
+Does it help with merge? Especially if we want to make it stable?
+No.</p>
+
+<blockquote><p>If there are multiple elements that match the key, the element returned is unspecified.</p></blockquote>
+
+<p>You will read similar things in many algorithms books.
+It&rsquo;s a typical story for binary search.
+Even when the book is written by famous people.
+I&rsquo;ll show you how to write it.</p>
+
+<a name="What-is-correct-code-3f-"></a>
+<h3>What is correct code?</h3>
+
+<p>Here comes another philosphical point.
+<em>What does wrong mean?</em>
+<em>What does incorrect mean?</em>
+At school they told you that the program is incorrect when <em>it doesn&rsquo;t satisfy its specifications</em>.
+Well, then <code>bsearch</code> is a correct program.
+I looked at the source, it does do what it promises to do.
+It will return <code>NULL</code>.
+I wish it were not correct.
+I wished it returned something useful.</p>
+
+<p>Correctness is a deeper concept than
+just satisfying specification.
+Well in reality, as you guys know,
+it must be deeper
+because you haven&rsquo;t got any specifications.
+When you write code, it&rsquo;s not that you are given specifications and need to encode them.
+I suspect that has never happened in your life, nor will it happen in any foreseeable future.
+But you still have to attempt to do something which is correct.
+Of course the people who advocate writing specifications will say yes, first
+you will write specification, and then implement specification.
+But, it&rsquo;s not going to help.
+Because, if you write wrong specification, you are the same guy who is going to write the implementation.
+Most likely it will not make it correct.</p>
+
+<p>So it&rsquo;s a deeper thing.
+You have to establish correctness from  more fundamental principles.
+<em>The program is correct if it returns desirable information</em>,
+if it does what it&rsquo;s supposed to do in some absolute sense.
+It&rsquo;s very hard to prove it.</p>
+
+<p>i think one of the lessons of this particular lecture is
+how hard simple things are.
+lots of very bright people cannot give it a correct interface.
+same with <code>bsearch</code>.</p>
+
+<p>You might say, &ldquo;Alex just talks about his beef
+with the standard committtee.&rdquo;
+No.
+What I&rsquo;m trying to tell you is that
+when you write things like that in your code,
+There will be some other guy using your code.
+Always think about that other guy.
+The great flaw in most code I see is there is no consideration
+for the other guy.
+People think, &ldquo;oh it works, so it&rsquo;s done.&rdquo;
+My dream is that we all write code thinking about other people.
+Then you say, &ldquo;well, then i have to do more work.&rdquo;
+This is the beauty of sharing.
+Uou might have attended  kindergarten
+and had a teacher that taught you it&rsquo;s good to share toys.
+She was right.</p>
+
+<a name="Linear-search"></a>
+<h2>Linear search</h2>
+
+<p>It would be very contrary to the way I do things to
+start with binary search.
+How could we do binary search if we cannot do linear search?
+In STL it is called <a href="https://en.cppreference.com/w/cpp/algorithm/find"><code>std::find</code></a> or <code>std::find_if</code><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>,
+Let&rsquo;s see how to write it.
+We can assume we know how to do it,
+and start from the top,
+or we could assume we don&rsquo;t know what are doing,
+which is usually then case when starting new things.
+I seldom start writing code from the signature.
+I typically have some algorithmic idea,
+so I start with that,
+often an inner loop.
+Then write code inside out.</p>
+
+<pre><code>while (first != last &amp;&amp; ... find the element...) ++first;
+</code></pre>
+
+<p>Now write the signature:</p>
+
+<pre><code>template &lt;typename I, typename P&gt;
+// I is an InputIterator
+// P is a unary predicate
+I find_if(I first, I last, P pred) {
+  // [first, last) is a valid range.
+  while (first != last &amp;&amp; !pred(first)) ++first;
+  return first;
+}
+</code></pre>
+
+<p><code>I</code> is an <code>InputIterator</code> instead of a <code>ForwardIterator</code>
+because it is single pass.</p>
+
+<a name="Trimming-the-standard"></a>
+<h3>Trimming the standard</h3>
+
+<p>One of the mistakes which frequently happens is people
+use the principle of <a href="https://en.wikipedia.org/wiki/Occam%27s_razor">Occam&rsquo;s Razor</a>
+and say, &ldquo;we need to only have one <code>find_if</code>&rdquo;.
+That&rsquo;s what happened.
+After I submitted STL it had many fine functions,
+but Bjarne was very afraid that STL was too large and would not be accepted, as is.
+(It wasn&rsquo;t that enormous at that point)
+He said, &ldquo;why don&rsquo;t I come to Palo Alto (I was at HP Labs)
+and bring along bunch of other standard committee people and we
+will trim it&rdquo;.
+Trimming was a sad thing.
+Imagine somebody coming with a knife and cutting pieces of your flesh.
+One of the things he said was there should be only one <code>find_if</code>.</p>
+
+<a name="Helper-functions"></a>
+<h3>Helper functions</h3>
+
+<p>So what else used to exist?
+Everytime I program I put this function back.
+It takes about 30 seconds,
+it&rsquo;s called <code>find_if_not</code>.
+Sometimes you want guys who are good,
+and sometimes bad.
+Couldn&rsquo;t you negate a predicate and use the same function?
+Well, I did, I added <a href="https://en.cppreference.com/w/cpp/utility/functional/not1"><code>std::not1</code></a>
+and <a href="https://en.cppreference.com/w/cpp/utility/functional/not2"><code>std::not2</code></a>.
+But, it&rsquo;s annoying.
+Fortunately, I think the
+standard committee in C++11 put it back in the standard.
+But they didn&rsquo;t do all of them,
+and some of them are not correct.</p>
+
+<pre><code>template &lt;typename I, typename P&gt;
+// I is an InputIterator
+// P is a unary predicate
+I find_if_not(I first, I last, P pred) {
+  // [first, last) is a valid range.
+  while (first != last &amp;&amp; pred(first)) ++first;
+  return first;
+}
+</code></pre>
+
+<p>Somebody asked me in 1994
+why I didn&rsquo;t write <code>std::all_of</code>, <code>std::none_of</code>, <code>std::any_of</code>
+which are now in C++11.
+My attitude was I write algorithms,
+not wrappers.
+They are just wrappers<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
+
+<pre><code>template &lt;typename I, typename P&gt;
+// I is an InputIterator
+// P is a unary predicate
+inline
+bool all_of(I first, I last, P pred) {
+  return find_if_not(first, last, pred) == last;
+}
+
+template &lt;typename I, typename P&gt;
+// I is an InputIterator
+// P is a unary predicate
+inline
+bool none_of(I first, I last, P pred) {
+  return find_if(first, last, pred) == last;
+}
+
+template &lt;typename I, typename P&gt;
+// I is an InputIterator
+// P is a unary predicate
+inline
+bool any_of(I first, I last, P pred) {
+  return find_if(first, last, pred) != last;
+}
+</code></pre>
+
+<a name="Bounded-and-counted-ranges."></a>
+<h2>Bounded and counted ranges.</h2>
+
+<p>Once upon a time I believed ranges come in two kinds<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.</p>
+
+<ol>
+<li><strong>Bounded ranges</strong>: Ranges bounded by a first and last iterator/pointer.</li>
+<li><strong>Counted ranges</strong>: Ranges constructed from a first pointer/iterator and an
+ interger <code>N</code>.</li>
+</ol>
+
+
+<p>Which one is better?
+Both are good, and both are different.
+You cannot say one is better than the other.
+It depends on the algorithm.
+There used to be more bounded range algorithms in the STL, but they wre taken out.
+For example we have <a href="https://en.cppreference.com/w/cpp/algorithm/copy"><code>std::copy</code></a> and
+<a href="https://en.cppreference.com/w/cpp/algorithm/copy_n"><code>std::copy_n</code></a>
+both are really convenient.</p>
+
+<p>Let&rsquo;s look at the interface for <code>std::copy_n</code>.</p>
+
+<pre><code>template&lt;typename InputIt, typename Size, typename OutputIt&gt;
+OutputIt copy_n(InputIt first, Size count, OutputIt result);
+</code></pre>
+
+<p>This is actually wrong.
+You have to return where the output iterator advances to,
+because it might be gone after the function operates
+internally, and there is no way to get it back.
+But, it&rsquo;s not enough.
+It needs to also return where the first ends.
+There is a general principle, you should be able to restart the algorithm
+where you left off.
+You copy something, then you want to copy more.
+So we need to think carefully about what you return.
+You might think everyone gets it, but
+that code was reviewed by hundreds of people,
+and not noticed.</p>
+
+<p>So let&rsquo;s try writing <code>find_if_n</code></p>
+
+<pre><code>template &lt;typename I, typename N, typename P&gt;
+// I is an InputIterator
+// N is an integral type
+// P is a unary predicate
+std::pair&lt;I, N&gt; find_if_n(I first, N n, P pred) {
+  while (n != N(0) &amp;&amp; !pred(first)) {
+    --n;
+    ++first;
+  }
+  return std::make_pair(first, n);
+}
+</code></pre>
+
+<a name="Advance-and-distance-functions"></a>
+<h2>Advance and distance functions</h2>
+
+<p>How does <a href="https://en.cppreference.com/w/cpp/iterator/advance"><code>std::advance</code></a> work?
+It was introduced by me to allow
+us to do long or fast thing depending on iterator type.
+For a pointer it will translate to one instruction.
+It&rsquo;s going to be fast.
+In the case of a linked list, it&rsquo;s going to be linear time.
+Here is how it works:</p>
+
+<pre><code>template&lt;typename I, typename N&gt;
+inline
+void advance{I&amp; first, N n) {
+  advance(first, n, std::iterator_traits&lt;I&gt;::iterator_category);
+}
+
+template&lt;typename I, typename N&gt;
+inline
+void advance{I&amp; first, N n, std::input_iterator_tag) {
+  while (n &gt; 0) {
+    ++first;
+    --n;
+  }
+}
+
+template&lt;typename I, typename N&gt;
+inline
+void advance{I&amp; first, N n, std::random_access_iterator_tag) {
+  first += n;
+}
+</code></pre>
+
+<p>The dispatch between these is clearly done at compile time.
+I could have had every iterator have <code>+=</code> and <code>-</code> iterator.
+My thinking was that people have an expectation that those symbols are fast.
+Making it linear time will confuse many people.</p>
+
+<p>Now let&rsquo;s implement <a href="https://en.cppreference.com/w/cpp/iterator/distance"><code>std::distance</code></a>:</p>
+
+<pre><code>template&lt;typename I&gt;
+inline
+typename std::iterator_traits&lt;I&gt;::difference_type distance{I&amp; first, I&amp; last) {
+  return distance(first, last, std::iterator_traits&lt;I&gt;::iterator_category);
+}
+
+template&lt;typename I&gt;
+inline
+typename std::iterator_traits&lt;I&gt;::difference_type distance{I&amp; first, I&amp; last, std::input_iterator_tag) {
+  typename std::iterator_traits&lt;I&gt;::difference_type n;
+  while (first != last) {
+    ++first;
+    ++n;
+  }
+  return n;
+}
+
+template&lt;typename I&gt;
+inline
+typename std::iterator_traits&lt;I&gt;::difference_type distance{I&amp; first, I&amp; last, std::random_access_iterator_tag) {
+  return last - first;
+}
+</code></pre>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/algorithm.h">algorithm.h</a></li>
+<li><a href="code/search.h">search.h</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+He does now!<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+Specifically the usage of function pointers and <code>void*</code> instead of generics.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+Alex: &ldquo;The name is stolen from Common Lisp <a href="http://clhs.lisp.se/Body/f_find_.htm"><code>find</code></a>.
+Always try to borrow from some place.
+Originality is frowned upon,
+especially for naming.
+Everyone loves to make non-standard names.&rdquo;<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+This is an amusing comment because
+Alex just got done talking about why <code>find_if_not</code>
+was such a helpful contribution
+and how we need should consider the needs of the user
+and give them various convenience versions.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
+Refererring to their usage in &ldquo;Elements of Programming&rdquo;.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="12_merge_sort.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="14_binary_search.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

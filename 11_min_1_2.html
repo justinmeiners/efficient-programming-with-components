@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>11. Smallest and second-smallest element</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="10_binary_counter.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="12_merge_sort.html">next</a>
+]
+</span>
+
+
+
+<a name="L11.-Smallest-and-second-2d-smallest-element"></a>
+<h1>11. Smallest and second-smallest element</h1>
+
+<a name="Program-design-approach"></a>
+<h2>Program design approach</h2>
+
+<p>You all learned that the first thing you do when programming is define abstract things,
+then do specific things.
+I am teaching you intentionally the opposite approach.
+I am not smart enough to write interfaces first.
+First you write the code.
+You write the algorithm.
+Then you figure out what you need for the algorithm.
+The interface comes out of the use,
+not from contemplation.</p>
+
+<p>I prefer to write code backward.
+Then everything just falls out.
+Delay thinking.
+Be lazy.
+For most algorithms you also need objects.
+So you can design those after.
+All the best programmers are lazy.
+If they were not lazy, they would do work with their hands.
+They invented programming languages to be lazy.
+Imitate them.</p>
+
+<a name="Combining-binary-counter-and-list-pool"></a>
+<h2>Combining binary counter and list pool</h2>
+
+<p>We built a machine for doing reduction.
+We also built a pool for very fast lists.
+Now we have to combine all that so it produces the final algorithm.
+From where we are now, it should only take 4-5 lines of code
+to write <code>min_element_1_2</code>
+along with type scaffolding.</p>
+
+<a name="Inner-loop"></a>
+<h3>Inner loop</h3>
+
+<p>Let us imagine you have all the materials to build it (we don&rsquo;t)
+and let&rsquo;s discuss the main loop:</p>
+
+<ol>
+<li>We will do a <code>while</code> loop and add things to a counter.</li>
+<li><p>We will reduce the counter.
+The result will have the minimum in the list.</p></li>
+<li><p>Use <code>std::min_element</code> to find the second place element
+ in the list of losers.</p></li>
+<li><p>Take the result of 2 and 3 and combine them in a pair.</p></li>
+</ol>
+
+
+<p>Now let&rsquo;s start writing it,
+even though we don&rsquo;t have all the parts.
+It&rsquo;s programming with smoke and mirrors<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.</p>
+
+<pre><code>while (first != last) counter.add(std::make_pair(first++, pool.empty_queue()));
+result_type min1_list = counter.reduce();
+I min1 = min1_list.first;
+I min2 = *std::min_element(iterator(pool, min1_list.second.first), iterator(pool), cmp);
+return std::make_pair(min1, min2);
+</code></pre>
+
+<p>We will have to adjust it, but
+these are the only instruction generating lines<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>:</p>
+
+<p>Before the loop we need to define these objects and types.
+Let&rsquo;s construct our counter. Do we know it&rsquo;s type? No.
+That&rsquo;s ok call it <code>counter_type</code>.</p>
+
+<pre><code>counter_type counter(op, std::make_pair(last, pool.empty_queue()));
+</code></pre>
+
+<p>We need a counter operation.
+Do we know its type? No.
+Do the lazy thing call it <code>op_type</code>.</p>
+
+<pre><code>op_type op(cmp, pool);
+</code></pre>
+
+<p>Now define the pool. We do know it&rsquo;s type:</p>
+
+<pre><code>list_pool&lt;I, std::size_t&gt; pool;
+</code></pre>
+
+<p>Notice that we use <code>std::min_element</code> on our list pool.
+Will that work?
+Yes, because we added iterators to our list pool.
+Define our <code>iterator</code> type;</p>
+
+<pre><code>typedef typename list_pool&lt;I, std::size_t&gt;::iterator iterator;
+</code></pre>
+
+<p>We are almost done.
+There are bunch of <code>typedef</code> and a bunch of little classes
+to write, but we are sort of done.</p>
+
+<a name="Comparing-iterator-values"></a>
+<h3>Comparing iterator values</h3>
+
+<p>We will be storing <code>list_pool</code> iterators,
+We don&rsquo;t want to compare iterators, we want to compare
+their values.
+Let&rsquo;s write a type function
+which takes any comparison operation on type <code>T</code>,
+and returns a comparison for <code>iterator&lt;T&gt;</code>.</p>
+
+<pre><code>template &lt;typename Compare&gt;
+class compare_dereference
+{
+private:
+  Compare cmp;
+public:
+  compare_dereference(const Compare&amp; cmp) : cmp(cmp) {}
+  template &lt;typename I&gt;
+  bool operator() (const I&amp; x, const I&amp; y) const {
+    return cmp(*x, *y);
+  }
+};
+</code></pre>
+
+<p>So in the main loop replace <code>cmp</code> with <code>cmp_deref</code> and add the following
+lines:</p>
+
+<pre><code>typedef compare_dereference&lt;Compare&gt; compare_type;
+compare_type cmp_deref(cmp);
+</code></pre>
+
+<a name="Reduction-operation"></a>
+<h3>Reduction operation</h3>
+
+<p>We will define a reduction function object
+to be used in the binary counter to find the <code>min</code>.
+What it will do is apply a comparison operation between two elements <code>cmp(a, b)</code>,
+When an element wins a comparison, the loser will be added
+to a list of elements which have lost to <code>a</code>.
+In other words, it will keep track of the elements which each element has beaten.
+This list of &ldquo;losers&rdquo; associated with each element is stored in a <code>list_pool</code>.</p>
+
+<pre><code>template &lt;typename T, typename N, typename Compare&gt;
+class op_min1_2 
+{
+private:
+  Compare cmp;
+  list_pool&lt;T, N&gt;* p;
+public:
+  typedef typename list_pool&lt;T, N&gt;::list_type list_type;
+  typedef std::pair&lt;T, std::pair&lt;list_type, list_type&gt; &gt; argument_type;
+
+  op_min1_2(const Compare&amp; cmp, list_pool&lt;T, N&gt;&amp; pool) : cmp(cmp), p(&amp;pool) {}
+
+  argument_type operator()(const argument_type&amp; x, 
+                           const argument_type&amp; y) {
+    if (!cmp(y.first, x.first)) {
+      p-&gt;free(y.second);
+      return std::make_pair(x.first, p-&gt;push_back(x.second, y.first));
+    } else {
+      p-&gt;free(x.second);
+      return std::make_pair(y.first, p-&gt;push_front(y.second, x.first));
+    }
+  }
+};
+</code></pre>
+
+<p>When an element wins, we can combine it&rsquo;s list of losers
+with the element it beat, due to transitivity.
+We want this operation to be stable, so we need to be careful with the order
+in which the losers are stored.
+Note that one uses <code>push_back</code> and the other <code>push_front</code>.</p>
+
+<a name="Finishing-the-scaffolding"></a>
+<h3>Finishing the scaffolding</h3>
+
+<p>Now that we have all the parts,
+we can define the final missing types and the signature:</p>
+
+<pre><code>template &lt;typename I, typename Compare&gt;
+// requires I is a ForwardIterator
+// and Compare is a StrictWeakOrdering on ValueType(I)
+std::pair&lt;I, I&gt; min_element1_2(I first, I last, Compare cmp) {
+  if (first == last || successor(first) == last) {
+    return std::make_pair(first, last);
+  }
+
+  typedef op_min1_2&lt;I, size_t, compare_type&gt; op_type;
+  typedef binary_counter&lt;op_type&gt; counter_type;
+  typedef typename op_type::argument_type  result_type;
+
+  // ...
+}
+</code></pre>
+
+<p>If you put all these components together, and get it to compile
+it should work<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+The fact that you can do that, is to me a miracle.
+There is quite a lot of complexity going on.
+This sense of wonder does not disappear.</p>
+
+<p><strong>Exercise:</strong> Implement this algorithm in another language.
+    It will help you see language limitations and
+    understand the algorithm better.</p>
+
+<a name="Why-do-we-need-the-typename-keyword-3f-"></a>
+<h2>Why do we need the typename keyword?</h2>
+
+<p>Once upon a time there were
+templates, there was STL, people were writing code,
+but there was no <code>typename</code> and everything worked.
+Of course, clever people (all the clever people reside in the standard committee (joke))
+brought up this example:</p>
+
+<pre><code>template &lt;class T&gt;
+class foo {
+    typedef T::value_type value_type;
+};
+</code></pre>
+
+<p>Obviously what you are trying to do is extract <code>T</code>&rsquo;s value type
+and use it here.
+Let us try to to follow the committees logic.
+The logic says maybe <code>T::value_type</code> refers to a static variable
+in <code>T</code>, which it could be of course.
+But, don&rsquo;t you know from the context that it&rsquo;s supposed to be a type?
+Since they are very well educated, they say, &ldquo;but that will
+make our grammar <a href="https://en.wikipedia.org/wiki/Context-free_grammar">context-sensitive</a><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+We need to figure out the meaning of
+a token without referring to  the context in which it appears&rdquo;.</p>
+
+<p>So they came up with the following rule:
+If you don&rsquo;t put <code>typename</code>, the compiler must assume it is a variable,
+even if it is a type.
+This is done to maintain the property that you don&rsquo;t need to know outside context.
+Of course, the problem here does not really relate to typename.
+The problem exists because <code>T</code>  is not specified.
+The language has no concepts.
+For example if we said <code>Container T</code>
+instead of <code>class T</code>, and had a concept <code>Container</code>, the definition of <code>Container</code> would say that it is required to have an affiliated type <code>value_type</code>.
+Then the compiler could figure out what we really mean.
+What often happens is that instead of
+solving the real problem, a partial problem is solved.
+We still do not have concepts.
+One of the great things about C++
+is the language has been evolving for 40 years which is also one of the terrible
+problems.</p>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/min_element1_2.h">min_element1_2.h</a></li>
+<li><a href="code/test_min1_2.cpp">test_min1_2.cpp</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+In the lectures Alex goes through several rounds
+of defining and renaming types.
+I included this section to illustrate the process.
+If you are confused refer to the final code
+at the end of the lesson.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+These are the only lines which generate
+assembly instructions for the CPU to execute.
+All other lines are just to make the C++ type system work.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+<p>Much of the scaffolding can be removed in modern C++.
+Most of the ugly <code>typename ...</code> definitions
+could be replaced by <code>auto</code>, which was introduced in C++11.
+A few of the function objects (such as <code>compare_dereference</code>)
+may also make more sense as C++ lambdas.</p><a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+This terminology is specific to compilers and theory
+of computation. It refers to a classification
+of formal languages based on their complexity to parse.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="10_binary_counter.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="12_merge_sort.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

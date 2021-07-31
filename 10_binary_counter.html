@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>10. Balanced binary reduction</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="09_iterators.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="11_min_1_2.html">next</a>
+]
+</span>
+
+
+
+<a name="L10.-Balanced-binary-reduction"></a>
+<h1>10. Balanced binary reduction</h1>
+
+<a name="Alice-in-wonderland"></a>
+<h2>Alice in wonderland</h2>
+
+<p>Let us attack the problem of finding not just the smallest
+of <code>n</code> elements, but the smallest and second smallest.
+The problem has a very distinguished pedigree it was first addressed by a well-known British mathematician
+<a href="https://en.wikipedia.org/wiki/Lewis_Carroll">Charles Dodgson</a> (Lewis Carroll).
+If you haven&rsquo;t heard of him, you should.
+There is a very important book which he wrote, not the <a href="https://www.gutenberg.org/ebooks/28696">mathematical book</a>
+, but the book called <a href="https://www.gutenberg.org/ebooks/11">&ldquo;Alice&rsquo;s Adventures in Wonderland&rdquo;</a>.
+If you haven&rsquo;t read it, do.
+No person should be hired ever unless you read &ldquo;Alice in Wonderland&rdquo;.
+in any case he was also a mathematician.
+He also dabbled in all kind of games
+apparently he <a href="http://www.bananagrammer.com/2009/10/games-of-lewis-carroll.html">invented Scrabble</a> and bunch of other games.</p>
+
+<p>At some point he decided that there is a clear problem with tennis tournaments.
+He observed that with a very high probability,
+if you have say a tournament with 64
+players, the guy who gets the second prize is actually not the second strongest.
+He observed that the strongest and
+second strongest could be paired in the first round.
+Therefore the second strongest guy gets eliminated and doesn&rsquo;t get the second prize,
+in spite of his prowess.
+This is is why now they use a technique known is <a href="https://en.wikipedia.org/wiki/Seed_(sports)">seeding</a> to assure
+that people of similar ability are spread out to different parts of the tree.
+But, he wanted to come up with an algorithm
+which assures that the second guy is truly the second guy.
+He published it in 1883.
+The algorithm wasn&rsquo;t quite an algorithm and it was clearly not optimal.
+It took 15 more years before the problem was stated correctly.
+People realized that you could talk about minimum
+number of comparisons but it took another thirty years, until 1964 when a
+Russian mathematician <a href="http://www.mathnet.ru/eng/person27000">Sergei S. Kislitsyn</a> published a paper which
+proved there is an optimal algorithm and described it.</p>
+
+<p>By the way, all of this information is available<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> in
+a
+book called <a href="https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming">&ldquo;The Art of Computer Programming&rdquo;</a> by <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> .
+You really should buy it.
+You make a certain commitment.
+You spend $150 saying that you really care about programming.
+This is not a book which is &ldquo;useful&rdquo; meaning it&rsquo;s not &ldquo;programming in Python for idiots&rdquo;,
+or &ldquo;information retrieval for 21st century&rdquo; or something like that.
+This is one of the fundamental books which you buy and then spend your
+lifetime getting the information out of it.
+You get beautiful things which you then could use for programming in Python or information retrieval or
+other things.
+I&rsquo;m going to be mentioning Knuth throughout the course.
+It&rsquo;s not a perfect book, it is just the greatest book we&rsquo;ve got.
+Some people think it&rsquo;s a good reference book.
+No, it&rsquo;s not, because you have to
+basically do linear search to find what you&rsquo;re interested in.
+Another important thing, do not spend too much time solving problems.
+Read the solutions.
+They are  right at the end.
+Lots of very important algorithms are described in the solutions to his problems.
+Reading Knuth has to become a lifelong activity.</p>
+
+<a name="Smallest-and-second-smallest-element"></a>
+<h2>Smallest and second smallest element</h2>
+
+<p>The problem of finding the smallest and second smallest element,
+is in &ldquo;The Art of Computer Programming&rdquo;, but somehow Knuth does not implement it.
+He describes it fully but doesn&rsquo;t implement it as an algorithm.
+As we shall see its actually a little tricky.
+I pick this algorithm not because it is of paramount importance for your future work.
+I pick this algorithm because it allows us to learn how to do decomposition
+and learn components along the way (like lists).</p>
+
+<p>How many comparisons do you need to solve this problem?
+Same as min-max from last time?
+No.
+You can do it in fewer.
+Let us try to use some logic .
+How many comparisons do we need to find the winner of the
+tournament? <code>n - 1</code>.
+It is necessary to find the winner, in order to find the second place guy.
+We could sketch a proof.
+Let us assume there are two potential guys greater than him.
+If there is none, he isn&rsquo;t second place.
+If there are two, he isn&rsquo;t second place either.</p>
+
+<p>What do we know about second place,
+specifically the games he lost.
+<em>He only lost one game, and it was to the winner</em>.
+If the winner remembers all the games he won,
+how could we determine second place?
+How many people did he beat?</p>
+
+<p>For example, <a href="https://en.wikipedia.org/wiki/The_Championships,_Wimbledon">Wimbledon</a> has 64 players who are admitted.
+The winner doesn&rsquo;t play 63 games.
+The tournament is structured as a binary tree.
+This tree is how deep?
+If you have <code>n</code> elements? It&rsquo;s <code>ceil(log_2(n))</code>.
+We could somehow arrange our tournament so that the
+winner will defeat this many people.
+Now that we have a list of the <code>ceil(log_2(n))</code> people who played the winner,
+we just find the best out of them which is
+<code>ceil(log_2(n)) - 1</code> comparisons.</p>
+
+<p>To review, we
+have <code>n - 1</code> comparisons to get the winner.
+<code>ceil(log_2(n)) - 1</code> to get the second best,
+from the list he played.
+So the upper bound for the algorithm is:</p>
+
+<pre><code>n + ceil(log_2(n)) - 2
+</code></pre>
+
+<p>Actually implementing this algorithm effectively
+will require us to create several components.
+We will build these up over the next few lessons.</p>
+
+<a name="Unoptimal-divider-and-conquer-approach"></a>
+<h3>Unoptimal divider and conquer approach</h3>
+
+<p>It might appear you could use divide and conquer.
+First split it in two,
+find min and second min of the first half,
+and the second half, and then merge them together doing two comparisons.
+It sounds very elegant because it&rsquo;s all recursive.
+But, let us think about how many comparisons it&rsquo;s going to do
+with simple mathematics.</p>
+
+<ol>
+<li><p>We start with <code>n</code> we need to pair and compare them.
+So the first round is <code>n/2</code> comparisons.</p></li>
+<li><p>In the second round we pair up the results,
+so we need <code>n/4</code> &ldquo;games&rdquo;.
+But, each game requires two comparisons (to find min and max).
+So we have another <code>n/2</code> comparisons.</p></li>
+<li><p>And so on&hellip;</p></li>
+</ol>
+
+
+<p>So that would be:</p>
+
+<pre><code>n/2 + (n/2 + n/4 + n/8 + ...)
+
+= n/2 + n-1
+</code></pre>
+
+<p>total comparisons.
+That&rsquo;s not what we&rsquo;re trying to accomplish,
+so divide and conquer doesn&rsquo;t always do what we think.</p>
+
+<a name="Tournament-tree-shapes"></a>
+<h3>Tournament tree shapes</h3>
+
+<p>First, we need rearrange the tournament we play.
+Right now <code>min_element</code> plays a tree structure that looks like this:</p>
+
+<pre><code>Unbalanced Tree
+/\
+  /\
+    /\
+      ... 
+       /\
+</code></pre>
+
+<p>It has <code>n - 1</code> internal nodes.
+But, we don&rsquo;t want the winner to play <code>n - 1</code> matches.
+We need to transform that into the way they play Tennis.
+We need to balance the tree.</p>
+
+<pre><code>Balanced Tree
+    / \
+   /\ /\
+    ...
+  /\ /\ /\
+</code></pre>
+
+<p>How do we do it?
+One way is to just pair up elements and build up.
+But then we need lots of memory to save the intermediate results.
+What do we mean when we say lots of memory?
+<code>O(n)</code> is bad, <code>O(sqrt(n))</code> is pretty bad.</p>
+
+<p>Note that once a bottom-level round has been played,
+they are ready to move up.
+Our goal is to basically to become eager.
+Whenever guys are ready to be paired we want to pair them.
+So if we only store only the winner at each level,
+we never need to store <code>log(n)</code> things.
+We can define the <strong>power</strong> of each element
+to be the number of games they have played.</p>
+
+<p>Realize that suddenly we see something which has nothing to do with our problem.
+<em>The foundation of our algorithm is the ability to take a tree like
+the linear (unbalanced) tree and transform it into a balanced tree</em>.
+What mathematical property allows us to do such a transformation?
+Specifically why can we convert one kind of computation to the other.
+Associativity<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+As long as our operation is associative,
+What property don&rsquo;t we need? Commutativity.
+We keep them in the same order,
+we just rebalanced parenthesis.</p>
+
+<p>If you think about it,
+our <code>min</code> is not quite commutative.
+In mathematics <code>min</code> is commutative.
+But, because we want to preserve stability it is not.
+We distinguish between the left and right argument.</p>
+
+<a name="Binary-counting-and-reduction"></a>
+<h2>Binary counting and reduction</h2>
+
+<p>Here we come to the amazing idea of how to do this transformation.
+This is one of the most beautiful ideas which they
+kept secret from you.
+They should have taught it in high school.
+But, they want to publish papers
+themselves and not tell you the general mechanism.</p>
+
+<p>We can create a counter, and in every bit of this counter we&rsquo;re
+going to keep a singleton.
+In each bit we keep the person who had <code>n</code> victories.
+We will never combine things unless they have the same weight/parity.</p>
+
+<p>Initially the counter has <code>zero</code> in every entry:</p>
+
+<pre><code>1 2  ...   32 (bits/singletons)
+0 0  ...   0
+</code></pre>
+
+<p>Take a new guy <code>x</code> who has never played any games,
+and you look at the guy in the first slot of the counter.
+The existing guy is either zero or not.
+If it&rsquo;s zero (<code>_</code>), put him in the counter.</p>
+
+<pre><code>1 2  ...   32         1 2  ...    32
+0 0  ...   0    &gt;&gt;&gt;   x 0  ...    0
+</code></pre>
+
+<p>If it&rsquo;s not zero, he plays a game with the existing guy.
+If he wins, he replaces the loser in the counter.</p>
+
+<pre><code>1 2  ...   32           1 2  ...   32
+y 0  ...   0     &gt;&gt;&gt;    x 0  ...   0
+</code></pre>
+
+<p>Otherwise, the existing guy has now won a game.
+So he needs to be promoted to the next level,
+he follows the same rules with the guy in that slot.
+It&rsquo;s a carry propagation.</p>
+
+<pre><code>1 2  ...   32           1 2  ...   32
+y 0  ...   0    &gt;&gt;&gt;     0 y  ...   0
+</code></pre>
+
+<p>If we end up with a guy in slot 32, it&rsquo;s an overflow,
+exactly like integer arithmetic.
+What do we do?
+Whenever we don&rsquo;t know to proceed,
+do something sensible and let whomever uses it figure out what is a sensible thing
+to do.
+Return the carry<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+
+<p>Let us be lazy.
+The great success in
+programming comes because there are lazy people who say, &ldquo;I don&rsquo;t want to know now,
+I&rsquo;ll find out later.&rdquo;
+Right now we are solving this problem.
+We have an associative binary operation of some kind
+ and what we discovered that if we have associativity,
+we can make this counter and it will work for us.</p>
+
+<p>If you are familiar with <a href="https://en.wikipedia.org/wiki/Numerical_analysis">numerical analysis</a>,
+whenever you sum up large number you don&rsquo;t really want to
+add small quantities to big quantitative.
+Bad things happen to the errors<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+So, you could use the same device for balancing your addition.
+If you want to implement <a href="https://en.wikipedia.org/wiki/Merge_sort">merge sort</a> you can use exactly the same device, since
+merge is associative<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
+The idea with merge sort, is only want to merge lists if they are roughly the same length
+and this helps you do it.</p>
+
+<p>When we become grownups we learn about advanced data structures,
+such as <a href="https://en.wikipedia.org/wiki/Binomial_heap">binomial forest</a>.
+They use the same idea.
+The counter helps us combine things only when they have the same weight.
+nless they are of the same weight it&rsquo;s a general algorithmic technique</p>
+
+<a name="Implementation"></a>
+<h3>Implementation</h3>
+
+<p>The first function will add an element to the counter
+using the process we just described.</p>
+
+<pre><code>template &lt;typename T, typename I, typename Op&gt;
+// requires Op is BinaryOperation(T)
+// and Op is associative 
+// and I is ForwardIterator and ValueType(I) == T
+T add_to_counter(I first, I last, Op op, const T&amp; zero, T carry) {
+    // precondition: carry != zero
+    while (first != last) {
+        if (*first == zero) {
+            *first = carry;
+            return zero;
+        }
+        carry = op(*first, carry);
+        *first = zero;
+        ++first;
+    }
+    return carry;
+}
+</code></pre>
+
+<p><code>op</code> is not commutative, so we need to be careful about the order
+it is evaluated in.
+Elements in the counter got there before, so they were to the left of the
+element we are inserting.</p>
+
+<p>Notice that zero is <code>const</code> reference because we don&rsquo;t plan to modify it,
+but we do modify carry,
+so it should be passed by value.</p>
+
+<p>The second function applies the operation
+to all the elements left sitting in the counter.</p>
+
+<pre><code>template &lt;typename T, typename I, typename Op&gt;
+// requires Op is BinaryOperation(T)
+// and Op is associative 
+// and I is ForwardIterator and ValueType(I) == T
+T reduce_counter(I first, I last, Op op, const T&amp; zero) {
+    while (first != last &amp;&amp; *first == zero) {
+        ++first;
+    }
+    if (first == last) return zero;
+
+    T result = *first;
+    while (++first != last) {
+        if (*first != zero) {
+            result = op(*first, result);
+        }
+    }
+    return result;
+}
+</code></pre>
+
+<p>We have to be careful with zero.
+Sometimes it will work with the operation so apply <code>op(x, zero)</code>
+gives you <code>x</code>, but sometimes that won&rsquo;t happen.
+So we can&rsquo;t really initialize to zero.</p>
+
+<p><strong>Exercise:</strong> Use these functions to sum up an array of <code>double</code>s.</p>
+
+<p><strong>Exercise:</strong> Rewrite <code>min_element</code> using these functions (just <code>min_element</code>, don&rsquo;t worry about second best).</p>
+
+<a name="Binary-counter-object"></a>
+<h2>Binary counter object</h2>
+
+<a name="Start-with-algorithms"></a>
+<h3>Start with algorithms</h3>
+
+<p>We want to take
+these two algorithms and combine them into an object.
+We have two beautiful algorithms but they&rsquo;re stateless.
+Everything is outside, and this is what we should always do,
+no matter what we has been taught in software engineering classes by very wise
+object-oriented professors.
+You start with algorithms.
+You don&rsquo;t start with objects.
+Figure out what you&rsquo;re going to do first.
+But you don&rsquo;t have to stop there.
+Because you can then put things together into an object.</p>
+
+<p>It&rsquo;s very easy when you write an algorithm to
+have a minimal iterator interface.
+They externalize the counter.
+We say, &ldquo;we don&rsquo;t want to know about him,
+we&rsquo;re just algorithms people&rdquo;.
+We assume the principle that  we will have no state for about
+five minutes, and stay very functional, but then
+turn around and deal with state.
+We look at the whole thing.</p>
+
+<a name="Counter-storage"></a>
+<h3>Counter storage</h3>
+
+<p>So what do we think is the state of this counter?
+How should we store the counter?
+Don&rsquo;t we have millions of elements to reduce?
+The counter is size <code>log(n)</code> which will
+never be greater than 64.
+So, it&rsquo;s actually a small fixed size.
+We will store it in a <code>std::vector</code>.</p>
+
+<pre><code>template &lt;typename Op, typename T = typename Op::argument_type&gt;
+class binary_counter
+{
+private:
+  std::vector&lt;T&gt; counter;
+  Op op;
+  T zero;
+
+public:
+  binary_counter(const Op&amp; op, const T&amp; zero) :
+    op(op), zero(zero) {}
+
+  void reserve(size_t n) { counter.reserve(n); }
+
+  void add(T x) {
+    x = add_to_counter(counter.begin(), counter.end(), op, zero, x);
+    if (x != zero) counter.push_back(x);
+  }
+
+  // returns: value of the counter
+  T reduce() {
+    return reduce_counter(counter.begin(), counter.end(), op, zero);
+  }
+};
+</code></pre>
+
+<p>Counter is private, we don&rsquo;t
+want people to muck up our counter.
+Same with our operation</p>
+
+<p>Using initializer lists instead of assignment in constructor is important.
+If you initialize in the body, it will first call default constructors
+for members, then you overwrite all the work with an assignment.</p>
+
+<p>I think it is very beautiful.
+We could compete with Steve Jobs for elegance of our design<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
+
+<a name="What-is-in-2d-place-memory-usage-3f-"></a>
+<h3>What is in-place memory usage?</h3>
+
+<p>How significant is the storage of our counter?
+We use the term <a href="https://en.wikipedia.org/wiki/In-place_algorithm">&ldquo;in-place&rdquo;</a> to indicate the memory
+usage of an algorithm is not significant.
+A long time ago people thought
+algorithms were in-place if they didn&rsquo;t require any  extra memory.
+Then they decided  constant memory was enough.
+But, then they said it doesn&rsquo;t quite work because our favorite algorithm
+doesn&rsquo;t work. Of course the most important algorithm is <a href="https://en.wikipedia.org/wiki/Quicksort">quicksort</a>.
+It&rsquo;s not in-place because it&rsquo;s recursive.
+Recursive algorithms tend to require <code>O(log(n))</code>.
+Quicksort splits roughly in the middle let&rsquo;s assume on average.</p>
+
+<p>So people say <code>log(n)</code> is good so that will count as in-place.
+Then they said , &ldquo;what if we have nested things.
+So is <code>log(n)^2</code> ok&rdquo;?
+In our universe <code>log(n) &lt;= 64</code> so this is 4096.</p>
+
+<p>Then theoreticians said it&rsquo;s really alright if we have &ldquo;poly-logarithmic&rdquo; storage
+Basically as long as the memory requirement is <code>O(p(log(n)))</code>
+where <code>p</code> is a polynomial, it&rsquo;s alright.
+Polynomials get a lot bigger than square,
+but let&rsquo;s go with &ldquo;poly-logarithmic&rdquo; being &ldquo;in-place&rdquo;.</p>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/binary_counter.h">binary_counter.h</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+See chapter 5.3.3 in Volume 3 of &ldquo;The Art of Computer Programming&rdquo;.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+<p><a href="https://mathworld.wolfram.com/Associative.html">Associativity</a> is a fundamental property studied in abstract
+algebra.
+Informally, it is that you can apply an operation to arguments
+in any order you want.
+Formally:</p>
+
+<pre><code>f(f(a, b), c)) = f(a, f(b, c))
+</code></pre>
+
+<p>For example, multiplication:</p>
+
+<pre><code>(a * b) * c = a * (b * c)
+</code></pre>
+
+<p>You can see why associativity is often referred to as being
+able to &ldquo;re-paranthesize&rdquo;.</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+<p>The terms <strong>carry</strong> and <strong>carry propagation</strong>
+are usually associated with the algorithm of binary addition
+and especially its implementation as
+an electronic/logical circuit called an <a href="https://en.wikipedia.org/wiki/Adder_(electronics)">adder</a>.</p>
+
+<p>An adder has two inputs <code>a</code> and <code>b</code> for
+the two digits to add together.
+It outputs a digit <code>s</code> which is the digit
+to display for this place value.
+There is supplementary output called a carry
+which is the amount that needs to move to the
+higher place value.</p>
+
+<p>The circuit behavior is determined by the following input/output table:</p>
+
+<pre><code>a  b   c  s
+----------
+1  0 | 0  1
+0  1 | 0  1
+1  1 | 1  0
+</code></pre>
+
+<p>This adds a single digit, but we want to add entire numbers.
+To, do so we add an additional input <code>l</code> for carried digits
+from lower place values.</p>
+
+<pre><code>a  b  l    c  s
+----------------
+1  0  0  | 0  1
+0  1  0  | 0  1
+1  1  0  | 1  0
+1  0  1  | 1  0
+0  1  1  | 1  0
+1  1  1  | 1  1
+</code></pre>
+
+<p>Now we can chain <code>n</code> of them togeter to be able to add <code>n</code> digits</p>
+
+<pre><code>    s_1 c_1-----|      s_2 c_2----  ...
+    |   |       |      |   |
+ -----------    |   ------------
+ |    |    |    |   |    |    |
+l_1  a_1  b_1   |_ l_2   a_2  b_2
+</code></pre>
+
+<p>An <strong>overflow</strong> is when the last adder has a non-zero carry.</p><a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+<p>Numerical floating point calculation
+is a subtle subject, but the basic issue Alex is
+referring to is straightforward.
+Floating point stores large numbers as decimals to some power.
+If you add a small decimal to that, it may not change it all.
+To try for yourself, compare the output of:</p>
+
+<pre><code>(152500.0 * 5000.0)
+</code></pre>
+
+<p>and</p>
+
+<pre><code>(152500.0 * 5000.0) + 0.01
+</code></pre><a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
+When I first learned about this algorithm, I showed a friend
+and he immediately had the idea to use it
+for merge sort, without any hint this was possible!<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
+Alex: Maybe we should make it in China.
+That&rsquo;s a necessary prerequisite for beautiful design.
+<a href="https://signalvnoise.com/posts/2710-designed-by-apple-in-california">Designed in Cupertino</a> assembled in China.
+So let&rsquo;s try to assemble our machine in Palo Alto.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="09_iterators.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="11_min_1_2.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

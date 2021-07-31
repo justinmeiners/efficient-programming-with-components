@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>8. Lisp-like lists</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="07_min_range.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="09_iterators.html">next</a>
+]
+</span>
+
+
+
+<a name="L8.-Lisp-2d-like-lists"></a>
+<h1>8. Lisp-like lists</h1>
+
+<a name="Lists-in-lisp-and-Scheme"></a>
+<h2>Lists in lisp and Scheme</h2>
+
+<p>A long time ago there was a programming language called <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp</a><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>
+or for you younger folks <a href="https://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</a>.
+Scheme might have been wrong, but it was great.
+The whole language centers around very simple <a href="https://en.wikipedia.org/wiki/Linked_list">linked lists</a>
+ which are based on three fundamental
+operations<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>:</p>
+
+<ol>
+<li><a href="http://www.lispworks.com/documentation/lw50/CLHS/Body/f_cons.htm"><code>cons</code></a>: create a pair.</li>
+<li><a href="http://clhs.lisp.se/Body/f_car_c.htm#car"><code>car</code></a>: get first element of pair.</li>
+<li><a href="http://clhs.lisp.se/Body/f_car_c.htm#cdr"><code>cdr</code></a>: get second element of pair.</li>
+</ol>
+
+
+<p>We&rsquo;re not going to use these terms and
+we&rsquo;re going to extend our vocabulary from 3 to 4.
+Lisp told us that there&rsquo;s this wonderful thing, without which we cannot live, called
+<a href="https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)">garbage collection</a>.
+We don&rsquo;t want garbage collection for
+all the algorithms we want to use.
+So we are going to add a 4th operation:</p>
+
+<ol>
+<li><code>free</code>: manually release/free a pair.</li>
+</ol>
+
+
+<p>What we want to do is muck around with lists.
+Meaning you can insert items in the middle, change pointers, connect this and that.
+All of these operations are natural.
+If you don&rsquo;t want to muck around, just use vectors.</p>
+
+<p>But, we&rsquo;re going to build it so it&rsquo;s blindingly fast.
+How are we going to do that?
+You want to avoid memory fragmentation.
+If you have lists
+with nodes spread all over  memory, every time
+you access one, it is a cache mich.
+Modern computers caches do not really help if you do long jumps.
+We have lots of nodes,
+but we want them to live in a little buffer even if we keep generating them back and forth.
+If they reside in a small space we will never get a cache miss.</p>
+
+<a name="Why-is-malloc-so-slow-3f-"></a>
+<h3>Why is malloc so slow?</h3>
+
+<p>We&rsquo;re also going to avoid <a href="https://man7.org/linux/man-pages/man3/malloc.3.html"><code>malloc</code></a>
+because it is evil.
+It used to be sort of alright, when I started working on STL in 1993.
+But, even then I realized it was too slow to be used with node
+based data structures.
+So for any data structure of nodes, such as list, I would keep a pool of
+nodes myself and manage them in a quick way.</p>
+
+<p>A few people, such as Bill Plauga<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> at Microsoft
+and others at <a href="https://www.gnu.org/">GNU</a> who followed their example, said that if they have a common
+pool and they just do pointer movement then if you have multiple threads you
+could have problems<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+Instead of solving the problem for the multi-threaded case
+they decided to solve it in general.
+They said, &ldquo;first we&rsquo;re going to put locks on our malloc<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
+Then we&rsquo;re going to throw Alex&rsquo;s pool management away
+and we&rsquo;re going to do full malloc.&rdquo;
+Now malloc is function call with a lock, so it&rsquo;s a very heavy operation.</p>
+
+<p>Because of this decision, all our lists are going to be thread safe.
+People like us, who do not use threads (you don&rsquo;t use threads right?) pay for them.
+They violated a fundamental
+principle which Bjarne insists on.
+<em>People should not pay for things they do not use</em>.
+Everybody pays for the ability of multiple threads to do list allocations out of the
+same pool, which actually nobody does but everybody pays.</p>
+
+<a name="List-pool"></a>
+<h2>List pool</h2>
+
+<p>A list pool is an object
+with many outstanding lists inside.
+Internally we will use one vector to implement many, many, lists.
+These lists are not containers.
+A container  guarantees that when a container is gone, the values are gone too.
+For these lists there is no guarantee like that.
+For example, you could split this list
+into two by setting a <code>cdr</code>.
+There is no ownership and this is why I recommend not viewing them as containers.
+STL containers are wonderful, when you want them, but that&rsquo;s not the case.</p>
+
+<p>We&rsquo;re trying to get as close to Lisp as we can without building garbage
+collection<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>. If you want to build garbage collection you can extend
+this thing and build garbage collection too, but garbage collection
+is overrated.</p>
+
+<p>Implement it as a class,
+we will have two types.
+<code>T</code> will be the values we want to store,
+and <code>N</code> will be an index type.</p>
+
+<pre><code>#include &lt;vector&gt;
+template&lt;typename T, typename N&gt;
+// T is semi-regular.
+// N is integral
+class list_pool {
+    // ...
+};
+</code></pre>
+
+<p>Now we are going to implement <code>cons</code>, <code>car</code>, <code>cdr</code>, and <code>free</code>, but
+we need appropriate names for a younger generation.</p>
+
+<a name="Car"></a>
+<h3>Car</h3>
+
+<p>We will rename <code>car</code> to <code>value</code>.
+Actually, it won&rsquo;t just be <code>car</code>, it will
+also act as <a href="http://clhs.lisp.se/Body/f_rplaca.htm"><code>rplaca</code></a> (set car).</p>
+
+<pre><code>T&amp; value(list_type x) {
+  return node(x).value;
+}
+
+const T&amp; value(list_type x) cons {
+  reutrn node(x).value;
+}
+</code></pre>
+
+<a name="Cdr"></a>
+<h3>Cdr</h3>
+
+<p>Similarly, we want <code>cdr</code> and <a href="http://clhs.lisp.se/Body/f_rplaca.htm"><code>rplacd</code></a>.</p>
+
+<pre><code>list_type&amp; next(list_type x) {
+  return node(x).next;
+}
+
+const list_type&amp; next(list_type x) const {
+  return node(x).next;
+}
+</code></pre>
+
+<a name="Free"></a>
+<h3>Free</h3>
+
+<p>Now let&rsquo;s write <code>free</code>.
+We can make it somewhat more useful by returning something other than void.
+Return the next, otherwise the user will have to save it before freeing.</p>
+
+<pre><code>list_type free(list_type x) {
+  list_type cdr = next(x);
+  next(x) = free_list;
+  free_list = x;
+  return cdr;
+}
+</code></pre>
+
+<p>This is the same as <code>(setf (cdr x) free-list)</code> in Lisp or <code>(set-cdr! x free-list)</code>
+in Scheme.</p>
+
+<a name="Cons"></a>
+<h3>Cons</h3>
+
+<p>Now we will write <code>cons</code>, it takes two arguments.
+Where do nodes come from?
+The free list, if it has room,
+otherwise we made a new node from the pool.</p>
+
+<pre><code>list_type allocate(const T&amp; val, list_type tail) {
+  list_type new_list = free_list;
+
+  if (is_empty(free_list)) {
+    new_list = new_node();
+  } else {
+    free_list = next(free_list);
+  }
+
+  // start with this part
+  value(new_list) = val;
+  next(new_list) = tail;
+  return new_list;
+}
+</code></pre>
+
+<p>So we need to write the public function <code>is_empty</code> and the private one <code>new_node</code>.</p>
+
+<pre><code>bool is_empty(list_type x) const {
+  return x == empty();
+}
+</code></pre>
+
+<p>Dual to this function, is one which gives you the <code>nil</code> or empty list.</p>
+
+<pre><code>list_type empty() {
+  return listp_type(0);
+}
+</code></pre>
+
+<p>You might think, what about the <code>0</code>th item in the pool?
+We will just index everything at <code>1</code>, so we don&rsquo;t lose
+the first item.
+If you use <code>-1</code> then our index type must be signed.</p>
+
+<pre><code>typedef N list_type;
+
+list_pool() {
+  free_list = empty();
+}
+</code></pre>
+
+<p>Let&rsquo;s write the class and private stuff now:</p>
+
+<pre><code>struct node_t {
+  T value;
+  N next;
+};
+
+std::vector&lt;node_t&gt; pool.
+
+node_t&amp; node(list_type x) {
+  reutrn pool[x - 1];
+}
+
+const node_t&amp; node(list_type x) const {
+  return pool[x - 1];
+}
+
+list_type new_node() {
+  pool.push_back(node_t());
+  return list_type(pool.size());
+}
+</code></pre>
+
+<p>Our structure requires all lists in the pool to be <code>const</code>
+or all of them to be non-<code>const</code>.
+Typically <code>const</code> is just for handing someone something
+to read.</p>
+
+<p>What should <code>N</code> be. Why not <code>size_t</code>?
+Because it&rsquo;s 64 bits.
+For our application we could probably
+use <code>uint16</code> so our whole node
+fits in 32 bits.
+But, we should define a default.</p>
+
+<pre><code>typename N = size_t
+</code></pre>
+
+<a name="Free-list-helper"></a>
+<h3>Free list helper</h3>
+
+<p>There is a simple rule to distinguish when
+you should write a method/member function
+and what to just make an outside function.
+Implement the simplest possible thing.
+If you can do it outside, do it.</p>
+
+<p>Let&rsquo;s implement a function for freeing an entire list,
+not just a node.</p>
+
+<pre><code>template &lt;typename T, typename N&gt;
+void free_list(list_pool&lt;T, N&gt;&amp; pool,
+    typename list_pool&lt;T, N&gt;::list_type x) {
+  while (!pool.is_empty(x)) x = pool.free(x); 
+}
+</code></pre>
+
+<a name="List-queue"></a>
+<h2>List queue</h2>
+
+<p>We can use our list to implement a queue structure.
+The queue will be defined by a list node
+in the front, and one in the back.</p>
+
+<pre><code>typedef std::pair&lt;list_type, list_type&gt; pair_type;
+</code></pre>
+
+<p>We often want to detect empty queues
+and construct them:</p>
+
+<pre><code>bool empty(const pair_type&amp; p) { return is_end(p.first); }
+pair_type empty_queue() { return pair_type(end(), end()); }
+</code></pre>
+
+<p>You can remove an element from the front of the queue:</p>
+
+<pre><code>pair_type pop_front(const pair_type&amp; p) {
+  if (empty(p)) return p;
+  return pair_type(next(p.first), p.second);
+}
+</code></pre>
+
+<p>You can add an element to the front, or the back of the queue:</p>
+
+<pre><code>pair_type push_front(const pair_type&amp; p, const T&amp; value) {
+  list_type new_node = allocate(value, p.first);
+  if (empty(p)) return pair_type(new_node, new_node);
+  return pair_type(new_node, p.second);
+}
+
+pair_type push_back(const pair_type&amp; p, const T&amp; value) {
+  list_type new_node = allocate(value, end());
+  if (empty(p)) return pair_type(new_node, new_node);
+  next(p.second) = new_node;
+  return pair_type(p.first, new_node);
+}
+</code></pre>
+
+<p>Now we can also free lists in constant time,
+simply by attaching the end of our list to the free list.</p>
+
+<pre><code>void free(const pair_type&amp; p) { free(p.first, p.second); }
+</code></pre>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/list_pool.h">list_pool.h</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+Alex: I&rsquo;m talking to an apparently non-existent Lisp community
+because MIT is just a <a href="http://lambda-the-ultimate.org/node/5335">Python school now</a>.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+<p>Alex call&rsquo;s these &ldquo;lists&rdquo; without much explanation.
+In Lisp all lists are built out of these pairs.
+The <code>car</code> (first element) is the value of the list at this point.
+The <code>cdr</code> (second element) points to another pair, or <code>nil</code>.
+<code>nil</code> terminations the list.</p>
+
+<p>For example the list <code>(1 2 3)</code> is represented by</p>
+
+<pre><code>(1, -)---&gt; (2, -)---&gt;(3, -)--&gt;nil
+</code></pre>
+
+<p>See <a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-15.html#%_sec_2.2">chapter 2.2</a> of &ldquo;Structure and Interpretation of Computer Programs&rdquo;
+to learn more.</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+I cannot find any reference to this person or materials related
+to this discussion. Please contact me if you know.
+In this <a href="https://devblogs.microsoft.com/cppblog/concurrent-containers/">C++ Blog</a>
+Microsoft appears to be taking the position in agreement with Alex,
+that locking on data structures is not a sufficient
+approach to concurrent programming.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+All kinds of problems can arise from two threads modifying the same resource.
+The basic problem is that you can no longer reason about control flow in your code.
+One line does not immediately follow the other,
+so things can be overwritten or messed up in betwween statements.
+Another problem is called a <a href="https://en.wikipedia.org/wiki/Race_condition">race condition</a>.
+This is when a piece of code relies on one thread doing a task before another,<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
+<p><a href="https://en.wikipedia.org/wiki/Lock_(computer_science)">Lock&rsquo;s</a> (often called mutex in programming)
+are a mechanism for controlling access to a shared resource.
+If you want to avoid threads messing up each others work,
+you ensure that only one thread is allowed to modify the resource at a time.
+Designing such a mechanism is actually fairly difficult.
+(See &ldquo;The Art of Multiprocesser Programming&rdquo; By Herlihy and Shavit.)</p>
+
+<p>They tend to be slow because they either require waiting in a loop &ldquo;spin lock&rdquo;
+or communicating with the kernel scheduler.</p>
+
+<p>Many programming projects in the late 90s and early 2000s (especially Java and C#)
+decided
+that the way to support multithreading programming was to ensure exclusive
+access to most every resources, as if one would write code
+using threads all over the place.
+This trend is reflected in Alex&rsquo;s story.</p>
+
+<p>The error prone nature of concurrency and parallelism has led to more disciplined design
+and tools.
+Often portions portions of the program are explicity dedicated to a certain thread
+and communication is carefully controlled.
+Another trend is to use
+threads in a functional manner, invoking them to do a bunch of work, without external
+state, and returning a single result.</p>
+
+<p>Based on Alex&rsquo;s comments we can assume he
+would support using multiple processes instead of threads.
+Processes offer memory protection by default, and then allow
+you to expose dangerous shared portions for communication.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
+<p>A significant difference between Alex&rsquo;s lists and those
+in Lisp is that they are homogenous,
+they can only store one type of value.
+In Lisp, hetrogenous lists are everywhere,
+especially nested lists, which are what
+allow code to be written in a list format.</p>
+
+<p>For example the expression:</p>
+
+<pre><code>(+ (* 1 2) 3)
+</code></pre>
+
+<p>Is a valid piece of code in Lisp.
+It is also two lists nested together.
+The inner list is the symbol <code>*</code> followed
+by <code>1</code> and <code>2</code>.
+The outer list starts with the symbol <code>+</code>, etc.</p>
+
+<p>The complexity of allocating and managing memory
+for such structures was one of the motivations
+for inventing garbage collection.</p><a href="#fnref:6" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="07_min_range.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="09_iterators.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

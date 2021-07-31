@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title># 9. Iterators</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="08_lisp.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="10_binary_counter.html">next</a>
+]
+</span>
+
+
+
+<a name="L9.-Iterators"></a>
+<h1>9. Iterators</h1>
+
+<a name="History-of-iterators"></a>
+<h2>History of iterators</h2>
+
+<p>When we wrote <code>list_pool</code> before, we didn&rsquo;t provide it with iterators,
+because we are learning to be lazy.
+Now is a good time to do it, so we can use
+other algorithms and learn to write iterators right once
+and for all.</p>
+
+<p>Let me tell you a little about them.
+Anybody who programs in C++ is forced to use vector
+and those have iterators.
+But, there are lots of people who do not quite understand what they are,
+partially because iterators are called iterators.
+Someone told me that once I shared with them the proper
+name for them, they immediately understood.</p>
+
+<p>There is a thing in computer science called iterators which first
+appeared in the mid-seventies around 1975 or 1976 at MIT.
+It was invented
+by <a href="https://en.wikipedia.org/wiki/Barbara_Liskov">Barbara Liskov</a> who was designing a language called <a href="https://en.wikipedia.org/wiki/CLU_(programming_language)">CLU</a> and she was
+interested by another &ldquo;great and very successful language&rdquo; (joke) called <a href="https://en.wikipedia.org/wiki/Alphard_(programming_language)">Alphard</a>.
+It never existed.
+It&rsquo;s a mythical language. It was never implemented.
+But, many people at <a href="https://en.wikipedia.org/wiki/Carnegie_Mellon_University">CMU</a> got tenure because of it.
+It has some interesting ideas, including the idea of a generator.
+For those of you who know <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>, it is like an <a href="https://wiki.python.org/moin/Iterator">iterator in Python</a>.
+Barabra Liskov said, wouldn&rsquo;t it be nice to write:</p>
+
+<pre><code>for x in thing
+</code></pre>
+
+<p>and iterators allow you to do that.
+It is like a generator in Alphard.
+It is a procedure which returns multiple values, one by one.
+It&rsquo;s a procedural abstraction.
+In CLU you could only have one iterator to a data
+structure and it extended the <code>for</code>.
+It was a generalization of a control structure.</p>
+
+<p>At the same time, I was working on how to do algorithms and I
+introduced the notion of position.
+A better name is coordinate, the name which Paul and I are use
+in our book &ldquo;Elements of Programming&rdquo;<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
+A coordinate is some way of indicating where in the data structure you are.
+It is not a control structure it&rsquo;s just the pointer into a data structure,
+or generalized notion of a coordinate.
+It is something which allows me to navigate through to the data structure in a natural way the
+data structure navigates.</p>
+
+<p>Eventually I started talking to C++ guys and showed them coordinates
+and they said, &ldquo;we call it iterator&rdquo;.
+Of course they didn&rsquo;t call what I had an iterator.
+They had some C++ code where they
+were trying to do CLU like iterators, heavy state procedural
+things instead of lightweight pointer.
+So, I chickened out.
+I said, &ldquo;Yes, that&rsquo;s exactly what you guys have&rdquo;.
+I thought it was much better to win with the wrong name
+than lose with the right name, so the name is stuck.
+It&rsquo;s in the standard, but again the concept which designates is not a
+concept of iterator in CLU or iterator in Python which is not iterator in Java.
+An iterator is a generalization of a coordinate in a data structure.
+It&rsquo;s a lightweight thing, it doesn&rsquo;t do anything.
+It just points to things.</p>
+
+<p>This argument is active again.
+There are are <a href="https://www.boost.org/">boost</a> guys
+who say, &ldquo;Iterator is all wrong. Let us, go back
+and do ranges.&rdquo;
+They&rsquo;re reinventing Barbara Liskov iterators.
+Just for the record, when I introduced my iterators,
+I was very familiar
+with the iterators in CLU.
+ Moreover I was even very familiar with Barbara herself
+and with <a href="https://dblp.org/pid/04/4444.html">Alan Snyder</a> who designed iterators.
+I didn&rsquo;t do what they did because I wanted to do something else.
+It wasn&rsquo;t out of ignorance.
+Maybe I was stupid,
+but I wasn&rsquo;t ignorant.</p>
+
+<a name="List-pool-iterators"></a>
+<h2>List pool iterators</h2>
+
+<p>We always need to distinguish between how we type
+code in C++ and what the notion is behind it.
+A key part of iterators is <strong>affiliated types</strong>.
+Iterators point to values and you want to know what those values are.
+Types don&rsquo;t work on their own.
+They come in clusters, or connected families.
+If you have <code>int*</code> there is an affiliated type <code>int</code>
+which are related.
+We want to be able to obtain <code>int</code> from <code>int*</code>.
+Even in Python which has <a href="https://en.wikipedia.org/wiki/Duck_typing">duck typing</a>.</p>
+
+<p>For an iterator, there are <a href="https://en.cppreference.com/w/cpp/iterator/iterator_traits">5 types</a> that we always need to define.
+3 are primary, 2 are secondary.
+Let&rsquo;s start with the primary:</p>
+
+<ol>
+<li><p><code>value_type</code>: the type of the value it points to.</p></li>
+<li><p><code>difference_type</code>: Difference between pointers (<a href="https://en.cppreference.com/w/c/types/ptrdiff_t"><code>ptrdiff_t</code></a> in C).
+ Unlike C we might need a different type.
+ The length between elements in a range, depends on the range type.
+ It is an integral type large enough to encode any valid
+ range of a given iterator.</p></li>
+<li><p><code>iterator_category</code>:
+ Once again this is a general notion, not just C++.
+ There are <code>ForwardIterators</code>, <code>RandomAccessIterators</code>,
+ <code>InputIterators</code>, etc.
+ They are different theory of iterators.</p>
+
+<p> In C++ (without concepts) we use tag types.
+ Every iterator uses a tag type to signify what theory
+ it supports.
+ The tag lets you do compile type dispatch.</p>
+
+<p> What category is this iterator?
+ In the list pool, our iterator is a <code>ForwardIterator</code>.
+ Because, there is no way in a singly linked list
+ to go backward.</p></li>
+</ol>
+
+
+<p>Let&rsquo;s define these types in the <code>list_pool</code>
+from last time.</p>
+
+<pre><code>#include &lt;iterator&gt;
+
+// class list_pool {
+// ...
+
+struct iterator {
+  typedef list_pool::value_type value_type;
+  typedef list_pool::list_type difference_type;
+  typedef std::forward_iterator_tag iterator_category;
+};
+
+// };
+</code></pre>
+
+<a name="Iterator-reference-types"></a>
+<h3>Iterator reference types</h3>
+
+<p>The 4th and 5th types to be defined are required only for historical reasons.
+Microsoft said they were going to vote against STL unless it accommodated
+multiple memory models.
+At the time, they had tiny pointers, huge pointers and
+<a href="https://devblogs.microsoft.com/oldnewthing/20200728-00/?p=104012">far pointers</a>.
+They wanted STL to somehow work with all of them.
+I had to figure out
+how they work.
+The difference between far pointer and huge pointer is really
+weird.
+They are both 32 bits.
+But, with far pointer if you add
+one to it, and the first low two bytes overflow, it rotates without propagation.
+With a huge, it does propagated to the 16th bit.</p>
+
+<p>So, they
+they demanded that I change the whole architecture to accommodate them.
+Guess how they voted?
+No.
+Now we&rsquo;re stuck for the next hundred years with stuff which was included to placate people that
+ couldn&rsquo;t have been placated.</p>
+
+<p>So what does an iterator return when you dereference it?
+Normally a reference. It&rsquo;s an <a href="https://en.wikipedia.org/wiki/Value_(computer_science)#lrvalue"><code>lvalue</code></a>
+so you can modify it.
+But, with far and tiny pointers, you don&rsquo;t know what the reference
+type should be.
+So now we need to provide it.</p>
+
+<ol>
+<li><code>reference</code>: the type of a reference to the value.</li>
+<li><code>pointer</code>:  the type of a pointer to the value.</li>
+</ol>
+
+
+<p>Here is our implementation:</p>
+
+<pre><code>typedef value_type&amp; reference;
+typedef value_type* pointer;
+</code></pre>
+
+<p>It&rsquo;s not particularly harmful, bu it obfuscates things
+and it provides &ldquo;language experts&rdquo; with steady employment.</p>
+
+<a name="Constructors"></a>
+<h3>Constructors</h3>
+
+<p>Let&rsquo;s write constructors for our iterator:</p>
+
+<pre><code>iterator() {}
+iterator(list_pool&amp; p, list_pool.::list_type node) :
+    pool(&amp;p), node(node) {}
+</code></pre>
+
+<p>We should explicitly call a constructor when we can.
+Default constructor shouldn&rsquo;t really be used
+because it guarantees only a partially formed value.
+It is only valid in that it can be destructed or assigned to.</p>
+
+<p>This is convenience constructor:</p>
+
+<pre><code>iterator(list_pool&amp; p) :
+    pool(&amp;p), node(p.empty()) {}
+</code></pre>
+
+<a name="Dereference"></a>
+<h3>Dereference</h3>
+
+<p>What goes inside an iterator? Obviously
+an index which lets us get nodes.</p>
+
+<pre><code>list_pool* pool;
+list_pool::list_type node;
+
+reference operator*() const {
+  return pool-&gt;value(node);
+};
+
+pointer operator-&gt;() const {
+  &amp;**this;
+};
+</code></pre>
+
+<p>The arrow operator could be automatically
+generated. Sadly it isn&rsquo;t.</p>
+
+<p>You may notice I have a lot of minor annoyances like this.
+Whenever you enter a language
+you have to put aside thoughts that things
+could be done differently.
+If you work in C, you write C.</p>
+
+<a name="Preincrement-2c--postincrement"></a>
+<h3>Preincrement, postincrement</h3>
+
+<p>When you increment the iterator should
+move to the next node.</p>
+
+<pre><code>iterator&amp; operator++() {
+  node = pool-&gt;next(node);
+  return *this;
+};
+
+
+iterator operator++(int) {
+  iterator tmp(*this);
+  ++*this;
+  return tmp;
+};
+</code></pre>
+
+<p><code>int</code> here doesn&rsquo;t do anything, it&rsquo;s
+just to distinguish pre and post.
+Preincrement could be automatically generated
+and it would be criminal to do anything else.</p>
+
+<a name="Equality"></a>
+<h3>Equality</h3>
+
+<p>It&rsquo;s customary here to
+pass the arguments by reference.
+Why not by value?
+Passing by value makes a copy.
+At the metaphysical level, what is a copy?
+A copy is something which is equal to the original.
+<em>Equality is a more primitive thing</em>.
+So let&rsquo;s try to define it without referring to copy.</p>
+
+<pre><code>friend
+bool operator==(const iterator&amp; x, const iterator&amp; y) {
+  // assert(x.pool === y.pool);
+  return x.node == y.node;
+}
+
+friend
+bool operator!=(const iterator&amp; x, const iterator&amp; y) {
+  return !(x == y);
+}
+</code></pre>
+
+<p>We could also complain about using <code>==</code> instead of <code>=</code>
+for equality, as it violates mathematical tradition.
+But, oh well.
+When you took Algebra in grade school,
+they use <code>=</code> and they use <code>x</code> and <code>y</code> and I think it&rsquo;s good.</p>
+
+<a name="Thoughts-about-iterator-design"></a>
+<h2>Thoughts about iterator design</h2>
+
+<a name="Should-we-add-safety-guards-3f-"></a>
+<h3>Should we add safety guards?</h3>
+
+<p>Notice I sometimes write assertions in comments:</p>
+
+<pre><code>// assert(x.pool === y.pool);
+</code></pre>
+
+<p>I don&rsquo;t write it because it takes too long to check<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+There is nobody who should be comparing iterators from separate pools.
+If he does, he deserves what he gets.
+But, wouldn&rsquo;t it be good to guarantee safety?
+No. It cannot be done.
+Safe programming is bogus programming.
+Programming has to be done right.
+You have to write correct code.
+Checks are good, but you can&rsquo;t
+make wrong code correct with syntactic limitations.
+Turing machines are fundamentally unsafe.</p>
+
+<p>What about compiling debug mode?
+It&rsquo;s mildly useful.
+The only truly useful thing is to decompose
+your program into clear subroutines and unit
+which you understand.
+That&rsquo;s the only thing I know that works.</p>
+
+<p>The reason to program in C++ is to have access to the machine.
+We want pointers.
+If you want a language which hides the machine,
+then use it.
+Python is good for writing scripts.
+But don&rsquo;t write your operating system in Python.
+Don&rsquo;t write your search engine.
+<a href="https://en.wikipedia.org/wiki/BASIC">BASIC</a> and <a href="https://en.wikipedia.org/wiki/COBOL">Cobol</a> were wonderful for what they are.
+I wouldn&rsquo;t use Cobol to write an operating system.</p>
+
+<a name="Why-are-forward-iterators-not-comparable-3f-"></a>
+<h3>Why are forward iterators not comparable?</h3>
+
+<p>What is the basic example of a <code>ForwardIterator</code>?
+A singly linked list.
+Forward iterators do not have <code>&lt;</code>.
+Is that a good idea?
+You could do it for linked lists, but it&rsquo;s very expensive
+and not even guaranteed to terminate<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+But you&rsquo;re assuming &ldquo;If I am <code>&lt;</code>, then I am before&rdquo;.
+This is only one interpretation.
+Let me explain.</p>
+
+<p>I cannot effectively implement
+<code>&lt;</code> on <code>ForwardIterator</code>, but I was very tempted to include it.
+It would do a very simple thing, which is to just compare pointers and
+return that comparison.
+This would allow me to sort them.
+This is an amazing thing.
+I don&rsquo;t need the semantics of before or after to be able to use them for fast binary
+search, whether in a map, or whether in a sorted array.
+For example, suppose I want to see if an iterator
+is in the structure, such as inclusion in a set.
+The only effective way is comparison.
+I was torn  because I knew I could not include it,
+because most people would attempt to write
+code in STL the old way they learned which is:</p>
+
+<pre><code>while (i &lt; j) 
+</code></pre>
+
+<p>They taught you that this was better code than STL style,
+but it doesn&rsquo;t work on linked lists or map.
+If I provide it for linked lists, people will
+write it, and it will compile and it will work.
+(I don&rsquo;t know what that will do.)
+So, that was not an option.</p>
+
+<a name="Everything-on-a-computer-is-totally-ordered"></a>
+<h3>Everything on a computer is totally ordered</h3>
+
+<p>But, I still want to emphasize the fact that total ordering is a universally useful thing.
+Fortunately on a computer
+it is fully defined on every byte.
+It&rsquo;s fully defined on every word as an integer.
+It&rsquo;s even defined, somewhat on <code>double</code> (ignoring bad values).</p>
+
+<p>Equality is naturally extendable to struct.
+It was an oversight on the part of C and still C++ again.
+The compiler should generate equality,
+and it could generate inequality using
+<a href="https://en.wikipedia.org/wiki/Lexicographic_order">lexographical</a> ordering.</p>
+
+<p>So if you want to use iterators
+on set you can define a custom comparator.
+One, which compares the addresses of the elements to which iterator points.
+It has nothing to do with before and after,
+but it establishes a total ordering.
+A total ordering does not have to be topologically induced by the traversal.</p>
+
+<p><strong>Exercise:</strong> extend the iterator to linked iterator
+    so we can assign the next on a node.
+    Specifically we want to be able to modify the successor of
+    an iterator.</p>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/list_pool_iterator.h">list_pool_iterator.h</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+Alex recommends chapter 7 of &ldquo;Elements of Programming&rdquo;
+ on coordinate structures.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+I think modern compilers have fixed this so you can
+write checks with more confidence that they won&rsquo;t affect release builds.
+Specifically the standard has mandated some rules about when
+<a href="https://en.cppreference.com/w/cpp/error/assert">assert</a> is enabled.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+The Swift language and standard library
+actually implement very similar concepts and containers
+as C++. In their equivalent to <code>ForwardIterator</code>
+they actually <a href="https://forums.swift.org/t/dropping-comparable-requirement-for-indices/3290">did require comparable</a>,
+and bounds check with it,
+making it very difficult to write data structures like linked lists
+and probably makes Alex&rsquo;s pointer comparison trick impossible.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="08_lisp.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="10_binary_counter.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

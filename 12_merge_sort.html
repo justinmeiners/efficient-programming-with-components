@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>12. Merge Sort</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="11_min_1_2.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="13_searching.html">next</a>
+]
+</span>
+
+
+
+<a name="L12.-Merge-Sort"></a>
+<h1>12. Merge Sort</h1>
+
+<a name="The-discovery-of-generic-programming"></a>
+<h2>The discovery of generic programming</h2>
+
+<p>I have to tell you a story about fish.
+I was young once.
+The year was 1976.
+Some of you were not even born.
+I was a good programmer.
+I was writing operating systems and doing a good job.
+But, I aspired to greater things.
+When you are young you aspire.
+There was an opening in one very prestigious institute, <a href="https://en.wikipedia.org/wiki/Russian_Academy_of_Sciences">Soviet Academy of Science</a> to work
+on the design of a parallel computer.
+I wanted this job really badly.</p>
+
+<p>A friend of mine who
+worked at this Institute recommended me to this group.
+I knew I was going to go
+there for for an interview and I&rsquo;d have to say some wonderful things or they
+would not give me a job.
+Right before my interview,  terrible thing happened.
+I ate some raw fish and it was very tasty but within
+ eight hours my temperature was 103.
+I was in a bad situation.</p>
+
+<p>I&rsquo;m in the hospital flying above my bed.
+That happens to you when you have high fever.
+But,  what I&rsquo;m thinking about is this upcoming interview about parallel computers.
+I know nothing about parallel computers not now, nor
+ever, but I really want the job.
+So I need to come up with some brilliant idea.
+So I&rsquo;m floating above the bed in space and thinking.
+Then I suddenly realize how to add four numbers in parallel I said oh I could add them
+in parallel if I add the first two and the second two in parallel:</p>
+
+<pre><code>     +
+    /  \
+   /    \
+  +      +
+ / \    / \
+x   y  z   w
+</code></pre>
+
+<p>I had this vision of this huge addition tree.
+When you&rsquo;re sick amazing things happen in your mind.
+Then I realized the second great thing, while still floating.
+It could be multiplication and the same thing will work.
+I started realizing more and more
+functions  will work <code>min</code>, <code>max</code>, but division will not work.
+Then I realized it&rsquo;s good to be sick.
+It has to do something which I almost forgot called abstract algebra.
+How is this related?
+I have been teaching the whole course<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> so I remember that
+there is this thing called associativity.
+I realized that this idea will work as long as the operation is associative.</p>
+
+<p>This became my central theme.
+how could I talk about associative operations?
+how could I write algorithms like that?
+When I came to United States somewhere along the way,
+maybe in Austria, I realized that merge was associative
+It was a very big deal because I never even thought about merge in terms of <code>+</code> and <code>*</code>, but merge is associative.
+Then I realized  I could do merge sort with parallel reduction.
+That&rsquo;s the summary.
+Alex, what have you been doing all your life? This.
+You might say, &ldquo;that&rsquo;s not good enough&rdquo;.
+Probably not.</p>
+
+<p>I never talked about that discovery, during the job interview.
+I did get the job and it wasn&rsquo;t particularly good.
+It wasn&rsquo;t good at all.
+But, things happen<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.</p>
+
+<a name="Iterators-as-a-concept"></a>
+<h2>Iterators as a concept</h2>
+
+<p>Generic programming means
+to me finding algebraic structures on which algorithms are defined and writing them
+like that.
+The second idea is that it will be terribly nice if using beautiful
+programming at that level wouldn&rsquo;t cost us anything.
+Anybody can do beautiful things if it&rsquo;s very slow.
+This is why we design languages like <a href="https://en.wikipedia.org/wiki/Prolog">Prolog</a>.
+They don&rsquo;t care as long as they could write it as <a href="https://en.wikipedia.org/wiki/Horn_clause">Horn clauses</a>, or
+things like that.
+So it&rsquo;s the combination of two things:</p>
+
+<ol>
+<li>Doing programming in mathematical theories</li>
+<li>not losing efficiency</li>
+</ol>
+
+
+<p>We are slowly hinting more at concepts.
+How is a concept different from a class?
+How is a concept different than an abstract class
+or interface in java?
+One way to see this is try to think of how to specify
+the concept of an iterator using them.
+Consider that iterators have a <code>value_type</code>.
+In an interface, every argument must have a fixed type.
+Interfaces specify <em>identical interfaces</em>.
+A concept defines <em>similar interfaces</em>.
+The concept of a pointer doesn&rsquo;t define
+the same interface for every type.
+The <code>*</code> operator can point to <code>int</code>, or <code>double</code>, or who knows what.
+<em>Concepts have variance on the types.</em></p>
+
+<p>Think also about <code>==</code>.
+It is a binary predicate.
+If you use inheritance, you can only modify the type of the first argument.
+The second argument stays the same.
+In Java you can kind of fix it by doing lots of casting.
+But, the other problem is more serious as you can&rsquo;t fix the fundamental variance on <code>value_type</code>.</p>
+
+<p>People say, &ldquo;but couldn&rsquo;t there be a correct inheritance?
+Of course, yes.
+But it&rsquo;s not the inheritance we have in C++ or Java.</p>
+
+<p>Because we don&rsquo;t have concepts, when we write
+functions which take an iterator as an argument you cannot say what
+requirements it has.</p>
+
+<a name="Kinds-of-iterators"></a>
+<h3>Kinds of iterators</h3>
+
+<p>There are several <a href="https://en.cppreference.com/w/cpp/iterator">iterator concepts</a> in STL<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>,
+all of which we have mentioned before:</p>
+
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/named_req/InputIterator"><code>InputIterator</code></a>: can only advance forward and once advanced, iterators pointing to previous elements become invalid.</li>
+<li><a href="https://en.cppreference.com/w/cpp/named_req/ForwardIterator"><code>ForwardIterator</code></a>: can advance forward and have iterators pointing to previous elements.</li>
+<li><a href="https://en.cppreference.com/w/cpp/named_req/BidirectionalIterator"><code>BidirectionalIterator</code></a>: can move iterators forward and backward.</li>
+<li><a href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator"><code>RandomAccessIterator</code></a>: can advance iterators by arbitrary steps in constant time (like pointers).</li>
+</ul>
+
+
+<a name="Linked-iterator"></a>
+<h3>Linked iterator</h3>
+
+<p>There are some people who say, &ldquo;concepts aren&rsquo;t important because Alex already exhausted them.
+there are just four kinds of iterators and that&rsquo;s all.&rdquo;
+There is a &ldquo;great&rdquo; person who goes around and gives talks saying this.
+I&rsquo;m not going to name him<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
+
+<p>What I&rsquo;m going to do now is introduce a new kind of iterator,
+just to spite this distinguished person.
+We want to extend the concept of an iterator with a new concept of a <code>LinkedIterator</code>.
+It is a <code>ForwardIterator</code> which in addition to
+the normal operations:</p>
+
+<ul>
+<li><code>++</code>: advance</li>
+<li><code>==</code>: equality</li>
+<li><code>*</code>: dereference</li>
+</ul>
+
+
+<p>It has one additional operation which allows
+you to set the successor.
+If you have an iterator and you have another one,
+you can just make the second iterator the successor
+of the first.
+You can literally connect them.
+Of course, the standard model is a linked list.</p>
+
+<p>To make our <code>list_pool</code> iterator a <code>LinkedIterator</code>
+we simply add the following function:</p>
+
+<pre><code>void set_successor(iterator x, iterator y) {
+    x.pool-&gt;next(x.node) = y.node;
+}
+</code></pre>
+
+<p>We want it to be a function not a member
+because primitive/built-in
+types don&rsquo;t have member functions.
+Furthermore, in the case of an iterator,
+it might be a pointer, not a class.
+In general, I don&rsquo;t like member functions.
+If you have the option of:</p>
+
+<pre><code>x.foo()
+</code></pre>
+
+<p>Or</p>
+
+<pre><code>foo(x)
+</code></pre>
+
+<p>There is at least one provable advantage.
+It has one fewer character<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
+But, since we think generically, a better
+question is whether the function could operate
+on a built-in type instead of a class.</p>
+
+<a name="Linked-iterator-is--22-unsafe-22-"></a>
+<h3>Linked iterator is &ldquo;unsafe&rdquo;</h3>
+
+<p>As long as you don&rsquo;t do it, the topology remains.
+But, if you do, things change.
+This is a very unsafe operation.
+You can even make circular lists.
+Some people say this is very bad.
+It should not be allowed.
+We have to come up with language mechanisms for not doing this evil.
+These are the people who believe that there are some syntactic rules that can make programming good.</p>
+
+<p>Are they right?
+Why not in the case of circular lists?
+They are very useful.
+Of course, if you try to get to the end,
+you will not be successful.
+But, it is a legitimate data structure.</p>
+
+<p>A long time ago when we programming in Lisp,
+there were people saying, &ldquo;never use <code>rplcd</code>&rdquo; (set successor).
+They were wrong.
+Use whatever is given to you.
+But, be wise.
+You can write bad code just with <code>+</code>.</p>
+
+<pre><code>while (true) a = a + 1;
+</code></pre>
+
+<p>That doesn&rsquo;t terminate.
+Well maybe just <code>while (true)</code> is bad.</p>
+
+<pre><code>a = 1;
+while (a &gt; 0)  { do stuff }
+</code></pre>
+
+<p>There many ways of writing bad code
+and syntax can&rsquo;t help you.
+No smart pointer or syntactic constraint
+will make a bad programmer into a good programmer.
+It will just replace one sort of bugs with another.
+Bad programmers are very creative,
+they find amazing things.</p>
+
+<a name="Reverse-linked-ranges"></a>
+<h2>Reverse linked ranges</h2>
+
+<p>To understand how this concept works
+we will look at a basic algorithm.
+If I hadn&rsquo;t already shown you <code>set_successor</code>
+we can learn it&rsquo;s use from this algorithm.
+It takes two lists, reverses the first,
+and attaches it to the second.
+It&rsquo;s a very important list algorithm.
+In scheme <code>(append! (reverse! x) tail)</code>
+or <code>(nconc (nreverse x) tail)</code>
+in Common Lisp.</p>
+
+<pre><code>template &lt;typename I&gt;
+// requires I is LinkedIterator
+I reverse_linked(I first, I last, I tail) {
+  while (first != last) {
+    I next = first;
+    ++next;
+    set_successor(first, tail);
+    tail = first;
+    first = next;
+  }
+  return tail;
+}
+</code></pre>
+
+<a name="Merging-sorted-lists"></a>
+<h2>Merging sorted lists</h2>
+
+<a name="Simple-merge"></a>
+<h3>Simple merge</h3>
+
+<p>The following function merges two sorted lists,
+using the algorithm we just wrote.</p>
+
+<pre><code>template &lt;typename I, typename Compare&gt;
+// requires I is Linked Iterator
+I merge_linked_simple(I first1, I last1, I first2, I last2, Compare cmp) {
+  I result = last1;
+  while (first1 != last1 &amp;&amp; first2 != last2) {
+    I tmp = cmp(*first2, *first1) ? first2++ : first1++;
+    set_successor(tmp, result);
+    result = tmp;
+
+  return reverse_linked(result, last1, first1 == last1 ? first2 : first1);
+}
+</code></pre>
+
+<p>Notice that a good thing about iterators
+is it helps us avoid writing <code>nil</code>/<code>null</code>.</p>
+
+<p>It&rsquo;s called simple because it&rsquo;s simplistic.
+Why?
+In terms of complexity it takes two passes.
+We have to go through the lists, and merge them,
+roughly <code>n</code> successors on the way there.
+Then we do the same number doing the <code>reverse_linked</code>.
+Also note that algorithmically there is no good reason why we evaluate</p>
+
+<pre><code>while (first1 != last1 &amp;&amp; first2 != last2)
+</code></pre>
+
+<p>On every single iteration, because only the one iterator
+we moved in the loop could become empty.
+We will come back to this.</p>
+
+<p><strong>Exercise:</strong> Write a theoretically more efficient merge which does not do this extra comparison (solved just below).</p>
+
+<a name="Improved-merge"></a>
+<h3>Improved merge</h3>
+
+<p>I clearly teach you all the wrong things.
+I tell you not to use
+inheritance, smart pointers, or read certain books.
+Now I&rsquo;m going to teach you to use <code>goto</code>.
+The greatest authority in computer science wrote a famous letter to
+communications of ACM called, <a href="papers/goto-harmful.pdf">&ldquo;Go To Statement Considered Harmful&rdquo;</a>.
+There is is nothing harmful in the computer.
+The computer is good.
+It has an instruction called <a href="https://en.wikipedia.org/wiki/JMP_(x86_instruction)">JMP</a> (or branch).
+If it&rsquo;s there, why not use it?</p>
+
+<p>If you are going to use <code>goto</code>, it&rsquo;s probably
+because you have something like a finite state machine.
+The state machine goes between fundamental states.
+You probably learned about them in school, but they never told
+you it relates to <code>goto</code>.
+What are the states which we need for this algorithm?
+Which list won the comparison and advanced.
+Either the 1st, or the 2nd.</p>
+
+<pre><code>template &lt;typename I, typename Compare&gt;
+// I is a linked forward iterator
+std::pair&lt;I, std::pair&lt;I, I&gt; &gt;
+merge_linked_non_empty(I first1, I last1, I first2, I last2, Compare cmp) {
+  I head, tail;
+  if (cmp(*first2, *first1)) {
+    head = first2;
+    tail = first2;
+    ++first2;
+    goto winner2;
+  } else {
+    head = first1;
+    tail = first1;
+    ++first1;
+    // goto winner1;
+  }
+winner1:
+  if (first1 == last1) goto empty1;
+  if (!cmp(*first2, *first1)) {
+    tail = first1;
+    ++first1;
+    goto winner1;
+  } else {
+    set_successor(tail, first2); 
+    tail = first2;
+    ++first2;
+    // goto winner2;
+  }
+winner2:
+  if (first2 == last2) goto empty2;
+  if (cmp(*first2, *first1)) {
+    tail = first2;
+    ++first2;
+    goto winner2;
+  } else {
+    set_successor(tail, first1);
+    tail = first1;
+    ++first1;
+    goto winner1;
+  }
+empty1:
+  set_successor(tail, first2);
+  return std::make_pair(head, std::make_pair(first2, last2));
+empty2:
+  set_successor(tail, first1);
+  return std::make_pair(head, std::make_pair(first1, last1));
+}
+</code></pre>
+
+<p>Let&rsquo;s go through the states.
+Right away,
+we need to determine who the winner is.
+For performance this part doesn&rsquo;t matter
+because it&rsquo;s not in the inner loop.
+<code>winner1</code> means the smaller element
+came from the 1st range, and similarly
+for <code>winner2</code>.
+We compare just the one that advanced.
+The two states are symmetric.</p>
+
+<p>I return 3 iterators.
+Why?
+It&rsquo;s specific to linked lists/iterators.
+If I want to take the resulting list
+and attach it, I need to be able to modify
+the successor of the final node.
+But, if we return the end, it&rsquo;s probably
+<code>nil</code> so I don&rsquo;t have it.
+Just return you all the information.
+The caller can do whatever they please.
+If they want to ignore it, ignore it.</p>
+
+<p>Note that it assumes the lists are nonempty,
+which is perfectly fine for our sort,
+which is not going to merge empty lists<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
+
+<a name="Is-it-worth-it-3f-"></a>
+<h3>Is it worth it?</h3>
+
+<p>We now have two programs.
+One of them is oh so very simple.
+The other one is elegant, but long and does a  minimal number of operations.
+Which one should we use in practice?
+We need to do a lot of experiments to establish certainty
+of what we are doing<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.</p>
+
+<p><strong>Exercise:</strong> Measure and determine whether it&rsquo;s actually faster than our simple merge.</p>
+
+<p>Can we think of any more performance improvements?
+In terms of operations we have cut it to the bare bone.
+But, one thing is <a href="https://en.wikipedia.org/wiki/Branch_predictor">branch mispredictions</a>.
+Modern processors try to predict which
+way a condition is going to go.
+If you look at our branches, the probability
+of going one way or the other is 50 percent.
+That&rsquo;s literally the worst thing which which could happen.
+I&rsquo;m entering the territory where I haven&rsquo;t done work yet.
+I haven&rsquo;t tried see whether some kind of predication avoidance of <code>goto</code>
+could be done.</p>
+
+<p><strong>Exercise:</strong> Try to write a version of this algorithm which is more friendly
+    for branch prediction.</p>
+
+<a name="Merge-sort"></a>
+<h2>Merge sort</h2>
+
+<p>Now that we can merge lists and we have our binary counter,
+we can write merge sort.
+For our machinery, we need to wrap this operation in an object.
+There is no code, it&rsquo;s just a way of invoking our merge function.
+It has 5 arguments, and we need a binary function.</p>
+
+<pre><code>template &lt;typename I, typename Compare&gt;
+// I is Linked Iteratork
+struct mergesort_linked_operation
+{
+  typedef I argument_type;
+  I nil;
+  Compare cmp;
+  mergesort_linked_operation(I nil, const Compare&amp; cmp) : nil(nil), cmp(cmp) {}
+  I operator()(I x, I y) { return merge_linked_simple(x, nil, y, nil, cmp); }
+};
+</code></pre>
+
+<p>The purpose of this is not to learn to sort lists.
+It is of course a useful skill.
+The purpose is to show you this code.
+Observe it is the same machine as we had before.</p>
+
+<pre><code>template &lt;typename I, typename Compare&gt;
+// I is Linked Iterator
+I mergesort_linked(I first, I last, Compare cmp) {
+  mergesort_linked_operation&lt;I, Compare&gt; op(last, cmp);
+  binary_counter&lt;mergesort_linked_operation&lt;I, Compare&gt; &gt; counter(op, last);
+  counter.reserve(16);
+  while (first != last) {
+    I tmp = first++;
+    set_successor(tmp, last);
+    counter.add(tmp);
+  }
+  return counter.reduce();
+}
+</code></pre>
+
+<p>It is very efficient, and doesn&rsquo;t do any kind of list splitting<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.
+If you don&rsquo;t find it&rsquo;s beautiful I have nothing to teach you.
+We aren&rsquo;t on the same wavelength.
+In the modern world, you meet somebody
+somebody and
+say, &ldquo;<a href="https://en.wikipedia.org/wiki/Johann_Sebastian_Bach">Bach</a> is a great composer&rdquo;.
+He says, &ldquo;nah, <a href="https://en.wikipedia.org/wiki/Lady_Gaga">Lady Gaga</a> is much more gifted&rdquo;.
+It&rsquo;s a free world.
+People are allowed to say whatever they like.
+Some  people will say,  &ldquo;oh this is not object-oriented&rdquo;, or &ldquo;this is not functional&rdquo;,
+which it isn&rsquo;t and I&rsquo;m very proud of it.
+But, in some sense this is literally the essence of my life work, this piece of
+code.
+That&rsquo;s where it started.
+That&rsquo;s where it ends.</p>
+
+<p>The majority of people do not get it.
+The majority of computer scientists do not get it.
+There is absolutely no indication that getting it will make you rich.</p>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/list_algorithm.h">list_algorithm.h</a></li>
+<li><a href="code/test_merge_sort.cpp">test_merge_sort.cpp</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+Alex studied math at
+<a href="https://en.wikipedia.org/wiki/Moscow_State_University">Lomonosov Moscow State University</a> from 1967-1972.
+He was a professor in the United States, so I believe this was a research
+or graduate level degree (although he does not appear in Math genealogy, or perhaps his name was Americanized).
+Based on my reading, I believe his area of research is number theory.
+I believe he is alluding to teaching an abstract algebra course as part of
+his graduate or post-graduate studies.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+This story can also be found in <a href="http://stepanovpapers.com/LoRusso_Interview.htm">this interview</a>.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+This is a subject for which the <a href="https://www.boost.org/sgi/stl/Iterators.html">SGI Documentation</a>
+can be a better resource.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+I suspect he is referring to <a href="https://en.wikipedia.org/wiki/Andrei_Alexandrescu">Andrei Alexandrescu</a> who gave a talk
+<a href="https://accu.org/conf-docs/PDFs_2009/AndreiAlexandrescu_iterators-must-go.pdf">&ldquo;Iterators must Go&rdquo;</a>.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
+<p>This argument doesn&rsquo;t hold up if there are arguments:</p>
+
+<pre><code>x.foo(y)
+</code></pre>
+
+<p>Versus:</p>
+
+<pre><code>foo(x, y)
+</code></pre>
+
+<p>I suppose you could drop the space:</p>
+
+<pre><code>foo(x,y)
+</code></pre>
+
+<p>Many languages such as Swift now also allow you to add member functions
+to primitive types like <code>int</code>.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
+<p>In Elements of Programming Alex often follows the pattern
+of creating a function which works well for some given assumptions
+(such as the list being nonempty) and then creates a wrapper
+which does additional checks or work to ensure the assumptions
+are met.
+This makes the algorithm more modular and faster
+for those other components which can ensure the assumptions.</p><a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<li id="fn:7">
+<p>In my test (Intel i5, 4 core, g++ 9.3.0)
+I noticed about a 15-20% improvement
+sorting one million integers.</p><a href="#fnref:7" rev="footnote">&#8617;</a></li>
+<li id="fn:8">
+<p>Alex: &ldquo;If you want to see a really bad program
+see <a href="http://people.csail.mit.edu/phw/index.html">Patrick Henry Winston</a>&rsquo;s
+book <a href="http://people.csail.mit.edu/phw/Books/LISPBACK.HTML">&ldquo;LISP 1st Edition&rdquo;</a>.
+Look at his sorting algorithm for list.
+It posses many remarkable properties including using <code>n log(n)</code> extra storage.
+Good example of a famous person at a respectable school
+publishing something terrible.
+Published does not mean good.&rdquo;</p><a href="#fnref:8" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="11_min_1_2.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="13_searching.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

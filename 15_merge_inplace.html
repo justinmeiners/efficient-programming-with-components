@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>15. Merge inplace</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="14_binary_search.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="16_optimizing_stable_sort.html">next</a>
+]
+</span>
+
+
+
+<a name="L15.-Merge-inplace"></a>
+<h1>15. Merge inplace</h1>
+
+<a name="Reinventing-things"></a>
+<h2>Reinventing things</h2>
+
+<p>Another sad story (like the fish story)
+is finding the algorithm for merging sorted lists.
+This is a notoriously hard problem.
+Many people worked on it.
+The first solution was done by a Russian computer scientist
+<a href="https://en.wikipedia.org/wiki/Alexander_Kronrod">Alexander Kronrod</a>,
+but it wasn&rsquo;t stable.
+There was another solution
+by a wonderful Argentinian computer scientist
+<a href="https://www.genealogy.math.ndsu.nodak.edu/id.php?id=47194">Luis Pardo</a> (Knuth&rsquo;s student).</p>
+
+<p>So, was thinking and thinking and thinking and once I was
+waking up in the phase between Twilight, when you wake up but still see
+dreams but you&rsquo;re not quite asleep.
+I saw the algorithm on the board,  it does happen.
+I was ecstatic.
+I think it was 1984.
+What do you do if you find a really beautiful algorithm?
+If you&rsquo;re me, you call your friends.
+So I called <a href="https://en.wikipedia.org/wiki/David_Musser">Dave Musser</a>
+and said, &ldquo;this is absolutely gorgeous&rdquo;
+and he agreed.
+I started implementing and doing measurements.
+Meanwhile, he starts telling faculty around him.</p>
+
+<p>Here comes the bad news. One of his colleagues,
+<a href="https://kaltofen.math.ncsu.edu/">Erich Kaltofen</a> who is a distinguished
+specialist in computer algebra,
+came to Dave and said &ldquo;Yeah it&rsquo;s nice,
+but there are these two Polish guys
+Dudzinski and Dydek
+who <a href="papers/on-stable-merge.pdf">published it</a> in 1981 (two years before).&rdquo;
+It was very sad.
+But, we often reinvent things.</p>
+
+<p>Meanwhile Knuth heard about it from his friend
+<a href="https://en.wikipedia.org/wiki/Ian_Pratt_(computer_scientist)">Ian Pratt</a> who told him about it.
+So he gives the attribution to his friend,
+and not the two polish guys.
+As an algorithm itself, it&rsquo;s utterly useless.
+Sometimes algorithms published by theoreticians
+can be used by us after appropriate modification.</p>
+
+<a name="Merging-adjacent-lists"></a>
+<h2>Merging adjacent lists</h2>
+
+<p>We got into all of this because we were
+thinking about merge.
+We already learned to merge linked list.
+I introduced this thing called <code>goto</code>.
+Today I&rsquo;m going to teach you some other bad programming practices because it&rsquo;s always
+pleasant to introduce techniques which are known to be bad in general when
+they&rsquo;re good in particular.</p>
+
+<p>We&rsquo;re going to to go about things in a funny way.
+Normally when I teach merge,
+we then realize it can be used for sorting,
+we write merge sort,
+and then we realize that merge sort needs extra memory,
+and say &ldquo;oh it&rsquo;s very unfortunate. Couldn&rsquo;t we find merge sort
+that doesn&rsquo;t require extra memory?&rdquo;
+This time around, I decided to follow a different path.
+At first, we are going to avoid normal merge.
+We&rsquo;re going to start with very beautiful, but somewhat slow code.
+Sometimes it&rsquo;s actually good to start with slow code and refine it
+into fast code.
+Especially if it allows you to create something architecturally nice
+and see connections.
+So we are going to look at the much harder problem of in-place merge
+The problem is actually hard if you think about it.</p>
+
+<a name="Interface"></a>
+<h3>Interface</h3>
+
+<p>What is the interface?
+It&rsquo;s not trivial.
+Obviously if you have two separate lists/vectors,
+you can&rsquo;t really merge in place.
+So the interface assumes they are adjacent.
+One thing you could do is just sort it.
+There are problems.
+Most sorts, besides merge sort,
+are not stable, so stability will be lost.</p>
+
+<p>For bounded (not counted) it will take three iterators:</p>
+
+<pre><code>first, middle, last
+</code></pre>
+
+<p>But our algorithm will greatly benefit from counted ranges.
+When do we need counted ranges? When we do bisection,
+or something like binary search.
+I like to use counted ranges.
+We will use two of them:</p>
+
+<pre><code>[first1, count1)
+[first2, count2)
+</code></pre>
+
+<p>We have a precondition that <code>distance(first1, first2) == count1</code>.
+Another precondition is that each range is sorted,
+and our post condition is the entire range will be sorted.</p>
+
+<a name="Algorithm"></a>
+<h3>Algorithm</h3>
+
+<p>If you don&rsquo;t know how to do something, the old
+advice is to look for divide and conquer.
+The following is a graph of the two sorted ranges adjacent to each other.
+The graph for each moves up and to the right to illustrate they are ascending.
+When we have lots of variables,
+naming doesn&rsquo;t work.
+We have to use one letter names with indices,
+like math.</p>
+
+<pre><code>    n0     n1
+   /      /
+  /      /
+ /      /
+/      /
+f0     f1
+</code></pre>
+
+<p>We will first bisect one of the ranges and pick a guy
+from the middle.
+Then we ask, &ldquo;where would it fit in the other sequence?&rdquo;.
+Do we have a function for that?
+We do. It&rsquo;s called <code>lower_bound</code>.</p>
+
+<p>Assume we bisect the left.
+So then we let <code>f0_0 = f0</code>,
+and <code>f0_1</code> be the bisection
+of the first interval.
+Then <code>f1_1</code> is found from the right using <code>lower_bound</code>.
+(that should take  <code>O(log(n))</code> comparisons).</p>
+
+<pre><code>    n0     n1
+   /      /
+  /      /
+  f0_1   f1_1
+ /      /
+/      /
+f0_0   f1
+</code></pre>
+
+<p>Now we are going to rotate (C++11 <a href="https://en.cppreference.com/w/cpp/algorithm/rotate"><code>std::rotate</code></a><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>).
+Rotating swaps elements in the range
+<code>[f0_1, f1_1)</code>
+in such a way that <code>f1</code> becomes the first.
+<code>[f0_0, f0_1)</code> and <code>[f1_1, n1)</code> remain fixed.</p>
+
+<pre><code>                n0     n1
+                /      /
+               /      /
+               f0_1  f1_1
+
+ /     /
+/     /
+f0_0  f1
+</code></pre>
+
+<p>Now we know <code>f0_1</code> is in his rightful place,
+so we will let <code>x = f0_1</code>,
+as he won&rsquo;t be moved again (all lower are to the left)
+(all greater are to the right).
+So, we shrink the range
+by one step by assigning <code>f1_0 = f0_1 + 1</code>,
+and then just figure out the lengths of the remaining
+intervals:</p>
+
+<pre><code>                  n1_0     n1_1
+                  /       /
+                f1_0     /
+                x      f1_1
+ n0_0   n0_1
+ /     /
+/     /
+f0_0  f0_1
+</code></pre>
+
+<p>Now notice that we have 4 adjacent sequences,
+each of which is individually sorted, so we
+can apply the algorithm recursively.</p>
+
+<p>Here is the other insight.
+Which range should we bisect?
+The smaller one, because
+we want to get to empty range as fast as possible.
+So if it&rsquo;s on the left we should use <code>lower_bound</code>
+If it&rsquo;s on the right we should use <code>upper_bound</code>.
+Why?
+To preserve stability we need to make sure equal
+guys don&rsquo;t jump over each other.</p>
+
+<a name="Implementation"></a>
+<h3>Implementation</h3>
+
+<p>If you write a function like this it has to return
+a lot of stuff.
+Here comes the solution which we are proud of,
+which is returning things through the reference arguments.
+Here we take 2 ranges,
+and return 4 of them.</p>
+
+<pre><code>template &lt;typename I, typename N, typename R&gt;
+// I is ForwardIterator
+// N is Integral
+// R is WeakStrictOrdering on the value type of I
+inline 
+void merge_inplace_left_subproblem(I  f0,   N  n0,
+                                   I  f1,   N  n1,
+                                   I&amp; f0_0, N&amp; n0_0, 
+                                   I&amp; f0_1, N&amp; n0_1, 
+                                   I&amp; f1_0, N&amp; n1_0, 
+                                   I&amp; f1_1, N&amp; n1_1,
+                                   R r) {
+  // precondition std::distance(f0, f1) == n0
+  // precondition is_sorted_n(f0, n0, r) &amp;&amp; is_sorted(f1, n1, r)
+  // precondition n0 &gt; 0
+  // precondition n1 &gt; 0
+  f0_0 = f0;
+  n0_0 = n0 &gt;&gt; 1;
+  f0_1 = f0;
+  std::advance(f0_1, n0_0);
+  f1_1 = lower_bound_n(f1, n1, *f0_1, r);
+  f1_0 = std::rotate(f0_1, f1, f1_1);
+  n0_1 = std::distance(f0_1, f1_0);
+  ++f1_0;
+  n1_0 = (n0 - n0_0) - 1;
+  n1_1 = n1 - n0_1;
+}
+</code></pre>
+
+<p>Now implement the right sub-problem,
+it is basically the same idea.
+The fundamental difference is upper bound,
+and switching sides.</p>
+
+<pre><code>template &lt;typename I, typename N, typename R&gt;
+// I is ForwardIterator
+// N is Integral
+// R is WeakStrictOrdering on the value type of I
+inline
+void merge_inplace_right_subproblem(I  f0,   N  n0,
+                                    I  f1,   N  n1,
+                                    I&amp; f0_0, N&amp; n0_0, 
+                                    I&amp; f0_1, N&amp; n0_1, 
+                                    I&amp; f1_0, N&amp; n1_0, 
+                                    I&amp; f1_1, N&amp; n1_1,
+                                    R r) {
+  // precondition std::distance(f0, f1) == n0
+  // precondition is_sorted_n(f0, n0, r) &amp;&amp; is_sorted(f1, n1, r)
+  // precondition n0 &gt; 0
+  // precondition n1 &gt; 0
+  f0_0 = f0;
+  n0_1 = n1 &gt;&gt; 1;
+  f1_1 = f1;
+  std::advance(f1_1, n0_1);
+  f0_1 = upper_bound_n(f0, n0, *f1_1, r);
+  ++f1_1;
+  f1_0 = std::rotate(f0_1, f1, f1_1);
+  n0_0 = std::distance(f0_0, f0_1);
+  n1_0 = n0 - n0_0;
+  n1_1 = (n1 - n0_1) - 1;
+}
+</code></pre>
+
+<p>Now we combine them in a function that does no work.</p>
+
+<pre><code>template &lt;typename I, typename N, typename R&gt;
+// I is ForwardIterator
+// N is Integral
+// R is WeakStrictOrdering on the value type of I 
+void merge_inplace_n(I  f0,   N  n0,
+                     I  f1,   N  n1,   R r) {
+  // precondition std::distance(f0, f1) == n0
+  // precondition is_sorted_n(f0, n0, r) &amp;&amp; is_sorted(f1, n1, r)
+  if (!n0 || !n1) return;
+  I f0_0, f0_1, f1_0, f1_1;
+  N n0_0, n0_1, n1_0, n1_1;
+  if (n0 &lt; n1)  merge_inplace_left_subproblem(f0,   n0,
+                                              f1,   n1,
+                                              f0_0, n0_0,
+                                              f0_1, n0_1,
+                                              f1_0, n1_0,
+                                              f1_1, n1_1,
+                                              r);
+  else         merge_inplace_right_subproblem(f0,   n0,
+                                              f1,   n1,
+                                              f0_0, n0_0,
+                                              f0_1, n0_1,
+                                              f1_0, n1_0,
+                                              f1_1, n1_1,
+                                              r);
+
+  merge_inplace_n(f0_0, n0_0, f0_1, n0_1, r);
+  merge_inplace_n(f1_0, n1_0, f1_1, n1_1, r);
+}
+</code></pre>
+
+<a name="Naming-things"></a>
+<h3>Naming things</h3>
+
+<p>There is a function in STL incorrectly called <a href="https://en.cppreference.com/w/cpp/algorithm/inplace_merge"><code>std::inplace_merge</code></a>
+Why is the name incorrect?
+Paul discovered it while working
+on the index to our book (Elements of Programming) and discovered
+a general principle which escaped me for decades.
+&ldquo;inplace merge&rdquo;
+is a bad name for a function?
+Why it should be <code>merge_inplace</code>.
+It should come next to merge in the index.
+People who look into the index want to see all the versions.
+Am I a total idiot?
+I guess, I did not see it.</p>
+
+<p>I&rsquo;m just emphasizing a very important naming principle
+which is to think about indexing.
+think about indexing things you you know like
+<code>find_if</code>, not <code>if_find</code>.
+Suffixes should be sorted in the order of importance.</p>
+
+<a name="Sort-from-merge"></a>
+<h2>Sort from merge</h2>
+
+<p>Now we can sort, using our merge mechanism.
+It&rsquo;s really easy.
+The first statement is that an empty list is sorted.
+The second is that a one element list is sorted.
+Now, we just call it recursively and ask
+it to sort itself.
+Nobody does any work except <code>merge_inplace_n</code><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.</p>
+
+<pre><code>template &lt;typename I, typename N, typename R&gt;
+// I is ForwardIterator
+// N is Integral
+// R is WeakStrictOrdering on the value type of I 
+I sort_inplace_n(I first, N  n, R r) {
+  if (!n) return first;
+  N half = n &gt;&gt; 1;
+  if (!half) return ++first;
+  I middle = sort_inplace_n(first, half, r);
+  I last   = sort_inplace_n(middle, n - half, r);
+  merge_inplace_n(first, half, middle, n - half, r);
+  return last;
+}
+</code></pre>
+
+<p>It&rsquo;s a good algorithm.
+It&rsquo;s stable.
+It uses no extra storage.
+Whether, that&rsquo;s really needed or not, we don&rsquo;t know.
+It has <code>log(n)</code> levels.
+At every level we have a merge which is <code>O(n log(n))</code>.
+so the overall complexity is <code>O(n log^2(n))</code>.
+It&rsquo;s better than bubble sort and shell sort.</p>
+
+<p>There is another strength of this algorithm,
+which you won&rsquo;t know unless you think about generic programming.
+What&rsquo;s the requirement on the iterator?
+Just forward iterator.
+We can sort anything.</p>
+
+<p>But, it also sucks.
+Where does it suck? Deep down in the call tree.
+At the top it&rsquo;s good.
+But, we are doing too much work.
+We will talk more about this in the next
+lesson.</p>
+
+<p><strong>Exercise:</strong> The requirement to use no extra storage is a little unrealistic.
+    Try to write a version that is similar, but utilizes extra storage.</p>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/merge_inplace.h">merge_inplace.h</a></li>
+<li><a href="code/test_merge_inplace.cpp">test_merge_inplace.cpp</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+When I first put <code>std::rotate</code> in STL
+it returned <code>void</code>.
+In 1995 I discovered what it should return and how to do it efficiently.
+When you rotate you return what the new middle is.
+It took literally 20 years.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+<p>If you are not familiar with recursion or mathematical induction
+this kind of code can look tricky.
+The key property is that every iteration the problem space is made smaller,
+in a way that it preserves essential properties of the original problem.</p>
+
+<p>In this case, we assume we can sort both halves. That wouldn&rsquo;t solve the
+problem normally, except that the merge algorithm gives us a way to combine them
+to get a solution for the full input space.</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="14_binary_search.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="16_optimizing_stable_sort.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Efficient Programming with Components</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="01_data_structures.html">next</a>
+]
+</span>
+
+
+
+<img src="img/cover.png" style="display: block; margin-left: auto; margin-right: auto;"/>
+
+<b>Course by:</b> <a href="http://stepanovpapers.com">Alexander A. Stepanov</a> (2013)
+<br/>
+<b>Notes by:</b> <a href="https://justinmeiners.github.io">Justin Meiners</a> (2021)
+<br/>
+
+
+<ul>
+ <li><a href="00_foreword.html#Foreword">Foreword</a></li>
+ <li><a href="00_foreword.html#Acknowledgments">Acknowledgments</a></li>
+ <li><a href="00_foreword.html#FAQ">FAQ</a></li>
+</ul>
+<ul>
+ <li><a href="01_data_structures.html#L1.-Choosing-data-structures-and-algorithms">1. Choosing data structures and algorithms</a>
+ <ul>
+  <li><a href="01_data_structures.html#Reflections-on-Trusting-Trust">Reflections on Trusting Trust</a></li>
+  <li><a href="01_data_structures.html#Hello-2c--World">Hello, World</a></li>
+  <li><a href="01_data_structures.html#Number-of-unique-elements">Number of unique elements</a>
+  <ul>
+   <li><a href="01_data_structures.html#Equality-vs-ordering">Equality vs ordering</a></li>
+   <li><a href="01_data_structures.html#Correct-solution">Correct solution</a></li>
+   <li><a href="01_data_structures.html#Use-the-correct-STL-data-structures">Use the correct STL data structures</a></li>
+  </ul>
+  </li>
+  <li><a href="01_data_structures.html#Two-fundamental-performance-metrics">Two fundamental performance metrics</a></li>
+  <li><a href="01_data_structures.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="02_regular_types.html#L2.-Regular-types-and-other-concepts">2. Regular types and other concepts</a>
+ <ul>
+  <li><a href="02_regular_types.html#We-don-27-t-know-how-to-program-yet">We don't know how to program yet</a></li>
+  <li><a href="02_regular_types.html#The-motivation-for-concepts">The motivation for concepts</a>
+  <ul>
+   <li><a href="02_regular_types.html#Closure-property-for-containers">Closure property for containers</a></li>
+  </ul>
+  </li>
+  <li><a href="02_regular_types.html#Semiregular-types">Semiregular types</a>
+  <ul>
+   <li><a href="02_regular_types.html#Copy-constructor">Copy constructor</a></li>
+   <li><a href="02_regular_types.html#Assignment-operator">Assignment operator</a></li>
+   <li><a href="02_regular_types.html#Destructor">Destructor</a></li>
+  </ul>
+  </li>
+  <li><a href="02_regular_types.html#Regular-types">Regular types</a>
+  <ul>
+   <li><a href="02_regular_types.html#Equality-operator">Equality operator</a></li>
+  </ul>
+  </li>
+  <li><a href="02_regular_types.html#Total-orderings">Total orderings</a>
+  <ul>
+   <li><a href="02_regular_types.html#Less-than-operator">Less than operator</a></li>
+  </ul>
+  </li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="03_singleton.html#L3.-Singleton:-a-pattern-for-regular-types">3. Singleton: a pattern for regular types</a>
+ <ul>
+  <li><a href="03_singleton.html#Learning-C-2b--2b--isn-27-t-as-hard-as-it-appears">Learning C++ isn't as hard as it appears</a></li>
+  <li><a href="03_singleton.html#Singleton:-a-pattern-for-regular-types">Singleton: a pattern for regular types</a>
+  <ul>
+   <li><a href="03_singleton.html#Not-the-object-oriented-pattern">Not the object oriented pattern</a></li>
+   <li><a href="03_singleton.html#Template-and-type-functions">Template and type functions</a></li>
+   <li><a href="03_singleton.html#Guidelines-for-writing-classes">Guidelines for writing classes</a></li>
+  </ul>
+  </li>
+  <li><a href="03_singleton.html#Semi-2d-regular-singleton">Semi-regular singleton</a>
+  <ul>
+   <li><a href="03_singleton.html#Optimize-the-common-case">Optimize the common case</a></li>
+   <li><a href="03_singleton.html#Virtual-functions-2c--virtual-destructors-2c--and-OOP">Virtual functions, virtual destructors, and OOP</a></li>
+  </ul>
+  </li>
+  <li><a href="03_singleton.html#Regular-singleton">Regular singleton</a>
+  <ul>
+   <li><a href="03_singleton.html#Equality-and-the-three-laws-of-thought">Equality and the three laws of thought</a></li>
+   <li><a href="03_singleton.html#Why-can-27-t-the-compiler-generate--3d--3d--and--21--3d--3f-">Why can't the compiler generate == and !=?</a></li>
+  </ul>
+  </li>
+  <li><a href="03_singleton.html#Totally-ordered-singleton">Totally ordered singleton</a>
+  <ul>
+   <li><a href="03_singleton.html#Specifying-concepts">Specifying concepts</a></li>
+  </ul>
+  </li>
+  <li><a href="03_singleton.html#Implicit-type-conversion">Implicit type conversion</a></li>
+  <li><a href="03_singleton.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="04_instrumented.html#L4.-Instrumented:-a-performance-measuring-tool">4. Instrumented: a performance measuring tool</a>
+ <ul>
+  <li><a href="04_instrumented.html#Great-language-designers">Great language designers</a></li>
+  <li><a href="04_instrumented.html#Instrumented-class">Instrumented class</a>
+  <ul>
+   <li><a href="04_instrumented.html#Redefining-regular-operations-with-counting">Redefining regular operations with counting</a></li>
+   <li><a href="04_instrumented.html#Storing-counts">Storing counts</a></li>
+   <li><a href="04_instrumented.html#How-should-we-use-enum-3f-">How should we use enum?</a></li>
+   <li><a href="04_instrumented.html#Use-all-the-language-features">Use all the language features</a></li>
+  </ul>
+  </li>
+  <li><a href="04_instrumented.html#Using-instrumented-to-analyze-sort">Using instrumented to analyze sort</a>
+  <ul>
+   <li><a href="04_instrumented.html#Normalizing-data">Normalizing data</a></li>
+   <li><a href="04_instrumented.html#What-data-should-we-test-on-3f-">What data should we test on?</a></li>
+  </ul>
+  </li>
+  <li><a href="04_instrumented.html#Measuring-solution-to-unique-elements">Measuring solution to unique elements</a></li>
+  <li><a href="04_instrumented.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="05_swap.html#L5.-Swap:-a-fundamental-component-">5. Swap: a fundamental component </a>
+ <ul>
+  <li><a href="05_swap.html#The-magic-spoon">The magic spoon</a></li>
+  <li><a href="05_swap.html#What-is-a-component-3f-">What is a component?</a>
+  <ul>
+   <li><a href="05_swap.html#Relative-and-absolute-efficiency">Relative and absolute efficiency</a></li>
+   <li><a href="05_swap.html#Three-tests-of-a-language-27-s-ability-to-write-components">Three tests of a language's ability to write components</a></li>
+  </ul>
+  </li>
+  <li><a href="05_swap.html#Swap">Swap</a>
+  <ul>
+   <li><a href="05_swap.html#General-swap">General swap</a></li>
+   <li><a href="05_swap.html#Specialized-swap">Specialized swap</a></li>
+  </ul>
+  </li>
+  <li><a href="05_swap.html#XOR-swap">XOR swap</a></li>
+  <li><a href="05_swap.html#Is-the-inline-keyword-important-3f-">Is the inline keyword important?</a></li>
+  <li><a href="05_swap.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="06_min_max.html#L6.-Ordering-2c--min-2c--and-max.">6. Ordering, min, and max.</a>
+ <ul>
+  <li><a href="06_min_max.html#Learning-to-design-code">Learning to design code</a></li>
+  <li><a href="06_min_max.html#Reviewing-Total-Orderings">Reviewing Total Orderings</a></li>
+  <li><a href="06_min_max.html#Weak-orderings">Weak orderings</a></li>
+  <li><a href="06_min_max.html#Min">Min</a>
+  <ul>
+   <li><a href="06_min_max.html#When-elements-are-equal">When elements are equal</a></li>
+   <li><a href="06_min_max.html#Correct-implementation">Correct implementation</a></li>
+  </ul>
+  </li>
+  <li><a href="06_min_max.html#Less-than-function-object">Less than function object</a></li>
+  <li><a href="06_min_max.html#Max">Max</a>
+  <ul>
+   <li><a href="06_min_max.html#Sort2">Sort2</a></li>
+   <li><a href="06_min_max.html#Implementation">Implementation</a></li>
+  </ul>
+  </li>
+  <li><a href="06_min_max.html#Fundamental-logical-laws-are-not-always-obeyed">Fundamental logical laws are not always obeyed</a></li>
+  <li><a href="06_min_max.html#Final-code">Final code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="07_min_range.html#L7.-Minimum-selection-on-ranges">7. Minimum selection on ranges</a>
+ <ul>
+  <li><a href="07_min_range.html#The-standard-is-not-a-limitation-on-ideas">The standard is not a limitation on ideas</a></li>
+  <li><a href="07_min_range.html#Minimum-element-in-a-range">Minimum element in a range</a>
+  <ul>
+   <li><a href="07_min_range.html#Iterator-conventions">Iterator conventions</a></li>
+   <li><a href="07_min_range.html#Forward-iterator">Forward iterator</a></li>
+  </ul>
+  </li>
+  <li><a href="07_min_range.html#Finding-min-and-max-together">Finding min and max together</a></li>
+  <li><a href="07_min_range.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="08_lisp.html#L8.-Lisp-2d-like-lists">8. Lisp-like lists</a>
+ <ul>
+  <li><a href="08_lisp.html#Lists-in-lisp-and-Scheme">Lists in lisp and Scheme</a>
+  <ul>
+   <li><a href="08_lisp.html#Why-is-malloc-so-slow-3f-">Why is malloc so slow?</a></li>
+  </ul>
+  </li>
+  <li><a href="08_lisp.html#List-pool">List pool</a>
+  <ul>
+   <li><a href="08_lisp.html#Car">Car</a></li>
+   <li><a href="08_lisp.html#Cdr">Cdr</a></li>
+   <li><a href="08_lisp.html#Free">Free</a></li>
+   <li><a href="08_lisp.html#Cons">Cons</a></li>
+   <li><a href="08_lisp.html#Free-list-helper">Free list helper</a></li>
+  </ul>
+  </li>
+  <li><a href="08_lisp.html#List-queue">List queue</a></li>
+  <li><a href="08_lisp.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="09_iterators.html#L9.-Iterators">9. Iterators</a>
+ <ul>
+  <li><a href="09_iterators.html#History-of-iterators">History of iterators</a></li>
+  <li><a href="09_iterators.html#List-pool-iterators">List pool iterators</a>
+  <ul>
+   <li><a href="09_iterators.html#Iterator-reference-types">Iterator reference types</a></li>
+   <li><a href="09_iterators.html#Constructors">Constructors</a></li>
+   <li><a href="09_iterators.html#Dereference">Dereference</a></li>
+   <li><a href="09_iterators.html#Preincrement-2c--postincrement">Preincrement, postincrement</a></li>
+   <li><a href="09_iterators.html#Equality">Equality</a></li>
+  </ul>
+  </li>
+  <li><a href="09_iterators.html#Thoughts-about-iterator-design">Thoughts about iterator design</a>
+  <ul>
+   <li><a href="09_iterators.html#Should-we-add-safety-guards-3f-">Should we add safety guards?</a></li>
+   <li><a href="09_iterators.html#Why-are-forward-iterators-not-comparable-3f-">Why are forward iterators not comparable?</a></li>
+   <li><a href="09_iterators.html#Everything-on-a-computer-is-totally-ordered">Everything on a computer is totally ordered</a></li>
+  </ul>
+  </li>
+  <li><a href="09_iterators.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="10_binary_counter.html#L10.-Balanced-binary-reduction">10. Balanced binary reduction</a>
+ <ul>
+  <li><a href="10_binary_counter.html#Alice-in-wonderland">Alice in wonderland</a></li>
+  <li><a href="10_binary_counter.html#Smallest-and-second-smallest-element">Smallest and second smallest element</a>
+  <ul>
+   <li><a href="10_binary_counter.html#Unoptimal-divider-and-conquer-approach">Unoptimal divider and conquer approach</a></li>
+   <li><a href="10_binary_counter.html#Tournament-tree-shapes">Tournament tree shapes</a></li>
+  </ul>
+  </li>
+  <li><a href="10_binary_counter.html#Binary-counting-and-reduction">Binary counting and reduction</a>
+  <ul>
+   <li><a href="10_binary_counter.html#Implementation">Implementation</a></li>
+  </ul>
+  </li>
+  <li><a href="10_binary_counter.html#Binary-counter-object">Binary counter object</a>
+  <ul>
+   <li><a href="10_binary_counter.html#Start-with-algorithms">Start with algorithms</a></li>
+   <li><a href="10_binary_counter.html#Counter-storage">Counter storage</a></li>
+   <li><a href="10_binary_counter.html#What-is-in-2d-place-memory-usage-3f-">What is in-place memory usage?</a></li>
+  </ul>
+  </li>
+  <li><a href="10_binary_counter.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="11_min_1_2.html#L11.-Smallest-and-second-2d-smallest-element">11. Smallest and second-smallest element</a>
+ <ul>
+  <li><a href="11_min_1_2.html#Program-design-approach">Program design approach</a></li>
+  <li><a href="11_min_1_2.html#Combining-binary-counter-and-list-pool">Combining binary counter and list pool</a>
+  <ul>
+   <li><a href="11_min_1_2.html#Inner-loop">Inner loop</a></li>
+   <li><a href="11_min_1_2.html#Comparing-iterator-values">Comparing iterator values</a></li>
+   <li><a href="11_min_1_2.html#Reduction-operation">Reduction operation</a></li>
+   <li><a href="11_min_1_2.html#Finishing-the-scaffolding">Finishing the scaffolding</a></li>
+  </ul>
+  </li>
+  <li><a href="11_min_1_2.html#Why-do-we-need-the-typename-keyword-3f-">Why do we need the typename keyword?</a></li>
+  <li><a href="11_min_1_2.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="12_merge_sort.html#L12.-Merge-Sort">12. Merge Sort</a>
+ <ul>
+  <li><a href="12_merge_sort.html#The-discovery-of-generic-programming">The discovery of generic programming</a></li>
+  <li><a href="12_merge_sort.html#Iterators-as-a-concept">Iterators as a concept</a>
+  <ul>
+   <li><a href="12_merge_sort.html#Kinds-of-iterators">Kinds of iterators</a></li>
+   <li><a href="12_merge_sort.html#Linked-iterator">Linked iterator</a></li>
+   <li><a href="12_merge_sort.html#Linked-iterator-is--22-unsafe-22-">Linked iterator is "unsafe"</a></li>
+  </ul>
+  </li>
+  <li><a href="12_merge_sort.html#Reverse-linked-ranges">Reverse linked ranges</a></li>
+  <li><a href="12_merge_sort.html#Merging-sorted-lists">Merging sorted lists</a>
+  <ul>
+   <li><a href="12_merge_sort.html#Simple-merge">Simple merge</a></li>
+   <li><a href="12_merge_sort.html#Improved-merge">Improved merge</a></li>
+   <li><a href="12_merge_sort.html#Is-it-worth-it-3f-">Is it worth it?</a></li>
+  </ul>
+  </li>
+  <li><a href="12_merge_sort.html#Merge-sort">Merge sort</a></li>
+  <li><a href="12_merge_sort.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="13_searching.html#L13.-Searching">13. Searching</a>
+ <ul>
+  <li><a href="13_searching.html#History-of-binary-search">History of binary search</a></li>
+  <li><a href="13_searching.html#bsearch-is-wrong">bsearch is wrong</a>
+  <ul>
+   <li><a href="13_searching.html#What-is-correct-code-3f-">What is correct code?</a></li>
+  </ul>
+  </li>
+  <li><a href="13_searching.html#Linear-search">Linear search</a>
+  <ul>
+   <li><a href="13_searching.html#Trimming-the-standard">Trimming the standard</a></li>
+   <li><a href="13_searching.html#Helper-functions">Helper functions</a></li>
+  </ul>
+  </li>
+  <li><a href="13_searching.html#Bounded-and-counted-ranges.">Bounded and counted ranges.</a></li>
+  <li><a href="13_searching.html#Advance-and-distance-functions">Advance and distance functions</a></li>
+  <li><a href="13_searching.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="14_binary_search.html#L14.-Binary-Search">14. Binary Search</a>
+ <ul>
+  <li><a href="14_binary_search.html#Bisection-in-math">Bisection in math</a></li>
+  <li><a href="14_binary_search.html#Partitions">Partitions</a>
+  <ul>
+   <li><a href="14_binary_search.html#Is-partitioned">Is partitioned</a></li>
+   <li><a href="14_binary_search.html#Partition-point">Partition point</a></li>
+  </ul>
+  </li>
+  <li><a href="14_binary_search.html#Upper-and-lower-bound">Upper and lower bound</a>
+  <ul>
+   <li><a href="14_binary_search.html#Is-sorted">Is sorted</a></li>
+  </ul>
+  </li>
+  <li><a href="14_binary_search.html#Binary-search-with-partition-points">Binary search with partition points</a></li>
+  <li><a href="14_binary_search.html#Project:-Partitioning">Project: Partitioning</a></li>
+  <li><a href="14_binary_search.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="15_merge_inplace.html#L15.-Merge-inplace">15. Merge inplace</a>
+ <ul>
+  <li><a href="15_merge_inplace.html#Reinventing-things">Reinventing things</a></li>
+  <li><a href="15_merge_inplace.html#Merging-adjacent-lists">Merging adjacent lists</a>
+  <ul>
+   <li><a href="15_merge_inplace.html#Interface">Interface</a></li>
+   <li><a href="15_merge_inplace.html#Algorithm">Algorithm</a></li>
+   <li><a href="15_merge_inplace.html#Implementation">Implementation</a></li>
+   <li><a href="15_merge_inplace.html#Naming-things">Naming things</a></li>
+  </ul>
+  </li>
+  <li><a href="15_merge_inplace.html#Sort-from-merge">Sort from merge</a></li>
+  <li><a href="15_merge_inplace.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="16_optimizing_stable_sort.html#L16.-Optimizing-stable-sort">16. Optimizing stable sort</a>
+ <ul>
+  <li><a href="16_optimizing_stable_sort.html#The-measure-of-a-good-programmer">The measure of a good programmer</a></li>
+  <li><a href="16_optimizing_stable_sort.html#How-good-is-our-stable-sort-3f-">How good is our stable sort?</a></li>
+  <li><a href="16_optimizing_stable_sort.html#A-plan-for-improvement.">A plan for improvement.</a>
+  <ul>
+   <li><a href="16_optimizing_stable_sort.html#Requirements">Requirements</a></li>
+   <li><a href="16_optimizing_stable_sort.html#Ideas-to-explore">Ideas to explore</a></li>
+   <li><a href="16_optimizing_stable_sort.html#First-steps">First steps</a></li>
+  </ul>
+  </li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="17_adaptive_merge_sort.html#L17.-Adaptive-merge-sort">17. Adaptive merge sort</a>
+ <ul>
+  <li><a href="17_adaptive_merge_sort.html#L-22-temporary-22--buffers-in-STL">"temporary" buffers in STL</a></li>
+  <li><a href="17_adaptive_merge_sort.html#Merge-with-buffer">Merge with buffer</a>
+  <ul>
+   <li><a href="17_adaptive_merge_sort.html#Performance-test">Performance test</a></li>
+  </ul>
+  </li>
+  <li><a href="17_adaptive_merge_sort.html#Adaptive-merge">Adaptive merge</a>
+  <ul>
+   <li><a href="17_adaptive_merge_sort.html#Performance-test">Performance test</a></li>
+  </ul>
+  </li>
+  <li><a href="17_adaptive_merge_sort.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="18_binary_insertion_sort.html#L18.-Binary-insertion-sort">18. Binary insertion sort</a>
+ <ul>
+  <li><a href="18_binary_insertion_sort.html#The-Organ-Grinder">The Organ Grinder</a></li>
+  <li><a href="18_binary_insertion_sort.html#Strategy">Strategy</a>
+  <ul>
+   <li><a href="18_binary_insertion_sort.html#Insertion-sort-variations">Insertion sort variations</a></li>
+   <li><a href="18_binary_insertion_sort.html#When-is-insertion-sort-useful-3f-">When is insertion sort useful?</a></li>
+   <li><a href="18_binary_insertion_sort.html#Naming-insertion-sort-function">Naming insertion sort function</a></li>
+  </ul>
+  </li>
+  <li><a href="18_binary_insertion_sort.html#Binary-insertion-sort">Binary insertion sort</a></li>
+  <li><a href="18_binary_insertion_sort.html#Rotate">Rotate</a>
+  <ul>
+   <li><a href="18_binary_insertion_sort.html#Rotate-for-bidirectional-iterators">Rotate for bidirectional iterators</a></li>
+   <li><a href="18_binary_insertion_sort.html#Rotate-for-forward-iterators">Rotate for forward iterators</a></li>
+   <li><a href="18_binary_insertion_sort.html#Should-we-support-forward-iterator-3f-">Should we support forward iterator?</a></li>
+  </ul>
+  </li>
+  <li><a href="18_binary_insertion_sort.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+<ul>
+ <li><a href="19_insertion_sort.html#L19.-Linear-insertion-sort">19. Linear insertion sort</a>
+ <ul>
+  <li><a href="19_insertion_sort.html#Thank-you-2c--noble-art.">Thank you, noble art.</a></li>
+  <li><a href="19_insertion_sort.html#Linear-insertion-sort">Linear insertion sort</a>
+  <ul>
+   <li><a href="19_insertion_sort.html#Linear-insert">Linear insert</a></li>
+   <li><a href="19_insertion_sort.html#Insertion-sort">Insertion sort</a></li>
+  </ul>
+  </li>
+  <li><a href="19_insertion_sort.html#Sentinel-version">Sentinel version</a>
+  <ul>
+   <li><a href="19_insertion_sort.html#Insertion-sort-in-quicksort">Insertion sort in quicksort</a></li>
+  </ul>
+  </li>
+  <li><a href="19_insertion_sort.html#Selection-sort">Selection sort</a></li>
+  <li><a href="19_insertion_sort.html#Preconditions-are-essential">Preconditions are essential</a></li>
+  <li><a href="19_insertion_sort.html#Final-project">Final project</a></li>
+  <li><a href="19_insertion_sort.html#Code">Code</a></li>
+ </ul>
+ </li>
+</ul>
+
+<span style="float: right">
+[
+<a href="">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="01_data_structures.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

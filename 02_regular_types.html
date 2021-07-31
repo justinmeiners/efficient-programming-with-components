@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>2. Regular types and other concepts</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="01_data_structures.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="03_singleton.html">next</a>
+]
+</span>
+
+
+
+<a name="L2.-Regular-types-and-other-concepts"></a>
+<h1>2. Regular types and other concepts</h1>
+
+<a name="We-don-27-t-know-how-to-program-yet"></a>
+<h2>We don&rsquo;t know how to program yet</h2>
+
+<p>The field grew very fast.
+We never had time to stop and think.
+It used to be that people who were computer scientists were programmers.
+When <a href="https://en.wikipedia.org/wiki/Edsger_W._Dijkstra">Dijkstra</a><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> gave his <a href="https://www.cs.utexas.edu/users/EWD/ewd03xx/EWD340.PDF">Turing award speech</a>
+he called himself a &ldquo;humble programmer&rdquo;.
+When Ken Thompson, in his
+lecture &ldquo;Reflection on Trusting Trust&rdquo;, talks of himself he says, &ldquo;I am a programmer&rdquo;.</p>
+
+<p>Then programmers disappeared.
+Everybody became a computer scientist or an architect.
+People say, &ldquo;no I&rsquo;m not a programmer, I&rsquo;m an architect&rdquo;.
+I guess they build buildings like <a href="https://en.wikipedia.org/wiki/Frank_Lloyd_Wright">Frank Lloyd Wright</a> (joke).
+What it means is they don&rsquo;t have any idea how to write code.
+(Clearly, I just insulted several communities).</p>
+
+<p>A couple of years ago I was at a party with
+<a href="https://en.wikipedia.org/wiki/Michael_Burrows">Mike Burrows</a> who did the original <a href="https://en.wikipedia.org/wiki/AltaVista">AltaVista</a> search engine and
+is now at Google.
+He told me, he cannot imagine how the guys at Google write anything at all.
+So, I&rsquo;m not even going to mention Yahoo (joke).
+I did interview at Facebook and let me tell you what I saw of that place&hellip;
+It that was five years ago.
+Maybe they improved but I don&rsquo;t think so.
+Places tend to to decline.</p>
+
+<p>You might say: &ldquo;Who are you to tell us?&rdquo;
+I am as guilty as any of you.
+Given the chance, I write very bad code.
+One thing which prevented me from being like
+everybody else was that some of my code had to go through thousands of people looking at it and telling me what they think about it.
+That is very helpful.</p>
+
+<p>From early on I actually had this idea that
+programming is a very great discipline.
+I don&rsquo;t mean that I&rsquo;m very great, or anything like that.
+It&rsquo;s that the discipline is a great discipline.
+I always wanted to learn to write ultimate code and I still think it&rsquo;s possible.
+I disagree with many of
+the luminaries in the field who claim it&rsquo;s an art, meaning that there are some
+gifted people like Mozart,
+and others who are just like us.
+I actually claim no, it&rsquo;s a discipline.</p>
+
+<p>This is why I want to discuss everything I write with you.
+If we together agree on it and we start start practicing it maybe it will turn into a
+discipline.
+You say, &ldquo;well, Alex what chance is there?
+There is the world and there is you&rdquo;.
+Yes, there are no chances but you still have to do
+what you believe is right.</p>
+
+<p>Well, plus they pay me (joke).</p>
+
+<a name="The-motivation-for-concepts"></a>
+<h2>The motivation for concepts</h2>
+
+<p>Remember what I said about these awful &ldquo;maps and maps of sets&rdquo; and things like that?
+The fact that they actually work is kind of amazing<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+It&rsquo;s a testament to how flexible they are.
+You might think you can just put any type in a map,
+but actually there are requirements on the type,
+certain properties which are required for these containers to function.</p>
+
+<p>Let, us think about what my task was when I started working on the C++ STL.
+It was to define standard data structures, which will work for or any, or reasonable subset of types.
+What is a reasonable subset of types?
+This is a little bit tricky but it&rsquo;s of paramount importance.</p>
+
+<p>My duty was to discover what will make
+a type work with any standard container.
+I knew that for sure, no matter what I do, there is one type which should work in every container: <code>int</code>.
+So, a regular type has to be like <code>int</code>, but not completely like it because it should work for <code>double</code>.
+Pointers are perhaps the most important type,
+even more important than <code>int</code>.
+It has to work for pointer.</p>
+
+<p>To understand all this, we&rsquo;re going to become a little bit theoretical.
+None of this stuff actually works  unless you understand at least a
+little bit of theory.
+We will call such reasonable types <code>Regular</code>.
+What we will do is formally define a set of operators that all <code>Regular</code> types must have,
+along with a set of requirements on those operators<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+The goal is that <code>Regular</code> types (those that obey the requirements)
+will behave sufficiently like <code>int</code>, <code>double</code>, and the rest.
+Such a definition is referred to as a <strong>concept</strong>, which we will talk about more later.</p>
+
+<p>Once we understand <code>Regular</code> then we will understand what algorithms are allowed to do;
+use the operations which are defined on <code>Regular</code> types.
+Whatever is a natural idiomatic expression in C should be a natural idiomatic expression for <code>Regular</code> types.</p>
+
+<a name="Closure-property-for-containers"></a>
+<h3>Closure property for containers</h3>
+
+<p>Furthermore, I realized that I have to make my own containers be like built-in types.
+I had to close the loop.
+I had to provide a bunch of type constructors.
+A <code>vector</code> is a type constructor.
+It takes the type <code>T</code> and constructs a type out of
+type <code>T</code>.
+Out of type <code>T</code> you get type <code>vector&lt;T&gt;</code>.
+It&rsquo;s a different type.</p>
+
+<p>We want these constructors to be closed<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+If you start with a regular type and keep applying
+these constructors you remain <code>Regular</code>.</p>
+
+<a name="Semiregular-types"></a>
+<h2>Semiregular types</h2>
+
+<p>Leading up to <code>Regular</code> we will define <code>Semiregular</code> which is a bit weaker.
+All <code>Semiregular</code> types must have the following operations:</p>
+
+<a name="Copy-constructor"></a>
+<h3>Copy constructor</h3>
+
+<p>We should be able to write:</p>
+
+<pre><code>T a(b); 
+</code></pre>
+
+<p>Or equivalently</p>
+
+<pre><code>T a = b;
+</code></pre>
+
+<p>They are not the same in general but they are the same if <code>b</code> is of type <code>T</code>.</p>
+
+<p>How do we define the semantics of this operation?
+Could we use an <a href="https://mathworld.wolfram.com/EquivalenceRelation.html">equivalence relation</a>?
+Consider the relation that always returns true.
+It is an equivalence relation.
+In other words, the relation R(a, b) = t, satisfies:</p>
+
+<ul>
+<li>symmetric: <code>R(a, b) &lt;=&gt; R(b, a)</code></li>
+<li>reflexive: <code>R(a, a)</code></li>
+<li>transitive <code>R(a, b) and R(b, c) =&gt; R(a, c)</code></li>
+</ul>
+
+
+<p>But, this is a wrong equivalence relation.
+We actually want something way stronger.
+We want <em>equality</em>.
+Given a notion of equality, we can define
+some axioms for our copy constructor.</p>
+
+<p><strong>Axiom:</strong> After <code>a</code> is copy constructed from <code>b</code>, we have <code>a == b</code>.
+Whatever, our meaning of equality.</p>
+
+<p>Let&rsquo;s think about what a copy is.
+It is something which is <em>equal to the original, but
+not identical to it</em>.</p>
+
+<p><strong>Axiom:</strong> After <code>a</code> is copy constructed from <code>b</code> they
+have distinct identity markers.
+In C++ the identity marker is usually address: <code>&amp;a != &amp;n</code>.</p>
+
+<p>All copy constructors must behave this way.
+If somebody clever comes and says, &ldquo;oh we&rsquo;re going
+to have a semantics where we&rsquo;re going to have this shared thing&rdquo;<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
+Will it work? No.
+Copy has to construct a different thing.</p>
+
+<a name="Assignment-operator"></a>
+<h3>Assignment operator</h3>
+
+<pre><code>T a; a = b;
+</code></pre>
+
+<p><strong>Axiom:</strong> Constructing and assignment are equivalent: <code>T a(b) &lt;=&gt; T a; a = b</code>.</p>
+
+<p>So, in order to for these operations to have correct semantics, they have to have equality defined.</p>
+
+<a name="Destructor"></a>
+<h3>Destructor</h3>
+
+<pre><code>~T();
+</code></pre>
+
+<p>You don&rsquo;t call destructors, so nothing specifically to say here.</p>
+
+<a name="Regular-types"></a>
+<h2>Regular types</h2>
+
+<p>The concept <code>Regular</code>  extends <code>Semiregular</code> with equality operators
+which are <code>==</code> and <code>!=</code>.</p>
+
+<a name="Equality-operator"></a>
+<h3>Equality operator</h3>
+
+<p>As we said before, we should define <code>==</code> so that after constructing
+a copy, the original and the copy are equal.</p>
+
+<p><code>!=</code> should always behave like: <code>!(a == b)</code>.
+My very strong point is that the semantics of
+inequality (<code>!=</code>) is absolutely and totally bound to the semantics of equality (<code>==</code>).
+You should not even be able to have a situation where they have different  semantics.
+But, the standards committee disagrees with me on that.
+They say that you could have equality be equality and
+inequality be multiplication operator.
+I think it&rsquo;s a very bad idea and a good idea depending on what you want (joking).
+It will provide you with job security.
+Because nobody will ever figure out why your code works or doesn&rsquo;t work.</p>
+
+<p>Many of these operations will be member functions. But what about equality?
+No, it shouldn&rsquo;t.
+Because fundamentally equal is a symmetric function.
+It compares two things.
+So even the paradigm of a member is the wrong paradigm.
+They are symmetric.</p>
+
+<a name="Total-orderings"></a>
+<h2>Total orderings</h2>
+
+<p>The concept <code>TotallyOrdered</code> extends <code>Regular</code> by adding a comparison operator <code>&lt;</code>.
+This is actually something that that Bjarne disagrees with me on.
+I say that <code>&lt;</code>, the total ordering of the type is
+fundamental, and should be required.
+He says it&rsquo;s too much to ask, and <code>Regular</code> types should be less strict.
+However, we will follow, his and the standard C++ convention by
+using a weaker <code>Regular</code> and limiting the requirement of ordering
+to <code>TotallyOrdered</code>.</p>
+
+<a name="Less-than-operator"></a>
+<h3>Less than operator</h3>
+
+<p><code>&lt;</code> must obey the following <a href="https://en.wikipedia.org/wiki/Total_order">mathematical properties</a>:</p>
+
+<p><strong>Axiom 1:</strong> Anti-reflexive: <code>!(a &lt; a)</code></p>
+
+<p><strong>Axiom 2:</strong> Transitive: If <code>a &lt; b</code> and <code>b &lt; c</code> then <code>a &lt; c</code>.</p>
+
+<p><strong>Axiom 3:</strong> Anti-symmetric: If <code>a &lt; b</code> then <code>!(b &lt; a)</code>.</p>
+
+<p><strong>Axiom 4:</strong> If <code>a != b</code> then <code>a &lt; b</code> or <code>b &gt; a</code>.</p>
+
+<p>In the same way that the semantics of <code>==</code> is related to <code>!=</code>,
+we can see the semantics of <code>&lt;</code> must be totally bound to the semantics of equality.
+But futhemore,  <code>&lt;</code> is related to four other operations which must also be defined:</p>
+
+<ol>
+<li><code>&lt;</code> less than</li>
+<li><code>&gt;</code> greater than</li>
+<li><code>&lt;=</code> less than or equal to</li>
+<li><code>&gt;=</code> greater than or equal to</li>
+</ol>
+
+
+<p>If you provide they have to have natural meaning.
+For example, <code>!(a &lt; b)</code>  should be <code>a &gt;= b</code> otherwise the world
+perishes.</p>
+
+<p>Later we will talk more about orderings, and define several different
+kinds.</p>
+
+<p>In the next lesson we will become familiar with these concepts
+by implementing a class which satisfies each of them.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+Dijkstra is also a fantastic programmer to learn from.
+Instead of focusing on academic publishing the majority of his work
+was typewritten or handwritten and passed around by mailing list.
+Consequently, it is very readable, and applicable, free from jargon
+or obscure technicalities.
+You can find an archive of these <a href="https://www.cs.utexas.edu/users/EWD/">here</a>.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+They&rsquo;re not <a href="https://en.wikipedia.org/wiki/Turing_completeness">Turing complete</a>, but they&rsquo;re Stepanov complete (joke).<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+Alex: Some might think regular types are form of equational reasoning.
+However, you can have a universe that is strictly functional where you have equational reasoning,
+Our universe has assignment and state.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+Closed is a term that from math, and has various, but similar meanings
+depending on context. In the context of abstract algebra, from which generic programming
+is inspired, closure means that applying an operation to an element in a domain <code>D</code> gives
+you something back in the same domain.
+For example the integers <code>Z</code> are closed under the operation of multiplication.
+Multiply two integers, you get an integer.
+However, it is not closed under division.
+<code>1 / 2</code> is not a integer.
+Applying this to Alex&rsquo;s quote, he means that containers should preserve properties
+of the base types they are constructed from.
+Containers of <code>Regular</code> types should be <code>Regular</code>.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
+This is likely a reference to how <a href="https://en.cppreference.com/w/cpp/memory/shared_ptr"><code>std::shared_ptr</code></a> behaves
+which provides a form of automatic memory management.,<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="01_data_structures.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="03_singleton.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>1. Choosing data structures and algorithms</title>
+<style>
+/* http://jasonm23.github.io/markdown-css-themes/ */
+
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+    color:#444;
+        font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+            font-size:12px;
+                line-height:1.5em;
+                    padding:1em;
+                        margin:auto;
+                            max-width:42em;
+                                background:#fefefe;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+    margin:1em 0;
+}
+
+img{
+    max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+        color:#111;
+            line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+    color:#666666;
+        margin:0;
+            padding-left: 3em;
+                border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
+pre { white-space: pre; }
+
+pre, code { background-color: #EEE; }
+pre{ overflow-x: auto; }
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+
+@media only screen and (min-width: 480px) {
+    body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+    body{font-size:16px;}
+}
+
+@media print {
+      * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+        body{font-size:12pt; max-width:100%;}
+          a, a:visited { text-decoration: underline; }
+            hr { height: 1px; border:0; border-bottom:1px solid black; }
+              a[href]:after { content: " (" attr(href) ")"; }
+                abbr[title]:after { content: " (" attr(title) ")"; }
+                  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+                    pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+                      tr, img { page-break-inside: avoid; }
+                        img { max-width: 100% !important; }
+                          @page :left { margin: 15mm 20mm 15mm 10mm; }
+                            @page :right { margin: 15mm 10mm 15mm 20mm; }
+                              p, h2, h3 { orphans: 3; widows: 3; }
+                                h2, h3 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+
+
+<span style="float: right">
+[
+<a href="00_foreword.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="02_regular_types.html">next</a>
+]
+</span>
+
+
+
+<a name="L1.-Choosing-data-structures-and-algorithms"></a>
+<h1>1. Choosing data structures and algorithms</h1>
+
+<a name="Reflections-on-Trusting-Trust"></a>
+<h2>Reflections on Trusting Trust</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/Ken_Thompson">Ken Thompson</a> did many wonderful things. Probably more
+than any programmer, he influenced the programming style  which we have right
+now. While he did not invent C, that was done by his friend <a href="https://en.wikipedia.org/wiki/Dennis_Ritchie">Dennis Ritchie</a>,
+he invented the programming style which underlies C.
+Dealing with pointers,
+knowing how pointers are subtracted, and stuff like that, all comes from Ken Thompson.</p>
+
+<p>Believe it or not, the best and brightest at that time were heavily on the
+march to get rid of pointers. Absolutely brilliant people who would give
+<a href="https://en.wikipedia.org/wiki/Turing_Award">Turing award</a> speeches.
+<a href="https://en.wikipedia.org/wiki/Tony_Hoare">Tony Hoare</a> is the case in point <a href="https://www.cs.fsu.edu/~engelen/courses/COP4610/hoare.pdf">saying</a> that pointers
+have to be abolished.
+The idea was that pointer is illegitimate thing.
+Language designers were fully convinced that
+even if you provide pointers nobody should call them pointers.
+They  would call them something like <a href="http://goanna.cs.rmit.edu.au/dale/ada/aln/13_access_types.html">access types</a>.
+They have to prohibit iterations, like you could never subtract pointers.
+<a href="https://en.wikipedia.org/wiki/Niklaus_Wirth">Niklaus Wirth</a>, the designer of Pascal, was very certain that you should never allow
+subtraction between pointers.
+We still have it at least in some languages.
+I know that our Java friends do not believe
+in subtracting pointers and subtraction of pointers.
+But, pointers are still at least partially with us.</p>
+
+<p>So Ken is an absolutely great man in many respects.
+His career started, not with UNIX, but when he was freshly out of
+school coming up with the brilliant <a href="https://swtch.com/~rsc/regexp/regexp1.html">practical algorithm</a> for matching regular expressions.
+Every time you write <a href="https://linux.die.net/man/1/grep">grep</a> or something like that you&rsquo;re most likely
+exercising code written by Ken in the late 60s.</p>
+
+<p>There is so much practical reliance on regular expressions.
+But they were invented
+believe it or not by theoreticians, specifically <a href="https://en.wikipedia.org/wiki/Stephen_Cole_Kleene">Stephen Kleene II</a> who was a logician.
+So Ken made them practical<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.</p>
+
+<p>Then he did UNIX, this totally brilliant operating system on which we all rely.
+All of our livelihoods come from Ken, in one shape or form.
+Do you remember the <a href="https://en.wikipedia.org/wiki/Fortune_(Unix)">fortune cookie program</a>?<br/>
+One of the fortune cookies was: &ldquo;it is all Ken&rsquo;s fault&rdquo;<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+We have to remember that.</p>
+
+<p>After he does that, just to demonstrate that he can do anything, he decides to show
+people how to play <a href="https://www.bell-labs.com/usr/dmr/www/ken-games.html">computer chess</a>.
+Mind it, at that point as far as I know he
+barely knew the moves.
+There was total dominance by Russian chess playing
+program <a href="https://en.wikipedia.org/wiki/Kaissa">Kaissa</a> and two or three years he builds this specialized hardware,
+totally  revolutionizes the approach to just playing.
+Of course nobody remembers
+what Kaissa was.
+He is a guy who could enter in a
+totally new field and do something beyond, not just world class, but beyond
+world class in a short period of time.</p>
+
+<p>In 1984 he was given the Turing award.
+It was shared with Dennis and he gave a beautiful speech which I highly
+recommend that that you read called <a href="papers/trusting-trust-thompson.pdf">&ldquo;Reflections on Trusting Trust&rdquo;</a> which talks
+about many things. But, I&rsquo;ll use just one little episode in the beginning which is
+very important from my point of view.
+He says that he was very blessed with collaborators specifically with Dennis<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+Then he continues that during many
+years of their collaboration not once they would attempt to do the same thing.
+They had this good sense to work on complementary things.
+Except once.
+Both of them needed to write an assembly program with about
+20 lines of code and continues Ken, &ldquo;I checked it was character by character
+identical&rdquo;.
+It sounds like mystical thing right, two people coming together,
+this is a Vulcan mind-meld (joke).</p>
+
+<p>But, there is something profound there.
+I actually think that it&rsquo;s less amazing then Ken makes it be.
+That is a central point of what I am trying to teach here.
+I actually had such mind-meld with several of my colleagues after we worked together for a while.
+For example, it&rsquo;s literally true that when <a href="https://en.wikipedia.org/wiki/David_Musser">Dave Musser</a> and I were working together long-distance,
+we would write the same thing.
+It was invariably, character by character, identical (even though we were not as good as Ken and Dennis).</p>
+
+<p>I claim that if we are really turning
+programming into professional discipline then the story of Ken and Dennis will
+not be a miracle.
+We should be writing basic code, character by character, identical.
+Imagine how wonderful it would be if you could understand what someone else wrote.</p>
+
+<a name="Hello-2c--World"></a>
+<h2>Hello, World</h2>
+
+<p>Whomever really wants to learn, will learn, and that is a challenge because it is my experience that if we take the intersection of what
+a room of programmers know it&rsquo;s going to be an empty set.
+That doesn&rsquo;t mean that you as an individual person doesn&rsquo;t know things, but intersection is going to be relatively small.</p>
+
+<p>Unfortunatly we&rsquo;ve got to a point where nobody teaches programming.
+Because there&rsquo;s no professor of computer science who has any idea how to program<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+Part of what I am trying to do here is to start discussing
+little things like, how do we name variables?
+Why is it important? We want to get to the point where
+everybody writes a consistent code, recognizable code.
+This is why I&rsquo;m I want to go slow and develop so that we
+all agree<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.</p>
+
+<p>We have to start with a very very simple program. Most of you recognize it, right? <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">Hello World</a>.</p>
+
+<pre><code>#include &lt;iostream&gt;
+
+int main() {
+  std::cout &lt;&lt; "Hello, world!" &lt;&lt; std::endl;
+}
+</code></pre>
+
+<p>There is no return value.
+Do you think it will compile?
+It does.
+C++ treats <code>main</code> as a special function; meaning when the control goes
+through the last brace, zero is returned.
+Because the standard UNIX convention, which became Universal
+convention, that on success you return zero.
+The language actually allows you to do things things like that.</p>
+
+<p>One warning, <a href="https://en.cppreference.com/w/cpp/io/cout"><code>cout</code></a> stuff works pretty much like how you think it works.
+However a friend of mine wrote something like:</p>
+
+<pre><code>std::cout &lt;&lt; f() &lt;&lt; g();
+</code></pre>
+
+<p>Lo and behold depending on the compiler, different results were printed.
+The order of evaluation of arguments to a function <a href="https://en.cppreference.com/w/cpp/language/eval_order">is not defined</a>
+and the operator <code>&lt;&lt;</code> is just a function call<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.
+Never depend on the arguments to a function
+being evaluated in a given order.</p>
+
+<p>The person in question actually immediately declared that he found the compiler bug.
+Compilers do have bugs but they are not as common as people believe.</p>
+
+<a name="Number-of-unique-elements"></a>
+<h2>Number of unique elements</h2>
+
+<p>This whole talk about performance started me and some coworkers
+investigating problems and involved very long queries.
+When we narrowed things down we always found something
+pertaining to incorrect use of STL<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.
+It&rsquo;s usually a one liner and the most egregious.</p>
+
+<p>The most most amazing thing is the following one liner which I will start in the
+beginning of the course, because it was just so important.
+We could weave the whole fabric of the course around this one little example.
+There was a range of integers. For example:</p>
+
+<pre><code>int a[] = { 1, 3, 1, 4, 1, 5 };
+</code></pre>
+
+<p>The person wanted to find out how many of these integers are unique.
+The person decided to write the following code<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>:</p>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;set&gt;
+
+int main() {
+  std::set&lt;int&gt; set_of_ints(a, a + 6);
+  std::cout &lt;&lt; set_of_ints.size() &lt;&lt; std::endl;
+}
+</code></pre>
+
+<p>This is perfectly good. It computed the thing.
+But it is actually very slow.</p>
+
+<a name="Equality-vs-ordering"></a>
+<h3>Equality vs ordering</h3>
+
+<p>The algorithm for <a href="https://en.cppreference.com/w/cpp/container/set"><code>set</code></a> <sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup> is <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">red black tree</a> which is
+universally stated in every book to be one of the best implementation of sets.
+Do we have to believe textbooks? We will see.
+In any case, we&rsquo;ll learn to count number of operations.
+We will observe that indeed it is going to do <code>O(n log(n))</code> number of comparisons.
+But, it is awfully slow.
+Why?
+Well, it has to do sort, but without actually sorting.
+Otherwise, you really cannot find out how many unique elements are in a sequence of integers.
+This is a paradoxical thing since finding unique elements is much
+easier operation<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup>.</p>
+
+<p>It seems that finding unique elements does
+not require ordering, it just requires equality.
+But, what we are actually doing is optimizing a search or find.
+Equality gives us linear search while sorting gives us binary search so we can find much much faster.
+One of the amazing things which we will discover is that ordering is very important.
+Things which we could do with ordering cannot be effectively done just with equality<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup>.</p>
+
+<p>If we are going by the book we we will say sorting is good as long it does approximately <code>O(n log(n))</code> operations.
+This is good for the books.
+It&rsquo;s actually not good for our code, because Big O
+could have an arbitrary coefficient.
+It could be <code>50(n log(n))</code><sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup>,
+The effective coefficient, not just in terms of number of operations,
+but in terms of time for this is very very
+large. How large? We will be doing measurements together of this very problem.
+But, let me tell you, it slows down between factor of 22 and a factor of 50 on large data sets.
+That is a lot.</p>
+
+<a name="Correct-solution"></a>
+<h3>Correct solution</h3>
+
+<p>How should we solve the problem? Could we replace it with a one-liner?
+There is an STL function just for this.
+It is called <a href="https://en.cppreference.com/w/cpp/algorithm/unique"><code>std::unique</code></a>.
+What does it do?
+It goes through a range and removes all non-unique elements that have returns a range of unique elements.
+Of course the presupposition is that the range is sorted.
+It will work if the range is not sorted either.
+It will just not eliminate all equal elements.
+It returns a pointer to the element passed the last
+element of the range. This is a standard STL convention.</p>
+
+<p>For example given:</p>
+
+<pre><code>1 2 2 2
+    ^
+</code></pre>
+
+<p>The returned pointer is indicated.
+So let&rsquo;s use it</p>
+
+<pre><code>std::sort(a, a + 6);
+std::cout &lt;&lt; std::unique(a, a + 6) - a &lt;&lt; std::endl;
+</code></pre>
+
+<p>Why am I not going to use <a href="https://en.cppreference.com/w/cpp/iterator/distance"><code>std::distance</code></a> instead
+of <code>a + 6</code>?</p>
+
+<pre><code>std::distance(a, std::unique(a, a + 6));
+</code></pre>
+
+<p>There is no need.
+Never use a function which is intended using a
+general case, when you sit deeper inside some specific case.</p>
+
+<a name="Use-the-correct-STL-data-structures"></a>
+<h3>Use the correct STL data structures</h3>
+
+<p>Whenever people have problems with STL, they ask me questions.
+They show me their examples of using STL.
+The most common thing is something like map of maps:</p>
+
+<pre><code>std::map&lt;..., std::map&lt;...&gt; &gt;
+</code></pre>
+
+<p>You sit there and you wonder. Before STL, nobody in his right mind
+would dare to say &ldquo;I&rsquo;m going to have a self-balancing tree which at every node
+has a self-balancing tree&rdquo;, because it will take them five
+years to implement it.</p>
+
+<p>It&rsquo;s maybe one of STL&rsquo;s strong points, that such a construction is so trivial.
+You could not just have map of maps,
+you could have maps of vectors of list of maps of sets.
+And in one line.
+Will it work? Yes, for some definition of work.
+Will it be fast? No.
+It cannot be fast because you have this enormous complex stuff.
+Its complexity is hidden but it&rsquo;s still there.</p>
+
+<p>Miracles are not possible.
+If you ask somebody to create a very
+complex data structure that&rsquo;s what you&rsquo;re going to get.
+You&rsquo;re going to get problems with node allocation.
+You are going to problems with rebalancing.
+You&rsquo;re going to get problem with whatever these advanced data
+structures do.
+These problems are going to get worse and worse.
+You&rsquo;re going to get a <a href="https://www.cs.cornell.edu/courses/cs3110/2014sp/lectures/26/memory.html">cache miss</a> on every step through the set.</p>
+
+<p>As our computers become faster, faster, and faster they&rsquo;re getting slower and
+slower and slower<sup id="fnref:13"><a href="#fn:13" rel="footnote">13</a></sup>.
+Meaning that  going to the main memory is very slow.
+You want to have locality of reference you want all your
+data are working on in the local cache if you have a huge set or map it&rsquo;s not
+going to be like that.</p>
+
+<p>Let me tell you a very simple piece of advice.
+If you remember just one thing out of this course it should be this:</p>
+
+<ol>
+<li>Whenever you can, use <a href="https://en.cppreference.com/w/cpp/container/vector"><code>std::vector</code></a>.</li>
+<li>If you cannot, find a way so you can.</li>
+</ol>
+
+
+<p>Avoid any data structures except arrays. &ldquo;Well aren&rsquo;t there exceptions?&rdquo;
+No, not for you.
+Because typically advanced data structures are slower than simple data
+structures.
+Data structures which appear to be alright when textbook writers
+wrote their books, are no longer all right now.
+Computers change so much.
+Things no longer work.</p>
+
+<p>If <code>set</code> is bad? Why is it in the standard?
+Think about it.
+If you do all of your insertions first, and then start searching,
+you do not need a <code>set</code>.
+The set is a very specific data structure which is needed only
+when you have a very specific workload.
+If you have a thing which grows
+and shrinks constantly dynamically.
+Then you have to have a <code>set</code>.
+You need a <code>set</code> only if you need a thing which does not move things around.
+As long as something gets into a <code>set</code> and it is not erased the pointer, it is fixed.
+For example, him sitting in this chair is in the <code>set</code>.
+As long as he&rsquo;s in this set he will not move from his chair.
+You could find him constant time.
+It&rsquo;s a very useful thing except most people do not use set for that.</p>
+
+<a name="Two-fundamental-performance-metrics"></a>
+<h2>Two fundamental performance metrics</h2>
+
+<p>There is a great book all of you should have and all of you should aspire to read
+(but actual reading that we don&rsquo;t know&hellip;)
+The book I am referring to (there&rsquo;s only one book
+like that in computer science) <a href="https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming">Art of Computer Programming</a>, written by <a href="https://www-cs-faculty.stanford.edu/~knuth/">Donald Knuth</a>.
+It&rsquo;s a very imperfect book but it&rsquo;s the greatest book we got.</p>
+
+<p>One of the things which I want to convince
+you of is that we want to be professionals.
+As professionals we want to have certain things on our bookshelves even if we don&rsquo;t read them.
+Lawyers have all this legal stuff in their office, they don&rsquo;t know
+anything about what&rsquo;s inside.
+But, they know they have to put it on the shelves.
+We at least have to aspire to the same level of professionalism.
+We put Knuth on the shelf.</p>
+
+<p>When we started reading Knuth we observed
+that even a very long time ago, Knuth started doing measuring operations.
+That is, when he would describe an algorithm he would not just say Big O, that came later
+(in spite of the fact that he introduced Big O into analysis of
+algorithms) but in his book he would carefully annotate how many operations.</p>
+
+<p>I want to get us to a point where we start learning how to
+measure things and when we measure algorithms there are two ways we could
+measure:</p>
+
+<ol>
+<li>Operation counts</li>
+<li>Measure time</li>
+</ol>
+
+
+<p>Both of them are important.
+Because if you count operations you could have
+analysis of algorithm in terms of abstract operations not depending on the
+specific type.
+This is very good, we have to have that.
+But then we also need to have times for specific commonly used types.
+So these are two things which we need to do.
+Our goal is to to be able to measure this problem with <code>set</code> and with sort.
+But, first we need to learn more about C++.</p>
+
+<a name="Code"></a>
+<h2>Code</h2>
+
+<ul>
+<li><a href="code/test_hello_world.cpp">test_hello_world.cpp</a></li>
+<li><a href="code/test_count_unique.cpp">test_count_unique.cpp</a></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+Alex recommended to me Marvin Minsky&rsquo;s <a href="minsky-computation">&ldquo;Computation: Finite and Infinite Machines&rdquo;</a>
+to learn more about these topics.
+It is a fantastic book which explores theory of computation, including finite state machines, neural networks,
+and Turing machines from a philosophical and mathematical perspective.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+I have been unable to find any reference to this quote.
+Some older fortune files
+such as <a href="http://fortunes.cat-v.org/plan_9/">this file</a>  from plan-9 contain similar quotes,
+such as &ldquo;Maybe I should have screwed up&rdquo;<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+Alex: In my opinion Dennis wasn' at genius like Ken,
+ but obviously first class.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+Alex: At Stanford there&rsquo;s one guy who knows, but he&rsquo;s an emeritus (Donald Knuth).<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
+Alex clarifies in later lectures that he is somewhat convention neutral.
+Whenever he works with a new group, he wants to reach consensus about style
+as quickly as possible.
+The organization and team should follow the same conventions.
+Clearly some conventions he has an argument for (when to use classes vs structs)
+but others he say doesn&rsquo;t matter at all, as long as it&rsquo;s consistent
+(which line to put the brace on).<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
+Alex: <code>&lt;&lt;</code> is not some <a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-10.html#%_sec_1.1.6">special form</a> (like the notion in Lisp), it is just a function call.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<li id="fn:7">
+<p><a href="https://en.wikipedia.org/wiki/Standard_Template_Library">STL</a> (standard template library) was of course originally written by the teacher Alex Stepanov.
+The original library was written for SGI, but then later integrated into the standard library.
+However, the version available in most implementations is much more complex and less consistent than Alex&rsquo;s original work.
+I have archived the <a href="https://github.com/justinmeiners/sgi-stl">SGI STL code</a> which probably contains more of Alex' original code than other that is available.</p>
+
+<p>The <a href="https://www.boost.org/sgi/stl/">SGI STL documentation</a> has also been archived and is a very useful reference alongside modern references,
+especially for understanding concepts.</p><a href="#fnref:7" rev="footnote">&#8617;</a></li>
+<li id="fn:8">
+Alex: You didn&rsquo;t use to need <code>#include &lt;set&gt;</code> when I first did STL.
+I had one gigantic a file called <code>stl.h</code>
+At that time people said it&rsquo;s utterly unacceptable to twenty thousand lines of code.
+If you think about it nowadays it appears to be very funny. Twenty thousand is nothing.
+That&rsquo;s why <code>stl.h</code> was replaced with a gazillion little headers.
+Sometimes I have no idea what they are.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
+<li id="fn:9">
+The set data structure is inspired by <a href="https://mathworld.wolfram.com/Set.html">mathematical sets</a>, which contain elements (all of which are distinct) in no-particular order.<a href="#fnref:9" rev="footnote">&#8617;</a></li>
+<li id="fn:10">
+Alex alludes to there being a linear time solution if we have extra memory available.
+One possible algorithm is using a lookup table.
+For example, one could allocate an array with <code>2^32</code> entries and count how many times integers are found only once.<a href="#fnref:10" rev="footnote">&#8617;</a></li>
+<li id="fn:11">
+Alex: <a href="https://en.wikipedia.org/wiki/Common_Lisp">Common Lisp</a>
+made a similar mistake.
+Some of you think it was a great language.
+They carefully designed a bunch of algorithms which work on arbitrary sequences
+and one of the algorithms was called <a href="http://clhs.lisp.se/Body/f_rm_dup.htm">remove-duplicates</a> and it relied on equality.
+It actually would go through  <code>N</code> times rremoving things.
+They did not sort.
+They use equality.
+It did work and it worked exceptionally well for most of the applications.
+In Lisp you usually have a list with 5 elements so it works just fine.
+The moment you go to larger lists things stop working.
+Quadratic algorithms are slow.<a href="#fnref:11" rev="footnote">&#8617;</a></li>
+<li id="fn:12">
+<p>To say a function <code>f</code> is <code>O(g)</code> it&rsquo;s only required that <code>f</code> be bounded
+ by a constant multiple for all inputs beyond some point.
+Formally, if <code>f(x) &lt;= Ag(x)</code> for all <code>x &gt; M</code>, where <code>A</code> and <code>M</code> are constant real numbers.
+Alex will tend to say &ldquo;order of&rdquo; to distinguish <code>O(f)</code> from exactly <code>f</code>.</p>
+
+<p>Alex is observing that there is no requirement for <code>A</code> to be small.</p><a href="#fnref:12" rev="footnote">&#8617;</a></li>
+<li id="fn:13">
+<p>This performance description is based on several trends in computer architecture.
+The first is that memory, especially <a href="http://gec.di.uminho.pt/discip/minf/ac0102/1000gap_proc-mem_speed.pdf">main memory</a> hasn&rsquo;t increased
+in read/write speed relative to the increase in processor speed.
+So reading and writing to memory is relatively expensive.</p>
+
+<p>Second, and related is that to compensate CPUs now have many layers of caches
+with layers increasing in speed and decreasing in size as they get closer to the
+CPU.
+The CPU does a lot of guessing to anticipate what data needs to be in the cache
+for a given section of code.
+Data structures and algorithm which jump over the address space tend to mess this up
+so the CPU must pause and load data in and out of cache.</p><a href="#fnref:13" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
+
+
+<span style="float: right">
+[
+<a href="00_foreword.html">previous</a>, 
+<a href="index.html">contents</a>, 
+<a href="02_regular_types.html">next</a>
+]
+</span>
+
+
+
+</body>
+</html>
