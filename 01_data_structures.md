@@ -300,7 +300,7 @@ That is a lot.
 
 How should we solve the problem? Could we replace it with a one-liner?
 There is an STL function just for this.
-It is called [`std::unique`][cpp-unique].
+It is called [`std::unique`][cpp-unique][^spelling].
 What does it do?
 It goes through a range and removes all non-unique elements,
 giving back a range of unique elements.
@@ -329,6 +329,10 @@ of `a + 6`?
 There is no need.
 Never use a function which is intended using a
 general case, when you sit deeper inside some specific case. 
+
+
+[^spelling]: Alex: Ken Thompson changed the spelling of unique ([uniq(1)](https://man7.org/linux/man-pages/man1/uniq.1.html)).
+    My great contribution to computer science was to restore it (joke).
 
 ### Use the correct STL data structures 
 

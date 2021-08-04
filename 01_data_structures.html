@@ -336,7 +336,7 @@ That is a lot.</p>
 
 <p>How should we solve the problem? Could we replace it with a one-liner?
 There is an STL function just for this.
-It is called <a href="https://en.cppreference.com/w/cpp/algorithm/unique"><code>std::unique</code></a>.
+It is called <a href="https://en.cppreference.com/w/cpp/algorithm/unique"><code>std::unique</code></a><sup id="fnref:13"><a href="#fn:13" rel="footnote">13</a></sup>.
 What does it do?
 It goes through a range and removes all non-unique elements,
 giving back a range of unique elements.
@@ -404,7 +404,7 @@ These problems are going to get worse and worse.
 You&rsquo;re going to get a <a href="https://www.cs.cornell.edu/courses/cs3110/2014sp/lectures/26/memory.html">cache miss</a> on every step through the set.</p>
 
 <p>As our computers become faster, faster, and faster they&rsquo;re getting slower and
-slower and slower<sup id="fnref:13"><a href="#fn:13" rel="footnote">13</a></sup>.
+slower and slower<sup id="fnref:14"><a href="#fn:14" rel="footnote">14</a></sup>.
 Meaning that  going to the main memory is very slow.
 You want to have locality of reference you want all your
 data are working on in the local cache if you have a huge set or map it&rsquo;s not
@@ -566,6 +566,9 @@ Alex will tend to say &ldquo;order of&rdquo; to distinguish <code>O(f)</code> fr
 
 <p>Alex is observing that there is no requirement for <code>A</code> to be small.</p><a href="#fnref:12" rev="footnote">&#8617;</a></li>
 <li id="fn:13">
+Alex: Ken Thompson changed the spelling of unique (<a href="https://man7.org/linux/man-pages/man1/uniq.1.html">uniq(1)</a>).
+My great contribution to computer science was to restore it (joke).<a href="#fnref:13" rev="footnote">&#8617;</a></li>
+<li id="fn:14">
 <p>This performance description is based on several trends in computer architecture.
 The first is that memory, especially <a href="http://gec.di.uminho.pt/discip/minf/ac0102/1000gap_proc-mem_speed.pdf">main memory</a> hasn&rsquo;t increased
 in read/write speed relative to the increase in processor speed.
@@ -577,7 +580,7 @@ CPU.
 The CPU does a lot of guessing to anticipate what data needs to be in the cache
 for a given section of code.
 Data structures and algorithm which jump over the address space tend to mess this up
-so the CPU must pause and load data in and out of cache.</p><a href="#fnref:13" rev="footnote">&#8617;</a></li>
+so the CPU must pause and load data in and out of cache.</p><a href="#fnref:14" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 
