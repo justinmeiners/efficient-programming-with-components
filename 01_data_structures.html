@@ -338,12 +338,13 @@ That is a lot.</p>
 There is an STL function just for this.
 It is called <a href="https://en.cppreference.com/w/cpp/algorithm/unique"><code>std::unique</code></a>.
 What does it do?
-It goes through a range and removes all non-unique elements that have returns a range of unique elements.
-Of course the presupposition is that the range is sorted.
+It goes through a range and removes all non-unique elements,
+giving back a range of unique elements.
+Of course the presupposition is that the input range is sorted.
 It will work if the range is not sorted either.
 It will just not eliminate all equal elements.
-It returns a pointer to the element passed the last
-element of the range. This is a standard STL convention.</p>
+It returns a pointer to the element passed the last  element of the range.
+This is a standard STL convention, that we will study.</p>
 
 <p>For example given:</p>
 
