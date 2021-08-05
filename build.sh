@@ -1,12 +1,16 @@
 #!/bin/sh
 
+# copy foreword page for Github README
+mkdir -p .github
+cp 00_foreword.md .github/README.md
+
+
+# cleanup generated content
 rm -f *.html
 rm -f *.bak
 
 ALL_MD="$(echo *.md | sort)"
-
 export TOC="index.html"
-
 
 # I need to keep track of "next" and "previous"
 # so I have this ugly loop
