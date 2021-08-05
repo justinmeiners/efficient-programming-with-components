@@ -1,10 +1,5 @@
 #!/bin/sh
 
-# copy foreword page for Github README
-mkdir -p .github
-cp 00_foreword.md .github/README.md
-
-
 # cleanup generated content
 rm -f *.html
 rm -f *.bak
