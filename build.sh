@@ -54,7 +54,7 @@ done
 # index page
 
 export TITLE="Efficient Programming with Components"
-export NEXT="01_data_structures.html"
+export NEXT="00_foreword.html"
 export PREVIOUS=""
 TARGET="index.html"
 
