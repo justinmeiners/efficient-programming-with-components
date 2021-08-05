@@ -163,7 +163,7 @@ are anything like his original vision.
 
 [find-broken]: https://sean-parent.stlab.cc/papers-and-presentations/#warning-stdfind-is-broken
 
-**I have a correction, additional references, or other helpful ideas.**
+**I have a correction, additional reference, or other helpful idea.**
 
 Please, make a [pull request](https://github.com/justinmeiners/efficient-programming-with-components).
 Corrections are welcome and needed.

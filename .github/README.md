@@ -1,4 +1,6 @@
-**I have a correction, additional references, or other helpful ideas.**
+## FAQ
+
+**I have a correction, additional reference, or other helpful idea.**
 
 Please, make a pull request.
 Corrections are welcome and needed.
