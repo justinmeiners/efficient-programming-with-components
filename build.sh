@@ -1,12 +1,11 @@
 #!/bin/sh
 
+# cleanup generated content
 rm -f *.html
 rm -f *.bak
 
 ALL_MD="$(echo *.md | sort)"
-
 export TOC="index.html"
-
 
 # I need to keep track of "next" and "previous"
 # so I have this ugly loop
@@ -55,7 +54,7 @@ done
 # index page
 
 export TITLE="Efficient Programming with Components"
-export NEXT="01_data_structures.html"
+export NEXT="00_foreword.html"
 export PREVIOUS=""
 TARGET="index.html"
 
