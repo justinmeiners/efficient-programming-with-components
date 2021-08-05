@@ -30,9 +30,9 @@ have yet to be understood.
 
 Much more than anything in particular about C++,
 Alex's work is about discovering these principles.
-It's about the basic logic and math which govern programs,
-and their ability to describe programs is being recognized
- in more [areas][wwdc].
+It's about the basic logic and math which govern programs.
+The power of this foundational approach is being recognized in more areas.
+(For example, see Apple's WWDC session on [Protocol-Oriented Programming][wwdc].)
 
 Generic programming starts with algorithms.
 Given an algorithm, how do we know it will work?
