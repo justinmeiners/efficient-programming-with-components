@@ -182,9 +182,8 @@ The technical exposition is where
 I have rearranged and filled in missing parts
 for educational purposes.
 
-Many of the links are a quick google search away,
-so may seem unnecessary.
-I added them anyway for convienince and historical purposes.
+Many of the links  may seem unnecessary as they are quick google search away.
+I added those for convenience and historical purposes.
 References which are obvious now may be difficult to track down in the future.
 
 
