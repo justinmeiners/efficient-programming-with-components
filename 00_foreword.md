@@ -17,7 +17,7 @@ These lectures are intended to teach exactly that.
 
 Programming, as distinct from computer science
 tends to be described as a craft or art,
-rather than a field ofs cience or engineering.
+rather than a field of science or engineering.
 It's learned by experience and by studying a loose collection
 of examples and rules passed down;
 don't make functions "too long", hide "unnecessary" details
@@ -96,7 +96,6 @@ Original course by Alexander. A. Stepanov.
 
 Course notes assembled from videos, course materials, interviews,
 and books by [Justin Meiners](https://github.com/justinmeiners) in 2021.
-
 The lectures were given in 2013 at [A9](https://en.wikipedia.org/wiki/A9.com).
 These notes are intended 
 to share scientific information for educational and historical purposes. 
@@ -111,8 +110,7 @@ who attended the lectures.
 This has all the information an organized form, with references,
 and working code.
 
-The videos are actually pretty hard to watch, due
-to the slow pace, and interaction with the audience.
+The videos are often hard to watch, due to the slow pace, and interaction with the audience.
 Sometimes a mistake is made and they go back and fix it.
 Alex may introduce story, and then finish it days later.
 Consequently some videos have fewer than 800 views,
