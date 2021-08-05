@@ -165,7 +165,10 @@ are anything like his original vision.
 
 **I have a correction, additional references, or other helpful ideas.**
 
-That would be welcome. Please, make a [pull request](https://github.com/justinmeiners/efficient-programming-with-components).
+Please, make a [pull request](https://github.com/justinmeiners/efficient-programming-with-components).
+Corrections are welcome and needed.
+However, be aware that some of the awkwardness of grammar
+comes from the speaker and is intentionally preserved.
 
 **How accurate is this text?**
 
