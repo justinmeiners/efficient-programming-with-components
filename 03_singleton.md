@@ -223,7 +223,7 @@ You put additional constructor, and bam whole bunch of stuff stops compiling, ve
 ### Optimize the common case
 
 In the assignment operator do we need to do anything special when assigning a value to itself (`x = x`)? 
-It's a thing [Scott Meyers][meyers] says you should check for with `if (x == x)`,
+It's a thing [Scott Meyers][meyers] says you should check for with `if (x == x)`[^scott-assignment-check],
 but you don't need to check, just consider what will happen if they are equal.
 It will just assign back to itself.
 It might do extra work.
@@ -241,6 +241,8 @@ No.
 You have to think.
 Then the code will be good.
 
+
+[^scott-assignment-check]: See item 17 in "Effective C++".
 
 
 ### Virtual functions, virtual destructors, and OOP

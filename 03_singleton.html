@@ -326,7 +326,7 @@ You put additional constructor, and bam whole bunch of stuff stops compiling, ve
 <h3>Optimize the common case</h3>
 
 <p>In the assignment operator do we need to do anything special when assigning a value to itself (<code>x = x</code>)?
-It&rsquo;s a thing <a href="https://en.wikipedia.org/wiki/Scott_Meyers">Scott Meyers</a> says you should check for with <code>if (x == x)</code>,
+It&rsquo;s a thing <a href="https://en.wikipedia.org/wiki/Scott_Meyers">Scott Meyers</a> says you should check for with <code>if (x == x)</code><sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>,
 but you don&rsquo;t need to check, just consider what will happen if they are equal.
 It will just assign back to itself.
 It might do extra work.
@@ -354,7 +354,7 @@ Then the code will be good.</p>
 
 <p>If you interview for a job and there is a manager who knows
 nothing at all about programming or C++, what is the one question he asks you?
-&ldquo;Why should you always make a destructor virtual?&rdquo;<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>
+&ldquo;Why should you always make a destructor virtual?&rdquo;<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>
 This is frightening thing for me because I lived my life
 until now, without ever making a single destructor virtual.
 Believe it or not most of my destructors are part of the standard library.</p>
@@ -362,7 +362,7 @@ Believe it or not most of my destructors are part of the standard library.</p>
 <p>All the great authorities on C++ such as <a href="https://en.wikipedia.org/wiki/Scott_Meyers">Scott Meyers</a> who
 people think invented C++ are idealized in books like &ldquo;Effective C++&rdquo;,
 &ldquo;Effective STL&rdquo;, &ldquo;effective everything&rdquo;.
-He tells you always declare destructor as virtual<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.
+He tells you always declare destructor as virtual<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.
 OK, he&rsquo;s wrong. Simple as that.</p>
 
 <p>What we do we want to create? Take type <code>T</code> put it in a struct will the size of the thing increase?
@@ -424,7 +424,7 @@ If you put it outside you discover you have to write an ugly thing.</p>
 and it has to satisfy some very basic rules.
 There is one great law which on which the entire edifice of civilization
 is based. It is called the <strong>law of identity</strong>
-and goes with two other fundamental laws of thought <sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>:</p>
+and goes with two other fundamental laws of thought <sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>:</p>
 
 <p><strong>The law of identity</strong>: a == a. Popeye the Sailor used to say, &ldquo;I am, what I am&rdquo;.</p>
 
@@ -439,7 +439,7 @@ There is a fundamental case which breaks and has consequences.
 <p>Everybody from Plato all the way up to <a href="https://en.wikipedia.org/wiki/Ayn_Rand">Ayn Rand</a>, the greatest American mind (joke).
 Whatever her political views, even she, <a href="https://plato.stanford.edu/entries/ayn-rand/supplement.html#ExisIdenCons">supported</a> the law of identity.
 There is a lot to figure out.
-There is deep stuff about equality<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.</p>
+There is deep stuff about equality<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.</p>
 
 <a name="Why-can-27-t-the-compiler-generate--3d--3d--and--21--3d--3f-"></a>
 <h3>Why can&rsquo;t the compiler generate == and !=?</h3>
@@ -464,7 +464,7 @@ It&rsquo;s a sensible rule a compiler could do.</p>
 But, I asked probably the second best person on the subject, <a href="https://en.wikipedia.org/wiki/Stephen_C._Johnson">Steve Johnson</a>, because
 he actually implemented all these assignments for structures and things like that.
 Steve told me,  &ldquo;it was very hard because the bits in the padding might not be equal.
-If you compare bit by bit things which have equal members, but not equal bits in the padding, it will not work&rdquo;<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.</p>
+If you compare bit by bit things which have equal members, but not equal bits in the padding, it will not work&rdquo;<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup>.</p>
 
 <p>But, why should you compare bit by bit?
 You should do recursive member by member as we discovered.
@@ -719,9 +719,11 @@ I got $250 for writing an <a href="http://stepanovpapers.com/BYTE_com.htm">artic
 I got $500 for an invited keynote at <a href="https://en.wikipedia.org/wiki/OOPSLA">oopsla</a>.
 I paid taxes from both.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
-Making a destructor virtual ensures that if a class
-inherits virtually and is destructed, then the base class destructor is called too.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+See item 17 in &ldquo;Effective C++&rdquo;.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
+Making a destructor virtual ensures that if a class
+inherits virtually and is destructed, then the base class destructor is called too.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<li id="fn:7">
 <p>In &ldquo;Effective C++&rdquo;, Scott Meyers does not say to use <code>virtual</code>
 on every destructor, he specifies &ldquo;make sure base classes have virtual destructors&rdquo;
 and clarifies &ldquo;gratuitously declaring all destructors virtual is just as wrong
@@ -735,8 +737,8 @@ we should always use <code>virtual</code> destructors was repeated
 and enforced in code linters at many organizations for a long time.
 I have personally had the question come up in several C++ interviews.
 It&rsquo;s likely that defenders of this practice incorrectly invoked
-Scott&rsquo;s name.</p><a href="#fnref:6" rev="footnote">&#8617;</a></li>
-<li id="fn:7">
+Scott&rsquo;s name.</p><a href="#fnref:7" rev="footnote">&#8617;</a></li>
+<li id="fn:8">
 <p>The &ldquo;laws of thought&rdquo; referenced here by Alex
 are generally attributed to Aristotle.
 Here is an expression of the Law of non-contradiction
@@ -745,8 +747,8 @@ in the <a href="http://classics.mit.edu/Aristotle/metaphysics.4.iv.html">Metaphy
 <blockquote><p>We have now posited that it is impossible for anything at the same time to be and not to be, and by this means have shown that this is the most indisputable of all principles.
 Some indeed demand that even this shall be demonstrated, but this they do through want of education, for not to know of what things one should demand demonstration, and of what one should not, argues want of education.
 For it is impossible that there should be demonstration of absolutely everything (there would be an infinite regress, so that there would still be no demonstration);
-but if there are things of which one should not demand demonstration, these persons could not say what principle they maintain to be more self-evident than the present one. (Book 4)</p></blockquote><a href="#fnref:7" rev="footnote">&#8617;</a></li>
-<li id="fn:8">
+but if there are things of which one should not demand demonstration, these persons could not say what principle they maintain to be more self-evident than the present one. (Book 4)</p></blockquote><a href="#fnref:8" rev="footnote">&#8617;</a></li>
+<li id="fn:9">
 There is a branch of logic
 called <a href="https://en.wikipedia.org/wiki/Intuitionistic_logic">intuitionism</a>,
 closely associated with <a href="https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_mathematics)">constructivism</a> which
@@ -754,8 +756,8 @@ denies the Law of excluded middle.
 Specifically, it takes issue with the idea that <code>!(!P)</code>, is the same as <code>P</code>.
 Modern <a href="https://plato.stanford.edu/entries/dialetheism/">philosophers</a> have even questioned the law of non-contradiction.
 But, I know of no serious mathematical or philosophical
-movements denying the law of identity.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
-<li id="fn:9">
+movements denying the law of identity.<a href="#fnref:9" rev="footnote">&#8617;</a></li>
+<li id="fn:10">
 <p>Padding is a technical fact about how C prepares data to be stored in memory.
 The compiler is not only concerned with memory usage,
 but also how the CPU will address that memory.
@@ -780,7 +782,7 @@ r.number = 20;
 
 <p>The invisible padding bits will not be modified,
 and so their values are undefined.
-You can read more <a href="https://en.cppreference.com/w/c/language/object">here</a>.</p><a href="#fnref:9" rev="footnote">&#8617;</a></li>
+You can read more <a href="https://en.cppreference.com/w/c/language/object">here</a>.</p><a href="#fnref:10" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 
