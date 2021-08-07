@@ -421,18 +421,19 @@ is a bad sequence.
 
 [register]: https://en.cppreference.com/w/c/language/storage_duration
 
-[^registers]: Registers are a fundamental component in CPU architecture.
-    Each register stores a single value (typically 32 bit or 64 bits).
-    Almost all CPU operations are confined to operating on values in registers.
-    For example, an `add` instruction adds the value in one register,
+[^registers]: 
+    In CPU architecture, a register is a slot on the CPU
+    that can store a single value (typically 32 bit or 64 bits).
+    Most CPU operations are confined to operating on values in registers.
+    For example, an "add" instruction might add the value in one register,
     to another register, and then stores the value in a third register.
+    Separate "load" and "store" instructions
+    are used to move a value between a register and a location in memory.
 
     Typically a CPU has only a handful (fewer than 50) of register, so a large part of the program
     is spent moving values from memory into registers so they can be operated on,
     and then transferring the results back to main memory.
 
-    The terms "load" and "store" refer to instructions
-    which move a single value between a register and a location in memory. 
 
 ## Code
 
