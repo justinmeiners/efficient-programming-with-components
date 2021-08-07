@@ -175,7 +175,7 @@ the name <code>singleton</code> and then you just need to fix two or three thing
 
 <p>Some of you might be confused by the name singleton.
 All the people
-read the <a href="https://en.wikipedia.org/wiki/Design_Patterns">&ldquo;Gang of Four&rdquo;</a> book<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> and are familiar with singleton pattern<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> and
+read the &ldquo;Gang of Four&rdquo; book<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> and are familiar with singleton pattern<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> and
 might think that&rsquo;s what I&rsquo;m talking about.
 No, I wouldn&rsquo;t do that, would I?
 What, I&rsquo;m talking about is not a pattern, but a very simple class.
@@ -207,7 +207,7 @@ No, this does not return a type.
 But it is a wonderful example of a <strong>type attribute</strong>,
 something which maps type into value.
 What about macro?
-Macro<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> for sure has now no effects on type system.
+Macro for sure has now no effects on type system<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
 What about pointer?
 Yes. The pointer star is a type function.</p>
 
@@ -362,7 +362,7 @@ Believe it or not most of my destructors are part of the standard library.</p>
 <p>All the great authorities on C++ such as <a href="https://en.wikipedia.org/wiki/Scott_Meyers">Scott Meyers</a> who
 people think invented C++ are idealized in books like &ldquo;Effective C++&rdquo;,
 &ldquo;Effective STL&rdquo;, &ldquo;effective everything&rdquo;.
-He tells you always declare destructor as virtual.
+He tells you always declare destructor as virtual<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.
 OK, he&rsquo;s wrong. Simple as that.</p>
 
 <p>What we do we want to create? Take type <code>T</code> put it in a struct will the size of the thing increase?
@@ -424,7 +424,7 @@ If you put it outside you discover you have to write an ugly thing.</p>
 and it has to satisfy some very basic rules.
 There is one great law which on which the entire edifice of civilization
 is based. It is called the <strong>law of identity</strong>
-and goes with two other fundamental laws of thought <sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>:</p>
+and goes with two other fundamental laws of thought <sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>:</p>
 
 <p><strong>The law of identity</strong>: a == a. Popeye the Sailor used to say, &ldquo;I am, what I am&rdquo;.</p>
 
@@ -439,7 +439,7 @@ There is a fundamental case which breaks and has consequences.
 <p>Everybody from Plato all the way up to <a href="https://en.wikipedia.org/wiki/Ayn_Rand">Ayn Rand</a>, the greatest American mind (joke).
 Whatever her political views, even she, <a href="https://plato.stanford.edu/entries/ayn-rand/supplement.html#ExisIdenCons">supported</a> the law of identity.
 There is a lot to figure out.
-There is deep stuff about equality<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.</p>
+There is deep stuff about equality<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.</p>
 
 <a name="Why-can-27-t-the-compiler-generate--3d--3d--and--21--3d--3f-"></a>
 <h3>Why can&rsquo;t the compiler generate == and !=?</h3>
@@ -464,7 +464,7 @@ It&rsquo;s a sensible rule a compiler could do.</p>
 But, I asked probably the second best person on the subject, <a href="https://en.wikipedia.org/wiki/Stephen_C._Johnson">Steve Johnson</a>, because
 he actually implemented all these assignments for structures and things like that.
 Steve told me,  &ldquo;it was very hard because the bits in the padding might not be equal.
-If you compare bit by bit things which have equal members, but not equal bits in the padding, it will not work&rdquo;<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.</p>
+If you compare bit by bit things which have equal members, but not equal bits in the padding, it will not work&rdquo;<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.</p>
 
 <p>But, why should you compare bit by bit?
 You should do recursive member by member as we discovered.
@@ -684,16 +684,19 @@ is false. Of course it handles implicit conversions, what else could it do?</p>
 <hr/>
 <ol>
 <li id="fn:1">
-&ldquo;Gang of four&rdquo; is a nickname for an influential text in object oriented programming called &ldquo;Design Patterns&rdquo;
+&ldquo;Gang of four&rdquo; is a nickname for an influential text in object oriented programming called <a href="https://en.wikipedia.org/wiki/Design_Patterns">&ldquo;Design Patterns&rdquo;</a>
 by Gamma, Helm, Johnson, and Vlissides.
 As the name suggests, the book studies patterns of ways to organize code and objects to solve common problems
 while aiming to preserve modularity and flexibility.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
-A singleton in object oriented programming is a class which is indented to have one instance,
+A <a href="https://www.oodesign.com/singleton-pattern.html">singleton</a> in object oriented programming is a class which is indented to have one instance,
 or at least one canonical instance, which all code can reference.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
 Macro systems typically manipulate only the text of the code itself, and thus have no
-access to compiler data.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+access to compiler data.
+Expanding all the macros to create new source code,
+and then compiling the resulting macro-less code
+would give equivalent output.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
 <p>Alex: Don&rsquo;t be so eager with making members of classes private.
 I&rsquo;m a communist, I don&rsquo;t like private proprety.
@@ -719,6 +722,21 @@ I paid taxes from both.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
 Making a destructor virtual ensures that if a class
 inherits virtually and is destructed, then the base class destructor is called too.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
+<p>In &ldquo;Effective C++&rdquo;, Scott Meyers does not say to use <code>virtual</code>
+on every destructor, he specifies &ldquo;make sure base classes have virtual destructors&rdquo;
+and clarifies &ldquo;gratuitously declaring all destructors virtual is just as wrong
+as never declaring them virtual&rdquo;.
+He provides a heuristic, &ldquo;declare a virtual destructor in a class
+if and only if that class contains at least one virtual function.&rdquo;</p>
+
+<p>Alex is wrong about Scott&rsquo;s recommendation.
+But, for whatever reason, this incorrect reading of Scott, that
+we should always use <code>virtual</code> destructors was repeated
+and enforced in code linters at many organizations for a long time.
+I have personally had the question come up in several C++ interviews.
+It&rsquo;s likely that defenders of this practice incorrectly invoked
+Scott&rsquo;s name.</p><a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<li id="fn:7">
 <p>The &ldquo;laws of thought&rdquo; referenced here by Alex
 are generally attributed to Aristotle.
 Here is an expression of the Law of non-contradiction
@@ -727,31 +745,42 @@ in the <a href="http://classics.mit.edu/Aristotle/metaphysics.4.iv.html">Metaphy
 <blockquote><p>We have now posited that it is impossible for anything at the same time to be and not to be, and by this means have shown that this is the most indisputable of all principles.
 Some indeed demand that even this shall be demonstrated, but this they do through want of education, for not to know of what things one should demand demonstration, and of what one should not, argues want of education.
 For it is impossible that there should be demonstration of absolutely everything (there would be an infinite regress, so that there would still be no demonstration);
-but if there are things of which one should not demand demonstration, these persons could not say what principle they maintain to be more self-evident than the present one. (Book 4)</p></blockquote><a href="#fnref:6" rev="footnote">&#8617;</a></li>
-<li id="fn:7">
-There is a mathematical school of thought which
-denies the Law of excluded middle, called <a href="https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_mathematics">constructivism</a>.
+but if there are things of which one should not demand demonstration, these persons could not say what principle they maintain to be more self-evident than the present one. (Book 4)</p></blockquote><a href="#fnref:7" rev="footnote">&#8617;</a></li>
+<li id="fn:8">
+There is a branch of logic
+called <a href="https://en.wikipedia.org/wiki/Intuitionistic_logic">intuitionism</a>,
+closely associated with <a href="https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_mathematics)">constructivism</a> which
+denies the Law of excluded middle.
 Specifically, it takes issue with the idea that <code>!(!P)</code>, is the same as <code>P</code>.
 Modern <a href="https://plato.stanford.edu/entries/dialetheism/">philosophers</a> have even questioned the law of non-contradiction.
-But, I know of no serious academic work denying the law of identity.<a href="#fnref:7" rev="footnote">&#8617;</a></li>
-<li id="fn:8">
-<p>Padding is a somewhat technical detail of how C lays out structures in memory.
-The compiler is not only concerned with memory, but also how the CPU will address that memory.
-So for example, if you write:</p>
+But, I know of no serious mathematical or philosophical
+movements denying the law of identity.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
+<li id="fn:9">
+<p>Padding is a technical fact about how C prepares data to be stored in memory.
+The compiler is not only concerned with memory usage,
+but also how the CPU will address that memory.
+Suppose you write the following:</p>
 
 <pre><code>typedef struct
 {
     uint16_t id;
     uint32_t number;
-};
+} Record;
 </code></pre>
 
-<p>The compiler will often insert 16 hidden padding bits between <code>id</code> and <code>number</code>,
-so that all the fields in the structure are aligned to 32 bits.
-Of course, assigning the visible fields will leave the values in the padding data
-undefined.</p>
+<p>A typical compiler will insert 16 hidden padding bits between <code>id</code> and <code>number</code>,
+so that all the fields in the structure begin at addresses
+which are multiples of 32 bits.
+Even if you assign all the fields:</p>
 
-<p>Read more <a href="https://en.cppreference.com/w/c/language/object">here</a></p><a href="#fnref:8" rev="footnote">&#8617;</a></li>
+<pre><code>Record r;
+r.id = 1;
+r.number = 20;
+</code></pre>
+
+<p>The invisible padding bits will not be modified,
+and so their values are undefined.
+You can read more <a href="https://en.cppreference.com/w/c/language/object">here</a>.</p><a href="#fnref:9" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

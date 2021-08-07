@@ -556,14 +556,14 @@ There is absolutely no indication that getting it will make you rich.
 
 
 [^bad-code]: 
-    Alex: "If you want to see a really bad program
+    Alex: If you want to see a really bad program
     see [Patrick Henry Winston][winston]'s
     book ["LISP 1st Edition"][lisp-book].
     Look at his sorting algorithm for list.
     It posses many remarkable properties including using `n log(n)` extra storage.
     Good example of a famous person at a respectable school
     publishing something terrible.
-    Published does not mean good."
+    Published does not mean good.
 
 [lisp-book]: http://people.csail.mit.edu/phw/Books/LISPBACK.HTML
 [winston]: http://people.csail.mit.edu/phw/index.html

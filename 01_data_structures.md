@@ -283,7 +283,7 @@ That is a lot.
     made a similar mistake.
     Some of you think it was a great language.
     They carefully designed a bunch of algorithms which work on arbitrary sequences
-    and one of the algorithms was called [remove-duplicates][clhs-duplicates] and it relied on equality.
+    and one of the algorithms was called [`remove-duplicates`][clhs-duplicates] and it relied on equality.
     It actually would go through  `N` times rremoving things.
     They did not sort. 
     They use equality.

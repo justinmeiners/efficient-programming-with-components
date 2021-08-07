@@ -45,12 +45,12 @@ in an implementation useful for others, called a **component**.
 Complex programs are written simply by combining simple
 components that are well understood.
 
-Generality and abstraction actually come from minimalism;
-reducing to essential parts,
-as opposed to hiding information,
-which is the mantra of black-box layering.
+Components facilitate abstraction and code reuse through minimalism;
+code is reduced to its essential function,
+as opposed to traditional black-box layering
+which merely hides information.
 Programs written this way also tend to be fast,
-which is a helpful ingredient for reusing code.
+which contributes to its reusability.
 If a component doesn't perform, 
 there will always be some performance-sensitive application
 that can't use it.
