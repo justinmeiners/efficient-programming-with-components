@@ -41,7 +41,7 @@ the name `singleton` and then you just need to fix two or three things.
 
 Some of you might be confused by the name singleton.
 All the people
-read the ["Gang of Four"][gof] book[^about-gof] and are familiar with singleton pattern[^singleton] and 
+read the "Gang of Four" book[^about-gof] and are familiar with singleton pattern[^singleton] and 
 might think that's what I'm talking about.
 No, I wouldn't do that, would I? 
 What, I'm talking about is not a pattern, but a very simple class. 
@@ -49,12 +49,12 @@ It's similar to a class called [`std::pair`][cpp-pair].
 If you go and check a dictionary it says: singleton, pair, triple, quadruple, etc. 
 A pair has two things, well singleton has just one thing.
 
-[^about-gof]: "Gang of four" is a nickname for an influential text in object oriented programming called "Design Patterns"
+[^about-gof]: "Gang of four" is a nickname for an influential text in object oriented programming called ["Design Patterns"][gof]
     by Gamma, Helm, Johnson, and Vlissides. 
     As the name suggests, the book studies patterns of ways to organize code and objects to solve common problems
     while aiming to preserve modularity and flexibility.
 
-[^singleton]: A singleton in object oriented programming is a class which is indented to have one instance,
+[^singleton]: A [singleton](https://www.oodesign.com/singleton-pattern.html) in object oriented programming is a class which is indented to have one instance,
     or at least one canonical instance, which all code can reference.
 
 [gof]: https://en.wikipedia.org/wiki/Design_Patterns
@@ -82,7 +82,7 @@ No, this does not return a type.
 But it is a wonderful example of a **type attribute**,
 something which maps type into value.
 What about macro?
-Macro[^macros] for sure has now no effects on type system.
+Macro for sure has now no effects on type system[^macros].
 What about pointer?
 Yes. The pointer star is a type function.
 
@@ -94,6 +94,9 @@ You write it post fix but it is logically a type function.
 
 [^macros]: Macro systems typically manipulate only the text of the code itself, and thus have no
     access to compiler data.
+    Expanding all the macros to create new source code,
+    and then compiling the resulting macro-less code
+    would give equivalent output.
 
 [sizeof]: https://en.cppreference.com/w/cpp/language/sizeof
 
@@ -220,7 +223,7 @@ You put additional constructor, and bam whole bunch of stuff stops compiling, ve
 ### Optimize the common case
 
 In the assignment operator do we need to do anything special when assigning a value to itself (`x = x`)? 
-It's a thing [Scott Meyers][meyers] says you should check for with `if (x == x)`,
+It's a thing [Scott Meyers][meyers] says you should check for with `if (x == x)`[^scott-assignment-check],
 but you don't need to check, just consider what will happen if they are equal.
 It will just assign back to itself.
 It might do extra work.
@@ -239,6 +242,8 @@ You have to think.
 Then the code will be good.
 
 
+[^scott-assignment-check]: See item 17 in "Effective C++".
+
 
 ### Virtual functions, virtual destructors, and OOP
 
@@ -256,7 +261,7 @@ Believe it or not most of my destructors are part of the standard library.
 All the great authorities on C++ such as [Scott Meyers][meyers] who
 people think invented C++ are idealized in books like "Effective C++",
 "Effective STL", "effective everything".
-He tells you always declare destructor as virtual.
+He tells you always declare destructor as virtual[^scott-virtual].
 OK, he's wrong. Simple as that.
 
 What we do we want to create? Take type `T` put it in a struct will the size of the thing increase?
@@ -291,7 +296,20 @@ I'm not denying that it's theoretically possible to find a good piece of code wr
 [meyers]: https://en.wikipedia.org/wiki/Scott_Meyers
 [^virtual-destructor]: Making a destructor virtual ensures that if a class
     inherits virtually and is destructed, then the base class destructor is called too.
+[^scott-virtual]: In "Effective C++", Scott Meyers does not say to use `virtual`
+    on every destructor, he specifies "make sure base classes have virtual destructors"
+    and clarifies "gratuitously declaring all destructors virtual is just as wrong
+    as never declaring them virtual".
+    He provides a heuristic, "declare a virtual destructor in a class
+    if and only if that class contains at least one virtual function."
 
+    Alex is wrong about Scott's recommendation.
+    But, for whatever reason, this incorrect reading of Scott, that
+    we should always use `virtual` destructors was repeated
+    and enforced in code linters at many organizations for a long time.
+    I have personally had the question come up in several C++ interviews.
+    It's likely that defenders of this practice incorrectly invoked
+    Scott's name.
 
 ## Regular singleton
 
@@ -347,18 +365,21 @@ There is deep stuff about equality[^constructivism].
     > For it is impossible that there should be demonstration of absolutely everything (there would be an infinite regress, so that there would still be no demonstration);
     > but if there are things of which one should not demand demonstration, these persons could not say what principle they maintain to be more self-evident than the present one. (Book 4)
 
-[^constructivism]: There is a mathematical school of thought which 
-    denies the Law of excluded middle, called [constructivism][constructivism].
+[^constructivism]: There is a branch of logic
+    called [intuitionism][intuitionism],
+    closely associated with [constructivism][constructivism] which 
+    denies the Law of excluded middle.
     Specifically, it takes issue with the idea that `!(!P)`, is the same as `P`.
     Modern [philosophers][dialetheism] have even questioned the law of non-contradiction.
-    But, I know of no serious academic work denying the law of identity.
-
+    But, I know of no serious mathematical or philosophical 
+    movements denying the law of identity.
 
 [rand]: https://en.wikipedia.org/wiki/Ayn_Rand
 [metaphysics]: http://classics.mit.edu/Aristotle/metaphysics.4.iv.html
-[constructivism]: https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_mathematics
+[constructivism]: https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_mathematics)
 [dialetheism]: https://plato.stanford.edu/entries/dialetheism/
 [rand-identity]: https://plato.stanford.edu/entries/ayn-rand/supplement.html#ExisIdenCons
+[intuitionism]: https://en.wikipedia.org/wiki/Intuitionistic_logic
 
 ### Why can't the compiler generate == and !=?
 
@@ -415,22 +436,29 @@ Notice that we didn't define `!=` as:
 Why? Because by defining one in terms of the other,
 it can always stay the way it is, even if we copy it to other classes.
 
-[^padding]: Padding is a somewhat technical detail of how C lays out structures in memory.
-    The compiler is not only concerned with memory, but also how the CPU will address that memory.
-    So for example, if you write:
+[^padding]: Padding is a technical fact about how C prepares data to be stored in memory.
+    The compiler is not only concerned with memory usage,
+    but also how the CPU will address that memory.
+    Suppose you write the following:
 
         typedef struct
         {
             uint16_t id;
             uint32_t number;
-        };
+        } Record;
 
-    The compiler will often insert 16 hidden padding bits between `id` and `number`,
-    so that all the fields in the structure are aligned to 32 bits.
-    Of course, assigning the visible fields will leave the values in the padding data 
-    undefined.
+    A typical compiler will insert 16 hidden padding bits between `id` and `number`,
+    so that all the fields in the structure begin at addresses
+    which are multiples of 32 bits.
+    Even if you assign all the fields:
 
-    Read more [here][padding]
+        Record r;
+        r.id = 1;
+        r.number = 20;
+
+    The invisible padding bits will not be modified,
+    and so their values are undefined.
+    You can read more [here][padding].
 
 [padding]: https://en.cppreference.com/w/c/language/object 
 [johnson]: https://en.wikipedia.org/wiki/Stephen_C._Johnson
