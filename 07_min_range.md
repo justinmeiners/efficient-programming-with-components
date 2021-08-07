@@ -3,9 +3,8 @@
 
 ## The standard is not a limitation on ideas 
 
-When I joined A9 I wrote a little generic function and it
-was not using STL iterators, it used some other iterator like
-thing, but, totally different.
+When I joined A9 I wrote a little generic function and it was not using STL iterators.
+It used some other iterator like thing, but, totally different.
 We wrote it, tested it, sent it in and one of
 the wise people who works for us looked at it and sent back
 the reply, "you guys have to learn about STL iterators",
