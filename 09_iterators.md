@@ -65,7 +65,7 @@ It's a lightweight thing, it doesn't do anything.
 It just points to things.
 
 This argument is active again.
-There are are [boost][boost] guys 
+There are [boost][boost] guys 
 who say, "Iterator is all wrong. Let us, go back
 and do ranges."
 They're reinventing Barbara Liskov iterators.
