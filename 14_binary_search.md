@@ -238,7 +238,7 @@ We have transitivity from a requirement of `StrictWeakOrdering`.
 
 ### Is sorted
 
-Let's write `is_sorted`[^adjacent-find].
+Let's write `is_sorted`.
 We know an empty range is sorted.
 As long as we didn't reach the end, and we didn't
 find a counterexample (not suddenly decreasing)
