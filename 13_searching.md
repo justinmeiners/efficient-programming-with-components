@@ -51,7 +51,7 @@ He was one of the inventors of blocks.
 American representatives which included such brilliant people as [John Backus][backus]
 and [Alan Perlis][perlis] actually reject it as too hard to implement.
 They didn't know how to do stacks.
-Buut sadly enough he doesn't get much credit,
+But sadly enough he doesn't get much credit,
 especially credit for correct binary search.
 We will be actually studying his version.
 

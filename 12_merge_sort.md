@@ -549,11 +549,9 @@ But, in some sense this is literally the essence of my life work, this piece of
 code. 
 That's where it started.
 That's where it ends.
-
 The majority of people do not get it.
 The majority of computer scientists do not get it.
 There is absolutely no indication that getting it will make you rich.
-
 
 [^bad-code]: 
     Alex: If you want to see a really bad program
