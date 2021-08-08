@@ -139,10 +139,10 @@ For `singleton`, we pick struct because it's less typing
 *We should find the most minimal way of saying what we want to say*.
 
 [^communist]: Alex: Don't be so eager with making members of classes private.
-    I'm a communist, I don't like private proprety.
-    Ok, I'm not really a communist.
+    I'm a communist, I don't like private property.
+    OK, I'm not really a communist.
     Someone accused me of being one for not liking object-oriented programming.
-    They said STL was basically communist propoganda.
+    They said STL was basically communist propaganda.
     Objects are important because they own things.
 
     This same person made a million dollars selling my code.
