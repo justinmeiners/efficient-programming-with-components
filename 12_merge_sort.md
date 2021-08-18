@@ -331,11 +331,10 @@ Also note that algorithmically there is no good reason why we evaluate
 
 On every single iteration, because only the one iterator
 we moved in the loop could become empty.
-We will come back to this.
 
 **Exercise:** Write a theoretically more efficient merge which does not do this extra comparison (solved just below).
 
-### Improved merge 
+### Merge with fewer comparisons
 
 I clearly teach you all the wrong things.
 I tell you not to use
