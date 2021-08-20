@@ -518,7 +518,7 @@ Because we implemented all these operators,
 These are requirements on the type `T`, otherwise known
 as **concepts**.
 
-The C++ language doesn't have support for concepts at this time.
+The C++ language doesn't have support for concepts at this time[^concepts-proposal].
 So, we use comments to communicate them.
 
 In `singleton` we add a comment to describe this:
@@ -540,6 +540,15 @@ If `T` has an equality, then singleton will have equality.
 Same for total ordering, etc.
 
 **Exercise:** Copy the file for singleton and modify it to write `pair`.
+
+[^concepts-proposal]: [Concepts][cpp-concepts], as a language feature, went through many
+    iterations and delays before finally being included in the C++20 standard.
+    When the course was given, a group at A9 (including Alex) was working to get them included in C++14.
+    You can read their [proposal](papers/concepts_proposal.pdf).
+    Bjarne actually visits A9 to give a guest lecture on concepts as part of the course,
+    however this is not included in the notes as it is a depature from the rest of the material.
+
+[cpp-concepts]: https://en.wikipedia.org/wiki/Concepts_(C%2B%2B)
 
 ## Implicit type conversion
 

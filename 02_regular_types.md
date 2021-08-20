@@ -137,7 +137,7 @@ these constructors you remain `Regular`.
     However, you can have a universe that is strictly functional where you have equational reasoning,
     Our universe has assignment and state.
 
-[^complete]: They're not [Turing complete][turing-complete], but they're Stepanov complete (joke).
+[^complete]: Alex: They're not [Turing complete][turing-complete], but they're Stepanov complete (joke).
 
 [turing-complete]: https://en.wikipedia.org/wiki/Turing_completeness
 

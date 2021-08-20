@@ -556,7 +556,7 @@ There is absolutely no indication that getting it will make you rich.
     Alex: If you want to see a really bad program
     see [Patrick Henry Winston][winston]'s
     book ["LISP 1st Edition"][lisp-book].
-    Look at his sorting algorithm for list.
+    Look at his sorting algorithm for list: [radix_sort.lisp](code/other/radix_sort.lisp).
     It posses many remarkable properties including using `n log(n)` extra storage.
     Good example of a famous person at a respectable school
     publishing something terrible.
