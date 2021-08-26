@@ -449,14 +449,14 @@ Not as efficiently[^without-goto].
     saying, "don't you know that `goto` is harmful?".
     I couldn't find another solution.
 
-[^non-empty]: In "Elements of Programming" Alex often follows the pattern
-    of creating a function which require strict assumptions
+[^non-empty]: In "Elements of Programming", Alex often follows the pattern
+    of creating a function which requires strict assumptions
     (such as the list being nonempty).
     Then he creates a wrapper
     which does additional checks or work to ensure the assumptions
     are met.
     This makes the algorithm more modular and faster
-    for those other components which can guarentee the assumptions,
+    for those other components which can guarantee the assumptions,
     without doing extra work.
     
 [ada]: https://en.wikipedia.org/wiki/Ada_(programming_language)
