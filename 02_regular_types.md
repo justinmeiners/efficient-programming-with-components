@@ -242,7 +242,7 @@ They are symmetric.
 ## Total orderings
 
 The concept `TotallyOrdered` extends `Regular` by adding a comparison operator `<`.
-This is actually something that that Bjarne disagrees with me on.
+This is actually something that Bjarne[^about-bjarne] disagrees with me on.
 I say that `<`, the total ordering of the type is
 fundamental, and should be required.
 He says it's too much to ask, and `Regular` types should be less strict.

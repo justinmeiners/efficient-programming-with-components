@@ -295,6 +295,10 @@ I sort_adaptive_n(I first, N n, R r, B buffer, N buffer_size) {
 }
 </code></pre>
 
+<p>(Recall, that we proved 16 was a good cutoff.)
+The standard C convention for old people is that <code>ALL_CAPS</code> means it&rsquo;s a macro.
+We will use this for a constant here<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.</p>
+
 <p>We have a few decisions to make for insertion sort.
 Should we use <code>upper_bound</code> or <code>lower_bound</code> for binary search?
 If we use <code>lower_bound</code> and we have equal guys at the end,
@@ -311,7 +315,7 @@ So let&rsquo;s use <code>upper_bound_n</code></p>
 
 <p>What we will first write a function for finding where an element
 goes and placing it there.
-Then we will structure our loop<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> around that.</p>
+Then we will structure our loop<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> around that.</p>
 
 <pre><code>template &lt;typename I, typename N, typename R&gt;
 // I is ForwardIterator
@@ -468,7 +472,7 @@ void rotate_right_by_one(I first, I last, std::forward_iterator_tag) {
 </code></pre>
 
 <p>Let&rsquo;s write a dispatch for both versions,
-it will compile to no code<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+it will compile to no code<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
 
 <pre><code>template &lt;typename I&gt;
 inline
@@ -481,7 +485,7 @@ void rotate_right_by_one(I first, I butlast, I last) {
 <h3>Should we support forward iterator?</h3>
 
 <p>Someone brought up that <code>ForwardIterator</code> doesn&rsquo;t
-really make sense for this algorithm<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>,
+really make sense for this algorithm<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>,
 because if we have something like a linked list, we don&rsquo;t need to rotate
 or shift elements around,
 we can just insert it where it belongs.
@@ -500,6 +504,14 @@ In our sort we constantly re-link
 next, so eventually you get to a point where everything is scattered
 all over memory.</p>
 
+<p>STL used to have a sentence in the container
+section which the standard commitee threw out.
+Use a vector.
+This is a true statement.
+Unless you are absolutely positive
+you need something else, use a vector
+or a C array<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
+
 <a name="Code"></a>
 <h2>Code</h2>
 
@@ -512,13 +524,14 @@ all over memory.</p>
 <hr/>
 <ol>
 <li id="fn:1">
-<p>Alex: Of course, STL still has it on the inside.
+<p>Alex: Of course, STL still has insertion sort on the inside.
 It has to.
-So insertion sort was in the library and is still used by the library, but they took it out.
-The argument was, &ldquo;we have too many sorts&rdquo;.
+What happened during the standardization process,
+is they took something which was in the library and was used by the library, and threw it out.
+The argument was, &ldquo;we already have too many sorts&rdquo;.
 Is it a good argument?
 No, you need to have as many sorts as people might need
-when they practical things.
+when they do practical things.
 How many sorts are in STL?</p>
 
 <ol>
@@ -534,16 +547,25 @@ How many sorts are in STL?</p>
 </ol>
 <a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
+Alex:
+    I think you should read Bjarne&rsquo;s book &ldquo;Design and Evolution of C++&rdquo;.
+    It&rsquo;s a short book and very instructive.
+    This is the book I hope he will revise, because it only goes up to like 92.
+    In any case, the last chapter is dedicated to the preprocessor.
+    It has an epigraph: &ldquo;CPP must be destroyed&rdquo; - Cato.
+    <a href="https://en.wikipedia.org/wiki/Carthago_delenda_est"><em>Carthago delenda est</em></a> (&ldquo;Carthage must be destroyed&rdquo;).
+    It&rsquo;s still not destroyed, but maybe one day.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
 Alex: Could we use a <code>for</code> loop instead of a <code>while</code>?
 Yes, but I hate <code>for</code> loops.
 Why? Because the semantics have changed about 6 times,
-since I started C++, <code>while</code> loops never changed.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
-<li id="fn:3">
+since I started C++, <code>while</code> loops never changed.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
 Alex: Someday we will get concepts
 in the C++ standard and not have to write these things.
 But that will be at least 5 years and I won&rsquo;t be programming.
-I&rsquo;m like an old man planting an Apple tree.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
-<li id="fn:4">
+I&rsquo;m like an old man planting an Apple tree.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
 <p>Alex:
 I actually drop this requirement in STL and require
 <code>RandomAccessIterator</code>, for all the sorts.
@@ -558,26 +580,26 @@ them on things like linked lists.
 It&rsquo;s so much slower that they would be better off copying into a vector,
 sort stuff there, and then copy back.</p>
 
-<p>I could do the more general case,
-but programmers are immature.
+<p>I was a &ldquo;nanny&rdquo;.
+I was making decisions by saying,
+&ldquo;I know how to do it in the more general case.
+But, I will not let programmers do it because
+they are immature.&rdquo;.
 This &ldquo;nanny&rdquo; control is not necessarily a good thing.
 I am of two minds here.
 I am trying to not be a nanny here.
 I&rsquo;m trying to show you the spectrum.
-Sometimes you have to sort linked lists because you have
-no extra memory.
-It doesn&rsquo;t happen often, probably will never happen in your life,
-but it just might.</p>
-
-<p>As I have recommended before, the advice I typically give
-is just use vectors, unless you are absolutely positive
-you need something else. (C array is fine too.)</p>
-
-<p><a href="https://en.wikipedia.org/wiki/Herb_Sutter">Herb Sutter</a> used to recommend to the world
-to use <a href="https://en.cppreference.com/w/cpp/container/deque"><code>std::deque</code></a>.
+Sometimes you have to sort linked lists because you have no extra memory.
+It doesn&rsquo;t happen often
+It probably will never happen in your life.
+But, it just might for at least one of you.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
+Alex: Because they threw it out, people like
+<a href="https://en.wikipedia.org/wiki/Herb_Sutter">Herb Sutter</a> used to recommend to the world
+to use <a href="https://en.cppreference.com/w/cpp/container/deque"><code>std::deque</code></a> (see <a href="http://www.gotw.ca/gotw/054.htm">&ldquo;Using Vector and Deque&rdquo;</a>).
 I&rsquo;m not making it up.
-He thought, that it supports more operations than vector.
-He was wrong, I wrote both.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
+He thought, that it&rsquo;s better because it supports more operations.
+He was wrong, I wrote both <code>std::vector</code> and <code>std::deque</code>.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

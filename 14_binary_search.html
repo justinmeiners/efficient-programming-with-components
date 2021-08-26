@@ -168,7 +168,7 @@ It is a great idea.</p>
 <a name="Partitions"></a>
 <h2>Partitions</h2>
 
-<p>We are still struggling on our path to binary search.
+<p>We are still struggling on our path to binary search<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
 It deals with two things.
 First
 it deals with a monotonically non-decreasing sequence.
@@ -200,7 +200,7 @@ Don&rsquo;t you want satisfying things?</p>
 <p>But it&rsquo;s wrong.
 We want partition sequence to be sorted on the boolean values and since STL
 assumes that ascending order is natural,
-The right thing to do is make partition consistent<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, false values go first.
+The right thing to do is make partition consistent<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, false values go first.
 But, for our course we will follow the standard.</p>
 
 <pre><code>template&lt;typename I, typename P&gt;
@@ -250,7 +250,7 @@ We could do better if our range is at least forward iterable.</p>
 
 <p>Even for singly linked lists such a thing is useful, because
 if your predicate is very expensive,
-while iteration is relatively fast<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>,
+while iteration is relatively fast<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>,
 you still could reduce the number of tests to <code>log(n)</code>.
 As we shall see we have a very good bound on the number of traversal
 operations which is literally <code>n</code>, not order of <code>n</code>,
@@ -291,6 +291,12 @@ I partitioned_point_n(I first, N n, P pred) {
   return first;
 }
 </code></pre>
+
+<p>Why a shift (<code>n &gt;&gt; 1</code>)? We know it&rsquo;s non-negative.
+I&rsquo;m a penny pincher.
+Maybe the compiler will automatically do it for <code>n / 2</code>
+maybe it will not.
+Now it will.</p>
 
 <p>How many <code>++</code> operations do we do?
 <code>n /2 + n/4 + ... + = n</code>.
@@ -411,7 +417,7 @@ and just beyond.
 How could we describe the property of the first iterator?
 We have a dichotomy.
 Everybody to the left is less than <code>5</code>.
-In other words, it is the partition point<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+In other words, it is the partition point<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
 This is why we don&rsquo;t want equal because equal leads
 to all these bad binary search that return <code>-1</code>,
 because they only look for <code>5</code>.</p>
@@ -456,7 +462,7 @@ class lower_bound_predicate
 </code></pre>
 
 <p>Now we can write <code>lower_bound</code>, which is the version
-of &ldquo;binary search&rdquo; that we want<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>:</p>
+of &ldquo;binary search&rdquo; that we want<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>:</p>
 
 <pre><code>template &lt;typename I, typename N, typename R&gt;
 // I is ForwardIterator
@@ -534,17 +540,22 @@ then try to do it on an array.</p>
 <hr/>
 <ol>
 <li id="fn:1">
+Alex: Paul McJones has a good friend <a href="https://en.wikipedia.org/wiki/Butler_Lampson">Butler Lampson</a> who is a Turing award
+winner. We went to lunch and he told us binary search is the
+only algorithm a programmer needs to know.
+I think sort should be there too, but we&rsquo;ll take his opinion.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
 Alex: Changing something in this standard is impossible,
 because they just don&rsquo;t listen to arguments.
-Whatever arguments you give them, they just say, &ldquo;It&rsquo;s the standard&rdquo;.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
-<li id="fn:2">
+Whatever arguments you give them, they just say, &ldquo;It&rsquo;s the standard&rdquo;.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
 In writing my masters thesis
 I actually came across a comparison operator which is very expensive to evaluate.
 It is the Dehornoy ordering on <a href="https://github.com/justinmeiners/braid-rank-thesis">braid groups</a>.
 This is a total ordering which I used for sorting, removing duplicates,
 and other algorithms in a very similar style to STL.
-Optimizing the number of comparisons made a large difference.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
-<li id="fn:3">
+Optimizing the number of comparisons made a large difference.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
 <p>Centering binary search around predicates solves an important problem.
 One thing you might want to do is binary search an array of records by
 a particular field.
@@ -569,8 +580,8 @@ at all, or even an operation.</p>
 <p>By defining binary search as a partition point then this problem goes away.
 Apparently this information was lost,
 and you can see some of their discussions of this
-topic <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2001/n1313.html">here</a> and <a href="https://cplusplus.github.io/LWG/issue270">here</a>.</p><a href="#fnref:3" rev="footnote">&#8617;</a></li>
-<li id="fn:4">
+topic <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2001/n1313.html">here</a> and <a href="https://cplusplus.github.io/LWG/issue270">here</a>.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
 Alex: If you remember there was this
 grand review one day where the committee through out a bunch of useful functions.
 Well they inserted some too.
@@ -581,7 +592,7 @@ to him,
 and he said, &ldquo;but, where is binary search?&rdquo;.
 So, I did it for him.
 Who can argue with a best friend.
-Will I ever use it? No.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+Will I ever use it? No.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

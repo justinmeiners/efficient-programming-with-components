@@ -45,7 +45,7 @@ It is a great idea.
 
 ## Partitions
 
-We are still struggling on our path to binary search.
+We are still struggling on our path to binary search[^paul].
 It deals with two things.
 First
 it deals with a monotonically non-decreasing sequence.
@@ -168,6 +168,12 @@ so we will start with a counted range, instead of bounded.
       return first;
     }
 
+Why a shift (`n >> 1`)? We know it's non-negative.
+I'm a penny pincher.
+Maybe the compiler will automatically do it for `n / 2`
+maybe it will not.
+Now it will.
+
 How many `++` operations do we do?
 `n /2 + n/4 + ... + = n`.
 We are traversing more than linear
@@ -185,7 +191,7 @@ We are also not trying to be lucky and find equal.
     }
 
 
-[^paul]: Alex: Paul has a good friend [Butler Lampson][lampson] who is a Turing award
+[^paul]: Alex: Paul McJones has a good friend [Butler Lampson][lampson] who is a Turing award
     winner. We went to lunch and he told us binary search is the 
     only algorithm a programmer needs to know.
     I think sort should be there too, but we'll take his opinion.
@@ -196,12 +202,6 @@ We are also not trying to be lucky and find equal.
     This is a total ordering which I used for sorting, removing duplicates,
     and other algorithms in a very similar style to STL.
     Optimizing the number of comparisons made a large difference.
-
-[^shift-vs-divide]: Alex: Why a shift? We know it's non-negative.
-    I'm a penny pincher.
-    Maybe the compiler will automatically do it for `n / 2`
-    maybe it will not.
-    Now it will.
 
 [lampson]: https://en.wikipedia.org/wiki/Butler_Lampson
 [braid-research]: https://github.com/justinmeiners/braid-rank-thesis
