@@ -439,7 +439,7 @@ or a C array[^sutter-advice].
     I am trying to not be a nanny here.
     I'm trying to show you the spectrum.
     Sometimes you have to sort linked lists because you have no extra memory.
-    It doesn't happen often
+    It doesn't happen often.
     It probably will never happen in your life.
     But, it just might for at least one of you.
 
