@@ -431,35 +431,34 @@ Note that it assumes the lists are nonempty,
 which is perfectly fine for our sort,
 which is not going to merge empty lists[^non-empty].
 
+Can you write it without `goto`?
+Not as efficiently[^without-goto].
+
 
 [jump]: https://en.wikipedia.org/wiki/JMP_(x86_instruction)
 [harmful]: papers/goto-harmful.pdf
 
 
-[^without-goto]:
-    Alex: "Can you write it without `goto`?
-    I  have this in code going back to 1985.
+[^without-goto]: Alex:  I have this in code going back to 1985.
     I wrote it then in Scheme without `goto`,
     but it had other efficiency problems.
     Since then I have published the code, multiple times.
-
     The first is in my [Ada][ada] book on generic libraries
     ("The Ada Generic Library Linear List Processing Packages").
     I got such angry letters, especially from Holland,
-    saying, "don't you know that `goto` is harfmul?".
-    I couldn't find another solution".
+    saying, "don't you know that `goto` is harmful?".
+    I couldn't find another solution.
 
-[^non-empty]:
-    In Elements of Programming Alex often follows the pattern
-    of creating a function which works well for some given assumptions
-    (such as the list being nonempty) and then creates a wrapper
+[^non-empty]: In "Elements of Programming", Alex often follows the pattern
+    of creating a function which requires strict assumptions
+    (such as the list being nonempty).
+    Then he creates a wrapper
     which does additional checks or work to ensure the assumptions
     are met.
     This makes the algorithm more modular and faster
-    for those other components which can ensure the assumptions.
+    for those other components which can guarantee the assumptions,
+    without doing extra work.
     
-
-
 [ada]: https://en.wikipedia.org/wiki/Ada_(programming_language)
 
 ### Is it worth it?
@@ -490,8 +489,7 @@ could be done.
 
 [branch]: https://en.wikipedia.org/wiki/Branch_predictor
 
-[^test-result]:
-    In my test (Intel i5, 4 core, g++ 9.3.0)
+[^test-result]: In my test (Intel i5, 4 core, g++ 9.3.0)
     I noticed about a 15-20% improvement
     sorting one million integers.
 

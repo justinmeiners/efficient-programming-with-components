@@ -135,18 +135,15 @@ It sort of works, you know, slowly.
 [insertion-sort]: https://en.wikipedia.org/wiki/Insertion_sort
 [parent]: https://sean-parent.stlab.cc/papers-and-presentations/
 
-[^design-of-cpp]: Alex: "I think you should read Bjarne's book "Design and Evolution of C++".
-        The last chapter is dedicated to macros and it has an epigraph:
-        "CPP must be destroyed" - Cato."
-
 [^sorts-in-stl]:
-    Alex: Of course, STL still has it on the inside.
+    Alex: Of course, STL still has insertion sort on the inside.
     It has to.
-    So insertion sort was in the library and is still used by the library, but they took it out.
-    The argument was, "we have too many sorts".
+    What happened during the standardization process,
+    is they took something which was in the library and was used by the library, and threw it out.
+    The argument was, "we already have too many sorts".
     Is it a good argument?
     No, you need to have as many sorts as people might need
-    when they practical things.
+    when they do practical things.
     How many sorts are in STL?
 
     1. [`std::sort`](https://en.cppreference.com/w/cpp/algorithm/sort) the fastest sort.
@@ -184,6 +181,11 @@ algorithms.
       merge_adaptive_n(first, half, middle, n - half, r, buffer, buffer_size);
       return last;
     }
+
+
+(Recall, that we proved 16 was a good cutoff.)
+The standard C convention for old people is that `ALL_CAPS` means it's a macro.
+We will use this for a constant here[^macros-comment].
 
 We have a few decisions to make for insertion sort.
 Should we use `upper_bound` or `lower_bound` for binary search?
@@ -249,6 +251,19 @@ That's the invariant on which we rely.
       }
       return current;
     }
+
+[^macros-comment]: Alex:
+        I think you should read Bjarne's book "Design and Evolution of C++".
+        It's a short book and very instructive.
+        This is the book I hope he will revise, because it only goes up to like 92.
+        In any case, the last chapter is dedicated to the preprocessor.
+        It has an epigraph: "CPP must be destroyed" - Cato.
+        [*Carthago delenda est*][latin-carthage] ("Carthage must be destroyed").
+        It's still not destroyed, but maybe one day.
+        
+
+[latin-carthage]: https://en.wikipedia.org/wiki/Carthago_delenda_est
+            
 
 ## Rotate
 
@@ -383,6 +398,16 @@ In our sort we constantly re-link
 next, so eventually you get to a point where everything is scattered
 all over memory.
 
+STL used to have a sentence in the container
+section which the standard commitee threw out.
+Use a vector.
+This is a true statement.
+Unless you are absolutely positive
+you need something else, use a vector
+or a C array[^sutter-advice].
+
+
+
 
 [^for-loop]: Alex: Could we use a `for` loop instead of a `while`?
     Yes, but I hate `for` loops.
@@ -404,27 +429,28 @@ all over memory.
     It's so much slower that they would be better off copying into a vector,
     sort stuff there, and then copy back.
 
-    I could do the more general case,
-    but programmers are immature.
+    I was a "nanny".
+    I was making decisions by saying,
+    "I know how to do it in the more general case.
+    But, I will not let programmers do it because
+    they are immature.".
     This "nanny" control is not necessarily a good thing.
     I am of two minds here.
     I am trying to not be a nanny here.
     I'm trying to show you the spectrum.
-    Sometimes you have to sort linked lists because you have
-    no extra memory.
-    It doesn't happen often, probably will never happen in your life,
-    but it just might.  
+    Sometimes you have to sort linked lists because you have no extra memory.
+    It doesn't happen often.
+    It probably will never happen in your life.
+    But, it just might for at least one of you.
 
-    As I have recommended before, the advice I typically give 
-    is just use vectors, unless you are absolutely positive
-    you need something else. (C array is fine too.)
-
+[^sutter-advice]: Alex: Because they threw it out, people like
     [Herb Sutter][sutter] used to recommend to the world
-    to use [`std::deque`][cpp-deque].
+    to use [`std::deque`][cpp-deque] (see ["Using Vector and Deque"][vector-and-deque]).
     I'm not making it up.
-    He thought, that it supports more operations than vector.
-    He was wrong, I wrote both.
+    He thought, that it's better because it supports more operations.
+    He was wrong, I wrote both `std::vector` and `std::deque`.
 
+[vector-and-deque]: http://www.gotw.ca/gotw/054.htm
 [cpp-copy-back]: https://en.cppreference.com/w/cpp/algorithm/copy_backward
 [cpp-deque]: https://en.cppreference.com/w/cpp/container/deque
 [sutter]: https://en.wikipedia.org/wiki/Herb_Sutter

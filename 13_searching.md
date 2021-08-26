@@ -298,7 +298,7 @@ They are just wrappers[^wrapper].
 
 ## Bounded and counted ranges.
 
-Once upon a time I believed ranges come in two kinds[^eop].
+Once upon a time I believed ranges come in two kinds[^eop-range-kinds].
 
 1. **Bounded ranges**: Ranges bounded by a first and last iterator/pointer.
 2. **Counted ranges**: Ranges constructed from a first pointer/iterator and an 
@@ -356,9 +356,9 @@ So let's try writing `find_if_n`
     Alex just got done talking about why `find_if_not`
     was such a helpful contribution
     and how we need should consider the needs of the user
-    and give them various convenience versions.
+    and give them various convenience interfaces for algorithms.
 
-[^eop]: Refererring to their usage in "Elements of Programming".
+[^eop-range-kinds]: These two kinds of ranges are discussed in depth in "Elements of Programming".
 
 [cpp-find]: https://en.cppreference.com/w/cpp/algorithm/find
 [clhs-find]: http://clhs.lisp.se/Body/f_find_.htm

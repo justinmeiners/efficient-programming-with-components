@@ -538,6 +538,9 @@ If they want to ignore it, ignore it.</p>
 which is perfectly fine for our sort,
 which is not going to merge empty lists<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
 
+<p>Can you write it without <code>goto</code>?
+Not as efficiently<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.</p>
+
 <a name="Is-it-worth-it-3f-"></a>
 <h3>Is it worth it?</h3>
 
@@ -546,7 +549,7 @@ One of them is oh so very simple.
 The other one is elegant, but long and does a  minimal number of operations.
 Which one should we use in practice?
 We need to do a lot of experiments to establish certainty
-of what we are doing<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.</p>
+of what we are doing<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.</p>
 
 <p><strong>Exercise:</strong> Measure and determine whether it&rsquo;s actually faster than our simple merge.</p>
 
@@ -606,7 +609,7 @@ I mergesort_linked(I first, I last, Compare cmp) {
 }
 </code></pre>
 
-<p>It is very efficient, and doesn&rsquo;t do any kind of list splitting<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.
+<p>It is very efficient, and doesn&rsquo;t do any kind of list splitting<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.
 If you don&rsquo;t find it&rsquo;s beautiful I have nothing to teach you.
 We aren&rsquo;t on the same wavelength.
 In the modern world, you meet somebody
@@ -671,18 +674,30 @@ I suspect he is referring to <a href="https://en.wikipedia.org/wiki/Andrei_Alexa
 <p>Many languages such as Swift now also allow you to add member functions
 to primitive types like <code>int</code>.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
-<p>In Elements of Programming Alex often follows the pattern
-of creating a function which works well for some given assumptions
-(such as the list being nonempty) and then creates a wrapper
+In &ldquo;Elements of Programming&rdquo;, Alex often follows the pattern
+of creating a function which requires strict assumptions
+(such as the list being nonempty).
+Then he creates a wrapper
 which does additional checks or work to ensure the assumptions
 are met.
 This makes the algorithm more modular and faster
-for those other components which can ensure the assumptions.</p><a href="#fnref:6" rev="footnote">&#8617;</a></li>
+for those other components which can guarantee the assumptions,
+without doing extra work.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
 <li id="fn:7">
-<p>In my test (Intel i5, 4 core, g++ 9.3.0)
-I noticed about a 15-20% improvement
-sorting one million integers.</p><a href="#fnref:7" rev="footnote">&#8617;</a></li>
+Alex:  I have this in code going back to 1985.
+I wrote it then in Scheme without <code>goto</code>,
+but it had other efficiency problems.
+Since then I have published the code, multiple times.
+The first is in my <a href="https://en.wikipedia.org/wiki/Ada_(programming_language)">Ada</a> book on generic libraries
+(&ldquo;The Ada Generic Library Linear List Processing Packages&rdquo;).
+I got such angry letters, especially from Holland,
+saying, &ldquo;don&rsquo;t you know that <code>goto</code> is harmful?&rdquo;.
+I couldn&rsquo;t find another solution.<a href="#fnref:7" rev="footnote">&#8617;</a></li>
 <li id="fn:8">
+In my test (Intel i5, 4 core, g++ 9.3.0)
+I noticed about a 15-20% improvement
+sorting one million integers.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
+<li id="fn:9">
 <p>Alex: If you want to see a really bad program
 see <a href="http://people.csail.mit.edu/phw/index.html">Patrick Henry Winston</a>&rsquo;s
 book <a href="http://people.csail.mit.edu/phw/Books/LISPBACK.HTML">&ldquo;LISP 1st Edition&rdquo;</a>.
@@ -690,7 +705,7 @@ Look at his sorting algorithm for list: <a href="code/other/radix_sort.lisp">rad
 It posses many remarkable properties including using <code>n log(n)</code> extra storage.
 Good example of a famous person at a respectable school
 publishing something terrible.
-Published does not mean good.</p><a href="#fnref:8" rev="footnote">&#8617;</a></li>
+Published does not mean good.</p><a href="#fnref:9" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 
