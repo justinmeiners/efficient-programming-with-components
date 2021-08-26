@@ -449,7 +449,7 @@ Not as efficiently[^without-goto].
     saying, "don't you know that `goto` is harmful?".
     I couldn't find another solution.
 
-[^non-empty]: In Elements of Programming Alex often follows the pattern
+[^non-empty]: In "Elements of Programming" Alex often follows the pattern
     of creating a function which require strict assumptions
     (such as the list being nonempty).
     Then he creates a wrapper
