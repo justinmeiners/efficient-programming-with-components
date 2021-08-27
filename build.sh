@@ -1,5 +1,14 @@
 #!/bin/sh
 
+# This script is used to convert each of the markdown files into HTML.
+#
+# It has these third-party dependencies:
+#   - discount (2.2.6 or later)
+#   - envsubst (available as part of gettext)
+#
+# If you are unable to install these dependencies locally, you may wish to run
+# the build script via docker. You can do that by calling build_with_docker.sh
+
 # cleanup generated content
 rm -f *.html
 rm -f *.bak
@@ -72,5 +81,3 @@ done
 
 cat template/page_prefix.html | envsubst >> $TARGET
 cat template/suffix.html | envsubst >> $TARGET
-
-
