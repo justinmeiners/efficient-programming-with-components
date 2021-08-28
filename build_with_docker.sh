@@ -6,11 +6,8 @@
 script_path="$( cd "$(dirname "$0")" || exit $?; pwd -P )"
 
 docker build -t epwc-build -<<EOF
-FROM ubuntu:focal
-RUN apt-get update && apt-get install -y \
-    gettext-base \
-    discount \
- && rm -rf /var/lib/apt/lists/*
+FROM alpine:3
+RUN  apk add --no-cache gettext discount
 EOF
 
 docker run \
