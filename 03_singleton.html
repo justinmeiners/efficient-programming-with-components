@@ -157,7 +157,7 @@ but five and anybody can.</p>
 <h2>Singleton: a pattern for regular types</h2>
 
 <p>Today I wanted to start with one such page which would show us how to write any class.
-This class is called <code>singleton</code> and posses two properties:</p>
+This class is called <code>singleton</code> and possesses two properties:</p>
 
 <ol>
 <li>It is the most simple class possible, meaning it will have no code whatsoever.</li>
@@ -178,7 +178,7 @@ All the people
 read the &ldquo;Gang of Four&rdquo; book<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> and are familiar with singleton pattern<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> and
 might think that&rsquo;s what I&rsquo;m talking about.
 No, I wouldn&rsquo;t do that, would I?
-What, I&rsquo;m talking about is not a pattern, but a very simple class.
+What I&rsquo;m talking about is not a pattern, but a very simple class.
 It&rsquo;s similar to a class called <a href="https://en.cppreference.com/w/cpp/utility/pair"><code>std::pair</code></a>.
 If you go and check a dictionary it says: singleton, pair, triple, quadruple, etc.
 A pair has two things, well singleton has just one thing.</p>
@@ -215,7 +215,7 @@ Yes. The pointer star is a type function.</p>
 </code></pre>
 
 <p>It takes type int, double, etc and returns another type.
-You write it post fix but it is logically a type function.</p>
+You write it postfix but it is logically a type function.</p>
 
 <a name="Guidelines-for-writing-classes"></a>
 <h3>Guidelines for writing classes</h3>
@@ -232,7 +232,7 @@ struct singleton
 <p>What is the difference between a class and a struct?
 The only difference is how they treat public and private.
 They&rsquo;re fundamentally the same.
-If I say <code>struct</code> the default field accessibility is public if I say <code>class</code> the default is private.</p>
+If I say <code>struct</code> the default field accessibility is public. If I say <code>class</code> the default is private.</p>
 
 <p>Some would say, &ldquo;let us make value private because
 that&rsquo;s object-oriented way&rdquo;.
@@ -247,14 +247,14 @@ It doesn&rsquo;t protect anything<sup id="fnref:4"><a href="#fn:4" rel="footnote
 What do we need to make private?
 When you should not be able to set a value.
 A canonical example is something like <code>std::vector</code>.
-Internally, it has a pointer to memory area where all the data is allocated.
+Internally, it has a pointer to a memory area where all the data is allocated.
 You don&rsquo;t want to have this thing public because if somebody writes into there,
 you&rsquo;re going to be leaking memory.
 There is no reason to write to it before you first deallocate.
 Another way to think about it is to help preserve an invariant.
 There is some condition we need to assure that the values cannot change.</p>
 
-<p>For <code>singleton</code>, we pick struct because it&rsquo;s less typing
+<p>For <code>singleton</code>, we pick struct because it&rsquo;s less typing.
 <em>We should find the most minimal way of saying what we want to say</em>.</p>
 
 <a name="Semi-2d-regular-singleton"></a>
@@ -265,7 +265,7 @@ It has to be natural, so all the functions they would normally write for <code>i
 Not of course plus, minus, divide, etc but the basic fundamental stuff should work the same.
 Even people who don&rsquo;t understand logic behind STL still
  manage to use <code>std::vector</code> because
-vector behaves in some what nature way.</p>
+vector behaves in somewhat natural way.</p>
 
 <p>For example, we want to be able to support conditional initialization:</p>
 
@@ -306,7 +306,7 @@ The compiler will do this for us.</p>
 
 <p>What will the default value of <code>T</code> be when it&rsquo;s a pointer type?
 Just some random address, which is fine.
-The two properties of default constructible value of <code>T</code> on which you
+The two properties of default constructed value of <code>T</code> on which you
 can rely are:</p>
 
 <ol>
@@ -331,7 +331,7 @@ but you don&rsquo;t need to check, just consider what will happen if they are eq
 It will just assign back to itself.
 It might do extra work.
 But, you don&rsquo;t want to optimize the case which is once in a blue moon while slowing every other case.
-Believe it or not when we do timing experiments we will learn conditional conditionals are very very expensive and getting to be more and more expensive.
+Believe it or not when we do timing experiments we will learn conditionals are very very expensive and getting to be more and more expensive.
 Assignments are getting to be free.
 The processor could schedule them in parallel.
 There is just enough hardware to do that so don&rsquo;t break the pipeline.</p>
@@ -365,10 +365,10 @@ people think invented C++ are idealized in books like &ldquo;Effective C++&rdquo
 He tells you always declare destructor as virtual<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.
 OK, he&rsquo;s wrong. Simple as that.</p>
 
-<p>What we do we want to create? Take type <code>T</code> put it in a struct will the size of the thing increase?
+<p>What we do we want to create? Take type <code>T</code>, put it in a struct. Will the size of the thing increase?
 No. It has no overhead.
 Singleton is the same size as <code>T</code>.
-It&rsquo;s the wonderful thing about singleton, and let&rsquo;s you pack them in arrays.
+It&rsquo;s the wonderful thing about singleton, and lets you pack them in arrays.
 If you add <code>virtual</code> to the destructor, the size will dramatically grow.
 Why would I put virtual? Because some really crazy person would want to
 inherit something virtually from this? He needs counseling.
@@ -378,7 +378,7 @@ Not a single class in the standard library does it.</p>
 What it means is once upon a time it was an object-oriented language.
 Then some people chased it away and said you could program differently.
 I am showing you how you could program differently.
-If you program an object-oriented way then many good things might happen.
+If you program in an object-oriented way then many good things might happen.
 I don&rsquo;t know what they are but you are not going to be efficient.
 Bjarne used to joke that object
 oriented systems are those that slow graphics.</p>
@@ -392,7 +392,7 @@ of people here who would clearly advocate object-oriented programming,
 but I&rsquo;m not one of them.
 I destroyed my career by becoming this sworn enemy of object-oriented a long time ago.
 I am yet to see a situation where it&rsquo;s helpful.
-I&rsquo;m not denying that it&rsquo;s theoretically possible to find a good piece of code written with virtual functions I am just stating the fact I haven&rsquo;t seen one yet.</p>
+I&rsquo;m not denying that it&rsquo;s theoretically possible to find a good piece of code written with virtual functions. I am just stating the fact I haven&rsquo;t seen one yet.</p>
 
 <a name="Regular-singleton"></a>
 <h2>Regular singleton</h2>
@@ -413,7 +413,7 @@ bool operator!=(const singleton&amp; x, const singleton&amp; y) {
 
 <p>Recall that we decided not to define these as member functions, because they are symmetric.
 <code>friend</code> functions inside the class declaration are not member functions,
-but still have all the access to to all the members (not that we care here).
+but still have all the access to all the members (not that we care here).
 More importantly this signature is nice.
 If you put it outside you discover you have to write an ugly thing.</p>
 
@@ -422,7 +422,7 @@ If you put it outside you discover you have to write an ugly thing.</p>
 
 <p>We have to define what equality is
 and it has to satisfy some very basic rules.
-There is one great law which on which the entire edifice of civilization
+There is one great law on which the entire edifice of civilization
 is based. It is called the <strong>law of identity</strong>
 and goes with two other fundamental laws of thought <sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>:</p>
 
@@ -451,12 +451,12 @@ C is a very great language in some respects but
 it also was a homegrown thing without some particularly deep thinking.
 Initially they didn&rsquo;t have structs.
 Then they had structs, but they couldn&rsquo;t pass them.
-They were not copy able and you couldn&rsquo;t pass them as arguments you.
+They were not copyable and you couldn&rsquo;t pass them as arguments.
 Then they fixed it.
 They said, &ldquo;we&rsquo;ll just copy the bits&rdquo; and things would work.</p>
 
 <p>Equality is defined for all built-in types; <code>int</code>, <code>double</code>, <code>short</code>, <code>char</code>, pointers, etc.
-So, if you have struct, why can&rsquo;t you generate an equality that uses those?
+So, if you have a struct, why can&rsquo;t you generate an equality that uses those?
 Two things are equal if all their members are equal.
 It&rsquo;s a sensible rule a compiler could do.</p>
 
@@ -566,7 +566,7 @@ So, we use comments to communicate them.</p>
 which is only <code>SemiRegular</code>.
 In C++, things don&rsquo;t have to be defined unless they are used.
 This is a wonderful property on which we are relying.
-If you give me <code>T</code> which has no equality, it it is fine.
+If you give me <code>T</code> which has no equality, it is fine.
 It will give me singleton of <code>T</code>
 which will have copy constructor and assignment but will not have equality.
 If <code>T</code> has an equality, then singleton will have equality.
@@ -583,13 +583,13 @@ talk a bit about implicit type conversions.</p>
 <p>Once upon a time people invented strong typing.
 When they did, they said everything has to have a type.
 If you want to make it into a different type you have to convert it, by calling a function.
-Make&rsquo;s sense, right?
+Makes sense, right?
 But, our friends at <a href="https://en.wikipedia.org/wiki/Bell_Labs">Bell Labs</a> thought it was a bad idea.
 They said, &ldquo;I don&rsquo;t want to write the conversion functions&rdquo;.
 Therefore they invented something called implicit conversions.</p>
 
 <p>In C it converts integers to float.
-Why did these Bell Labs guy introduce such a thing?
+Why did these Bell Labs guys introduce such a thing?
 Were they mad?
 It was because they were lazy.
 They couldn&rsquo;t do it elegantly because they didn&rsquo;t
@@ -610,7 +610,7 @@ possible type and obviously it&rsquo;s <code>double</code>.</li>
 
 
 <p>When C++ came about they couldn&rsquo;t just reject the legacy of C.
-One of the deals was that C++ compiler had to compile the entire
+One of the deals was that the C++ compiler had to compile the entire
 UNIX codebase and there was only one place where it broke.
 In UNIX there is a system call <a href="https://linux.die.net/man/2/stat"><code>stat</code></a> which returns a struct <code>stat</code>.
 But, in C++ structs and functions live in the
@@ -628,11 +628,11 @@ So, implicit conversions work for all types and the rules are <a href="https://e
 If you have a conversion from one user defined type to another,
 the compiler will look for all the one-step user defined conversions.
 Fortunately it is not going to look for
-two, three, four five steps because you know there is combinatorial explosion.</p>
+two, three, four, five steps because you know there is combinatorial explosion.</p>
 
 <p>But, it doesn&rsquo;t stop there.
 On top of user-defined conversion you could put one more layer of built-in conversions.
-I you have a class which is convertible to <code>int</code> and a function
+If you have a class which is convertible to <code>int</code> and a function
 which takes <code>double</code>.
 You could give me the element of a class and it will work.
 It seems not to be a big deal,
@@ -663,13 +663,13 @@ they are in <code>while</code>, <code>if</code>, and other conditions which peop
 So, the entire type system is screwed up (technical term), to work around some
 The end of the story is avoid implicit conversions.
 Never rely on them it&rsquo;s impossible to avoid them.
-Even you declare everything explicit there is still a
+Even if you declare everything explicit there is still a
 context in C++ where implicit conversion will be done.
 You should never rely on one type
 automatically becoming another.</p>
 
 <p>There are some specialists on C++, even specialists
-on STL, who write that STL totally depends on implicit conversions this
+on STL, who write that STL totally depends on implicit conversions. This
 is false. Of course it handles implicit conversions, what else could it do?</p>
 
 <a name="Code"></a>
@@ -689,7 +689,7 @@ by Gamma, Helm, Johnson, and Vlissides.
 As the name suggests, the book studies patterns of ways to organize code and objects to solve common problems
 while aiming to preserve modularity and flexibility.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
-A <a href="https://www.oodesign.com/singleton-pattern.html">singleton</a> in object oriented programming is a class which is indented to have one instance,
+A <a href="https://www.oodesign.com/singleton-pattern.html">singleton</a> in object oriented programming is a class which is intended to have one instance,
 or at least one canonical instance, which all code can reference.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
 Macro systems typically manipulate only the text of the code itself, and thus have no
@@ -732,7 +732,7 @@ He provides a heuristic, &ldquo;declare a virtual destructor in a class
 if and only if that class contains at least one virtual function.&rdquo;</p>
 
 <p>Alex is wrong about Scott&rsquo;s recommendation.
-But, for whatever reason, this incorrect reading of Scott, that
+But for whatever reason, this incorrect recommendation that
 we should always use <code>virtual</code> destructors was repeated
 and enforced in code linters at many organizations for a long time.
 I have personally had the question come up in several C++ interviews.
@@ -784,12 +784,12 @@ r.number = 20;
 and so their values are undefined.
 You can read more <a href="https://en.cppreference.com/w/c/language/object">here</a>.</p><a href="#fnref:10" rev="footnote">&#8617;</a></li>
 <li id="fn:11">
-<a href="https://en.wikipedia.org/wiki/Concepts_(C%2B%2B)">Concepts</a>, as a language feature, went through many
+<a href="https://en.wikipedia.org/wiki/Concepts_(C%2B%2B)">Concepts</a> as a language feature went through many
 iterations and delays before finally being included in the C++20 standard.
 When the course was given, a group at A9 (including Alex) was working to get them included in C++14.
 You can read their <a href="papers/concepts_proposal.pdf">proposal</a>.
 Bjarne actually visits A9 to give a guest lecture on concepts as part of the course,
-however this is not included in the notes as it is a depature from the rest of the material.<a href="#fnref:11" rev="footnote">&#8617;</a></li>
+however this is not included in the notes as it is a departure from the rest of the material.<a href="#fnref:11" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

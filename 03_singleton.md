@@ -27,7 +27,7 @@ My goal is to make everybody a C++ expert, not to prove that experts are experts
 ## Singleton: a pattern for regular types
 
 Today I wanted to start with one such page which would show us how to write any class.
-This class is called `singleton` and posses two properties:
+This class is called `singleton` and possesses two properties:
 
 1. It is the most simple class possible, meaning it will have no code whatsoever.
 2. It is the most complete class possible, meaning it will have all the language details about class writing which you need to know.
@@ -44,7 +44,7 @@ All the people
 read the "Gang of Four" book[^about-gof] and are familiar with singleton pattern[^singleton] and 
 might think that's what I'm talking about.
 No, I wouldn't do that, would I? 
-What, I'm talking about is not a pattern, but a very simple class. 
+What I'm talking about is not a pattern, but a very simple class. 
 It's similar to a class called [`std::pair`][cpp-pair].
 If you go and check a dictionary it says: singleton, pair, triple, quadruple, etc. 
 A pair has two things, well singleton has just one thing.
@@ -54,7 +54,7 @@ A pair has two things, well singleton has just one thing.
     As the name suggests, the book studies patterns of ways to organize code and objects to solve common problems
     while aiming to preserve modularity and flexibility.
 
-[^singleton]: A [singleton](https://www.oodesign.com/singleton-pattern.html) in object oriented programming is a class which is indented to have one instance,
+[^singleton]: A [singleton](https://www.oodesign.com/singleton-pattern.html) in object oriented programming is a class which is intended to have one instance,
     or at least one canonical instance, which all code can reference.
 
 [gof]: https://en.wikipedia.org/wiki/Design_Patterns
@@ -89,7 +89,7 @@ Yes. The pointer star is a type function.
     int* 
 
 It takes type int, double, etc and returns another type.
-You write it post fix but it is logically a type function.
+You write it postfix but it is logically a type function.
 
 
 [^macros]: Macro systems typically manipulate only the text of the code itself, and thus have no
@@ -113,7 +113,7 @@ Now let's start our class, with a field for value:
 What is the difference between a class and a struct?
 The only difference is how they treat public and private.
 They're fundamentally the same.
-If I say `struct` the default field accessibility is public if I say `class` the default is private.
+If I say `struct` the default field accessibility is public. If I say `class` the default is private.
 
 Some would say, "let us make value private because 
 that's object-oriented way".
@@ -128,14 +128,14 @@ That does bring us to another question.
 What do we need to make private?
 When you should not be able to set a value.
 A canonical example is something like `std::vector`.
-Internally, it has a pointer to memory area where all the data is allocated.
+Internally, it has a pointer to a memory area where all the data is allocated.
 You don't want to have this thing public because if somebody writes into there,
 you're going to be leaking memory.
 There is no reason to write to it before you first deallocate.
 Another way to think about it is to help preserve an invariant.
 There is some condition we need to assure that the values cannot change.
 
-For `singleton`, we pick struct because it's less typing
+For `singleton`, we pick struct because it's less typing.
 *We should find the most minimal way of saying what we want to say*.
 
 [^communist]: Alex: Don't be so eager with making members of classes private.
@@ -170,7 +170,7 @@ It has to be natural, so all the functions they would normally write for `int` w
 Not of course plus, minus, divide, etc but the basic fundamental stuff should work the same.
 Even people who don't understand logic behind STL still
  manage to use `std::vector` because
-vector behaves in some what nature way.
+vector behaves in somewhat natural way.
 
 For example, we want to be able to support conditional initialization:
 
@@ -207,7 +207,7 @@ The compiler will do this for us.
 
 What will the default value of `T` be when it's a pointer type?
 Just some random address, which is fine.
-The two properties of default constructible value of `T` on which you
+The two properties of default constructed value of `T` on which you
 can rely are:
 
 1. You can assign to it.
@@ -228,7 +228,7 @@ but you don't need to check, just consider what will happen if they are equal.
 It will just assign back to itself.
 It might do extra work.
 But, you don't want to optimize the case which is once in a blue moon while slowing every other case.
-Believe it or not when we do timing experiments we will learn conditional conditionals are very very expensive and getting to be more and more expensive.
+Believe it or not when we do timing experiments we will learn conditionals are very very expensive and getting to be more and more expensive.
 Assignments are getting to be free.
 The processor could schedule them in parallel.
 There is just enough hardware to do that so don't break the pipeline.
@@ -264,10 +264,10 @@ people think invented C++ are idealized in books like "Effective C++",
 He tells you always declare destructor as virtual[^scott-virtual].
 OK, he's wrong. Simple as that.
 
-What we do we want to create? Take type `T` put it in a struct will the size of the thing increase?
+What we do we want to create? Take type `T`, put it in a struct. Will the size of the thing increase?
 No. It has no overhead. 
 Singleton is the same size as `T`.
-It's the wonderful thing about singleton, and let's you pack them in arrays.
+It's the wonderful thing about singleton, and lets you pack them in arrays.
 If you add `virtual` to the destructor, the size will dramatically grow.
 Why would I put virtual? Because some really crazy person would want to
 inherit something virtually from this? He needs counseling.
@@ -277,7 +277,7 @@ You have all heard that C++ is a multi-paradigm language.
 What it means is once upon a time it was an object-oriented language.
 Then some people chased it away and said you could program differently.
 I am showing you how you could program differently.
-If you program an object-oriented way then many good things might happen.
+If you program in an object-oriented way then many good things might happen.
 I don't know what they are but you are not going to be efficient.
 Bjarne used to joke that object
 oriented systems are those that slow graphics.
@@ -291,7 +291,7 @@ of people here who would clearly advocate object-oriented programming,
 but I'm not one of them.
 I destroyed my career by becoming this sworn enemy of object-oriented a long time ago.
 I am yet to see a situation where it's helpful.
-I'm not denying that it's theoretically possible to find a good piece of code written with virtual functions I am just stating the fact I haven't seen one yet.
+I'm not denying that it's theoretically possible to find a good piece of code written with virtual functions. I am just stating the fact I haven't seen one yet.
 
 [meyers]: https://en.wikipedia.org/wiki/Scott_Meyers
 [^virtual-destructor]: Making a destructor virtual ensures that if a class
@@ -304,7 +304,7 @@ I'm not denying that it's theoretically possible to find a good piece of code wr
     if and only if that class contains at least one virtual function."
 
     Alex is wrong about Scott's recommendation.
-    But, for whatever reason, this incorrect reading of Scott, that
+    But for whatever reason, this incorrect recommendation that
     we should always use `virtual` destructors was repeated
     and enforced in code linters at many organizations for a long time.
     I have personally had the question come up in several C++ interviews.
@@ -328,7 +328,7 @@ For regular types we must define equality.
 
 Recall that we decided not to define these as member functions, because they are symmetric.
 `friend` functions inside the class declaration are not member functions,
-but still have all the access to to all the members (not that we care here).
+but still have all the access to all the members (not that we care here).
 More importantly this signature is nice.
 If you put it outside you discover you have to write an ugly thing.
 
@@ -336,7 +336,7 @@ If you put it outside you discover you have to write an ugly thing.
 
 We have to define what equality is 
 and it has to satisfy some very basic rules.
-There is one great law which on which the entire edifice of civilization
+There is one great law on which the entire edifice of civilization
 is based. It is called the **law of identity**
 and goes with two other fundamental laws of thought [^laws-of-thought]:
 
@@ -390,13 +390,13 @@ C is a very great language in some respects but
 it also was a homegrown thing without some particularly deep thinking.
 Initially they didn't have structs.
 Then they had structs, but they couldn't pass them.
-They were not copy able and you couldn't pass them as arguments you.
+They were not copyable and you couldn't pass them as arguments.
 Then they fixed it. 
 They said, "we'll just copy the bits" and things would work.
 
 
 Equality is defined for all built-in types; `int`, `double`, `short`, `char`, pointers, etc.
-So, if you have struct, why can't you generate an equality that uses those?
+So, if you have a struct, why can't you generate an equality that uses those?
 Two things are equal if all their members are equal.
 It's a sensible rule a compiler could do. 
 
@@ -533,7 +533,7 @@ You might wonder how `==` will work, if you plug-in only a type `T`
 which is only `SemiRegular`.
 In C++, things don't have to be defined unless they are used.
 This is a wonderful property on which we are relying.
-If you give me `T` which has no equality, it it is fine.
+If you give me `T` which has no equality, it is fine.
 It will give me singleton of `T`
 which will have copy constructor and assignment but will not have equality.
 If `T` has an equality, then singleton will have equality.
@@ -541,12 +541,12 @@ Same for total ordering, etc.
 
 **Exercise:** Copy the file for singleton and modify it to write `pair`.
 
-[^concepts-proposal]: [Concepts][cpp-concepts], as a language feature, went through many
+[^concepts-proposal]: [Concepts][cpp-concepts] as a language feature went through many
     iterations and delays before finally being included in the C++20 standard.
     When the course was given, a group at A9 (including Alex) was working to get them included in C++14.
     You can read their [proposal](papers/concepts_proposal.pdf).
     Bjarne actually visits A9 to give a guest lecture on concepts as part of the course,
-    however this is not included in the notes as it is a depature from the rest of the material.
+    however this is not included in the notes as it is a departure from the rest of the material.
 
 [cpp-concepts]: https://en.wikipedia.org/wiki/Concepts_(C%2B%2B)
 
@@ -558,13 +558,13 @@ talk a bit about implicit type conversions.
 Once upon a time people invented strong typing.
 When they did, they said everything has to have a type.
 If you want to make it into a different type you have to convert it, by calling a function.
-Make's sense, right?
+Makes sense, right?
 But, our friends at [Bell Labs][bell] thought it was a bad idea.
 They said, "I don't want to write the conversion functions".
 Therefore they invented something called implicit conversions.
 
 In C it converts integers to float.
-Why did these Bell Labs guy introduce such a thing?
+Why did these Bell Labs guys introduce such a thing?
 Were they mad? 
 It was because they were lazy.
 They couldn't do it elegantly because they didn't
@@ -582,7 +582,7 @@ Without overloading they had two choices.
    possible type and obviously it's `double`. 
 
 When C++ came about they couldn't just reject the legacy of C.
-One of the deals was that C++ compiler had to compile the entire
+One of the deals was that the C++ compiler had to compile the entire
 UNIX codebase and there was only one place where it broke.
 In UNIX there is a system call [`stat`][stat] which returns a struct `stat`.
 But, in C++ structs and functions live in the
@@ -601,11 +601,11 @@ Here are the rules:
 If you have a conversion from one user defined type to another,
 the compiler will look for all the one-step user defined conversions.
 Fortunately it is not going to look for
-two, three, four five steps because you know there is combinatorial explosion.
+two, three, four, five steps because you know there is combinatorial explosion.
 
 But, it doesn't stop there.
 On top of user-defined conversion you could put one more layer of built-in conversions.
-I you have a class which is convertible to `int` and a function
+If you have a class which is convertible to `int` and a function
 which takes `double`.
 You could give me the element of a class and it will work.
 It seems not to be a big deal,
@@ -635,13 +635,13 @@ they are in `while`, `if`, and other conditions which people used for input stre
 So, the entire type system is screwed up (technical term), to work around some
 The end of the story is avoid implicit conversions.
 Never rely on them it's impossible to avoid them.
-Even you declare everything explicit there is still a
+Even if you declare everything explicit there is still a
 context in C++ where implicit conversion will be done. 
 You should never rely on one type
 automatically becoming another.
 
 There are some specialists on C++, even specialists
-on STL, who write that STL totally depends on implicit conversions this
+on STL, who write that STL totally depends on implicit conversions. This
 is false. Of course it handles implicit conversions, what else could it do?
 
 
