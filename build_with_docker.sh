@@ -5,7 +5,7 @@
 
 script_path="$( cd "$(dirname "$0")" || exit $?; pwd -P )"
 
-docker build -t meiners/epwc -<<EOF
+docker build -t epwc-build -<<EOF
 FROM ubuntu:focal
 RUN apt-get update && apt-get install -y \
     gettext-base \
@@ -18,5 +18,5 @@ docker run \
   -v "${script_path}:/src" \
   -w /src \
   -u `id -u`:`id -g` \
-  meiners/epwc \
+  epwc-build \
   "./build.sh"
