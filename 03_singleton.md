@@ -344,7 +344,7 @@ and goes with two other fundamental laws of thought [^laws-of-thought]:
 
 Computers do not obey such law. 
 There is a fundamental case which breaks and has consequences.
-**Exercise:** If you don't believe me, try to figure out a type which violates the law of identity. 
+**Exercise:** If you don't believe me, try to figure out a type which violates the law of identity[^identity-violation]. 
 
 **The law of non-contradiction**: You cannot have a predicate `P` be true and `!P` be true at the same time.
 
@@ -365,6 +365,8 @@ There is deep stuff about equality[^constructivism].
     > For it is impossible that there should be demonstration of absolutely everything (there would be an infinite regress, so that there would still be no demonstration);
     > but if there are things of which one should not demand demonstration, these persons could not say what principle they maintain to be more self-evident than the present one. (Book 4)
 
+[^identity-violation]: This is likely referring to the `float` and `double` types which can both represent [NaN (not-a-number)][isnan] values that violate the law of identity.
+
 [^constructivism]: There is a branch of logic
     called [intuitionism][intuitionism],
     closely associated with [constructivism][constructivism] which 
@@ -374,6 +376,7 @@ There is deep stuff about equality[^constructivism].
     But, I know of no serious mathematical or philosophical 
     movements denying the law of identity.
 
+[isnan]: https://en.cppreference.com/w/cpp/numeric/math/isnan
 [rand]: https://en.wikipedia.org/wiki/Ayn_Rand
 [metaphysics]: http://classics.mit.edu/Aristotle/metaphysics.4.iv.html
 [constructivism]: https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_mathematics)
