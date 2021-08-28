@@ -15,7 +15,7 @@ envsubst --version > /dev/null
 
 if [ $? -ne 0 ]
 then
-    echo "cannot find envsubst"
+    echo "could not find envsubst."
     exit 1
 fi
 
