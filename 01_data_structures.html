@@ -189,7 +189,7 @@ world class in a short period of time.</p>
 
 <p>In 1984 he was given the Turing award.
 It was shared with Dennis and he gave a beautiful speech which I highly
-recommend that that you read called <a href="papers/trusting-trust-thompson.pdf">&ldquo;Reflections on Trusting Trust&rdquo;</a> which talks
+recommend that you read called <a href="papers/trusting-trust-thompson.pdf">&ldquo;Reflections on Trusting Trust&rdquo;</a> which talks
 about many things. But, I&rsquo;ll use just one little episode in the beginning which is
 very important from my point of view.
 He says that he was very blessed with collaborators specifically with Dennis<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
@@ -343,7 +343,7 @@ giving back a range of unique elements.
 Of course the presupposition is that the input range is sorted.
 It will work if the range is not sorted either.
 It will just not eliminate all equal elements.
-It returns a pointer to the element passed the last  element of the range.
+It returns a pointer to the element past the last element of the range.
 This is a standard STL convention, that we will study.</p>
 
 <p>For example given:</p>
@@ -359,14 +359,14 @@ So let&rsquo;s use it</p>
 std::cout &lt;&lt; std::unique(a, a + 6) - a &lt;&lt; std::endl;
 </code></pre>
 
-<p>Why am I not going to use <a href="https://en.cppreference.com/w/cpp/iterator/distance"><code>std::distance</code></a> instead
-of <code>a + 6</code>?</p>
+<p>Why am I not going to use <a href="https://en.cppreference.com/w/cpp/iterator/distance"><code>std::distance</code></a> here (instead
+of subtracting the pointer <code>a</code> from the result of <code>std::unique</code>)?</p>
 
 <pre><code>std::distance(a, std::unique(a, a + 6));
 </code></pre>
 
 <p>There is no need.
-Never use a function which is intended using a
+Never use a function which is intended to be used in a
 general case, when you sit deeper inside some specific case.</p>
 
 <a name="Use-the-correct-STL-data-structures"></a>
@@ -406,8 +406,8 @@ You&rsquo;re going to get a <a href="https://www.cs.cornell.edu/courses/cs3110/2
 <p>As our computers become faster, faster, and faster they&rsquo;re getting slower and
 slower and slower<sup id="fnref:14"><a href="#fn:14" rel="footnote">14</a></sup>.
 Meaning that  going to the main memory is very slow.
-You want to have locality of reference you want all your
-data are working on in the local cache if you have a huge set or map it&rsquo;s not
+You want to have locality of reference. You want all your
+data that you are working on in the local cache. If you have a huge set or map it&rsquo;s not
 going to be like that.</p>
 
 <p>Let me tell you a very simple piece of advice.
@@ -579,7 +579,7 @@ with layers increasing in speed and decreasing in size as they get closer to the
 CPU.
 The CPU does a lot of guessing to anticipate what data needs to be in the cache
 for a given section of code.
-Data structures and algorithm which jump over the address space tend to mess this up
+Data structures and algorithms which jump over the address space tend to mess this up
 so the CPU must pause and load data in and out of cache.</p><a href="#fnref:14" rev="footnote">&#8617;</a></li>
 </ol>
 </div>

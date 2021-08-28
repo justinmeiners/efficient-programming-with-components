@@ -59,7 +59,7 @@ world class in a short period of time.
 
 In 1984 he was given the Turing award.
 It was shared with Dennis and he gave a beautiful speech which I highly
-recommend that that you read called ["Reflections on Trusting Trust"][reflections] which talks
+recommend that you read called ["Reflections on Trusting Trust"][reflections] which talks
 about many things. But, I'll use just one little episode in the beginning which is
 very important from my point of view.
 He says that he was very blessed with collaborators specifically with Dennis[^dennis].
@@ -307,7 +307,7 @@ giving back a range of unique elements.
 Of course the presupposition is that the input range is sorted.
 It will work if the range is not sorted either.
 It will just not eliminate all equal elements.
-It returns a pointer to the element passed the last  element of the range.
+It returns a pointer to the element past the last element of the range.
 This is a standard STL convention, that we will study.
 
 For example given:
@@ -321,13 +321,13 @@ So let's use it
     std::cout << std::unique(a, a + 6) - a << std::endl;
 
 
-Why am I not going to use [`std::distance`][cpp-distance] instead
-of `a + 6`?
+Why am I not going to use [`std::distance`][cpp-distance] here (instead
+of subtracting the pointer `a` from the result of `std::unique`)?
 
     std::distance(a, std::unique(a, a + 6));
 
 There is no need.
-Never use a function which is intended using a
+Never use a function which is intended to be used in a
 general case, when you sit deeper inside some specific case. 
 
 
@@ -369,8 +369,8 @@ You're going to get a [cache miss][cache] on every step through the set.
 As our computers become faster, faster, and faster they're getting slower and
 slower and slower[^slower].
 Meaning that  going to the main memory is very slow.
-You want to have locality of reference you want all your
-data are working on in the local cache if you have a huge set or map it's not
+You want to have locality of reference. You want all your
+data that you are working on in the local cache. If you have a huge set or map it's not
 going to be like that. 
 
 
@@ -415,7 +415,7 @@ It's a very useful thing except most people do not use set for that.
     CPU.
     The CPU does a lot of guessing to anticipate what data needs to be in the cache
     for a given section of code. 
-    Data structures and algorithm which jump over the address space tend to mess this up
+    Data structures and algorithms which jump over the address space tend to mess this up
     so the CPU must pause and load data in and out of cache.
 
 
@@ -476,6 +476,3 @@ But, first we need to learn more about C++.
 
 - [test_hello_world.cpp](code/test_hello_world.cpp)
 - [test_count_unique.cpp](code/test_count_unique.cpp)
-
-
-
