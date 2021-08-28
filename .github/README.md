@@ -11,7 +11,7 @@ Please make changes to the markdown files (not the HTML).
 If you do not want to build the HTML for a change,
 I am happy to do so for you.
 
-## Building
+## Build Dependencies
 
 Building requires 2 basic dependencies:
 
@@ -26,11 +26,13 @@ Building requires 2 basic dependencies:
 
     sudo apt install gettext-base discount
 
+## Build script
+
 You can then run.
 
     ./build.sh
 
-## Docker
+## Build with Docker
 
 If you don't want to install anything in your enviornment
 we have included a convience script which uses docker.
