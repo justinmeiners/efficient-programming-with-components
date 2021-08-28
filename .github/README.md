@@ -13,7 +13,7 @@ I am happy to do so for you.
 
 ## Build Dependencies
 
-Building requires 2 basic dependencies:
+Building requires 2 widely available dependencies:
 
 - `discount` (markdown implementation)
 - `envsubst`
@@ -27,8 +27,6 @@ Building requires 2 basic dependencies:
     sudo apt install gettext-base discount
 
 ## Build script
-
-You can then run.
 
     ./build.sh
 
