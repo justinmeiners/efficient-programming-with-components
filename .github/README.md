@@ -35,7 +35,7 @@ You can then run.
 ## Build with Docker
 
 If you don't want to install anything in your enviornment
-we have included a convience script which uses docker.
+we have included a convenience script which uses docker.
 
     ./build_with_docker.sh
 
