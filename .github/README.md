@@ -15,7 +15,7 @@ I am happy to do so for you.
 
 Building requires 2 basic dependencies:
 
-- `discount` markdown implementation
+- `discount` (markdown implementation)
 - `envsubst`
 
 **macOS Homebrew**
