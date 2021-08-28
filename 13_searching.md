@@ -9,7 +9,7 @@ Of course, you have never heard of him.
 He was the guy who invented first general purpose computer, but we
 don't remember people like that.
 In 1946 he gave a brilliant series of
-lectures at the [Moore School][moore] at [Pennsylvania University][penn] 
+lectures at the [Moore School][moore-school] at [Pennsylvania University][penn] 
 on programming.
 For the first time,
 he described things like merge, merge sort, and binary search,
@@ -58,7 +58,7 @@ We will be actually studying his version.
 [^wiki]: He does now!
 
 [mauchly]: https://en.wikipedia.org/wiki/John_Mauchly
-[moore]: https://en.wikipedia.org/wiki/Moore_School_of_Electrical_Engineering
+[moore-school]: https://en.wikipedia.org/wiki/Moore_School_of_Electrical_Engineering
 [penn]: https://en.wikipedia.org/wiki/University_of_Pennsylvania
 [eniac]: https://en.wikipedia.org/wiki/ENIAC
 [lehmer]: https://en.wikipedia.org/wiki/D._H._Lehmer
