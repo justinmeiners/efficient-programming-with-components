@@ -343,7 +343,7 @@ giving back a range of unique elements.
 Of course the presupposition is that the input range is sorted.
 It will work if the range is not sorted either.
 It will just not eliminate all equal elements.
-It returns a pointer to the element passed the last  element of the range.
+It returns a pointer to the element past the last element of the range.
 This is a standard STL convention, that we will study.</p>
 
 <p>For example given:</p>
@@ -359,14 +359,14 @@ So let&rsquo;s use it</p>
 std::cout &lt;&lt; std::unique(a, a + 6) - a &lt;&lt; std::endl;
 </code></pre>
 
-<p>Why am I not going to use <a href="https://en.cppreference.com/w/cpp/iterator/distance"><code>std::distance</code></a> instead
-of <code>a + 6</code>?</p>
+<p>Why am I not going to use <a href="https://en.cppreference.com/w/cpp/iterator/distance"><code>std::distance</code></a> here (instead
+of subtracting the pointer <code>a</code> from the result of <code>std::unique</code>)?</p>
 
 <pre><code>std::distance(a, std::unique(a, a + 6));
 </code></pre>
 
 <p>There is no need.
-Never use a function which is intended using a
+Never use a function which is intended to be used in a
 general case, when you sit deeper inside some specific case.</p>
 
 <a name="Use-the-correct-STL-data-structures"></a>

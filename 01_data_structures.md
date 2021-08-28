@@ -307,7 +307,7 @@ giving back a range of unique elements.
 Of course the presupposition is that the input range is sorted.
 It will work if the range is not sorted either.
 It will just not eliminate all equal elements.
-It returns a pointer to the element passed the last  element of the range.
+It returns a pointer to the element past the last element of the range.
 This is a standard STL convention, that we will study.
 
 For example given:
@@ -321,13 +321,13 @@ So let's use it
     std::cout << std::unique(a, a + 6) - a << std::endl;
 
 
-Why am I not going to use [`std::distance`][cpp-distance] instead
-of `a + 6`?
+Why am I not going to use [`std::distance`][cpp-distance] here (instead
+of subtracting the pointer `a` from the result of `std::unique`)?
 
     std::distance(a, std::unique(a, a + 6));
 
 There is no need.
-Never use a function which is intended using a
+Never use a function which is intended to be used in a
 general case, when you sit deeper inside some specific case. 
 
 
