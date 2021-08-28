@@ -1,5 +1,25 @@
 #!/bin/sh
 
+# check depencencies
+MD_BUILD=markdown
+
+$MD_BUILD --version | grep discount > /dev/null
+
+if [ $? -ne 0 ]
+then
+    echo "markdown --version did not match discount."
+    exit 1
+fi
+
+envsubst --version > /dev/null
+
+if [ $? -ne 0 ]
+then
+    echo "could not find envsubst."
+    exit 1
+fi
+
+
 # cleanup generated content
 rm -f *.html
 rm -f *.bak
@@ -40,7 +60,7 @@ do
 
       cat template/prefix.html | envsubst >> $TARGET
       cat template/page_prefix.html | envsubst >> $TARGET
-      markdown -f toc -f footnote $MD >> $TARGET
+      $MD_BUILD -f toc -f footnote $MD >> $TARGET
       cat template/page_prefix.html | envsubst >> $TARGET
       cat template/suffix.html | envsubst >> $TARGET
     fi
@@ -67,7 +87,7 @@ cat template/cover.html >> $TARGET
 for MD in $ALL_MD
 do
     BASE=$(basename $MD .md)
-	markdown -n -T -f toc -f footnote $MD | sed "s/href=\"#/href=\"${BASE}.html#/g" >> $TARGET
+	$MD_BUILD -n -T -f toc -f footnote $MD | sed "s/href=\"#/href=\"${BASE}.html#/g" >> $TARGET
 done
 
 cat template/page_prefix.html | envsubst >> $TARGET
