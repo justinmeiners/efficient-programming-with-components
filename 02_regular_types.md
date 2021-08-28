@@ -24,7 +24,7 @@ is now at Google.
 He told me, he cannot imagine how the guys at Google write anything at all. 
 So, I'm not even going to mention Yahoo (joke).
 I did interview at Facebook and let me tell you what I saw of that place... 
-It that was five years ago.
+That was five years ago.
 Maybe they improved but I don't think so.
 Places tend to to decline.
 
@@ -47,7 +47,7 @@ and others who are just like us.
 I actually claim no, it's a discipline.
 
 This is why I want to discuss everything I write with you.
-If we together agree on it and we start start practicing it maybe it will turn into a
+If we together agree on it and we start practicing it maybe it will turn into a
 discipline.
 You say, "well, Alex what chance is there?
 There is the world and there is you".
@@ -80,7 +80,7 @@ but actually there are requirements on the type,
 certain properties which are required for these containers to function.
 
 Let, us think about what my task was when I started working on the C++ STL.
-It was to define standard data structures, which will work for or any, or reasonable subset of types.
+It was to define standard data structures which will work for any reasonable subset of types.
 What is a reasonable subset of types?
 This is a little bit tricky but it's of paramount importance.
 
@@ -121,20 +121,20 @@ We want these constructors to be closed[^closed].
 If you start with a regular type and keep applying
 these constructors you remain `Regular`.
 
-[^closed]: Closed is a term that from math, and has various, but similar meanings
+[^closed]: Closed is a term from math that has various but similar meanings
     depending on context. In the context of abstract algebra, from which generic programming
     is inspired, closure means that applying an operation to an element in a domain `D` gives
     you something back in the same domain.
     For example the integers `Z` are closed under the operation of multiplication.
     Multiply two integers, you get an integer.
     However, it is not closed under division.
-    `1 / 2` is not a integer.
+    `1 / 2` is not an integer.
     Applying this to Alex's quote, he means that containers should preserve properties
     of the base types they are constructed from.
     Containers of `Regular` types should be `Regular`.
 
-[^equational-reasoning]: Alex: Some might think regular types are form of equational reasoning.
-    However, you can have a universe that is strictly functional where you have equational reasoning,
+[^equational-reasoning]: Alex: Some might think regular types are a form of equational reasoning.
+    However, you can have a universe that is strictly functional where you have equational reasoning.
     Our universe has assignment and state.
 
 [^complete]: Alex: They're not [Turing complete][turing-complete], but they're Stepanov complete (joke).
@@ -175,7 +175,7 @@ Given a notion of equality, we can define
 some axioms for our copy constructor.
 
 **Axiom:** After `a` is copy constructed from `b`, we have `a == b`.
-Whatever, our meaning of equality.
+Whatever our meaning of equality.
 
 Let's think about what a copy is.
 It is something which is *equal to the original, but
@@ -246,7 +246,7 @@ This is actually something that Bjarne[^about-bjarne] disagrees with me on.
 I say that `<`, the total ordering of the type is
 fundamental, and should be required.
 He says it's too much to ask, and `Regular` types should be less strict.
-However, we will follow, his and the standard C++ convention by 
+However we will follow his and the standard C++ convention by 
 using a weaker `Regular` and limiting the requirement of ordering
 to `TotallyOrdered`.
 
@@ -265,14 +265,14 @@ to `TotallyOrdered`.
 
 In the same way that the semantics of `==` is related to `!=`,
 we can see the semantics of `<` must be totally bound to the semantics of equality.
-But futhemore,  `<` is related to four other operations which must also be defined:
+But furthermore,  `<` is related to four other operations which must also be defined:
 
 1. `<` less than
 2. `>` greater than
 3. `<=` less than or equal to
 4. `>=` greater than or equal to
 
-If you provide they have to have natural meaning.
+If you provide them then they have to have natural meaning.
 For example, `!(a < b)`  should be `a >= b` otherwise the world
 perishes.
 
@@ -286,5 +286,3 @@ by implementing a class which satisfies each of them.
 [bjarne]: https://www.stroustrup.com/
 [^about-bjarne]: [Bjarne Stroustrup][bjarne] is the creator of C++, author of many C++ books,
     and always has been an active member of the community.
-
-

@@ -154,7 +154,7 @@ is now at Google.
 He told me, he cannot imagine how the guys at Google write anything at all.
 So, I&rsquo;m not even going to mention Yahoo (joke).
 I did interview at Facebook and let me tell you what I saw of that place&hellip;
-It that was five years ago.
+That was five years ago.
 Maybe they improved but I don&rsquo;t think so.
 Places tend to to decline.</p>
 
@@ -177,7 +177,7 @@ and others who are just like us.
 I actually claim no, it&rsquo;s a discipline.</p>
 
 <p>This is why I want to discuss everything I write with you.
-If we together agree on it and we start start practicing it maybe it will turn into a
+If we together agree on it and we start practicing it maybe it will turn into a
 discipline.
 You say, &ldquo;well, Alex what chance is there?
 There is the world and there is you&rdquo;.
@@ -197,7 +197,7 @@ but actually there are requirements on the type,
 certain properties which are required for these containers to function.</p>
 
 <p>Let, us think about what my task was when I started working on the C++ STL.
-It was to define standard data structures, which will work for or any, or reasonable subset of types.
+It was to define standard data structures which will work for any reasonable subset of types.
 What is a reasonable subset of types?
 This is a little bit tricky but it&rsquo;s of paramount importance.</p>
 
@@ -280,7 +280,7 @@ Given a notion of equality, we can define
 some axioms for our copy constructor.</p>
 
 <p><strong>Axiom:</strong> After <code>a</code> is copy constructed from <code>b</code>, we have <code>a == b</code>.
-Whatever, our meaning of equality.</p>
+Whatever our meaning of equality.</p>
 
 <p>Let&rsquo;s think about what a copy is.
 It is something which is <em>equal to the original, but
@@ -352,7 +352,7 @@ This is actually something that Bjarne<sup id="fnref:6"><a href="#fn:6" rel="foo
 I say that <code>&lt;</code>, the total ordering of the type is
 fundamental, and should be required.
 He says it&rsquo;s too much to ask, and <code>Regular</code> types should be less strict.
-However, we will follow, his and the standard C++ convention by
+However we will follow his and the standard C++ convention by
 using a weaker <code>Regular</code> and limiting the requirement of ordering
 to <code>TotallyOrdered</code>.</p>
 
@@ -371,7 +371,7 @@ to <code>TotallyOrdered</code>.</p>
 
 <p>In the same way that the semantics of <code>==</code> is related to <code>!=</code>,
 we can see the semantics of <code>&lt;</code> must be totally bound to the semantics of equality.
-But futhemore,  <code>&lt;</code> is related to four other operations which must also be defined:</p>
+But furthermore,  <code>&lt;</code> is related to four other operations which must also be defined:</p>
 
 <ol>
 <li><code>&lt;</code> less than</li>
@@ -381,7 +381,7 @@ But futhemore,  <code>&lt;</code> is related to four other operations which must
 </ol>
 
 
-<p>If you provide they have to have natural meaning.
+<p>If you provide them then they have to have natural meaning.
 For example, <code>!(a &lt; b)</code>  should be <code>a &gt;= b</code> otherwise the world
 perishes.</p>
 
@@ -403,18 +403,18 @@ You can find an archive of these <a href="https://www.cs.utexas.edu/users/EWD/">
 <li id="fn:2">
 Alex: They&rsquo;re not <a href="https://en.wikipedia.org/wiki/Turing_completeness">Turing complete</a>, but they&rsquo;re Stepanov complete (joke).<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
-Alex: Some might think regular types are form of equational reasoning.
-However, you can have a universe that is strictly functional where you have equational reasoning,
+Alex: Some might think regular types are a form of equational reasoning.
+However, you can have a universe that is strictly functional where you have equational reasoning.
 Our universe has assignment and state.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
-Closed is a term that from math, and has various, but similar meanings
+Closed is a term from math that has various but similar meanings
 depending on context. In the context of abstract algebra, from which generic programming
 is inspired, closure means that applying an operation to an element in a domain <code>D</code> gives
 you something back in the same domain.
 For example the integers <code>Z</code> are closed under the operation of multiplication.
 Multiply two integers, you get an integer.
 However, it is not closed under division.
-<code>1 / 2</code> is not a integer.
+<code>1 / 2</code> is not an integer.
 Applying this to Alex&rsquo;s quote, he means that containers should preserve properties
 of the base types they are constructed from.
 Containers of <code>Regular</code> types should be <code>Regular</code>.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
