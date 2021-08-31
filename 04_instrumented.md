@@ -6,7 +6,7 @@
 Here is a little speech about great language designers.
 Once upon a time
 there was a very great language designer called [Niklaus Wirth][wirth].
-He was very brilliant, no question about it, and a very wonderful, kind,  charming, and witty, person.
+He was very brilliant, no question about it, and a very wonderful, kind, charming and witty person.
 So he designed his first programming language called 
 [Euler][euler] which he did at [Berkeley][berkeley].
 Then it was [ALGOL W][algolw].
@@ -21,7 +21,7 @@ but, he would design a beautiful language, observe that it's limited, throw it a
 and design a better language.
 What about the customer base? Well, who cares.
 This is why we still have so many people programming in
-Oberson. Because, by the time he got to Oberon, people got tired.
+Oberon. Because, by the time he got to Oberon, people got tired.
 
 This is why I claim, that to be honest
 Bjarne is literally the greatest language designer, at least after [John Backus][backus].
@@ -32,8 +32,8 @@ Dennis was  brilliant.
 He did C and then washed his hands and walked away,
 which is very wise.
 I sympathize. 
-But, Bjarne started working on C++
-in roughly 1978 (and then released in 1981), 35 years ago .
+But Bjarne started working on C++
+in roughly 1978 (and then released in 1981), 35 years ago.
 Then he never abandoned us.
 It was never perfect, but he would work on it, and work on it, and work on it,
  and go to horrible meetings of the standard committee,
@@ -45,7 +45,7 @@ further, and further, and further, with the most advanced language
 mechanisms known to humankind.
 What you can do right now in C++, you cannot
 really do in any other language.
-But, it requires patience, determination,
+But it requires patience, determination
 and genius.
 Whatever decisions he made in 1979 didn't lead to a stalemate later on.
 There is some ugly stuff, but you could avoid it.
@@ -54,8 +54,8 @@ I have no other example, not just in language design, but in
 computer science.
 Ken Thompson did Unix but do you think he stayed
 with UNIX?
-No, in his tuning award speech he said he stopped working 
-on UNIX a long time.
+No, in his Turing award speech he said he stopped working 
+on UNIX a long time ago.
 It's very difficult.
 
 I'm a clear example
@@ -75,7 +75,7 @@ I know it's a free country, you can.
 My advice to most of you, if you want good life follow my
 example.
 Because it's very hard to do what Bjarne does.
-I cannot point a single other example literally of a person who keeps
+I cannot point to a single other example literally of a person who keeps
 working.
 [McCarthy][mccarthy] invents Lisp. 
 After [1.5][lisp15] he's gone.
@@ -141,7 +141,7 @@ Writing this particular class will teach you once and for all to write
 
 ### Redefining regular operations with counting
 
-We're going to write instrumented using the same technique
+We're going to write `instrumented` using the same technique
 we use to write all classes:
 
 1. Copy and paste the [`singleton.h`](code/singleton.h) file we made last time.
@@ -149,7 +149,7 @@ we use to write all classes:
 
 Now we will do some work to count operations.
 In the copy constructor, we will initialize value,
-and add a line to 
+and add a line that 
 bumps up the copy count, like this:
 
     instrumented(const instrumented& x) : value(x.value) {
@@ -170,7 +170,7 @@ When I write code I want to do two things:
 This line is short, so I like one.
 I have been changing my programming style depending on the people with
 whom I work.
-[Paul McJones][paul] effected my programming style greatly when I started here.
+[Paul McJones][paul] affected my programming style greatly when I started here.
 For example I never used to use `x`.
 I avoided short variable names.
 In my old code everything is called `special_variable_x`.
@@ -205,14 +205,14 @@ on singleton:
 
 ### Storing counts
 
-What do with all the counts?
+What to do with all the counts?
 Where do they get stored?
 Every time this `instrumented` thing  happens we want some global count to be incremented.
 We were told that using global variables is bad.
 If I were doing it just for me, I would have used globals.
 Old guys don't mind using global variables.
 They're actually good.
-Since you are modern people, we will show you how to do it to do with inheritance.
+Since you are modern people, we will show you how to do it with inheritance.
 We will define a base class to hold this data:
 
     struct instrumented_base
@@ -262,11 +262,11 @@ It's very cheap to pass things which contain nothing.
 
 There is a notorious problem in C++ with static
 members of templates, it's just not good.
-We don't need to inherit from a template all these different
+We don't need to inherit from a template. All these different
 `instrumented<T>`'s inherit from the same base which will contain nothing at
 all and we will use this as a counting device.
 
-What is good about is we managed not to
+What is good about this is we managed not to
 muck up this nice class.
 It's basically the same as singleton.
 It's fundamentally of the same structure and we pushed all of the
@@ -274,7 +274,7 @@ statistic collection stuff out into a helper class.
 
 ### How should we use enum?
 
-`enum` which is a mechanism which introduces a bunch of constants.
+`enum` is a mechanism which introduces a bunch of constants.
 It's a very evil mechanism.
 I was wondering who invented enum,
 because it wasn't in first edition of K&R[^kandr].
@@ -288,7 +288,7 @@ Whether it worked there correctly or not remains to be seen.
 
 Dennis decided to bring it in,
 but the issue  is that it's not really a type.
- C++ attempts make it a type but doesn't quite work.
+C++ attempts to make it a type but it doesn't quite work.
 You could have a variable
 typed with the enum which has three different values and then you take totally
 different value assigned to it, nothing happens.
@@ -303,7 +303,7 @@ Never depend on a value of a given enum.
 
 [^kandr]: K&R (Kernighan and Ritchie) is a nickname for the book ["The C Programming Language"][c-lang].
     K&R usually specifically refers to the original release.
-    A layer edition was made when the C language became ANSI standardized,
+    A later edition was made when the C language became ANSI standardized,
     and the cover of that edition is labeled as such.
 
 [c-lang]: https://en.wikipedia.org/wiki/The_C_Programming_Language
@@ -315,7 +315,7 @@ I use inheritance, when appropriate.
 In general, I *use any language feature when appropriate*.
 Paul and I even use `goto` and we're not ashamed.
 There is a famous statement attributed to Ken Thompson that the fastest way of going from one place in the program to another is by using the `goto` statement, and it is so.
-If you implement things like called state machines it's a
+If you implement things like state machines it's a
 wonderful technique, because you have transitions.
 You go from this state to that state.
 You could write a loop with some conditional.
@@ -337,7 +337,7 @@ Everything has its place, Dijkstra's structures not withstanding[^goto].
 
     It doesn't look bad there, but if you do a lot of control flow
     (especially using adhoc patterns, besides `while`)
-    then it becomes "spagehetti code"
+    then it becomes "spaghetti code"
     that is difficult to read and follow.
     In a complex program, one must essentially read
     every statement as if you were the computer and jump
@@ -361,7 +361,7 @@ Everything has its place, Dijkstra's structures not withstanding[^goto].
 
 ## Using instrumented to analyze sort
 
-To learn how to use instrumented, let's analyze the performance
+To learn how to use `instrumented`, let's analyze the performance
 of sorting routines in STL.
 There are a few of them
 and they all use a distinct algorithm:
@@ -388,7 +388,7 @@ and they all use a distinct algorithm:
     Those of you who work on search, know you don't really need to sort everything,
     you just need to sort a little bit.
 
-    What do you use for partial sort?
+    What algorithm do you use for partial sort?
     I'll tell you that it's wrong.
     The solution which STL uses was good in 1994, but  a bad solution in 2013.
     It uses [heap sort](https://en.wikipedia.org/wiki/Heapsort).
@@ -405,7 +405,7 @@ relative to each other.
 
 
 
-**Exercise**: With instrumented, compare the number of operations
+**Exercise**: With `instrumented`, compare the number of operations
 between these three kinds of sort[^implementations].
 Refer to the code provided at the end of the chapter.
 A complete test harness is provided which will randomly
@@ -519,7 +519,7 @@ we could do more operations without actually incurring more time.
 Let us talk about possible input shapes.
 What is a good set of data to test these algorithms on?
 The most basic one is just to generate uniformly random data.
-Another shape to try is a list which is already sort.
+Another shape to try is a list which is already sorted.
 As we'll discover later on, some sorting algorithms are particularly
 bad for this particular configuration.
 Both ascending and descending will give different results.
@@ -531,7 +531,7 @@ But, eventually we want to define some measure of the ratio of equal
 to unequal elements.
 
 Random shuffle of uniform shuffle of random data is very good,
-but it's not a very realistic a distribution.
+but it's not a very realistic distribution.
 One which is very common in real life is called [Zipf distribution][zipf].
 Let me describe it incorrectly, first.
 Assume that the most probable guy comes with probability `1`.
