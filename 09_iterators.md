@@ -66,7 +66,7 @@ It's a lightweight thing, it doesn't do anything.
 It just points to things.
 
 This argument is active again.
-There are [boost][boost] guys 
+There are Boost[^boost] guys 
 who say, "Iterator is all wrong. Let us, go back
 and do ranges."
 They're reinventing Barbara Liskov iterators.
@@ -82,7 +82,12 @@ but I wasn't ignorant.
 
 [^eop]: Alex recommends chapter 7 of "Elements of Programming"
      on coordinate structures.
-
+     
+[^boost]: [Boost][boost] is a popular collection of C++ libraries generally accepted as the next tool to reach 
+    for beyond the standard library.
+     Alex speaks positively of some parts, such as in his [foreword][alex-graph-foreword] for "The Boost Graph Library",
+    others he is more critical of.
+    
 [liskov]: https://en.wikipedia.org/wiki/Barbara_Liskov
 [clu]: https://en.wikipedia.org/wiki/CLU_(programming_language)
 [alphard]: https://en.wikipedia.org/wiki/Alphard_(programming_language)
@@ -91,6 +96,7 @@ but I wasn't ignorant.
 [py-iterator]: https://wiki.python.org/moin/Iterator
 [boost]: https://www.boost.org/
 [snyder]: https://dblp.org/pid/04/4444.html
+[alex-graph-foreword]: http://stepanovpapers.com/siekforeword.pdf
 
 ## List pool iterators
 
