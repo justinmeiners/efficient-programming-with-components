@@ -197,7 +197,7 @@ It&rsquo;s a lightweight thing, it doesn&rsquo;t do anything.
 It just points to things.</p>
 
 <p>This argument is active again.
-There are <a href="https://www.boost.org/">boost</a> guys
+There are Boost<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> guys
 who say, &ldquo;Iterator is all wrong. Let us, go back
 and do ranges.&rdquo;
 They&rsquo;re reinventing Barbara Liskov iterators.
@@ -431,7 +431,7 @@ they use <code>=</code> and they use <code>x</code> and <code>y</code> and I thi
 <pre><code>// assert(x.pool === y.pool);
 </code></pre>
 
-<p>I don&rsquo;t write it because it takes too long to check<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+<p>I don&rsquo;t write it because it takes too long to check<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
 There is nobody who should be comparing iterators from separate pools.
 If he does, he deserves what he gets.
 But, wouldn&rsquo;t it be good to guarantee safety?
@@ -468,7 +468,7 @@ A singly linked list.
 Forward iterators do not have <code>&lt;</code>.
 Is that a good idea?
 You could do it for linked lists, but it&rsquo;s very expensive
-and not even guaranteed to terminate<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+and not even guaranteed to terminate<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
 But you&rsquo;re assuming &ldquo;If I am <code>&lt;</code>, then I am before&rdquo;.
 This is only one interpretation.
 Let me explain.</p>
@@ -539,18 +539,21 @@ A total ordering does not have to be topologically induced by the traversal.</p>
 Alex recommends chapter 7 of &ldquo;Elements of Programming&rdquo;
  on coordinate structures.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
+<a href="https://www.boost.org/">Boost</a> is a popular collection of C++ libraries generally accepted as the next tool to reach for beyond the standard library.
+ Alex speaks positively of some parts, (See <a href="http://stepanovpapers.com/siekforeword.pdf">his foreword</a> for &ldquo;The Boost Graph Library&rdquo;) others he is more critical of.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
 I think modern compilers have fixed this so you can
 write checks with more confidence that they won&rsquo;t affect release builds.
 Specifically the standard has mandated some rules about when
-<a href="https://en.cppreference.com/w/cpp/error/assert">assert</a> is enabled.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
-<li id="fn:3">
+<a href="https://en.cppreference.com/w/cpp/error/assert">assert</a> is enabled.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
 The Swift language and standard library
 actually implement very similar concepts and containers
 as C++. In their equivalent to <code>ForwardIterator</code>
 they actually <a href="https://forums.swift.org/t/dropping-comparable-requirement-for-indices/3290">did require comparable</a>,
 and bounds check with it,
 making it very difficult to write data structures like linked lists
-and probably makes Alex&rsquo;s pointer comparison trick impossible.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+and probably makes Alex&rsquo;s pointer comparison trick impossible.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

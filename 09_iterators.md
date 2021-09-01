@@ -83,10 +83,8 @@ but I wasn't ignorant.
 [^eop]: Alex recommends chapter 7 of "Elements of Programming"
      on coordinate structures.
      
-[^boost]: [Boost][boost] is a popular collection of C++ libraries generally accepted as the next tool to reach 
-    for beyond the standard library.
-     Alex speaks positively of some parts, such as in his [foreword][alex-graph-foreword] for "The Boost Graph Library",
-    others he is more critical of.
+[^boost]: [Boost][boost] is a popular collection of C++ libraries generally accepted as the next tool to reach for beyond the standard library.
+     Alex speaks positively of some parts, (See [his foreword][alex-graph-foreword] for "The Boost Graph Library") others he is more critical of.
     
 [liskov]: https://en.wikipedia.org/wiki/Barbara_Liskov
 [clu]: https://en.wikipedia.org/wiki/CLU_(programming_language)
