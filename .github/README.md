@@ -35,7 +35,7 @@ Building requires 2 widely available dependencies:
 If you don't want to install anything in your enviornment
 we have included a convenience script which uses docker.
 
-    ./build_with_docker.sh
+    ./docker_build.sh
 
 
 
