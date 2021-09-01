@@ -463,19 +463,29 @@ and they all use a distinct algorithm:</p>
   department, the people will remain alphabetically sorted within every department.
   If you just sort with arbitrary sort, it will be all over the place.</p>
 
-<p>  To be stable you use <a href="https://en.wikipedia.org/wiki/Merge_sort">merge sort</a>.</p></li>
+<p>  To be stable you use <a href="https://en.wikipedia.org/wiki/Merge_sort">merge sort</a>.
+o</p></li>
 <li><p><a href="https://en.cppreference.com/w/cpp/algorithm/partial_sort"><code>std::partial_sort</code></a></p>
 
-<p>  For example, you give it 100 elements and you sort from 1st to the
-  10th to the last. But, for the last 90 elements there is no guarantee.
+<p>  What&rsquo;s the interface?
+  It takes three iterators <code>first</code>, <code>middle</code>, and <code>last</code>.
+  What does it do?
+  It orders the elements so that <code>first</code> to <code>middle</code>
+  contains the smallest elements from the entire range.
+  Then it sorts those first elements.</p>
+
+<p>  For example, suppose you give it 100 elements and you want to sort from 1st to the 10th to the last.
+  The smallest 10 will be moved to the front and be sorted.
+  The last 90 elements will be left in some order.
   Those of you who work on search, know you don&rsquo;t really need to sort everything,
-  you just need to sort a little bit.</p>
+  you just need to sort a little bit<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
 
 <p>  What algorithm do you use for partial sort?
   I&rsquo;ll tell you that it&rsquo;s wrong.
   The solution which STL uses was good in 1994, but  a bad solution in 2013.
   It uses <a href="https://en.wikipedia.org/wiki/Heapsort">heap sort</a>.
-  That&rsquo;s what algorithm books tell you<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p></li>
+  That&rsquo;s what algorithm books tell you
+  and what I believed was the correct solution<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p></li>
 </ul>
 
 
@@ -483,12 +493,12 @@ and they all use a distinct algorithm:</p>
 relative to each other.</p>
 
 <p><strong>Exercise</strong>: With <code>instrumented</code>, compare the number of operations
-between these three kinds of sort<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+between these three kinds of sort<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
 Refer to the code provided at the end of the chapter.
 A complete test harness is provided which will randomly
 shuffle a large list of numbers to test with and print the results
 in a formatted table.
-Here is a sample of the output for heap sort<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>:</p>
+Here is a sample of the output for heap sort<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>:</p>
 
 <pre><code>       n        copy      assign    destruct     default       equal        less    construct
       16          69          91          69           0           0          65            0
@@ -605,7 +615,7 @@ normalize by the sum of the harmonic series up to <code>n</code>:</p>
 </code></pre>
 
 <p>The denominator is actually <code>ln(n) + gamma</code>
-where gamma is a small number<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
+where gamma is a small number<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.</p>
 
 <p><strong>Exercise:</strong>  Introduce variation into the shape of data and compare
 the sorting algorithms again.</p>
@@ -721,11 +731,15 @@ Later on he will give examples.</p>
 which allows one to use labels and goto restricted to a specific block.
 Fast, assembly-like, messy code can be wrapped in nice functional interfaces.</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
+Alex: If you can sort a little bit, you can sort everything.
+Set the second argument to be the same as the third:
+<code>std::partial_sort(first, last, last)</code>.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
 Alex: There is a perfectly wonderful three
 line solution which could change partial sort and make it much more acceptable to modern computers but it&rsquo;s not the standard.
 It will take the implementers of the standard library
-another 15 years to catch up.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
-<li id="fn:4">
+another 15 years to catch up.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
 <p>Many programmers imagine the C++ standard library is a package like
 <code>sqlite</code> or <code>LaTeX</code> that is centrally developed
 and deployed to many platforms.
@@ -741,14 +755,14 @@ I always assume, being the guy who did all of that,
 that is the same algorithm wherever I go.
 Obviously somebody modified them a little bit
 over these 20 years.
-For example, people at Apple did something slightly different from people at GNU.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
-<li id="fn:5">
-AMD Ryzen 5 2400G (8 core, 3.6 GHz). GCC 9.3.0<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+For example, people at Apple did something slightly different from people at GNU.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
+AMD Ryzen 5 2400G (8 core, 3.6 GHz). GCC 9.3.0<a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<li id="fn:7">
 Alex states that the little bit added on to <code>log(n)</code>
 is called the <a href="https://en.wikipedia.org/wiki/Stirling_number">Stirling number</a>.
 This does not appear to be correct, and he probably meant
-to refer to the <a href="https://en.wikipedia.org/wiki/Euler%E2%80%93Mascheroni_constant">Euler-Masheroni constant</a>.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
+to refer to the <a href="https://en.wikipedia.org/wiki/Euler%E2%80%93Mascheroni_constant">Euler-Masheroni constant</a>.<a href="#fnref:7" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

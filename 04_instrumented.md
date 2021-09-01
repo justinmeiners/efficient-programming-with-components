@@ -380,19 +380,28 @@ and they all use a distinct algorithm:
     If you just sort with arbitrary sort, it will be all over the place.
 
     To be stable you use [merge sort](https://en.wikipedia.org/wiki/Merge_sort).
-
+o
 - [`std::partial_sort`](https://en.cppreference.com/w/cpp/algorithm/partial_sort)
 
-    For example, you give it 100 elements and you sort from 1st to the
-    10th to the last. But, for the last 90 elements there is no guarantee.
-    Those of you who work on search, know you don't really need to sort everything,
-    you just need to sort a little bit.
+    What's the interface?
+    It takes three iterators `first`, `middle`, and `last`.
+    What does it do?
+    It orders the elements so that `first` to `middle`
+    contains the smallest elements from the entire range.
+    Then it sorts those first elements.
 
+    For example, suppose you give it 100 elements and you want to sort from 1st to the 10th to the last.
+    The smallest 10 will be moved to the front and be sorted.
+    The last 90 elements will be left in some order.
+    Those of you who work on search, know you don't really need to sort everything,
+    you just need to sort a little bit[^partial-complete-sort].
+    
     What algorithm do you use for partial sort?
     I'll tell you that it's wrong.
     The solution which STL uses was good in 1994, but  a bad solution in 2013.
     It uses [heap sort](https://en.wikipedia.org/wiki/Heapsort).
-    That's what algorithm books tell you[^heap-sort-correction].
+    That's what algorithm books tell you
+    and what I believed was the correct solution[^heap-sort-correction].
 
 
 We want to compare how these various sort operations perform,
@@ -403,7 +412,13 @@ relative to each other.
     It will take the implementers of the standard library 
     another 15 years to catch up.
 
+[^old-heap-algorithm]: It was a correct solution in 1993. Computers changed.
+    The algorithms which worked perfectly wonderfully in 1993, still work in the books.
+    But they don't work in the computer.
 
+[^partial-complete-sort]: Alex: If you can sort a little bit, you can sort everything.
+    Set the second argument to be the same as the third:
+    `std::partial_sort(first, last, last)`.
 
 **Exercise**: With `instrumented`, compare the number of operations
 between these three kinds of sort[^implementations].
