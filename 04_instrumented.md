@@ -500,7 +500,7 @@ Here is a sample of data for heap sort with measurements normalized:
      8388608        0.20        1.06        0.20        0.00        0.00        1.02         0.00
     16777216        0.19        1.06        0.19        0.00        0.00        1.01         0.00
 
-You remember Knuth (*Author of "The Art of Computer programming"*)?
+You remember Knuth (Author of "The Art of Computer programming")?
 In the beginning of the first volume when he introduces complexity
 he tells you how to measure complexity.
 He says we measure it as a function where we have
