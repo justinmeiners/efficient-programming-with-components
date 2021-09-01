@@ -380,7 +380,7 @@ and they all use a distinct algorithm:
     If you just sort with arbitrary sort, it will be all over the place.
 
     To be stable you use [merge sort](https://en.wikipedia.org/wiki/Merge_sort).
-o
+
 - [`std::partial_sort`](https://en.cppreference.com/w/cpp/algorithm/partial_sort)
 
     What's the interface?
@@ -400,8 +400,7 @@ o
     I'll tell you that it's wrong.
     The solution which STL uses was good in 1994, but  a bad solution in 2013.
     It uses [heap sort](https://en.wikipedia.org/wiki/Heapsort).
-    That's what algorithm books tell you
-    and what I believed was the correct solution[^heap-sort-correction].
+    That's what algorithm books tell you and what I believed was the correct solution[^heap-sort-correction].
 
 
 We want to compare how these various sort operations perform,
