@@ -136,7 +136,7 @@ td { vertical-align: top; }
 <p>Here is a little speech about great language designers.
 Once upon a time
 there was a very great language designer called <a href="https://en.wikipedia.org/wiki/Niklaus_Wirth">Niklaus Wirth</a>.
-He was very brilliant, no question about it, and a very wonderful, kind,  charming, and witty, person.
+He was very brilliant, no question about it, and a very wonderful, kind, charming and witty person.
 So he designed his first programming language called
 <a href="https://en.wikipedia.org/wiki/Euler_(programming_language)">Euler</a> which he did at <a href="https://en.wikipedia.org/wiki/University_of_California,_Berkeley">Berkeley</a>.
 Then it was <a href="https://en.wikipedia.org/wiki/ALGOL_W">ALGOL W</a>.
@@ -151,7 +151,7 @@ but, he would design a beautiful language, observe that it&rsquo;s limited, thro
 and design a better language.
 What about the customer base? Well, who cares.
 This is why we still have so many people programming in
-Oberson. Because, by the time he got to Oberon, people got tired.</p>
+Oberon. Because, by the time he got to Oberon, people got tired.</p>
 
 <p>This is why I claim, that to be honest
 Bjarne is literally the greatest language designer, at least after <a href="https://en.wikipedia.org/wiki/John_Backus">John Backus</a>.
@@ -162,8 +162,8 @@ Dennis was  brilliant.
 He did C and then washed his hands and walked away,
 which is very wise.
 I sympathize.
-But, Bjarne started working on C++
-in roughly 1978 (and then released in 1981), 35 years ago .
+But Bjarne started working on C++
+in roughly 1978 (and then released in 1981), 35 years ago.
 Then he never abandoned us.
 It was never perfect, but he would work on it, and work on it, and work on it,
  and go to horrible meetings of the standard committee,
@@ -175,7 +175,7 @@ further, and further, and further, with the most advanced language
 mechanisms known to humankind.
 What you can do right now in C++, you cannot
 really do in any other language.
-But, it requires patience, determination,
+But it requires patience, determination
 and genius.
 Whatever decisions he made in 1979 didn&rsquo;t lead to a stalemate later on.
 There is some ugly stuff, but you could avoid it.
@@ -184,8 +184,8 @@ I have no other example, not just in language design, but in
 computer science.
 Ken Thompson did Unix but do you think he stayed
 with UNIX?
-No, in his tuning award speech he said he stopped working
-on UNIX a long time.
+No, in his Turing award speech he said he stopped working
+on UNIX a long time ago.
 It&rsquo;s very difficult.</p>
 
 <p>I&rsquo;m a clear example
@@ -205,7 +205,7 @@ I know it&rsquo;s a free country, you can.
 My advice to most of you, if you want good life follow my
 example.
 Because it&rsquo;s very hard to do what Bjarne does.
-I cannot point a single other example literally of a person who keeps
+I cannot point to a single other example literally of a person who keeps
 working.
 <a href="https://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)">McCarthy</a> invents Lisp.
 After <a href="https://archive.org/details/lisp15programmer00john">1.5</a> he&rsquo;s gone.
@@ -261,7 +261,7 @@ Writing this particular class will teach you once and for all to write
 <a name="Redefining-regular-operations-with-counting"></a>
 <h3>Redefining regular operations with counting</h3>
 
-<p>We&rsquo;re going to write instrumented using the same technique
+<p>We&rsquo;re going to write <code>instrumented</code> using the same technique
 we use to write all classes:</p>
 
 <ol>
@@ -272,7 +272,7 @@ we use to write all classes:</p>
 
 <p>Now we will do some work to count operations.
 In the copy constructor, we will initialize value,
-and add a line to
+and add a line that
 bumps up the copy count, like this:</p>
 
 <pre><code>instrumented(const instrumented&amp; x) : value(x.value) {
@@ -298,7 +298,7 @@ When I write code I want to do two things:</p>
 <p>This line is short, so I like one.
 I have been changing my programming style depending on the people with
 whom I work.
-<a href="https://www.mcjones.org/paul/">Paul McJones</a> effected my programming style greatly when I started here.
+<a href="https://www.mcjones.org/paul/">Paul McJones</a> affected my programming style greatly when I started here.
 For example I never used to use <code>x</code>.
 I avoided short variable names.
 In my old code everything is called <code>special_variable_x</code>.
@@ -332,14 +332,14 @@ bool operator&lt;(const instrumented&amp; x, const instrumented&amp; y) {
 <a name="Storing-counts"></a>
 <h3>Storing counts</h3>
 
-<p>What do with all the counts?
+<p>What to do with all the counts?
 Where do they get stored?
 Every time this <code>instrumented</code> thing  happens we want some global count to be incremented.
 We were told that using global variables is bad.
 If I were doing it just for me, I would have used globals.
 Old guys don&rsquo;t mind using global variables.
 They&rsquo;re actually good.
-Since you are modern people, we will show you how to do it to do with inheritance.
+Since you are modern people, we will show you how to do it with inheritance.
 We will define a base class to hold this data:</p>
 
 <pre><code>struct instrumented_base
@@ -390,11 +390,11 @@ It&rsquo;s very cheap to pass things which contain nothing.</p>
 
 <p>There is a notorious problem in C++ with static
 members of templates, it&rsquo;s just not good.
-We don&rsquo;t need to inherit from a template all these different
+We don&rsquo;t need to inherit from a template. All these different
 <code>instrumented&lt;T&gt;</code>&rsquo;s inherit from the same base which will contain nothing at
 all and we will use this as a counting device.</p>
 
-<p>What is good about is we managed not to
+<p>What is good about this is we managed not to
 muck up this nice class.
 It&rsquo;s basically the same as singleton.
 It&rsquo;s fundamentally of the same structure and we pushed all of the
@@ -403,7 +403,7 @@ statistic collection stuff out into a helper class.</p>
 <a name="How-should-we-use-enum-3f-"></a>
 <h3>How should we use enum?</h3>
 
-<p><code>enum</code> which is a mechanism which introduces a bunch of constants.
+<p><code>enum</code> is a mechanism which introduces a bunch of constants.
 It&rsquo;s a very evil mechanism.
 I was wondering who invented enum,
 because it wasn&rsquo;t in first edition of K&amp;R<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
@@ -417,7 +417,7 @@ Whether it worked there correctly or not remains to be seen.</p>
 
 <p>Dennis decided to bring it in,
 but the issue  is that it&rsquo;s not really a type.
- C++ attempts make it a type but doesn&rsquo;t quite work.
+C++ attempts to make it a type but it doesn&rsquo;t quite work.
 You could have a variable
 typed with the enum which has three different values and then you take totally
 different value assigned to it, nothing happens.
@@ -434,7 +434,7 @@ Never depend on a value of a given enum.</p>
 In general, I <em>use any language feature when appropriate</em>.
 Paul and I even use <code>goto</code> and we&rsquo;re not ashamed.
 There is a famous statement attributed to Ken Thompson that the fastest way of going from one place in the program to another is by using the <code>goto</code> statement, and it is so.
-If you implement things like called state machines it&rsquo;s a
+If you implement things like state machines it&rsquo;s a
 wonderful technique, because you have transitions.
 You go from this state to that state.
 You could write a loop with some conditional.
@@ -445,7 +445,7 @@ Everything has its place, Dijkstra&rsquo;s structures not withstanding<sup id="f
 <a name="Using-instrumented-to-analyze-sort"></a>
 <h2>Using instrumented to analyze sort</h2>
 
-<p>To learn how to use instrumented, let&rsquo;s analyze the performance
+<p>To learn how to use <code>instrumented</code>, let&rsquo;s analyze the performance
 of sorting routines in STL.
 There are a few of them
 and they all use a distinct algorithm:</p>
@@ -471,7 +471,7 @@ and they all use a distinct algorithm:</p>
   Those of you who work on search, know you don&rsquo;t really need to sort everything,
   you just need to sort a little bit.</p>
 
-<p>  What do you use for partial sort?
+<p>  What algorithm do you use for partial sort?
   I&rsquo;ll tell you that it&rsquo;s wrong.
   The solution which STL uses was good in 1994, but  a bad solution in 2013.
   It uses <a href="https://en.wikipedia.org/wiki/Heapsort">heap sort</a>.
@@ -482,7 +482,7 @@ and they all use a distinct algorithm:</p>
 <p>We want to compare how these various sort operations perform,
 relative to each other.</p>
 
-<p><strong>Exercise</strong>: With instrumented, compare the number of operations
+<p><strong>Exercise</strong>: With <code>instrumented</code>, compare the number of operations
 between these three kinds of sort<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
 Refer to the code provided at the end of the chapter.
 A complete test harness is provided which will randomly
@@ -580,7 +580,7 @@ we could do more operations without actually incurring more time.</p>
 <p>Let us talk about possible input shapes.
 What is a good set of data to test these algorithms on?
 The most basic one is just to generate uniformly random data.
-Another shape to try is a list which is already sort.
+Another shape to try is a list which is already sorted.
 As we&rsquo;ll discover later on, some sorting algorithms are particularly
 bad for this particular configuration.
 Both ascending and descending will give different results.
@@ -592,7 +592,7 @@ But, eventually we want to define some measure of the ratio of equal
 to unequal elements.</p>
 
 <p>Random shuffle of uniform shuffle of random data is very good,
-but it&rsquo;s not a very realistic a distribution.
+but it&rsquo;s not a very realistic distribution.
 One which is very common in real life is called <a href="https://en.wikipedia.org/wiki/Zipf%27s_law">Zipf distribution</a>.
 Let me describe it incorrectly, first.
 Assume that the most probable guy comes with probability <code>1</code>.
@@ -686,7 +686,7 @@ set sort
 <li id="fn:1">
 K&amp;R (Kernighan and Ritchie) is a nickname for the book <a href="https://en.wikipedia.org/wiki/The_C_Programming_Language">&ldquo;The C Programming Language&rdquo;</a>.
 K&amp;R usually specifically refers to the original release.
-A layer edition was made when the C language became ANSI standardized,
+A later edition was made when the C language became ANSI standardized,
 and the cover of that edition is labeled as such.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
 <p>Goto used to be the primary way to do control flow in programs,
@@ -703,7 +703,7 @@ because it closely resembles how how machines and their languages work.</p>
 
 <p>It doesn&rsquo;t look bad there, but if you do a lot of control flow
 (especially using adhoc patterns, besides <code>while</code>)
-then it becomes &ldquo;spagehetti code&rdquo;
+then it becomes &ldquo;spaghetti code&rdquo;
 that is difficult to read and follow.
 In a complex program, one must essentially read
 every statement as if you were the computer and jump
