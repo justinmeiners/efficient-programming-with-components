@@ -13,8 +13,8 @@ knowing how pointers are subtracted, and stuff like that, all comes from Ken Tho
 Believe it or not, the best and brightest at that time were heavily on the
 march to get rid of pointers. Absolutely brilliant people who would give
 [Turing award][turing-award] speeches.
-[Tony Hoare][hoare] is the case in point [saying][hoare-speech] that pointers
-have to be abolished.
+[Tony Hoare][hoare] is the case in point saying that pointers
+have to be abolished[^hoare-speech].
 The idea was that pointer is illegitimate thing. 
 Language designers were fully convinced that
 even if you provide pointers nobody should call them pointers.
@@ -29,7 +29,7 @@ But, pointers are still at least partially with us.
 
 So Ken is an absolutely great man in many respects.
 His career started, not with UNIX, but when he was freshly out of
-school coming up with the brilliant [practical algorithm][regex] for matching regular expressions.
+school coming up with the brilliant practical algorithm for matching regular expressions[^regex-algorithm].
 Every time you write [grep][grep] or something like that you're most likely
 exercising code written by Ken in the late 60s.
 
@@ -102,9 +102,13 @@ Imagine how wonderful it would be if you could understand what someone else wrot
 
 [^teaching-programming]: Alex: At Stanford there's one guy who knows, but he's an emeritus (Donald Knuth).
 
+[^hoare-speech]: From the 1980 Turing award lecture ["The Emperor's New Clothes"][hoare-speech].
+
+[^regex-algorithm]: Ken's algorithm generates a finite state machine 
+   which can recognize a given regular expression.
+   See ["Regular Expression Matching Can Be Simple And Fast"][regex-fast].
+
 [fortune]: https://en.wikipedia.org/wiki/Fortune_(Unix)
-
-
 [dennis]: https://en.wikipedia.org/wiki/Dennis_Ritchie
 [kleene]: https://en.wikipedia.org/wiki/Stephen_Cole_Kleene
 [russia-chess]: https://en.wikipedia.org/wiki/Kaissa
@@ -116,7 +120,7 @@ Imagine how wonderful it would be if you could understand what someone else wrot
 
 [grep]: https://linux.die.net/man/1/grep
 [plan-9-fortune]: http://fortunes.cat-v.org/plan_9/
-[regex]: https://swtch.com/~rsc/regexp/regexp1.html
+[regex-fast]: https://swtch.com/~rsc/regexp/regexp1.html
 
 [turing-award]: https://en.wikipedia.org/wiki/Turing_Award
 [hoare]: https://en.wikipedia.org/wiki/Tony_Hoare
