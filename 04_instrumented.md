@@ -391,8 +391,8 @@ and they all use a distinct algorithm:
     Then it sorts those first elements.
 
     For example, suppose you give it 100 elements and you want to sort from 1st, to the 10th, to the last.
-    The smallest 10 will be moved to the front and then sorted.
-    The last 90 elements will be left in some order.
+    The smallest 10 will be moved to the front in sorted order.
+    But the last 90 elements will be left in *some order*.
     Those of you who work on search, know you don't really need to sort everything,
     you just need to sort a little bit[^partial-complete-sort].
     
