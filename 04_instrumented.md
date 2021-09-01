@@ -390,15 +390,15 @@ and they all use a distinct algorithm:
     contains the smallest elements from the entire range.
     Then it sorts those first elements.
 
-    For example, suppose you give it 100 elements and you want to sort from 1st to the 10th to the last.
-    The smallest 10 will be moved to the front and be sorted.
+    For example, suppose you give it 100 elements and you want to sort from 1st, to the 10th, to the last.
+    The smallest 10 will be moved to the front and then sorted.
     The last 90 elements will be left in some order.
     Those of you who work on search, know you don't really need to sort everything,
     you just need to sort a little bit[^partial-complete-sort].
     
     What algorithm do you use for partial sort?
     I'll tell you that it's wrong.
-    The solution which STL uses was good in 1994, but  a bad solution in 2013.
+    The solution which STL uses was good in 1993, but a bad solution in 2013.
     It uses [heap sort](https://en.wikipedia.org/wiki/Heapsort).
     That's what algorithm books tell you and what I believed was the correct solution[^heap-sort-correction].
 
@@ -411,7 +411,7 @@ relative to each other.
     It will take the implementers of the standard library 
     another 15 years to catch up.
 
-[^old-heap-algorithm]: It was a correct solution in 1993. Computers changed.
+[^old-heap-algorithm]: Alex: Computers changed.
     The algorithms which worked perfectly wonderfully in 1993, still work in the books.
     But they don't work in the computer.
 
