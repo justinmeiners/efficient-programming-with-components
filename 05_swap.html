@@ -166,7 +166,7 @@ It&rsquo;s a pound of flesh.</p>
 It&rsquo;s something which is not specific and could be used by all the
 applications which need this particular problem solved.
 Then comes another important question.
-People comes to me and say &ldquo;why don&rsquo;t we use <a href="https://en.wikipedia.org/wiki/Go_(programming_language)">Go</a>, or <a href="https://en.wikipedia.org/wiki/Scala_(programming_language)">Scala</a>,
+People come to me and say &ldquo;why don&rsquo;t we use <a href="https://en.wikipedia.org/wiki/Go_(programming_language)">Go</a>, or <a href="https://en.wikipedia.org/wiki/Scala_(programming_language)">Scala</a>,
 and many others?&rdquo;
 Let us discuss
  what components are in terms of a programming language.
@@ -229,7 +229,7 @@ You obviously don&rsquo;t know whether you meant it in a general way or not.</p>
 of whether a language is good enough.
 I still use it to determine whether a language is suitable for what I want to do or not.
 There are three programs which I need to
-implement in a general way to know that the language is suitable these three
+implement in a general way to know that the language is suitable. These three
 programs are:</p>
 
 <ol>
@@ -253,16 +253,16 @@ Do them in a general way.
 If they&rsquo;re at least relatively efficient, that is, they are not slower than specific things
 written in the language, then let us talk.
 If you cannot do it, let us stick with C++.
-I&rsquo;m just explaining the reasoning behind my my choice of C++.</p>
+I&rsquo;m just explaining the reasoning behind my choice of C++.</p>
 
 <a name="Swap"></a>
 <h2>Swap</h2>
 
 <p>Let us look at these three programs.
-Why they are important?
+Why are they important?
 Why is swap important? What does it deal with?
 Apparently it&rsquo;s not self-evident.
-Once upon a time I was talking to a very famous program,
+Once upon a time I was talking to a very famous programmer,
 supposedly the best programmer A9 ever had.
 I told him about these three things and  he looks at me
 and said, &ldquo;I never had to use swap in my life&rdquo;.
@@ -270,22 +270,22 @@ I don&rsquo;t know&hellip; I was very impressed because
 you swap for sorting,
 for reversing the sequence,
 for rotating the sequence,
-for all kind of operations.
-Basically, if you do something with a
-sequence you swap.
- so it is very important practically.
-But, it also happens to be very important
-theoretically because a long time ago when people were starting group theory<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>
-They discovered that any permutation of a sequence could be generated out of swap<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+for all kinds of operations.
+Basically if you do something with a
+sequence, you swap.
+So it is very important practically.
+But it also happens to be very important
+theoretically, because a long time ago when people were starting group theory<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>
+they discovered that any permutation of a sequence could be generated out of swap<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
 Swap is the most primitive operation.
-the reason is sequence, and any other
-permutation, can be constructed out of swap.</p>
+The reason is sequence. And any other
+permutation can be constructed out of swap.</p>
 
-<p>But, apparently not everyone, even famous programmers,
+<p>But apparently not everyone (even famous programmers)
 realized that.
 Well, he had to claim that the language he thought was
 the greatest language was great, and since it couldn&rsquo;t do swap,
-what do you?
+what do you do?
 You deny the utility of swap.</p>
 
 <a name="General-swap"></a>
@@ -313,7 +313,7 @@ for it, you don&rsquo;t want to worry about whether <code>inline</code> is on th
 <h3>Specialized swap</h3>
 
 <p>For some types, this <code>swap</code> will perform poorly.
-Could you give an example of it is horribly inefficient?
+Could you give an example of it being horribly inefficient?
 What about a large container?
 Consider:</p>
 
@@ -330,8 +330,8 @@ every single element into that temporary, and then back
 What should we do if someone says, &ldquo;I have a wonderful generic solution, very abstract, but it takes a million iterations when there should be three.&rdquo;?
 Throw him out.
 There is no excuse.
-Then he says, &ldquo;oh, but I could use <a href="https://en.wikipedia.org/wiki/Tropical_semiring">tropical semirings</a>&rdquo;,
-take tropical semirings and do something to him and them<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
+Then he says, &ldquo;Oh, but I could use <a href="https://en.wikipedia.org/wiki/Tropical_semiring">tropical semirings</a>&rdquo;.
+Take tropical semirings and do something to him and them<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
 
 <p>If you think about the algorithm that needs to take place,
 it requires <em>knowledge of how vector actually stores data</em>.
@@ -340,7 +340,7 @@ but the pointers to their contents should be swapped.</p>
 
 <p>A central feature of a container is ownership of the elements.
 So the elements and container go together.
-For things of this kind, we nee to write a special swap.</p>
+For things of this kind, we need to write a special swap.</p>
 
 <pre><code>template&lt;typename T&gt;
 // T is Semi-Regular
@@ -352,7 +352,7 @@ void swap(std::vector&lt;T&gt;&amp; a, std::vector&lt;T&gt;&amp; b) {
 </code></pre>
 
 <p>It would be wonderful to be able to just type those comments and the
-and compiler will do it for us sadly enough we&rsquo;re not there yet.</p>
+compiler will do it for us. Sadly enough we&rsquo;re not there yet.</p>
 
 <p>When we write a special version of this function,
 it is called <strong>partial template specialization</strong>.
@@ -380,23 +380,23 @@ void swap_xor(T&amp; a, T&amp; b) {
     some basic properties of <code>^</code>. (See solution<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.)</p>
 
 <p>What are the requirements for this algorithm?
-Specifically, what types have an <code>XOR</code> operator <code>^</code>.
+Specifically, what types have an <code>XOR</code> operator <code>^</code>?
 Could we use it on <code>int</code>? Yes, but it&rsquo;s a bad idea.
 The language standard says that the
-result of <code>XOR</code> for the signed bit is not defined.
+result of <code>XOR</code> for the sign bit is not defined.
 If it is a positive integer you know what is going on for the sign bits.
 When it&rsquo;s negative you have no idea.</p>
 
 <p>So use it for <code>unsigned int</code>, or <code>char</code>.
 Basically, unsigned integral types.
-So, it&rsquo;s not particularly useful.</p>
+So it&rsquo;s not particularly useful.</p>
 
-<p>But, there is a case where it doesn&rsquo;t work,
+<p>But there is a case where it doesn&rsquo;t work,
 which is weird because we have a proof it does work (if you did the exercise above).
-But, in our proof we made the
+In our proof we made the
 small assumption that <code>x</code> and <code>y</code> are different objects.
 Because if they happen to be the same object, the value it contains at
-the end of this function will be always be zero.
+the end of this function will always be zero.
 Every bit will be zapped completely totally and absolutely.</p>
 
 <p>We could fix this by wrapping the body in:</p>
@@ -408,7 +408,7 @@ Every bit will be zapped completely totally and absolutely.</p>
 
 <p>Is it a good idea?
 In this case, it&rsquo;s important for correctness.
-But, be careful.
+But be careful.
 We should never add it to the other swap
 because it adds more work to the common case.</p>
 
@@ -422,7 +422,7 @@ So you add to your code:</p>
 }
 </code></pre>
 
-<p>But, if you optimize for 5, and you have more than three integers,
+<p>But if you optimize for 5, and you have more than three integers,
 it will seldom be 5 and you will be doing the check all the time.</p>
 
 <p>So two rules:</p>
@@ -439,8 +439,8 @@ it will seldom be 5 and you will be doing the check all the time.</p>
 <p><code>inline</code> is one of the things which will go away.
 There are certain things in C and C++ which are there because compiler technology was imperfect.
 When I started in C++ in 1986
-I had to write the keyword <a href="https://en.cppreference.com/w/c/language/storage_duration"><code>register</code></a> everywhere because believe it or
-not compilers wouldn&rsquo;t use registers<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup> unless you specifically indicated that something goes into the register.
+I had to write the keyword <a href="https://en.cppreference.com/w/c/language/storage_duration"><code>register</code></a> everywhere because, believe it or
+not, compilers wouldn&rsquo;t use registers<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup> unless you specifically indicated that something goes into the register.
 Of course if it went into
 the register you could never use address operator <code>&amp;</code> because obviously registers do not have addresses.
 It was a very special thing you needed to worry about.
@@ -449,13 +449,13 @@ Stripping <code>register</code> declarations from fundamental algorithms caused 
 Why?
 For every call to <code>++</code> the assembly code first did a load
 and then after it stored the result.
-At that time computers used to do one thing at the time.
+At that time computers used to do one thing at a time.
 So by adding a load and store around everything, it basically tripled the time.</p>
 
 <p>This is no longer true, meaning that computers no longer
 execute one operation at a time, as we will discover.
 For sure, you never need to worry about registers.
-In modern computers, this is utterly idiotic you should never do it.
+In modern computers this is utterly idiotic; you should never do it.
 In the same way the compiler is perfectly  theoretically capable
 of figuring out what needs to be <code>inline</code>, much more than you.</p>
 
@@ -468,7 +468,7 @@ Right now it still makes a difference.
 You remove this <code>inline</code> and you
 could get enormous performance difference.
 It could be a factor of 10 for something like swap.
-The problem is that the function call sequences,
+The problem is that the function call sequence,
 is a bad sequence.</p>
 
 <a name="Code"></a>
@@ -532,12 +532,12 @@ You also have to write move versions of many operators.</p>
 
 <p>On the other hand, it solves this problem generally, so that one does not need
 to write custom swaps for every data structure.
-It shifts the responsbility to the data structure author,
+It shifts the responsibility to the data structure author,
 instead of every algorithm which might use it.</p><a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
 Alex himself uses Tropical semi-rings to describe
 several algorithms in his book &ldquo;From Mathematics to Generic Programming&rdquo; (See chapter 8.6).
-So his issue here is not algebraic abstractions, but pursing abstraction
+So his issue here is not algebraic abstractions, but pursuing abstraction
 with enormous cost.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
 <p>The ^ symbol is  bitwise <a href="https://en.wikipedia.org/wiki/Exclusive_or">exclusive or</a>.
@@ -569,14 +569,14 @@ It is defined by the following truth table:</p>
 </code></pre><a href="#fnref:6" rev="footnote">&#8617;</a></li>
 <li id="fn:7">
 <p>In CPU architecture, a register is a slot on the CPU
-that can store a single value (typically 32 bit or 64 bits).
+that can store a single value (typically 32 or 64 bits).
 Most CPU operations are confined to operating on values in registers.
 For example, an &ldquo;add&rdquo; instruction might add the value in one register,
-to another register, and then stores the value in a third register.
+to another register, and then store the value in a third register.
 Separate &ldquo;load&rdquo; and &ldquo;store&rdquo; instructions
 are used to move a value between a register and a location in memory.</p>
 
-<p>Typically a CPU has only a handful (fewer than 50) of register, so a large part of the program
+<p>Typically a CPU has only a handful of registers (fewer than 50), so a large part of the program
 is spent moving values from memory into registers so they can be operated on,
 and then transferring the results back to main memory.</p><a href="#fnref:7" rev="footnote">&#8617;</a></li>
 </ol>
