@@ -42,7 +42,7 @@ A component is something which solves a problem in a general way.
 It's something which is not specific and could be used by all the
 applications which need this particular problem solved.
 Then comes another important question.
-People comes to me and say "why don't we use [Go][go], or [Scala][scala],
+People come to me and say "why don't we use [Go][go], or [Scala][scala],
 and many others?"
 Let us discuss 
  what components are in terms of a programming language.
@@ -104,7 +104,7 @@ A long time ago I came up with a very simple test
 of whether a language is good enough.
 I still use it to determine whether a language is suitable for what I want to do or not.
 There are three programs which I need to
-implement in a general way to know that the language is suitable these three
+implement in a general way to know that the language is suitable. These three
 programs are:
 
 1. `swap`: takes two things and swaps them.
@@ -125,15 +125,15 @@ Do them in a general way.
 If they're at least relatively efficient, that is, they are not slower than specific things 
 written in the language, then let us talk.
 If you cannot do it, let us stick with C++.
-I'm just explaining the reasoning behind my my choice of C++.
+I'm just explaining the reasoning behind my choice of C++.
 
 ## Swap
 
 Let us look at these three programs.
-Why they are important? 
+Why are they important? 
 Why is swap important? What does it deal with?
 Apparently it's not self-evident.
-Once upon a time I was talking to a very famous program,
+Once upon a time I was talking to a very famous programmer,
 supposedly the best programmer A9 ever had.
 I told him about these three things and  he looks at me
 and said, "I never had to use swap in my life".
@@ -141,22 +141,22 @@ I don't know... I was very impressed because
 you swap for sorting,
 for reversing the sequence,
 for rotating the sequence,
-for all kind of operations.
-Basically, if you do something with a
-sequence you swap.
- so it is very important practically.
-But, it also happens to be very important
-theoretically because a long time ago when people were starting group theory[^group-theory]
-They discovered that any permutation of a sequence could be generated out of swap[^permutation].
+for all kinds of operations.
+Basically if you do something with a
+sequence, you swap.
+So it is very important practically.
+But it also happens to be very important
+theoretically, because a long time ago when people were starting group theory[^group-theory]
+they discovered that any permutation of a sequence could be generated out of swap[^permutation].
 Swap is the most primitive operation.
-the reason is sequence, and any other
-permutation, can be constructed out of swap.
+The reason is sequence. And any other
+permutation can be constructed out of swap.
 
-But, apparently not everyone, even famous programmers,
+But apparently not everyone (even famous programmers)
 realized that. 
 Well, he had to claim that the language he thought was
 the greatest language was great, and since it couldn't do swap,
-what do you?
+what do you do?
 You deny the utility of swap.
 
 [^group-theory]: [Group theory](https://en.wikipedia.org/wiki/Group_theory) 
@@ -213,7 +213,7 @@ for it, you don't want to worry about whether `inline` is on the front or not.
 ### Specialized swap
 
 For some types, this `swap` will perform poorly.
-Could you give an example of it is horribly inefficient?
+Could you give an example of it being horribly inefficient?
 What about a large container?
 Consider:
 
@@ -229,8 +229,8 @@ So we have generic code which works everywhere, except it's very slow.
 What should we do if someone says, "I have a wonderful generic solution, very abstract, but it takes a million iterations when there should be three."?
 Throw him out.
 There is no excuse. 
-Then he says, "oh, but I could use [tropical semirings][tropical]",
-take tropical semirings and do something to him and them[^tropical].
+Then he says, "Oh, but I could use [tropical semirings][tropical]".
+Take tropical semirings and do something to him and them[^tropical].
 
 If you think about the algorithm that needs to take place, 
 it requires *knowledge of how vector actually stores data*.
@@ -239,7 +239,7 @@ but the pointers to their contents should be swapped.
 
 A central feature of a container is ownership of the elements.
 So the elements and container go together.
-For things of this kind, we nee to write a special swap.
+For things of this kind, we need to write a special swap.
 
     template<typename T>
     // T is Semi-Regular
@@ -250,7 +250,7 @@ For things of this kind, we nee to write a special swap.
     }
 
 It would be wonderful to be able to just type those comments and the 
-and compiler will do it for us sadly enough we're not there yet.
+compiler will do it for us. Sadly enough we're not there yet.
 
 When we write a special version of this function,
 it is called **partial template specialization**.
@@ -261,7 +261,7 @@ and the `T` parameter is still generic.
 
 [^tropical]: Alex himself uses Tropical semi-rings to describe
     several algorithms in his book "From Mathematics to Generic Programming" (See chapter 8.6).
-    So his issue here is not algebraic abstractions, but pursing abstraction
+    So his issue here is not algebraic abstractions, but pursuing abstraction
     with enormous cost.
 
 [^move]:
@@ -282,7 +282,7 @@ and the `T` parameter is still generic.
 
     On the other hand, it solves this problem generally, so that one does not need
     to write custom swaps for every data structure.
-    It shifts the responsbility to the data structure author,
+    It shifts the responsibility to the data structure author,
     instead of every algorithm which might use it.
 
 ## XOR swap
@@ -304,24 +304,24 @@ Yes, there is a [beautiful algorithm][xor-swap] using XOR[^xor].
     some basic properties of `^`. (See solution[^xor-proof].)
 
 What are the requirements for this algorithm?
-Specifically, what types have an `XOR` operator `^`.
+Specifically, what types have an `XOR` operator `^`?
 Could we use it on `int`? Yes, but it's a bad idea.
 The language standard says that the
-result of `XOR` for the signed bit is not defined.
+result of `XOR` for the sign bit is not defined.
 If it is a positive integer you know what is going on for the sign bits.
 When it's negative you have no idea.
 
 So use it for `unsigned int`, or `char`.
 Basically, unsigned integral types.
-So, it's not particularly useful.
+So it's not particularly useful.
 
 
-But, there is a case where it doesn't work,
+But there is a case where it doesn't work,
 which is weird because we have a proof it does work (if you did the exercise above).
-But, in our proof we made the
+In our proof we made the
 small assumption that `x` and `y` are different objects.
 Because if they happen to be the same object, the value it contains at
-the end of this function will be always be zero.
+the end of this function will always be zero.
 Every bit will be zapped completely totally and absolutely.
 
 We could fix this by wrapping the body in:
@@ -332,7 +332,7 @@ We could fix this by wrapping the body in:
 
 Is it a good idea?
 In this case, it's important for correctness.
-But, be careful.
+But be careful.
 We should never add it to the other swap
 because it adds more work to the common case.
 
@@ -345,7 +345,7 @@ So you add to your code:
         // do normal path
     }
 
-But, if you optimize for 5, and you have more than three integers,
+But if you optimize for 5, and you have more than three integers,
 it will seldom be 5 and you will be doing the check all the time.
 
 So two rules: 
@@ -386,8 +386,8 @@ So two rules:
 `inline` is one of the things which will go away.
 There are certain things in C and C++ which are there because compiler technology was imperfect.
 When I started in C++ in 1986
-I had to write the keyword [`register`][register] everywhere because believe it or
-not compilers wouldn't use registers[^registers] unless you specifically indicated that something goes into the register.
+I had to write the keyword [`register`][register] everywhere because, believe it or
+not, compilers wouldn't use registers[^registers] unless you specifically indicated that something goes into the register.
 Of course if it went into
 the register you could never use address operator `&` because obviously registers do not have addresses.
 It was a very special thing you needed to worry about.
@@ -396,13 +396,13 @@ Stripping `register` declarations from fundamental algorithms caused a slow down
 Why? 
 For every call to `++` the assembly code first did a load 
 and then after it stored the result.
-At that time computers used to do one thing at the time.
+At that time computers used to do one thing at a time.
 So by adding a load and store around everything, it basically tripled the time.
 
 This is no longer true, meaning that computers no longer
 execute one operation at a time, as we will discover.
 For sure, you never need to worry about registers.
-In modern computers, this is utterly idiotic you should never do it.
+In modern computers this is utterly idiotic; you should never do it.
 In the same way the compiler is perfectly  theoretically capable
 of figuring out what needs to be `inline`, much more than you.
 
@@ -415,7 +415,7 @@ Right now it still makes a difference.
 You remove this `inline` and you
 could get enormous performance difference.
 It could be a factor of 10 for something like swap.
-The problem is that the function call sequences,
+The problem is that the function call sequence,
 is a bad sequence.
 
 
@@ -423,14 +423,14 @@ is a bad sequence.
 
 [^registers]: 
     In CPU architecture, a register is a slot on the CPU
-    that can store a single value (typically 32 bit or 64 bits).
+    that can store a single value (typically 32 or 64 bits).
     Most CPU operations are confined to operating on values in registers.
     For example, an "add" instruction might add the value in one register,
-    to another register, and then stores the value in a third register.
+    to another register, and then store the value in a third register.
     Separate "load" and "store" instructions
     are used to move a value between a register and a location in memory.
 
-    Typically a CPU has only a handful (fewer than 50) of register, so a large part of the program
+    Typically a CPU has only a handful of registers (fewer than 50), so a large part of the program
     is spent moving values from memory into registers so they can be operated on,
     and then transferring the results back to main memory.
 
@@ -438,4 +438,3 @@ is a bad sequence.
 ## Code
 
 - [swap.h](code/swap.h)
-
