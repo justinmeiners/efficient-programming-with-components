@@ -387,12 +387,11 @@ and they all use a distinct algorithm:
     It takes three iterators `first`, `middle`, and `last`.
     What does it do?
     It orders the elements so that `first` to `middle`
-    contains the smallest elements from the entire range.
-    Then it sorts those first elements.
+    contains the smallest elements from the entire range, in sorted order.
 
     For example, suppose you give it 100 elements and you want to sort from 1st, to the 10th, to the last.
     The smallest 10 will be moved to the front in sorted order.
-    But the last 90 elements will be left in *some order*.
+    But the last 90 elements will be left in *some unspecified order*.
     Those of you who work on search, know you don't really need to sort everything,
     you just need to sort a little bit[^partial-complete-sort].
     
