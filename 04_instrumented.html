@@ -470,12 +470,11 @@ and they all use a distinct algorithm:</p>
   It takes three iterators <code>first</code>, <code>middle</code>, and <code>last</code>.
   What does it do?
   It orders the elements so that <code>first</code> to <code>middle</code>
-  contains the smallest elements from the entire range.
-  Then it sorts those first elements.</p>
+  contains the smallest elements from the entire range, in sorted order.</p>
 
 <p>  For example, suppose you give it 100 elements and you want to sort from 1st, to the 10th, to the last.
   The smallest 10 will be moved to the front in sorted order.
-  But the last 90 elements will be left in <em>some order</em>.
+  But the last 90 elements will be left in <em>some unspecified order</em>.
   Those of you who work on search, know you don&rsquo;t really need to sort everything,
   you just need to sort a little bit<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
 
