@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>6. Ordering, min, and max.</title>
+<title>6. Ordering, min, and max</title>
 <style>
 /* http://jasonm23.github.io/markdown-css-themes/ */
 
@@ -127,8 +127,8 @@ td { vertical-align: top; }
 
 
 
-<a name="L6.-Ordering-2c--min-2c--and-max."></a>
-<h1>6. Ordering, min, and max.</h1>
+<a name="L6.-Ordering-2c--min-2c--and-max"></a>
+<h1>6. Ordering, min, and max</h1>
 
 <a name="Learning-to-design-code"></a>
 <h2>Learning to design code</h2>
@@ -139,7 +139,7 @@ I want to teach
 you to think so that you could design something equal or better.
 So most of the algorithms we are looking at are in STL,
 but they are not exposed.
-They&rsquo;re beyond what the standard Committee would ever consider.
+They&rsquo;re beyond what the C++ Standard Committee would ever consider.
 You might say, &ldquo;Alex this is a simple problem. Couldn&rsquo;t you show us how
 to build a search engine?&rdquo;
 Not in a class.</p>
@@ -164,7 +164,7 @@ instead of <code>&lt;=</code>?
 It&rsquo;s important to note that this was a choice I made.
 They give you roughly the same universe of things, so you could design
 it around either.
-But, somewhow I felt <code>&lt;</code> is a more fundamental relation.
+But somehow I felt <code>&lt;</code> is a more fundamental relation.
 <code>&lt;</code> requires a little less typing.
 There are other reasons, too.</p>
 
@@ -180,10 +180,10 @@ It&rsquo;s guaranteed.</p>
 
 <p><strong>Axiom 4:</strong> If <code>a != b</code> then <code>a &lt; b</code> or <code>b &gt; a</code>.</p>
 
-<p>This is also called the trichomoty law,
+<p>This is also called the trichotomy law,
 because for all elements, exactly one of three things must be true<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>:</p>
 
-<pre><code>(a &lt; b) or (b &lt; a) or (a = b)
+<pre><code>(a &lt; b) or (b &lt; a) or (a == b)
 </code></pre>
 
 <p>There is a fundamental connection between <code>&lt;</code> and <code>==</code>.
@@ -259,9 +259,9 @@ and 5 and 3 are literals which are constant.</p>
 
 <p>What should we return when <code>a == b</code>?
 It seems it doesn&rsquo;t matter.
-But, that&rsquo;s the problem.
+But that&rsquo;s the problem.
 Everywhere in programming you do something and it seems to be correct.
-But, you have to think deeply and then you discover a problem.
+But you have to think deeply and then you discover a problem.
 There is nothing little in programming.</p>
 
 <p>Let me construct a proof for you.
@@ -271,7 +271,7 @@ Nothing should be swapped.
 It&rsquo;s a good requirement.</p>
 
 <p>Another requirement is if I sort two things,
-The first guy should be the <code>min</code> afterwards
+the first guy should be the <code>min</code> afterwards
 and the second guy should be the <code>max</code>.
 We agreed that default ordering for sorting should be ascending.
 Zero, one, two, three is natural.
@@ -291,7 +291,7 @@ should return the first. We will see more of this later.</p>
 <p>When you design a function you often think about just this
 function, and ignore how it interacts with other parts of your API.
 Then you discover inconsistencies which can be very subtle but painful.
-There are several profound mistakes in STL
+There are several profound mistakes in STL.
 They are still in the standard, despite all my attempts to change them.
 It&rsquo;s very easy to make a mistake and it&rsquo;s really hard to fix it.</p>
 
@@ -322,7 +322,7 @@ There are two reasons:</p>
 <li><p><strong>Functionality:</strong> Making it a type would allow it to have state. Pointers to functions have no state.</p></li>
 <li><p><strong>Performance:</strong> If we were passing a pointer it would have to do a function call through the pointer.
 The function call has to save and restore registers.
-It&rsquo;s slow especially if it sits inside a loop and is called a gazallion times.</p></li>
+It&rsquo;s slow especially if it sits inside a loop and is called a gazillion times.</p></li>
 </ol>
 
 
@@ -395,7 +395,7 @@ So, the one in the standard is still broken.
 Let us see why.</p>
 
 <p>It seems that <code>max</code> is just <code>min</code> with <code>&gt;</code>.
-So wh do we need it?
+So why do we need it?
 We still want to provide what is convenient for the customer.
 When they think <code>max</code> and go looking for it, it should somehow work.
 But, its a little bit more.</p>
@@ -416,7 +416,7 @@ void sort2(T&amp; a, T&amp; b, Compare cmp) {
 }
 </code></pre>
 
-<p>It&rsquo;s always preferrable to sort in-place because we can obtain a composable
+<p>It&rsquo;s always preferable to sort in-place because we can obtain a composable
 one by first copying, and then applying the in-place algorithm.</p>
 
 <p>Note once again the order of comparison.
@@ -486,7 +486,7 @@ a &lt; b or b &gt;= a
 
 <p>We assume these statements are true,
 but it&rsquo;s not true.
-There are exceptions whic cause enourmous amounts of harm
+There are exceptions which cause enormous amounts of harm
 and break all the laws of equality and ordering.</p>
 
 <pre><code>double x(0.0/0.0);
@@ -559,7 +559,7 @@ But, <code>{ 1, 4 }</code> is not a subset of <code>{ 1, 2, 3 }</code>.
 Neither is <code>{ 1, 2, 3 }</code> a subset of <code>{ 1, 4 }</code>.
 The two elements are incomparable.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
-Function objects like this in C++ fulfill
+Function objects like this in C++ fulfil
 the same role as <a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-21.html#%_sec_3.2">closures or lambdas</a>.
 They capture variables or state, and then use them to evaluate the function.
 The main difference is that their saved context is explicit rather
