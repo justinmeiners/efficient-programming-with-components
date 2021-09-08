@@ -61,9 +61,9 @@ We need to talk about iterator conventions.
 Notice that `min_element` doesn't return the value itself,
 but the iterator pointing to the minimum element.
 Why?
-We probably want to update the value.
+Because we probably want to update the value.
 
-Suppose, I'm a manager I want to look for the
+Suppose I'm a manager and I want to look for the
 worst-performing guy and then fire him (joke).
 I don't want his value, I want a handle on him.
 I want an iterator.
@@ -73,13 +73,13 @@ things with what you find.
 
 There is another reason.
 The range might be empty[^emptyrange].
-In which case we return last iterator.
+In which case we return the last iterator.
 
 `first` and `last` are maybe bad names, but that's what they are.
 They are hard to change, because I called them that everywhere.
-`last` actual doesn't mean last.
+`last` actually doesn't mean last.
 `last` means one after the last element.
-In order to define a sequence you need to point  past the last.
+In order to define a sequence you need to point past the last.
 Because you want to able to work with empty ranges.
 
 
@@ -102,11 +102,11 @@ the first bad and first good.
 But there may be no good, or no bad elements.
 We need to able to return an empty range.
 
-In C++ this is a standard convention some
+In C++ this is a standard convention. Some
 people in the world of Java and Python are slowly realizing that maybe it
-has something to do with mathematics not with C++.
-But, it will take decades before people fully realize that you have to always go
-passed the end.
+has something to do with mathematics and not with C++.
+But it will take decades before people fully realize that you have to always go
+past the end.
 Mathematically you need [semi-open intervals][half-open].
 They are denoted like so:
 
@@ -119,10 +119,10 @@ Or in our terms:
 [^emptyrange]: Many languages struggle with empty ranges because they prefer their algorithms
     to work with values instead of iterators.
     For example, they might return `nil` or a boolean which indicates
-    whether the value was found or not.
+    whether the value was found or not, or they may throw an exception.
 
-    Of course, unless they are dealing with a nice language, this adds a few lines of code,
-    or the possiblity that you forget to check for the nil case, and perhaps
+    Of course, this adds a few lines of code,
+    or the possibility that you forget to check for the nil case, and perhaps
     restricts the algorithm to reference types only.
 
 [half-open]: https://mathworld.wolfram.com/Half-ClosedInterval.html 
@@ -180,19 +180,19 @@ In general why do we need `n - 1` comparisons.
 Why no more? We don't need to compare an element with itself.
 Why no fewer?
 Maybe we could do it
-in `n - 2` with a clever algorithm.
+in `n - 2` with a clever algorithm?
 The simple argument to
 remember is that `n - 1` guys have to lose.
 We're finding a winner in our competition.
-If person didn't play in a competition, if he didn't lose,
+If a person didn't play in a competition, if he didn't lose,
 we cannot eliminate him.
 We need to eliminate all but one.
 
 How many comparisons if we need to find minimum and maximum together?
 Obviously we could do `2n - 2`,
-what about fewer[^minmax]?
+but what about fewer[^minmax]?
 The idea is very simple.
-Assume that  we worked up to the middle of 
+Assume that we worked up to the middle of 
 of our range and we have a running min and a running max.
 The temptation is take the next element compare him with min and with max.
 That's very sad because very often we will do two comparisons and then discount the other.
@@ -298,7 +298,7 @@ It was [added to][cpp-minmax] the standard in C++11.
 [pohl]: https://users.soe.ucsc.edu/~pohl/bio.htm
 [cpp-minmax]: https://en.cppreference.com/w/cpp/algorithm/minmax_element
 
-[^minmax]: First time find the min (`n - 1` comparisons). Then find the max (`n - 1` comparisons).
+[^minmax]: First find the min (`n - 1` comparisons), then find the max (`n - 1` comparisons).
            `(n - 1) + (n - 1) = 2n - 2`.
 
 [^pohl]: Alex has written more about Ira and this algorithm [here](http://stepanovpapers.com/IraPohlFest.pdf)

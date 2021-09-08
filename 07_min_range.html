@@ -190,9 +190,9 @@ I min_element(I first, I last, Compare cmp) {
 Notice that <code>min_element</code> doesn&rsquo;t return the value itself,
 but the iterator pointing to the minimum element.
 Why?
-We probably want to update the value.</p>
+Because we probably want to update the value.</p>
 
-<p>Suppose, I&rsquo;m a manager I want to look for the
+<p>Suppose I&rsquo;m a manager and I want to look for the
 worst-performing guy and then fire him (joke).
 I don&rsquo;t want his value, I want a handle on him.
 I want an iterator.
@@ -202,13 +202,13 @@ things with what you find.</p>
 
 <p>There is another reason.
 The range might be empty<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
-In which case we return last iterator.</p>
+In which case we return the last iterator.</p>
 
 <p><code>first</code> and <code>last</code> are maybe bad names, but that&rsquo;s what they are.
 They are hard to change, because I called them that everywhere.
-<code>last</code> actual doesn&rsquo;t mean last.
+<code>last</code> actually doesn&rsquo;t mean last.
 <code>last</code> means one after the last element.
-In order to define a sequence you need to point  past the last.
+In order to define a sequence you need to point past the last.
 Because you want to able to work with empty ranges.</p>
 
 <pre><code>        a b c d
@@ -229,11 +229,11 @@ the first bad and first good.
 But there may be no good, or no bad elements.
 We need to able to return an empty range.</p>
 
-<p>In C++ this is a standard convention some
+<p>In C++ this is a standard convention. Some
 people in the world of Java and Python are slowly realizing that maybe it
-has something to do with mathematics not with C++.
-But, it will take decades before people fully realize that you have to always go
-passed the end.
+has something to do with mathematics and not with C++.
+But it will take decades before people fully realize that you have to always go
+past the end.
 Mathematically you need <a href="https://mathworld.wolfram.com/Half-ClosedInterval.html">semi-open intervals</a>.
 They are denoted like so:</p>
 
@@ -272,19 +272,19 @@ In general why do we need <code>n - 1</code> comparisons.
 Why no more? We don&rsquo;t need to compare an element with itself.
 Why no fewer?
 Maybe we could do it
-in <code>n - 2</code> with a clever algorithm.
+in <code>n - 2</code> with a clever algorithm?
 The simple argument to
 remember is that <code>n - 1</code> guys have to lose.
 We&rsquo;re finding a winner in our competition.
-If person didn&rsquo;t play in a competition, if he didn&rsquo;t lose,
+If a person didn&rsquo;t play in a competition, if he didn&rsquo;t lose,
 we cannot eliminate him.
 We need to eliminate all but one.</p>
 
 <p>How many comparisons if we need to find minimum and maximum together?
 Obviously we could do <code>2n - 2</code>,
-what about fewer<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>?
+but what about fewer<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>?
 The idea is very simple.
-Assume that  we worked up to the middle of
+Assume that we worked up to the middle of
 of our range and we have a running min and a running max.
 The temptation is take the next element compare him with min and with max.
 That&rsquo;s very sad because very often we will do two comparisons and then discount the other.
@@ -398,10 +398,10 @@ It was <a href="https://en.cppreference.com/w/cpp/algorithm/minmax_element">adde
 <p>Many languages struggle with empty ranges because they prefer their algorithms
 to work with values instead of iterators.
 For example, they might return <code>nil</code> or a boolean which indicates
-whether the value was found or not.</p>
+whether the value was found or not, or they may throw an exception.</p>
 
-<p>Of course, unless they are dealing with a nice language, this adds a few lines of code,
-or the possiblity that you forget to check for the nil case, and perhaps
+<p>Of course, this adds a few lines of code,
+or the possibility that you forget to check for the nil case, and perhaps
 restricts the algorithm to reference types only.</p><a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
 &ldquo;No man ever steps in the same river twice.&rdquo; - Heraclitus<a href="#fnref:2" rev="footnote">&#8617;</a></li>
@@ -426,10 +426,10 @@ It can&rsquo;t seek back earlier in the input.
 Once it is read, it is gone.</p>
 
 <p>This is one of the reasons why gzip is so useful.
-It compresses data on the fly, without being able to see the incoming data,
+It compresses data on the fly, without being able to see future incoming data,
 or re-analyzing what came before.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
-First time find the min (<code>n - 1</code> comparisons). Then find the max (<code>n - 1</code> comparisons).
+First find the min (<code>n - 1</code> comparisons), then find the max (<code>n - 1</code> comparisons).
        <code>(n - 1) + (n - 1) = 2n - 2</code>.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
 Alex has written more about Ira and this algorithm <a href="http://stepanovpapers.com/IraPohlFest.pdf">here</a><a href="#fnref:6" rev="footnote">&#8617;</a></li>
