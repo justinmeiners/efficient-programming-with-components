@@ -162,7 +162,7 @@ So it must be a `ForwardIterator`.
     `head` reads 50000 random characters,
     and immediately outputs it (to `stdout`).
     This output then becomes the input for `gzip` (`stdin`)
-    which compresses it and outputs the data in a compressed form.
+    which compresses it. 
 
     The two programs run concurrently not sequentially.
     When `head` reads a small chunk of data, it can be immediately

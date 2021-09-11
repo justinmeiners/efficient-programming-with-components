@@ -421,7 +421,7 @@ Consider the following shell command:</p>
 <p><code>head</code> reads 50000 random characters,
 and immediately outputs it (to <code>stdout</code>).
 This output then becomes the input for <code>gzip</code> (<code>stdin</code>)
-which compresses it and outputs the data in a compressed form.</p>
+which compresses it.</p>
 
 <p>The two programs run concurrently not sequentially.
 When <code>head</code> reads a small chunk of data, it can be immediately
