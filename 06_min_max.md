@@ -1,4 +1,4 @@
-6. Ordering, min, and max.
+6. Ordering, min, and max
 =============================
 
 ## Learning to design code
@@ -9,7 +9,7 @@ I want to teach
 you to think so that you could design something equal or better.
 So most of the algorithms we are looking at are in STL,
 but they are not exposed.
-They're beyond what the standard Committee would ever consider.
+They're beyond what the C++ Standard Committee would ever consider.
 You might say, "Alex this is a simple problem. Couldn't you show us how
 to build a search engine?"
 Not in a class.
@@ -34,7 +34,7 @@ instead of `<=`?
 It's important to note that this was a choice I made.
 They give you roughly the same universe of things, so you could design
 it around either.
-But, somewhow I felt `<` is a more fundamental relation.
+But somehow I felt `<` is a more fundamental relation.
 `<` requires a little less typing.
 There are other reasons, too.
 
@@ -50,10 +50,10 @@ It's guaranteed.
 
 **Axiom 4:** If `a != b` then `a < b` or ` b > a`.
 
-This is also called the trichomoty law,
+This is also called the trichotomy law,
 because for all elements, exactly one of three things must be true[^eop-ordering]:
 
-    (a < b) or (b < a) or (a = b)
+    (a < b) or (b < a) or (a == b)
 
 There is a fundamental connection between `<` and `==`.
 If `!(b < a)` then it must be the case that `b >= a`.
@@ -135,9 +135,9 @@ and 5 and 3 are literals which are constant.
 
 What should we return when `a == b`?
 It seems it doesn't matter.
-But, that's the problem.
+But that's the problem.
 Everywhere in programming you do something and it seems to be correct.
-But, you have to think deeply and then you discover a problem.
+But you have to think deeply and then you discover a problem.
 There is nothing little in programming.
 
 Let me construct a proof for you.
@@ -147,7 +147,7 @@ Nothing should be swapped.
 It's a good requirement.
 
 Another requirement is if I sort two things,
-The first guy should be the `min` afterwards
+the first guy should be the `min` afterwards
 and the second guy should be the `max`.
 We agreed that default ordering for sorting should be ascending.
 Zero, one, two, three is natural. 
@@ -166,7 +166,7 @@ So let's correct it, so we don't swap unless necessary.
 When you design a function you often think about just this
 function, and ignore how it interacts with other parts of your API.
 Then you discover inconsistencies which can be very subtle but painful.
-There are several profound mistakes in STL
+There are several profound mistakes in STL.
 They are still in the standard, despite all my attempts to change them.
 It's very easy to make a mistake and it's really hard to fix it.
 
@@ -195,7 +195,7 @@ There are two reasons:
 
 2. **Performance:** If we were passing a pointer it would have to do a function call through the pointer.
    The function call has to save and restore registers.
-   It's slow especially if it sits inside a loop and is called a gazallion times.
+   It's slow especially if it sits inside a loop and is called a gazillion times.
 
 ## Less than function object
 
@@ -262,7 +262,7 @@ Remember the faster computers get, the slower function calls are.
     Does it matter? 
     Not at all.
 
-[^function-objects]: Function objects like this in C++ fulfill
+[^function-objects]: Function objects like this in C++ fulfil
     the same role as [closures or lambdas][sicp-env].
     They capture variables or state, and then use them to evaluate the function.
     The main difference is that their saved context is explicit rather
@@ -283,7 +283,7 @@ So, the one in the standard is still broken.
 Let us see why.
 
 It seems that `max` is just `min` with `>`.
-So wh do we need it?
+So why do we need it?
 We still want to provide what is convenient for the customer.
 When they think `max` and go looking for it, it should somehow work.
 But, its a little bit more.
@@ -302,7 +302,7 @@ To see how they should all work, let's write `sort2`, which sorts two things.
       }
     }
 
-It's always preferrable to sort in-place because we can obtain a composable
+It's always preferable to sort in-place because we can obtain a composable
 one by first copying, and then applying the in-place algorithm.
 
 Note once again the order of comparison.
@@ -367,7 +367,7 @@ Certain thing should always work, such as the following:
 
 We assume these statements are true, 
 but it's not true.
-There are exceptions whic cause enourmous amounts of harm
+There are exceptions which cause enormous amounts of harm
 and break all the laws of equality and ordering.
 
     double x(0.0/0.0);
@@ -419,6 +419,3 @@ you have to assure that singular values do not appear in your computation.
 ## Final code
 
 - [minmax.h](code/minmax.h)
-
-
-
