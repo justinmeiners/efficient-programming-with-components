@@ -153,24 +153,33 @@ So it must be a `ForwardIterator`.
     so once you read them, they are gone.
 
 [^stdin]:
-    Another example of the `InputIterator` concept is UNIX pipes.
-    Consider the command:
+    Another example of the `InputIterator` concept is [UNIX pipes][unix-pipes].
+    Pipes transfer data which is output from one program, to the input of another.
+    Consider the following shell command:
 
-        head -c 500 /dev/urandom | gzip
+        head -c 50000 /dev/urandom | gzip
 
-    Head will read 500 random characters, but that data isn't stored anywhere,
-    it's immediately passed to `stdout`, 
-    which is `stdin` for [gzip][gzip].
-    gzip reads data from `stdin`.
-    It can only read data as it comes in.
+    `head` reads 50000 random characters,
+    and immediately outputs it (to `stdout`).
+    This output then becomes the input for `gzip` (`stdin`)
+    which compresses it and outputs the data in a compressed form.
+
+    The two programs run concurrently not sequentially.
+    When `head` reads a small chunk of data, it can be immediately
+    be written to `gzip`.
+    In this way, the data transfer operates like `InputIterator`.
+    Neither program has access to all the data at once.
+    They can only read pieces of data as they come in.
     It can't seek back earlier in the input.
     Once it is read, it is gone.
 
-    This is one of the reasons why gzip is so useful.
-    It compresses data on the fly, without being able to see the incoming data,
-    or re-analyzing what came before.
+    The ability of `gzip` to operate on "input iterator"-like
+    streams is one of the reasons why it is so versatile.
+    It can compress data while it is being generated, or downloaded,
+    without being able to see the complete data.
 
 [gzip]: https://linux.die.net/man/1/gzip
+[unix-pipes]: https://en.wikipedia.org/wiki/Pipeline_(Unix)
 
 ## Finding min and max together
 
