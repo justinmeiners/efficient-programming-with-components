@@ -128,8 +128,8 @@ same pool, which actually nobody does but everybody pays.
     This trend is reflected in Alex's story.
 
     Since then, the error prone nature of concurrency and parallelism
-    has led to more disciplined design and tools.
-    One approach, is to  design the program architecture  around a few specific threads running
+    has encouraged more disciplined design and tools.
+    One approach, is to organize the program architecture around a few specific threads running
     for the duration of the program, with carefully controlled communication
     protocols.
     Another is to spawn threads only to compute pure functions,
@@ -138,7 +138,7 @@ same pool, which actually nobody does but everybody pays.
     Based on Alex's comments we can guess that 
     he would prefer processes to threads.
     Processes offer memory protection by default, with all the danger
-    centralized in a small shared portions, which can be used for communication.
+    centralized in small shared portions.
     (See chapter 7 of "The Art of UNIX Programming")
 
 [gnu]: https://www.gnu.org/
