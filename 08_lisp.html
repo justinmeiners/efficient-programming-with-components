@@ -187,18 +187,18 @@ based data structures.
 So for any data structure of nodes, such as list, I would keep a pool of
 nodes myself and manage them in a quick way.</p>
 
-<p>A few people, such as Bill Plauga<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> at Microsoft
+<p>A few people, such as <a href="https://en.wikipedia.org/wiki/P._J._Plauger">Bill Plauger</a> at Microsoft
 and others at <a href="https://www.gnu.org/">GNU</a> who followed their example, said that if they have a common
 pool and they just do pointer movement then if you have multiple threads you
-could have problems<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+could have problems<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
 Instead of solving the problem for the multi-threaded case
 they decided to solve it in general.
-They said, &ldquo;first we&rsquo;re going to put locks on our malloc<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
+They said, &ldquo;first we&rsquo;re going to put locks on our malloc<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
 Then we&rsquo;re going to throw Alex&rsquo;s pool management away
 and we&rsquo;re going to do full malloc.&rdquo;
 Now malloc is function call with a lock, so it&rsquo;s a very heavy operation.</p>
 
-<p>Because of this decision, all our lists are going to be thread safe.
+<p>Because of this decision, all our lists are going to be thread safe<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
 People like us, who do not use threads (you don&rsquo;t use threads right?) pay for them.
 They violated a fundamental
 principle which Bjarne insists on.
@@ -472,49 +472,48 @@ The <code>cdr</code> (second element) points to another pair, or <code>nil</code
 <p>See <a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-15.html#%_sec_2.2">chapter 2.2</a> of &ldquo;Structure and Interpretation of Computer Programs&rdquo;
 to learn more.</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
-I cannot find any reference to this person or materials related
-to this discussion. Please contact me if you know.
-In this <a href="https://devblogs.microsoft.com/cppblog/concurrent-containers/">C++ Blog</a>
-Microsoft appears to be taking the position in agreement with Alex,
-that locking on data structures is not a sufficient
-approach to concurrent programming.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
-<li id="fn:4">
 All kinds of problems can arise from two threads modifying the same resource.
-The basic problem is that you can no longer reason about control flow in your code.
+With concurrent processes you can no longer reason about control flow in your code.
 One line does not immediately follow the other,
 so things can be overwritten or messed up in betwween statements.
 Another problem is called a <a href="https://en.wikipedia.org/wiki/Race_condition">race condition</a>.
-This is when a piece of code relies on one thread doing a task before another,<a href="#fnref:4" rev="footnote">&#8617;</a></li>
-<li id="fn:5">
+This is when a piece of code relies on one thread doing a task before another.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
 <p><a href="https://en.wikipedia.org/wiki/Lock_(computer_science)">Lock&rsquo;s</a> (often called mutex in programming)
 are a mechanism for controlling access to a shared resource.
-If you want to avoid threads messing up each others work,
-you ensure that only one thread is allowed to modify the resource at a time.
-Designing such a mechanism is actually fairly difficult.
-(See &ldquo;The Art of Multiprocesser Programming&rdquo; By Herlihy and Shavit.)</p>
+To prevent multiple threads from running over each other,
+a lock ensures that only one thread can access or modify
+a shared resource at a time.
+Designing such a mechanism well is actually fairly difficult.
+(See &ldquo;The Art of Multiprocesser Programming&rdquo; by Herlihy and Shavit.)
+Locks tend to be slow because they pause threads until they are safe to proceed.
+In addition they usually communicate with the kernel.</p>
 
-<p>They tend to be slow because they either require waiting in a loop &ldquo;spin lock&rdquo;
-or communicating with the kernel scheduler.</p>
-
-<p>Many programming projects in the late 90s and early 2000s (especially Java and C#)
-decided
-that the way to support multithreading programming was to ensure exclusive
-access to most every resources, as if one would write code
-using threads all over the place.
+<p>Many programming frameworks in the late 90s and early 2000s (especially Java and C#)
+decided that the way to support multithreading programming was to protect
+every resource with locks,
+as if programs should share class instances
+across threads haphazardly.
 This trend is reflected in Alex&rsquo;s story.</p>
 
-<p>The error prone nature of concurrency and parallelism has led to more disciplined design
-and tools.
-Often portions portions of the program are explicity dedicated to a certain thread
-and communication is carefully controlled.
-Another trend is to use
-threads in a functional manner, invoking them to do a bunch of work, without external
-state, and returning a single result.</p>
+<p>Since then, the error prone nature of concurrency and parallelism
+has led to more disciplined design and tools.
+One approach, is to  design the program architecture  around a few specific threads running
+for the duration of the program, with carefully controlled communication
+protocols.
+Another is to spawn threads only to compute pure functions,
+which do not have shared resource problems.</p>
 
-<p>Based on Alex&rsquo;s comments we can assume he
-would support using multiple processes instead of threads.
-Processes offer memory protection by default, and then allow
-you to expose dangerous shared portions for communication.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<p>Based on Alex&rsquo;s comments we can guess that
+he would prefer processes to threads.
+Processes offer memory protection by default, with all the danger
+centralized in a small shared portions, which can be used for communication.
+(See chapter 7 of &ldquo;The Art of UNIX Programming&rdquo;)</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
+Although <code>malloc</code> may lock, according to
+<a href="https://devblogs.microsoft.com/cppblog/concurrent-containers/">this article</a>,
+STL containers on Microsoft platforms do not attempt to
+ensure thread safety with locks.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
 <p>A significant difference between Alex&rsquo;s lists and those
 in Lisp is that they are homogenous,
