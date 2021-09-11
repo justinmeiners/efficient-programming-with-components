@@ -411,23 +411,31 @@ device, such as the internet.
 You read packets as they arrive, and they aren&rsquo;t stored anywhere,
 so once you read them, they are gone.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
-<p>Another example of the <code>InputIterator</code> concept is UNIX pipes.
-Consider the command:</p>
+<p>Another example of the <code>InputIterator</code> concept is <a href="https://en.wikipedia.org/wiki/Pipeline_(Unix)">UNIX pipes</a>.
+Pipes transfer data which is output from one program, to the input of another.
+Consider the following shell command:</p>
 
-<pre><code>head -c 500 /dev/urandom | gzip
+<pre><code>head -c 50000 /dev/urandom | gzip
 </code></pre>
 
-<p>Head will read 500 random characters, but that data isn&rsquo;t stored anywhere,
-it&rsquo;s immediately passed to <code>stdout</code>,
-which is <code>stdin</code> for <a href="https://linux.die.net/man/1/gzip">gzip</a>.
-gzip reads data from <code>stdin</code>.
-It can only read data as it comes in.
+<p><code>head</code> reads 50000 random characters,
+and immediately outputs it (to <code>stdout</code>).
+This output then becomes the input for <code>gzip</code> (<code>stdin</code>)
+which compresses it.</p>
+
+<p>The two programs run concurrently not sequentially.
+When <code>head</code> reads a small chunk of data, it can be immediately
+be written to <code>gzip</code>.
+In this way, the data transfer operates like <code>InputIterator</code>.
+Neither program has access to all the data at once.
+They can only read pieces of data as they come in.
 It can&rsquo;t seek back earlier in the input.
 Once it is read, it is gone.</p>
 
-<p>This is one of the reasons why gzip is so useful.
-It compresses data on the fly, without being able to see the incoming data,
-or re-analyzing what came before.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<p>The ability of <code>gzip</code> to operate on &ldquo;input iterator&rdquo;-like
+streams is one of the reasons why it is so versatile.
+It can compress data while it is being generated, or downloaded,
+without being able to see the complete data.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
 First find the min (<code>n - 1</code> comparisons), then find the max (<code>n - 1</code> comparisons).
        <code>(n - 1) + (n - 1) = 2n - 2</code>.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
