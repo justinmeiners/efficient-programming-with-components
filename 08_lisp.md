@@ -104,7 +104,7 @@ same pool, which actually nobody does but everybody pays.
     ensure thread safety with locks.
     
 [^race]: All kinds of problems can arise from two threads modifying the same resource.
-    With concurrent processes you can no longer reason about control flow in your code.
+    When code executes concurrently, it's much more difficult to reason about control flow.
     One line does not immediately follow the other,
     so things can be overwritten or messed up in betwween statements.
     Another problem is called a [race condition][race].
