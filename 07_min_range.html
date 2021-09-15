@@ -207,7 +207,7 @@ In which case we return the last iterator.</p>
 <p><code>first</code> and <code>last</code> are maybe bad names, but that&rsquo;s what they are.
 They are hard to change, because I called them that everywhere.
 <code>last</code> actually doesn&rsquo;t mean last.
-<code>last</code> means one after the last element.
+<code>last</code> means one after the last element<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
 In order to define a sequence you need to point past the last.
 Because you want to able to work with empty ranges.</p>
 
@@ -255,9 +255,9 @@ Both are for iterating forward,
 as opposed to random jumps.
 What is an <code>InputIterator</code>?
 Input iterators describe algorithms
-which go through the river once<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
-It&rsquo;s like they&rsquo;re reading stuff from the wire<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
-Imagine the various kinds of streams<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
+which go through the river once<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+It&rsquo;s like they&rsquo;re reading stuff from the wire<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+Imagine the various kinds of streams<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.</p>
 
 <p>But, in our algorithm we store a previous position in the variable <code>min_el</code>.
 Therefore the things which go through the wire will not work.
@@ -282,7 +282,7 @@ We need to eliminate all but one.</p>
 
 <p>How many comparisons if we need to find minimum and maximum together?
 Obviously we could do <code>2n - 2</code>,
-but what about fewer<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>?
+but what about fewer<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>?
 The idea is very simple.
 Assume that we worked up to the middle of
 of our range and we have a running min and a running max.
@@ -378,7 +378,7 @@ size_t n = sizeof(a) / sizeof(int);
 auto pair = minmax_element(a, a + n, std::less&lt;int&gt;());
 </code></pre>
 
-<p>This algorithm was invented by <a href="https://users.soe.ucsc.edu/~pohl/bio.htm">Ira Pohl</a><sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup> of UC Santa Cruz, in the mid-seventies.
+<p>This algorithm was invented by <a href="https://users.soe.ucsc.edu/~pohl/bio.htm">Ira Pohl</a><sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup> of UC Santa Cruz, in the mid-seventies.
 He also proved it was optimal.
 It&rsquo;s also practically good.
 It was <a href="https://en.cppreference.com/w/cpp/algorithm/minmax_element">added to</a> the standard in C++11.</p>
@@ -404,13 +404,18 @@ whether the value was found or not, or they may throw an exception.</p>
 or the possibility that you forget to check for the nil case, and perhaps
 restricts the algorithm to reference types only.</p><a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
-&ldquo;No man ever steps in the same river twice.&rdquo; - Heraclitus<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+In &ldquo;Elements of Programming&rdquo;
+the term &ldquo;limit&rdquo; is used instead of &ldquo;last&rdquo; to avoid this confusion.
+It also happens to start with the same letter, so
+the abbrevation <code>[f, l)</code> can be read as either word.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
+&ldquo;No man ever steps in the same river twice.&rdquo; - Heraclitus<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
 &ldquo;Through the wire&rdquo; refers to receiving data from a communication
 device, such as the internet.
 You read packets as they arrive, and they aren&rsquo;t stored anywhere,
-so once you read them, they are gone.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
-<li id="fn:4">
+so once you read them, they are gone.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
 <p>Another example of the <code>InputIterator</code> concept is <a href="https://en.wikipedia.org/wiki/Pipeline_(Unix)">UNIX pipes</a>.
 Pipes transfer data which is output from one program, to the input of another.
 Consider the following shell command:</p>
@@ -435,12 +440,12 @@ Once it is read, it is gone.</p>
 <p>The ability of <code>gzip</code> to operate on &ldquo;input iterator&rdquo;-like
 streams is one of the reasons why it is so versatile.
 It can compress data while it is being generated, or downloaded,
-without being able to see the complete data.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
-<li id="fn:5">
-First find the min (<code>n - 1</code> comparisons), then find the max (<code>n - 1</code> comparisons).
-       <code>(n - 1) + (n - 1) = 2n - 2</code>.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+without being able to see the complete data.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
-Alex has written more about Ira and this algorithm <a href="http://stepanovpapers.com/IraPohlFest.pdf">here</a><a href="#fnref:6" rev="footnote">&#8617;</a></li>
+First find the min (<code>n - 1</code> comparisons), then find the max (<code>n - 1</code> comparisons).
+       <code>(n - 1) + (n - 1) = 2n - 2</code>.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<li id="fn:7">
+Alex has written more about Ira and this algorithm <a href="http://stepanovpapers.com/IraPohlFest.pdf">here</a><a href="#fnref:7" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

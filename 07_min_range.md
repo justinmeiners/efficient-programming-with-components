@@ -78,7 +78,7 @@ In which case we return the last iterator.
 `first` and `last` are maybe bad names, but that's what they are.
 They are hard to change, because I called them that everywhere.
 `last` actually doesn't mean last.
-`last` means one after the last element.
+`last` means one after the last element[^last-called-limit].
 In order to define a sequence you need to point past the last.
 Because you want to able to work with empty ranges.
 
@@ -124,6 +124,11 @@ Or in our terms:
     Of course, this adds a few lines of code,
     or the possibility that you forget to check for the nil case, and perhaps
     restricts the algorithm to reference types only.
+
+[^last-called-limit]: In "Elements of Programming"
+    the term "limit" is used instead of "last" to avoid this confusion.
+    It also happens to start with the same letter, so 
+    the abbrevation `[f, l)` can be read as either word.
 
 [half-open]: https://mathworld.wolfram.com/Half-ClosedInterval.html 
 
