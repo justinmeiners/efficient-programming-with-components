@@ -1,4 +1,4 @@
-## Accuracy
+## Accuracy of text
 
 These are course notes, not a transcript.
 I try to discern and communicate his intended message,
@@ -10,6 +10,9 @@ The technical exposition is where
 I have rearranged and filled in missing parts
 for educational purposes.
 
+## Voice
+
+Try to match Alex's voice.
 
 ## Exercises
 
@@ -51,7 +54,7 @@ Titles of books and articles are referred to with quotes: "The Art of Computer P
 
 Only the first word of a heading should be capitalized.
 
-## Alex foontones
+## Alex footnotes
 
 Occassionally Alex will make comments which are interesting but not related
 to the lesson or directly applicable to the audience.
