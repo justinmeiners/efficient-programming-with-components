@@ -27,7 +27,7 @@ It's a mythical language. It was never implemented.
 But, many people at [CMU][cmu] got tenure because of it.
 It has some interesting ideas, including the idea of a generator.
 For those of you who know [Python][python], it is like an [iterator in Python][py-iterator].
-Barabra Liskov said, wouldn't it be nice to write:
+Barbara Liskov said, wouldn't it be nice to write:
 
     for x in thing
 
