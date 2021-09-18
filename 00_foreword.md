@@ -103,6 +103,11 @@ This is a non-commercial project.
 Most of the code comes from [Ryan Ernst's repo](https://github.com/rjernst),
 who attended the lectures.
 
+Special thanks to [Alastair Harrison][aharrison] and [Ryan Pendleton][ryanp] for help with editing.
+
+[aharrison]: https://github.com/aharrison24
+[ryanp]: https://github.com/rpendleton
+
 # FAQ
 
 **Why do we need these notes if we can watch the [videos][videos]?**
@@ -182,6 +187,3 @@ The technical exposition is where
 I have rearranged and filled in missing parts
 for educational purposes.
 
-Many of the links may seem unnecessary as they are a quick Google search away.
-I added those for convenience and historical purposes.
-References which are obvious now may be difficult to track down in the future.

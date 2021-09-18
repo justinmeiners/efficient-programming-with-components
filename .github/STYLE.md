@@ -1,3 +1,16 @@
+## Accuracy
+
+These are course notes, not a transcript.
+I try to discern and communicate his intended message,
+not necessarily make a historical record of the conversation.
+
+If Alex is sharing a strong opinion or giving a speech,
+it is likely an exact quote (minus grammar and filler words).
+The technical exposition is where 
+I have rearranged and filled in missing parts
+for educational purposes.
+
+
 ## Exercises
 
 When exercises have a solution later in the text,
@@ -12,6 +25,10 @@ Exercises may be solved in footnotes.
 When linking off to a page with more information, a footnote should be provided giving a brief explanation of the link.
 This does not apply when the link directly matches the text and the connection is obvious.
 For example, the name of a school or person's wikipedia page can usually be linked to directly.
+
+Many of the links may seem unnecessary as they are a quick Google search away.
+I added those for convenience and historical purposes.
+References which are obvious now may be difficult to track down in the future.
 
 ## Story
 
