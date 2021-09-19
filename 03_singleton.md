@@ -345,7 +345,7 @@ and goes with two other fundamental laws of thought [^laws-of-thought]:
 Computers do not obey such law. 
 There is a fundamental case which breaks and has consequences.
 
-**Exercise:** If you don't believe me, try to figure out a type which violates the law of identity[^identity-violation]. 
+**Exercise:** If you don't believe me, try to figure out a type which violates the law of identity (solved in chapter 6). 
 
 **The law of non-contradiction**: You cannot have a predicate `P` be true and `!P` be true at the same time.
 
@@ -365,8 +365,6 @@ There is deep stuff about equality[^constructivism].
     > Some indeed demand that even this shall be demonstrated, but this they do through want of education, for not to know of what things one should demand demonstration, and of what one should not, argues want of education.
     > For it is impossible that there should be demonstration of absolutely everything (there would be an infinite regress, so that there would still be no demonstration);
     > but if there are things of which one should not demand demonstration, these persons could not say what principle they maintain to be more self-evident than the present one. (Book 4)
-
-[^identity-violation]: The answer to this exercise can be found later, in chapter 6.
 
 [^constructivism]: There is a branch of logic
     called [intuitionism][intuitionism],
@@ -658,5 +656,3 @@ is false. Of course it handles implicit conversions, what else could it do?
 [overloading]: https://en.cppreference.com/w/cpp/language/overload_resolution
 [stat]: https://linux.die.net/man/2/stat
 [implicit-rules]: https://en.cppreference.com/w/cpp/language/implicit_conversion
-
-

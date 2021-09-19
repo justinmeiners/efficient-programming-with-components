@@ -431,7 +431,7 @@ and goes with two other fundamental laws of thought <sup id="fnref:8"><a href="#
 <p>Computers do not obey such law.
 There is a fundamental case which breaks and has consequences.</p>
 
-<p><strong>Exercise:</strong> If you don&rsquo;t believe me, try to figure out a type which violates the law of identity<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.</p>
+<p><strong>Exercise:</strong> If you don&rsquo;t believe me, try to figure out a type which violates the law of identity (solved in chapter 6).</p>
 
 <p><strong>The law of non-contradiction</strong>: You cannot have a predicate <code>P</code> be true and <code>!P</code> be true at the same time.</p>
 
@@ -440,7 +440,7 @@ There is a fundamental case which breaks and has consequences.</p>
 <p>Everybody from Plato all the way up to <a href="https://en.wikipedia.org/wiki/Ayn_Rand">Ayn Rand</a>, the greatest American mind (joke).
 Whatever her political views, even she, <a href="https://plato.stanford.edu/entries/ayn-rand/supplement.html#ExisIdenCons">supported</a> the law of identity.
 There is a lot to figure out.
-There is deep stuff about equality<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup>.</p>
+There is deep stuff about equality<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.</p>
 
 <a name="Why-can-27-t-the-compiler-generate--3d--3d--and--21--3d--3f-"></a>
 <h3>Why can&rsquo;t the compiler generate == and !=?</h3>
@@ -465,7 +465,7 @@ It&rsquo;s a sensible rule a compiler could do.</p>
 But, I asked probably the second best person on the subject, <a href="https://en.wikipedia.org/wiki/Stephen_C._Johnson">Steve Johnson</a>, because
 he actually implemented all these assignments for structures and things like that.
 Steve told me,  &ldquo;it was very hard because the bits in the padding might not be equal.
-If you compare bit by bit things which have equal members, but not equal bits in the padding, it will not work&rdquo;<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup>.</p>
+If you compare bit by bit things which have equal members, but not equal bits in the padding, it will not work&rdquo;<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup>.</p>
 
 <p>But, why should you compare bit by bit?
 You should do recursive member by member as we discovered.
@@ -552,7 +552,7 @@ Because we implemented all these operators,
 These are requirements on the type <code>T</code>, otherwise known
 as <strong>concepts</strong>.</p>
 
-<p>The C++ language doesn&rsquo;t have support for concepts at this time<sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup>.
+<p>The C++ language doesn&rsquo;t have support for concepts at this time<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup>.
 So, we use comments to communicate them.</p>
 
 <p>In <code>singleton</code> we add a comment to describe this:</p>
@@ -750,8 +750,6 @@ Some indeed demand that even this shall be demonstrated, but this they do throug
 For it is impossible that there should be demonstration of absolutely everything (there would be an infinite regress, so that there would still be no demonstration);
 but if there are things of which one should not demand demonstration, these persons could not say what principle they maintain to be more self-evident than the present one. (Book 4)</p></blockquote><a href="#fnref:8" rev="footnote">&#8617;</a></li>
 <li id="fn:9">
-The answer to this exercise can be found later, in chapter 6.<a href="#fnref:9" rev="footnote">&#8617;</a></li>
-<li id="fn:10">
 There is a branch of logic
 called <a href="https://en.wikipedia.org/wiki/Intuitionistic_logic">intuitionism</a>,
 closely associated with <a href="https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_mathematics)">constructivism</a> which
@@ -759,8 +757,8 @@ denies the Law of excluded middle.
 Specifically, it takes issue with the idea that <code>!(!P)</code>, is the same as <code>P</code>.
 Modern <a href="https://plato.stanford.edu/entries/dialetheism/">philosophers</a> have even questioned the law of non-contradiction.
 But, I know of no serious mathematical or philosophical
-movements denying the law of identity.<a href="#fnref:10" rev="footnote">&#8617;</a></li>
-<li id="fn:11">
+movements denying the law of identity.<a href="#fnref:9" rev="footnote">&#8617;</a></li>
+<li id="fn:10">
 <p>Padding is a technical fact about how C prepares data to be stored in memory.
 The compiler is not only concerned with memory usage,
 but also how the CPU will address that memory.
@@ -785,14 +783,14 @@ r.number = 20;
 
 <p>The invisible padding bits will not be modified,
 and so their values are undefined.
-You can read more <a href="https://en.cppreference.com/w/c/language/object">here</a>.</p><a href="#fnref:11" rev="footnote">&#8617;</a></li>
-<li id="fn:12">
+You can read more <a href="https://en.cppreference.com/w/c/language/object">here</a>.</p><a href="#fnref:10" rev="footnote">&#8617;</a></li>
+<li id="fn:11">
 <a href="https://en.wikipedia.org/wiki/Concepts_(C%2B%2B)">Concepts</a> as a language feature went through many
 iterations and delays before finally being included in the C++20 standard.
 When the course was given, a group at A9 (including Alex) was working to get them included in C++14.
 You can read their <a href="papers/concepts_proposal.pdf">proposal</a>.
 Bjarne actually visits A9 to give a guest lecture on concepts as part of the course,
-however this is not included in the notes as it is a departure from the rest of the material.<a href="#fnref:12" rev="footnote">&#8617;</a></li>
+however this is not included in the notes as it is a departure from the rest of the material.<a href="#fnref:11" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 
