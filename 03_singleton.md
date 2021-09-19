@@ -344,7 +344,8 @@ and goes with two other fundamental laws of thought [^laws-of-thought]:
 
 Computers do not obey such law. 
 There is a fundamental case which breaks and has consequences.
-**Exercise:** If you don't believe me, try to figure out a type which violates the law of identity. 
+
+**Exercise:** If you don't believe me, try to figure out a type which violates the law of identity (solved in chapter 6). 
 
 **The law of non-contradiction**: You cannot have a predicate `P` be true and `!P` be true at the same time.
 
@@ -655,5 +656,3 @@ is false. Of course it handles implicit conversions, what else could it do?
 [overloading]: https://en.cppreference.com/w/cpp/language/overload_resolution
 [stat]: https://linux.die.net/man/2/stat
 [implicit-rules]: https://en.cppreference.com/w/cpp/language/implicit_conversion
-
-
