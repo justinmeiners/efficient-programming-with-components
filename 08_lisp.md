@@ -22,8 +22,9 @@ We don't want garbage collection for
 all the algorithms we want to use.
 So we are going to add a 4th operation:
 
-4. `free`: manually release/free a pair.
-
+<ol start="4">
+<li><code>free</code>: manually release/free a pair.</li>
+</ol>
 
 What we want to do is muck around with lists.
 Meaning you can insert items in the middle, change pointers, connect this and that.
@@ -389,5 +390,3 @@ simply by attaching the end of our list to the free list.
 ## Code
 
 - [list_pool.h](code/list_pool.h)
-
-
