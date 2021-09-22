@@ -133,9 +133,9 @@ td { vertical-align: top; }
 <a name="Lists-in-lisp-and-Scheme"></a>
 <h2>Lists in lisp and Scheme</h2>
 
-<p>A long time ago there was a programming language called <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp</a><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>
+<p>A long time ago there was a programming language called <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp</a>
 or for you younger folks <a href="https://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</a>.
-Scheme might have been wrong, but it was great.
+Scheme might have been wrong, but it was great<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
 The whole language centers around very simple <a href="https://en.wikipedia.org/wiki/Linked_list">linked lists</a>
  which are based on three fundamental
 operations<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>:</p>
@@ -213,7 +213,7 @@ same pool. Which actually nobody does, but everybody pays.</p>
 with many outstanding lists inside.
 Internally we will use one vector to implement many, many, lists.
 These lists are not containers.
-A container guarantees that when a container is gone, the values are gone too.
+A container guarantees that when the container is gone, the values are gone too.
 For these lists there is no guarantee like that.
 For example, you could split this list
 into two by setting a <code>cdr</code>.
@@ -234,19 +234,38 @@ template&lt;typename T, typename N&gt;
 // T is semi-regular.
 // N is integral
 class list_pool {
-    // ...
+    typedef N list_type;
+
+    struct node_t {
+      T value;
+      N next;
+    };
+
+    std::vector&lt;node_t&gt; pool;
+    list_type free_list;
 };
+</code></pre>
+
+<p>What should <code>N</code> be. Why not <code>size_t</code>?
+Because it&rsquo;s 64 bits.
+For our application we could probably
+use <code>uint16</code> so our whole node fits in 32 bits.
+But, we should define a default.</p>
+
+<pre><code>typename N = size_t;
 </code></pre>
 
 <p>Now we are going to implement <code>cons</code>, <code>car</code>, <code>cdr</code>, and <code>free</code> as member
 functions of <code>list_pool</code>, but we need appropriate names for a younger generation.</p>
 
-<a name="Car"></a>
-<h3>Car</h3>
+<a name="Value--28-car-29-"></a>
+<h3>Value (car)</h3>
 
 <p>We will rename <code>car</code> to <code>value</code>.
-Actually, it won&rsquo;t just be <code>car</code>, it will
-also act as <a href="http://clhs.lisp.se/Body/f_rplaca.htm"><code>rplaca</code></a> (set car).</p>
+Note that because we can return <code>value</code> by reference,
+it can be both read and modified.
+So, it won&rsquo;t just be <code>car</code>, it will
+also act as <a href="http://clhs.lisp.se/Body/f_rplaca.htm"><code>rplaca</code></a><sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.</p>
 
 <pre><code>T&amp; value(list_type x) {
   return node(x).value;
@@ -257,10 +276,11 @@ const T&amp; value(list_type x) const {
 }
 </code></pre>
 
-<a name="Cdr"></a>
-<h3>Cdr</h3>
+<a name="Next--28-cdr-29-"></a>
+<h3>Next (cdr)</h3>
 
-<p>Similarly, we want <code>cdr</code> and <a href="http://clhs.lisp.se/Body/f_rplaca.htm"><code>rplacd</code></a>.</p>
+<p>Let&rsquo;s rename <code>cdr</code> to <code>next</code>.
+Because of read and write it also acts as <a href="http://clhs.lisp.se/Body/f_rplaca.htm"><code>rplacd</code></a>.</p>
 
 <pre><code>list_type&amp; next(list_type x) {
   return node(x).next;
@@ -275,8 +295,7 @@ const list_type&amp; next(list_type x) const {
 <h3>Free</h3>
 
 <p>Now let&rsquo;s write <code>free</code>.
-We can make it somewhat more useful by returning something other than void.
-Return the next, otherwise the user will have to save it before freeing.</p>
+This operation appends a pair to list making it available for reuse in another allocation.</p>
 
 <pre><code>list_type free(list_type x) {
   list_type cdr = next(x);
@@ -286,11 +305,12 @@ Return the next, otherwise the user will have to save it before freeing.</p>
 }
 </code></pre>
 
-<p>This is the same as <code>(setf (cdr x) free-list)</code> in Lisp or <code>(set-cdr! x free-list)</code>
-in Scheme.</p>
+<p><sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>
+We make it somewhat more useful by returning something other than void.
+Return the <code>next</code>, otherwise the user will have to save it before freeing.</p>
 
-<a name="Cons"></a>
-<h3>Cons</h3>
+<a name="Allocate--28-cons-29-"></a>
+<h3>Allocate (cons)</h3>
 
 <p>Now we will write <code>cons</code>, it takes two arguments.
 Where do nodes come from?
@@ -313,7 +333,7 @@ otherwise we make a new node from the pool.</p>
 }
 </code></pre>
 
-<p>So we need to write the public function <code>is_empty</code> and the private one <code>new_node</code>.</p>
+<p>So we need to write the public function <code>is_empty</code>.</p>
 
 <pre><code>bool is_empty(list_type x) const {
   return x == empty();
@@ -332,23 +352,14 @@ We will just index everything at <code>1</code>, so we don&rsquo;t lose
 the first item.
 If you use <code>-1</code> then our index type must be signed.</p>
 
-<pre><code>typedef N list_type;
-
-list_pool() {
+<pre><code>list_pool() {
   free_list = empty();
 }
 </code></pre>
 
-<p>Let&rsquo;s write the class and private stuff now:</p>
+<p>Now we write a few private node functions including <code>new_node</code>.</p>
 
-<pre><code>struct node_t {
-  T value;
-  N next;
-};
-
-std::vector&lt;node_t&gt; pool;
-
-node_t&amp; node(list_type x) {
+<pre><code>node_t&amp; node(list_type x) {
   return pool[x - 1];
 }
 
@@ -366,16 +377,6 @@ list_type new_node() {
 or all of them to be non-<code>const</code>.
 Typically <code>const</code> is just for handing someone something
 to read.</p>
-
-<p>What should <code>N</code> be. Why not <code>size_t</code>?
-Because it&rsquo;s 64 bits.
-For our application we could probably
-use <code>uint16</code> so our whole node
-fits in 32 bits.
-But, we should define a default.</p>
-
-<pre><code>typename N = size_t;
-</code></pre>
 
 <a name="Free-list-helper"></a>
 <h3>Free list helper</h3>
@@ -456,21 +457,28 @@ simply by attaching the end of our list to the free list.</p>
 <ol>
 <li id="fn:1">
 Alex: I&rsquo;m talking to an apparently non-existent Lisp community
-because MIT is just a <a href="http://lambda-the-ultimate.org/node/5335">Python school now</a>.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+because MIT is just a Python school now
+(see <a href="http://lambda-the-ultimate.org/node/5335">&ldquo;Programming by poking: why MIT stopped teaching SICP&rdquo;</a>).<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
 <p>Alex calls these &ldquo;lists&rdquo; without much explanation.
-In Lisp all lists are built out of these pairs.
-The <code>car</code> (first element) is the value of the list at this point.
-The <code>cdr</code> (second element) points to another pair, or <code>nil</code>.
+In Lisp all lists are built out of pairs.
+In each pair, the first element (called the <code>car</code>) is the value of the list at this point.
+The second element (called the <code>cdr</code>) is a pointer to another pair, or <code>nil</code>.
 <code>nil</code> terminates the list.</p>
 
-<p>For example the list <code>(1 2 3)</code> is represented by</p>
+<p>For example,
+if we write a pair as <code>(car . cdr)</code> with <code>.</code> deliminating the <code>car</code> and <code>cdr</code>,
+the list <code>1 2 3</code> can be constructed from three pairs:</p>
 
-<pre><code>(1, -)---&gt; (2, -)---&gt;(3, -)--&gt;nil
+<pre><code>(1 . (2 . (3 . nil)))
 </code></pre>
 
 <p>See <a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-15.html#%_sec_2.2">chapter 2.2</a> of &ldquo;Structure and Interpretation of Computer Programs&rdquo;
-to learn more.</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
+for a thorough introduction to Lisp lists.</p>
+
+<p><code>car</code> and <code>cdr</code> are commonly called <code>head</code> and <code>tail</code> in other functional languages.
+Their names are historical artifacts of the hardware that early Lisp implementations used
+(see <a href="https://en.wikipedia.org/wiki/CAR_and_CDR">&ldquo;CAR and CDR Wikipedia page&rdquo;</a>).</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
 All kinds of problems can arise from two threads modifying the same resource.
 When code executes concurrently, it&rsquo;s much more difficult to reason about control flow.
@@ -536,6 +544,15 @@ The outer list starts with the symbol <code>+</code>, etc.</p>
 <p>The complexity of allocating and managing memory
 for such structures was one of the motivations
 for inventing garbage collection.</p><a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<li id="fn:7">
+<code>rplaca</code> and <code>rplacd</code> are unfriendly abbrevations of
+&ldquo;replace car&rdquo; and &ldquo;replace cdr&rdquo; (or historically as &ldquo;replace address&rdquo; and &ldquo;replace decrement&rdquo;. See &ldquo;Lisp 1.5 Programmer&rsquo;s Manual&rdquo;).
+They are low-level functions for manipulating pairs in lists.
+In Scheme they correspond to <code>set-car!</code> and <code>set-cdr!</code>.
+In Common Lisp one typically uses the higher-level macro <a href="http://www.lispworks.com/documentation/lw50/CLHS/Body/m_setf_.htm"><code>setf</code></a> for the same purpose.<a href="#fnref:7" rev="footnote">&#8617;</a></li>
+<li id="fn:8">
+The assignment in this code is the same as <code>(setf (cdr x) free-list)</code> in Common Lisp,
+or <code>(set-cdr! x free-list)</code> in Scheme.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 
