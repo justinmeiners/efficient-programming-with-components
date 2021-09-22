@@ -170,8 +170,8 @@ How are we going to do that?
 You want to avoid memory fragmentation.
 If you have lists
 with nodes spread all over  memory, every time
-you access one, it is a cache mich.
-Modern computers caches do not really help if you do long jumps.
+you access one, it is a cache miss.
+Modern computer caches do not really help if you do long jumps.
 We have lots of nodes,
 but we want them to live in a little buffer even if we keep generating them back and forth.
 If they reside in a small space we will never get a cache miss.</p>
@@ -204,7 +204,7 @@ They violated a fundamental
 principle which Bjarne insists on.
 <em>People should not pay for things they do not use</em>.
 Everybody pays for the ability of multiple threads to do list allocations out of the
-same pool, which actually nobody does but everybody pays.</p>
+same pool. Which actually nobody does, but everybody pays.</p>
 
 <a name="List-pool"></a>
 <h2>List pool</h2>
@@ -213,20 +213,19 @@ same pool, which actually nobody does but everybody pays.</p>
 with many outstanding lists inside.
 Internally we will use one vector to implement many, many, lists.
 These lists are not containers.
-A container  guarantees that when a container is gone, the values are gone too.
+A container guarantees that when a container is gone, the values are gone too.
 For these lists there is no guarantee like that.
 For example, you could split this list
 into two by setting a <code>cdr</code>.
 There is no ownership and this is why I recommend not viewing them as containers.
-STL containers are wonderful, when you want them, but that&rsquo;s not the case.</p>
+STL containers are wonderful when you want them, but that&rsquo;s not the case here.</p>
 
 <p>We&rsquo;re trying to get as close to Lisp as we can without building garbage
 collection<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>. If you want to build garbage collection you can extend
 this thing and build garbage collection too, but garbage collection
 is overrated.</p>
 
-<p>Implement it as a class,
-we will have two types.
+<p>We will implement <code>list_pool</code> as a class, with two types as template arguments.
 <code>T</code> will be the values we want to store,
 and <code>N</code> will be an index type.</p>
 
@@ -239,8 +238,8 @@ class list_pool {
 };
 </code></pre>
 
-<p>Now we are going to implement <code>cons</code>, <code>car</code>, <code>cdr</code>, and <code>free</code>, but
-we need appropriate names for a younger generation.</p>
+<p>Now we are going to implement <code>cons</code>, <code>car</code>, <code>cdr</code>, and <code>free</code> as member
+functions of <code>list_pool</code>, but we need appropriate names for a younger generation.</p>
 
 <a name="Car"></a>
 <h3>Car</h3>
@@ -253,8 +252,8 @@ also act as <a href="http://clhs.lisp.se/Body/f_rplaca.htm"><code>rplaca</code><
   return node(x).value;
 }
 
-const T&amp; value(list_type x) cons {
-  reutrn node(x).value;
+const T&amp; value(list_type x) const {
+  return node(x).value;
 }
 </code></pre>
 
@@ -296,7 +295,7 @@ in Scheme.</p>
 <p>Now we will write <code>cons</code>, it takes two arguments.
 Where do nodes come from?
 The free list, if it has room,
-otherwise we made a new node from the pool.</p>
+otherwise we make a new node from the pool.</p>
 
 <pre><code>list_type allocate(const T&amp; val, list_type tail) {
   list_type new_list = free_list;
@@ -324,7 +323,7 @@ otherwise we made a new node from the pool.</p>
 <p>Dual to this function, is one which gives you the <code>nil</code> or empty list.</p>
 
 <pre><code>list_type empty() {
-  return listp_type(0);
+  return list_type(0);
 }
 </code></pre>
 
@@ -347,10 +346,10 @@ list_pool() {
   N next;
 };
 
-std::vector&lt;node_t&gt; pool.
+std::vector&lt;node_t&gt; pool;
 
 node_t&amp; node(list_type x) {
-  reutrn pool[x - 1];
+  return pool[x - 1];
 }
 
 const node_t&amp; node(list_type x) const {
@@ -375,7 +374,7 @@ use <code>uint16</code> so our whole node
 fits in 32 bits.
 But, we should define a default.</p>
 
-<pre><code>typename N = size_t
+<pre><code>typename N = size_t;
 </code></pre>
 
 <a name="Free-list-helper"></a>
@@ -383,7 +382,7 @@ But, we should define a default.</p>
 
 <p>There is a simple rule to distinguish when
 you should write a method/member function
-and what to just make an outside function.
+and when to just make an outside function (free function).
 Implement the simplest possible thing.
 If you can do it outside, do it.</p>
 
@@ -449,6 +448,7 @@ simply by attaching the end of our list to the free list.</p>
 
 <ul>
 <li><a href="code/list_pool.h">list_pool.h</a></li>
+<li><a href="code/list_pool_iterator.h">list_pool_iterator.h</a> (included by <code>list_pool.h</code>, but not discussed until Chapter 9)</li>
 </ul>
 
 <div class="footnotes">
@@ -458,11 +458,11 @@ simply by attaching the end of our list to the free list.</p>
 Alex: I&rsquo;m talking to an apparently non-existent Lisp community
 because MIT is just a <a href="http://lambda-the-ultimate.org/node/5335">Python school now</a>.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
-<p>Alex call&rsquo;s these &ldquo;lists&rdquo; without much explanation.
+<p>Alex calls these &ldquo;lists&rdquo; without much explanation.
 In Lisp all lists are built out of these pairs.
 The <code>car</code> (first element) is the value of the list at this point.
 The <code>cdr</code> (second element) points to another pair, or <code>nil</code>.
-<code>nil</code> terminations the list.</p>
+<code>nil</code> terminates the list.</p>
 
 <p>For example the list <code>(1 2 3)</code> is represented by</p>
 
@@ -475,11 +475,11 @@ to learn more.</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
 All kinds of problems can arise from two threads modifying the same resource.
 When code executes concurrently, it&rsquo;s much more difficult to reason about control flow.
 One line does not immediately follow the other,
-so things can be overwritten or messed up in betwween statements.
+so things can be overwritten or messed up in between statements.
 Another problem is called a <a href="https://en.wikipedia.org/wiki/Race_condition">race condition</a>.
 This is when a piece of code relies on one thread doing a task before another.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
-<p><a href="https://en.wikipedia.org/wiki/Lock_(computer_science)">Lock&rsquo;s</a> (often called mutex in programming)
+<p><a href="https://en.wikipedia.org/wiki/Lock_(computer_science)">Locks</a> (often called mutexes in programming)
 are a mechanism for controlling access to a shared resource.
 To prevent multiple threads from running over each other,
 a lock ensures that only one thread can access or modify
@@ -490,7 +490,7 @@ Locks tend to be slow because they pause threads until they are safe to proceed.
 In addition they usually communicate with the kernel.</p>
 
 <p>Many programming frameworks in the late 90s and early 2000s (especially Java and C#)
-decided that the way to support multithreading programming was to protect
+decided that the way to support multithreaded programming was to protect
 every resource with locks,
 as if programs should share class instances
 across threads haphazardly.
@@ -498,7 +498,7 @@ This trend is reflected in Alex&rsquo;s story.</p>
 
 <p>Since then, the error prone nature of concurrency and parallelism
 has encouraged more disciplined design and tools.
-One approach, is to organize the program architecture around a few specific threads running
+One approach is to organize the program architecture around a few specific threads running
 for the duration of the program, with carefully controlled communication
 protocols.
 Another is to spawn threads only to compute pure functions,
@@ -518,7 +518,7 @@ ensure thread safety with locks.<a href="#fnref:5" rev="footnote">&#8617;</a></l
 <p>A significant difference between Alex&rsquo;s lists and those
 in Lisp is that they are homogenous,
 they can only store one type of value.
-In Lisp, hetrogenous lists are everywhere,
+In Lisp, heterogeneous lists are everywhere,
 especially nested lists, which are what
 allow code to be written in a list format.</p>
 

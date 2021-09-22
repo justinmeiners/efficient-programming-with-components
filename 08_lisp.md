@@ -35,18 +35,18 @@ How are we going to do that?
 You want to avoid memory fragmentation.
 If you have lists
 with nodes spread all over  memory, every time
-you access one, it is a cache mich.
-Modern computers caches do not really help if you do long jumps.
+you access one, it is a cache miss.
+Modern computer caches do not really help if you do long jumps.
 We have lots of nodes,
 but we want them to live in a little buffer even if we keep generating them back and forth.
 If they reside in a small space we will never get a cache miss.
 
 
-[^sicp]: Alex call's these "lists" without much explanation.
+[^sicp]: Alex calls these "lists" without much explanation.
     In Lisp all lists are built out of these pairs.
     The `car` (first element) is the value of the list at this point.
     The `cdr` (second element) points to another pair, or `nil`.
-    `nil` terminations the list.
+    `nil` terminates the list.
 
     For example the list `(1 2 3)` is represented by
 
@@ -94,7 +94,7 @@ They violated a fundamental
 principle which Bjarne insists on.
 *People should not pay for things they do not use*.
 Everybody pays for the ability of multiple threads to do list allocations out of the
-same pool, which actually nobody does but everybody pays.
+same pool. Which actually nobody does, but everybody pays.
 
 [pj-plauger]: https://en.wikipedia.org/wiki/P._J._Plauger
 
@@ -106,11 +106,11 @@ same pool, which actually nobody does but everybody pays.
 [^race]: All kinds of problems can arise from two threads modifying the same resource.
     When code executes concurrently, it's much more difficult to reason about control flow.
     One line does not immediately follow the other,
-    so things can be overwritten or messed up in betwween statements.
+    so things can be overwritten or messed up in between statements.
     Another problem is called a [race condition][race].
     This is when a piece of code relies on one thread doing a task before another.
 
-[^lock]: [Lock's][lock] (often called mutex in programming)
+[^lock]: [Locks][lock] (often called mutexes in programming)
     are a mechanism for controlling access to a shared resource.
     To prevent multiple threads from running over each other,
     a lock ensures that only one thread can access or modify
@@ -121,7 +121,7 @@ same pool, which actually nobody does but everybody pays.
     In addition they usually communicate with the kernel.
 
     Many programming frameworks in the late 90s and early 2000s (especially Java and C#)
-    decided that the way to support multithreading programming was to protect
+    decided that the way to support multithreaded programming was to protect
     every resource with locks,
     as if programs should share class instances
     across threads haphazardly.
@@ -129,7 +129,7 @@ same pool, which actually nobody does but everybody pays.
 
     Since then, the error prone nature of concurrency and parallelism
     has encouraged more disciplined design and tools.
-    One approach, is to organize the program architecture around a few specific threads running
+    One approach is to organize the program architecture around a few specific threads running
     for the duration of the program, with carefully controlled communication
     protocols.
     Another is to spawn threads only to compute pure functions,
@@ -151,12 +151,12 @@ A list pool is an object
 with many outstanding lists inside.
 Internally we will use one vector to implement many, many, lists.
 These lists are not containers.
-A container  guarantees that when a container is gone, the values are gone too.
+A container guarantees that when the container is gone, the values are gone too.
 For these lists there is no guarantee like that.
 For example, you could split this list
 into two by setting a `cdr`.
 There is no ownership and this is why I recommend not viewing them as containers.
-STL containers are wonderful, when you want them, but that's not the case.
+STL containers are wonderful when you want them, but that's not the case here.
 
 We're trying to get as close to Lisp as we can without building garbage
 collection[^difference]. If you want to build garbage collection you can extend
@@ -167,7 +167,7 @@ is overrated.
 [^difference]: A significant difference between Alex's lists and those
     in Lisp is that they are homogenous,
     they can only store one type of value.
-    In Lisp, hetrogenous lists are everywhere,
+    In Lisp, heterogeneous lists are everywhere,
     especially nested lists, which are what
     allow code to be written in a list format. 
 
@@ -186,8 +186,7 @@ is overrated.
     for inventing garbage collection.
 
 
-Implement it as a class,
-we will have two types.
+We will implement `list_pool` as a class, with two types as template arguments.
 `T` will be the values we want to store,
 and `N` will be an index type.
 
@@ -199,8 +198,8 @@ and `N` will be an index type.
         // ...
     };
 
-Now we are going to implement `cons`, `car`, `cdr`, and `free`, but
-we need appropriate names for a younger generation.
+Now we are going to implement `cons`, `car`, `cdr`, and `free` as member
+functions of `list_pool`, but we need appropriate names for a younger generation.
 
 ### Car
 
@@ -212,8 +211,8 @@ also act as [`rplaca`][set-car] (set car).
       return node(x).value;
     }
 
-    const T& value(list_type x) cons {
-      reutrn node(x).value;
+    const T& value(list_type x) const {
+      return node(x).value;
     }
 
 ### Cdr
@@ -249,7 +248,7 @@ in Scheme.
 Now we will write `cons`, it takes two arguments.
 Where do nodes come from?
 The free list, if it has room,
-otherwise we made a new node from the pool.
+otherwise we make a new node from the pool.
 
     list_type allocate(const T& val, list_type tail) {
       list_type new_list = free_list;
@@ -275,7 +274,7 @@ So we need to write the public function `is_empty` and the private one `new_node
 Dual to this function, is one which gives you the `nil` or empty list.
 
     list_type empty() {
-      return listp_type(0);
+      return list_type(0);
     }
 
 You might think, what about the `0`th item in the pool?
@@ -296,10 +295,10 @@ Let's write the class and private stuff now:
       N next;
     };
 
-    std::vector<node_t> pool.
+    std::vector<node_t> pool;
 
     node_t& node(list_type x) {
-      reutrn pool[x - 1];
+      return pool[x - 1];
     }
 
     const node_t& node(list_type x) const {
@@ -323,13 +322,13 @@ use `uint16` so our whole node
 fits in 32 bits.
 But, we should define a default.
 
-    typename N = size_t
+    typename N = size_t;
 
 ### Free list helper
 
 There is a simple rule to distinguish when
 you should write a method/member function
-and what to just make an outside function.
+and when to just make an outside function (free function).
 Implement the simplest possible thing.
 If you can do it outside, do it.
 
@@ -389,5 +388,4 @@ simply by attaching the end of our list to the free list.
 ## Code
 
 - [list_pool.h](code/list_pool.h)
-
-
+- [list_pool_iterator.h](code/list_pool_iterator.h) (included by `list_pool.h`, but not discussed until Chapter 9)
