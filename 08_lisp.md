@@ -58,7 +58,7 @@ If they reside in a small space we will never get a cache miss.
 
     `car` and `cdr` are commonly called `head` and `tail` in other functional languages.
     Their names are historical artifacts of the hardware that early Lisp implementations used
-    (see ["CAR and CDR Wikipedia page"][car-and-cdr]).
+    (see ["CAR and CDR Wikipedia page"][car-and-cdr] or "Lisp 1.5 Programmer's Manual").
 
 [^community]: Alex: I'm talking to an apparently non-existent Lisp community 
     because MIT is just a Python school now
@@ -355,7 +355,7 @@ not just a node.
 
 
 [^rplaca-explanation]: `rplaca` and `rplacd` are unfriendly abbrevations of
-    "replace car" and "replace cdr" (or historically as "replace address" and "replace decrement". See "Lisp 1.5 Programmer's Manual").
+    "replace car" and "replace cdr" (see "Lisp 1.5 Programmer's Manual").
     They are low-level functions for manipulating pairs in lists.
     In Scheme they correspond to `set-car!` and `set-cdr!`.
     In Common Lisp one typically uses the higher-level macro [`setf`][setf] for the same purpose.

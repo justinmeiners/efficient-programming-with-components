@@ -478,7 +478,7 @@ for a thorough introduction to Lisp lists.</p>
 
 <p><code>car</code> and <code>cdr</code> are commonly called <code>head</code> and <code>tail</code> in other functional languages.
 Their names are historical artifacts of the hardware that early Lisp implementations used
-(see <a href="https://en.wikipedia.org/wiki/CAR_and_CDR">&ldquo;CAR and CDR Wikipedia page&rdquo;</a>).</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
+(see <a href="https://en.wikipedia.org/wiki/CAR_and_CDR">&ldquo;CAR and CDR Wikipedia page&rdquo;</a> or &ldquo;Lisp 1.5 Programmer&rsquo;s Manual&rdquo;).</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
 All kinds of problems can arise from two threads modifying the same resource.
 When code executes concurrently, it&rsquo;s much more difficult to reason about control flow.
@@ -546,7 +546,7 @@ for such structures was one of the motivations
 for inventing garbage collection.</p><a href="#fnref:6" rev="footnote">&#8617;</a></li>
 <li id="fn:7">
 <code>rplaca</code> and <code>rplacd</code> are unfriendly abbrevations of
-&ldquo;replace car&rdquo; and &ldquo;replace cdr&rdquo; (or historically as &ldquo;replace address&rdquo; and &ldquo;replace decrement&rdquo;. See &ldquo;Lisp 1.5 Programmer&rsquo;s Manual&rdquo;).
+&ldquo;replace car&rdquo; and &ldquo;replace cdr&rdquo; (see &ldquo;Lisp 1.5 Programmer&rsquo;s Manual&rdquo;).
 They are low-level functions for manipulating pairs in lists.
 In Scheme they correspond to <code>set-car!</code> and <code>set-cdr!</code>.
 In Common Lisp one typically uses the higher-level macro <a href="http://www.lispworks.com/documentation/lw50/CLHS/Body/m_setf_.htm"><code>setf</code></a> for the same purpose.<a href="#fnref:7" rev="footnote">&#8617;</a></li>
