@@ -211,9 +211,11 @@ and `N` will be an index type.
 
         std::vector<node_t> pool;
         list_type free_list;
+
+        // ...
     };
 
-What should `N` be. Why not `size_t`?
+What should `N` be? Why not `size_t`?
 Because it's 64 bits.
 For our application we could probably
 use `uint16` so our whole node fits in 32 bits.
@@ -259,7 +261,8 @@ Because of read and write it also acts as [`rplacd`][rplacd].
 ### Free
 
 Now let's write `free`.
-This operation appends a pair to list making it available for reuse in another allocation.
+The pool maintains a list of nodes which are available for reuse.
+This operation appends a node to the head of this list[^free-in-lisp].
 
     list_type free(list_type x) {
       list_type cdr = next(x);
@@ -268,9 +271,8 @@ This operation appends a pair to list making it available for reuse in another a
       return cdr;
     }
 
-[^free-in-lisp]
-We make it somewhat more useful by returning something other than void.
-Return the `next`, otherwise the user will have to save it before freeing.
+We make it somewhat more useful by returning `next(x)` instead of void.
+If it was not returned, the user would have to save it before freeing.
 
 ### Allocate (cons)
 

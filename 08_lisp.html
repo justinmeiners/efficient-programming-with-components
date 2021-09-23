@@ -243,10 +243,12 @@ class list_pool {
 
     std::vector&lt;node_t&gt; pool;
     list_type free_list;
+
+    // ...
 };
 </code></pre>
 
-<p>What should <code>N</code> be. Why not <code>size_t</code>?
+<p>What should <code>N</code> be? Why not <code>size_t</code>?
 Because it&rsquo;s 64 bits.
 For our application we could probably
 use <code>uint16</code> so our whole node fits in 32 bits.
@@ -295,7 +297,8 @@ const list_type&amp; next(list_type x) const {
 <h3>Free</h3>
 
 <p>Now let&rsquo;s write <code>free</code>.
-This operation appends a pair to list making it available for reuse in another allocation.</p>
+The pool maintains a list of nodes which are available for reuse.
+This operation appends a node to the head of this list<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.</p>
 
 <pre><code>list_type free(list_type x) {
   list_type cdr = next(x);
@@ -305,9 +308,8 @@ This operation appends a pair to list making it available for reuse in another a
 }
 </code></pre>
 
-<p><sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>
-We make it somewhat more useful by returning something other than void.
-Return the <code>next</code>, otherwise the user will have to save it before freeing.</p>
+<p>We make it somewhat more useful by returning <code>next(x)</code> instead of void.
+If it was not returned, the user would have to save it before freeing.</p>
 
 <a name="Allocate--28-cons-29-"></a>
 <h3>Allocate (cons)</h3>
