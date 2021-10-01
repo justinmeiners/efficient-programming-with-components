@@ -122,41 +122,48 @@ Let's start with the primary:
     range of a given iterator.
 
 3. `iterator_category`:
-    Once again this is a general notion, not just C++.
-    There are `ForwardIterators`, `RandomAccessIterators`,
-    `InputIterators`, etc.
-    They are different theory of iterators.
+    Once again we need to distinguish between how we type this in C++ and what
+    the notion behind it is.
+    The notion here is that there are different categories, or theories,
+    of iterators: `ForwardIterators`, `RandomAccessIterators`,
+    `InputIterators`, etc...
 
-    In C++ (without concepts) we use tag types.
-    Every iterator uses a tag type to signify what theory
-    it supports.
-    The tag lets you do compile type dispatch.
+    In C++ (without concepts) we use tag types to designate the iterator categories.
+    Every iterator uses a tag type to signify which theory it supports.
+    The tag lets you do compile time dispatch[^compile-time-dispatch].
 
-    What category is this iterator?
-    In the list pool, our iterator is a `ForwardIterator`.
-    Because, there is no way in a singly linked list
-    to go backward.
+    What category is the iterator for `list_pool` from last chapter?
+    We need `ForwardIterator`, because there is no way in a singly linked list
+    to go backwards.
 
-Let's define these types in the `list_pool`
-from last time.
+Let's define these types in the `list_pool` iterator.
     
     #include <iterator>
 
     // class list_pool {
     // ...
 
-    struct iterator {
-      typedef list_pool::value_type value_type;
-      typedef list_pool::list_type difference_type;
-      typedef std::forward_iterator_tag iterator_category;
-    };
+         struct iterator {
+           typedef list_pool::value_type value_type;
+           typedef list_pool::list_type difference_type;
+           typedef std::forward_iterator_tag iterator_category;
+         };
 
     // };
 
 
+[^compile-time-dispatch]: Some algorithms can be implemented more efficiently for certain
+    iterator categories. For example [`std::distance`][std-distance] can be
+    implemented as a constant time algorithm for `RandomAccessIterators` but
+    only a linear time algorithm for other iterator categories. The
+    `iterator_category` tag allows the appropriate algorithm to be selected at
+    compile time. This technique is known as [tag disptach][tag-dispatch].
+
 [duck]: https://en.wikipedia.org/wiki/Duck_typing
 [ptrdiff]: https://en.cppreference.com/w/c/types/ptrdiff_t
 [cpp-iterator-traits]: https://en.cppreference.com/w/cpp/iterator/iterator_traits
+[std-distance]: https://en.cppreference.com/w/cpp/iterator/distance
+[tag-dispatch]: https://quuxplusone.github.io/blog/2021/06/07/tag-dispatch-and-concept-overloading
 
 ### Iterator reference types
 

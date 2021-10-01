@@ -237,36 +237,34 @@ Let&rsquo;s start with the primary:</p>
  It is an integral type large enough to encode any valid
  range of a given iterator.</p></li>
 <li><p><code>iterator_category</code>:
- Once again this is a general notion, not just C++.
- There are <code>ForwardIterators</code>, <code>RandomAccessIterators</code>,
- <code>InputIterators</code>, etc.
- They are different theory of iterators.</p>
+ Once again we need to distinguish between how we type this in C++ and what
+ the notion behind it is.
+ The notion here is that there are different categories, or theories,
+ of iterators: <code>ForwardIterators</code>, <code>RandomAccessIterators</code>,
+ <code>InputIterators</code>, etc&hellip;</p>
 
-<p> In C++ (without concepts) we use tag types.
- Every iterator uses a tag type to signify what theory
- it supports.
- The tag lets you do compile type dispatch.</p>
+<p> In C++ (without concepts) we use tag types to designate the iterator categories.
+ Every iterator uses a tag type to signify which theory it supports.
+ The tag lets you do compile time dispatch<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
 
-<p> What category is this iterator?
- In the list pool, our iterator is a <code>ForwardIterator</code>.
- Because, there is no way in a singly linked list
- to go backward.</p></li>
+<p> What category is the iterator for <code>list_pool</code> from last chapter?
+ We need <code>ForwardIterator</code>, because there is no way in a singly linked list
+ to go backwards.</p></li>
 </ol>
 
 
-<p>Let&rsquo;s define these types in the <code>list_pool</code>
-from last time.</p>
+<p>Let&rsquo;s define these types in the <code>list_pool</code> iterator.</p>
 
 <pre><code>#include &lt;iterator&gt;
 
 // class list_pool {
 // ...
 
-struct iterator {
-  typedef list_pool::value_type value_type;
-  typedef list_pool::list_type difference_type;
-  typedef std::forward_iterator_tag iterator_category;
-};
+     struct iterator {
+       typedef list_pool::value_type value_type;
+       typedef list_pool::list_type difference_type;
+       typedef std::forward_iterator_tag iterator_category;
+     };
 
 // };
 </code></pre>
@@ -431,7 +429,7 @@ they use <code>=</code> and they use <code>x</code> and <code>y</code> and I thi
 <pre><code>// assert(x.pool === y.pool);
 </code></pre>
 
-<p>I don&rsquo;t write it because it takes too long to check<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+<p>I don&rsquo;t write it because it takes too long to check<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
 There is nobody who should be comparing iterators from separate pools.
 If he does, he deserves what he gets.
 But, wouldn&rsquo;t it be good to guarantee safety?
@@ -468,7 +466,7 @@ A singly linked list.
 Forward iterators do not have <code>&lt;</code>.
 Is that a good idea?
 You could do it for linked lists, but it&rsquo;s very expensive
-and not even guaranteed to terminate<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+and not even guaranteed to terminate<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
 But you&rsquo;re assuming &ldquo;If I am <code>&lt;</code>, then I am before&rdquo;.
 This is only one interpretation.
 Let me explain.</p>
@@ -542,18 +540,25 @@ Alex recommends chapter 7 of &ldquo;Elements of Programming&rdquo;
 <a href="https://www.boost.org/">Boost</a> is a popular collection of C++ libraries generally accepted as the next tool to reach for beyond the standard library.
  Alex speaks positively of some parts, (See <a href="http://stepanovpapers.com/siekforeword.pdf">his foreword</a> for &ldquo;The Boost Graph Library&rdquo;) others he is more critical of.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
+Some algorithms can be implemented more efficiently for certain
+iterator categories. For example <a href="https://en.cppreference.com/w/cpp/iterator/distance"><code>std::distance</code></a> can be
+implemented as a constant time algorithm for <code>RandomAccessIterators</code> but
+only a linear time algorithm for other iterator categories. The
+<code>iterator_category</code> tag allows the appropriate algorithm to be selected at
+compile time. This technique is known as <a href="https://quuxplusone.github.io/blog/2021/06/07/tag-dispatch-and-concept-overloading">tag disptach</a>.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
 I think modern compilers have fixed this so you can
 write checks with more confidence that they won&rsquo;t affect release builds.
 Specifically the standard has mandated some rules about when
-<a href="https://en.cppreference.com/w/cpp/error/assert">assert</a> is enabled.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
-<li id="fn:4">
+<a href="https://en.cppreference.com/w/cpp/error/assert">assert</a> is enabled.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
 The Swift language and standard library
 actually implement very similar concepts and containers
 as C++. In their equivalent to <code>ForwardIterator</code>
 they actually <a href="https://forums.swift.org/t/dropping-comparable-requirement-for-indices/3290">did require comparable</a>,
 and bounds check with it,
 making it very difficult to write data structures like linked lists
-and probably makes Alex&rsquo;s pointer comparison trick impossible.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+and probably makes Alex&rsquo;s pointer comparison trick impossible.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 
