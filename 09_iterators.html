@@ -219,11 +219,25 @@ code in C++ and what the notion is behind it.
 A key part of iterators is <strong>affiliated types</strong>.
 Iterators point to values and you want to know what those values are.
 Types don&rsquo;t work on their own.
-They come in clusters, or connected families.
-If you have <code>int*</code> there is an affiliated type <code>int</code>
-which are related.
-We want to be able to obtain <code>int</code> from <code>int*</code>.
-Even in Python which has <a href="https://en.wikipedia.org/wiki/Duck_typing">duck typing</a>.</p>
+They come in clusters, or connected families of types.
+If you have a type <code>int*</code>, there is an affiliated type <code>int</code>.
+The two types are related. It would be terribly nice if we had a
+way to obtain <code>int</code> from <code>int*</code>. That is, if somebody
+gives me a pointer type, I want a way to find out what type
+it points to.</p>
+
+<p>To do this we need need this notion of <em>type functions</em> which accept one type
+and return a different type.
+This problem of needing to obtain affiliated types is not specific to C and C++.
+It appears in Java and Python as well.
+In spite of Python&rsquo;s <a href="https://en.wikipedia.org/wiki/Duck_typing">duck typing</a> there&rsquo;s <em>still</em> a connection
+between types, even if they are duck types.</p>
+
+<p>So we need this notion of <em>type functions</em>,
+but C doesn&rsquo;t let us do this,
+and neither does C++.
+Instead of type functions we are going to solve
+this problem for iterators by using typedefs.</p>
 
 <p>For an iterator, there are <a href="https://en.cppreference.com/w/cpp/iterator/iterator_traits">5 types</a> that we always need to define.
 3 are primary, 2 are secondary.
