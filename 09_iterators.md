@@ -59,22 +59,20 @@ So, I chickened out.
 I said, "Yes, that's exactly what you guys have".
 I thought it was much better to win with the wrong name 
 than lose with the right name, so the name is stuck.
-It's in the standard, but again the concept which designates is not a
-concept of iterator in CLU or iterator in Python which is not iterator in Java.
-An iterator is a generalization of a coordinate in a data structure.
-It's a lightweight thing, it doesn't do anything.
-It just points to things.
+It's in the standard. But again, the concept which it designates is not a
+concept of iterator in CLU or iterator in Python or iterator in Java.
+Our iterator is a generalization of a coordinate in a data structure.
+It's a lightweight thing. It doesn't *do* anything,
+it just *points* to something.
 
-This argument is active again.
-There are Boost[^boost] guys 
-who say, "Iterator is all wrong. Let us, go back
+There are these arguments which I hear from people like the 
+Boost[^boost] guys, who say "Iterators are all wrong. Let us go back
 and do ranges."
-They're reinventing Barbara Liskov iterators.
-Just for the record, when I introduced my iterators,
-I was very familiar
-with the iterators in CLU.
- Moreover I was even very familiar with Barbara herself
-and with [Alan Snyder][snyder] who designed iterators. 
+Guess what? They're reinventing Barbara Liskov's iterators.
+Just for the record, when I introduced my iterators
+I was very familiar with the iterators in CLU.
+Moreover I was even very familiar with Barbara herself
+and with [Alan Snyder][snyder] who co-designed the iterators in CLU.
 I didn't do what they did because I wanted to do something else.
 It wasn't out of ignorance.
 Maybe I was stupid, 
@@ -423,6 +421,3 @@ A total ordering does not have to be topologically induced by the traversal.
 ## Code
    
 - [list_pool_iterator.h](code/list_pool_iterator.h)
-
-
-
