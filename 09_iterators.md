@@ -403,7 +403,7 @@ Equality is naturally extendable to struct.
 It was an oversight on the part of C and still C++ again.
 The compiler should generate equality,
 and it could generate inequality using
-[lexicoographical][lex] ordering.
+[lexicographical][lex] ordering.
 
 So if you want to use iterators
 on set, you can define a custom comparator.
