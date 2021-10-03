@@ -190,22 +190,20 @@ So, I chickened out.
 I said, &ldquo;Yes, that&rsquo;s exactly what you guys have&rdquo;.
 I thought it was much better to win with the wrong name
 than lose with the right name, so the name is stuck.
-It&rsquo;s in the standard, but again the concept which designates is not a
-concept of iterator in CLU or iterator in Python which is not iterator in Java.
-An iterator is a generalization of a coordinate in a data structure.
-It&rsquo;s a lightweight thing, it doesn&rsquo;t do anything.
-It just points to things.</p>
+It&rsquo;s in the standard. But again, the concept which it designates is not a
+concept of iterator in CLU or iterator in Python or iterator in Java.
+Our iterator is a generalization of a coordinate in a data structure.
+It&rsquo;s a lightweight thing. It doesn&rsquo;t <em>do</em> anything,
+it just <em>points</em> to something.</p>
 
-<p>This argument is active again.
-There are Boost<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> guys
-who say, &ldquo;Iterator is all wrong. Let us, go back
+<p>There are these arguments which I hear from people like the
+Boost<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> guys, who say &ldquo;Iterators are all wrong. Let us go back
 and do ranges.&rdquo;
-They&rsquo;re reinventing Barbara Liskov iterators.
-Just for the record, when I introduced my iterators,
-I was very familiar
-with the iterators in CLU.
- Moreover I was even very familiar with Barbara herself
-and with <a href="https://dblp.org/pid/04/4444.html">Alan Snyder</a> who designed iterators.
+Guess what? They&rsquo;re reinventing Barbara Liskov&rsquo;s iterators.
+Just for the record, when I introduced my iterators
+I was very familiar with the iterators in CLU.
+Moreover I was even very familiar with Barbara herself
+and with <a href="https://dblp.org/pid/04/4444.html">Alan Snyder</a> who co-designed the iterators in CLU.
 I didn&rsquo;t do what they did because I wanted to do something else.
 It wasn&rsquo;t out of ignorance.
 Maybe I was stupid,
@@ -219,11 +217,25 @@ code in C++ and what the notion is behind it.
 A key part of iterators is <strong>affiliated types</strong>.
 Iterators point to values and you want to know what those values are.
 Types don&rsquo;t work on their own.
-They come in clusters, or connected families.
-If you have <code>int*</code> there is an affiliated type <code>int</code>
-which are related.
-We want to be able to obtain <code>int</code> from <code>int*</code>.
-Even in Python which has <a href="https://en.wikipedia.org/wiki/Duck_typing">duck typing</a>.</p>
+They come in clusters, or connected families of types.
+If you have a type <code>int*</code>, there is an affiliated type <code>int</code>.
+The two types are related. It would be terribly nice if we had a
+way to obtain <code>int</code> from <code>int*</code>. That is, if somebody
+gives me a pointer type, I want a way to find out what type
+it points to.</p>
+
+<p>To do this we need this notion of <em>type functions</em> which accept one type
+and return a different type.
+This problem of needing to obtain affiliated types is not specific to C and C++.
+It appears in Java and Python as well.
+In spite of Python&rsquo;s <a href="https://en.wikipedia.org/wiki/Duck_typing">duck typing</a> there&rsquo;s <em>still</em> a connection
+between types, even if they are duck types.</p>
+
+<p>So we need this notion of <em>type functions</em>,
+but C doesn&rsquo;t let us do this,
+and neither does C++.
+Instead of type functions we are going to solve
+this problem for iterators by using typedefs.</p>
 
 <p>For an iterator, there are <a href="https://en.cppreference.com/w/cpp/iterator/iterator_traits">5 types</a> that we always need to define.
 Three of them are primary, two are secondary.
@@ -278,7 +290,7 @@ struct iterator {
 Microsoft said they were going to vote against STL unless it accommodated
 multiple memory models.
 At the time, they had tiny pointers, huge pointers and
-<a href="https://devblogs.microsoft.com/oldnewthing/20200728-00/?p=104012">far pointers</a>.
+far pointers.
 They wanted STL to somehow work with all of them.
 I had to figure out
 how they work.
@@ -286,8 +298,10 @@ The difference between far pointer and huge pointer is really
 weird.
 They are both 32 bits.
 But, with far pointer if you add
-one to it, and the first low two bytes overflow, it rotates without propagation.
-With a huge, it does propagated to the 16th bit.</p>
+one to it, and the two lowest bytes overflow,
+they wrap without propagation to the upper bytes.
+With a huge pointer, the carry <em>is</em> propagated to the upper bytes, but by adding
+8 to them<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
 
 <p>So they demanded that I change the whole architecture to accommodate them.
 Guess how they voted?
@@ -427,7 +441,7 @@ they used <code>=</code> and they used <code>x</code> and <code>y</code> and I t
 <pre><code>// assert(x.pool == y.pool);
 </code></pre>
 
-<p>I don&rsquo;t use a real assert because it takes too long to check<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+<p>I don&rsquo;t use a real assert because it takes too long to check<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
 There is nobody who should be comparing iterators from separate pools.
 If he does, he deserves what he gets.
 But, wouldn&rsquo;t it be good to guarantee safety?
@@ -464,7 +478,7 @@ A singly linked list.
 Forward iterators do not have &lsquo;less-than&rsquo; defined on them.
 Is that a good idea?
 You could do it for linked lists, but it&rsquo;s very expensive
-and not even guaranteed to terminate<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+and not even guaranteed to terminate<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
 But you&rsquo;re assuming &ldquo;If I am less-than, then I am before&rdquo;.
 This is only one interpretation.
 Let me explain.</p>
@@ -507,7 +521,7 @@ It&rsquo;s even defined, somewhat on <code>double</code> (ignoring bad values).<
 It was an oversight on the part of C and still C++ again.
 The compiler should generate equality,
 and it could generate inequality using
-<a href="https://en.wikipedia.org/wiki/Lexicographic_order">lexicoographical</a> ordering.</p>
+<a href="https://en.wikipedia.org/wiki/Lexicographic_order">lexicographical</a> ordering.</p>
 
 <p>So if you want to use iterators
 on set, you can define a custom comparator.
@@ -538,18 +552,22 @@ Alex recommends chapter 7 of &ldquo;Elements of Programming&rdquo;
 <a href="https://www.boost.org/">Boost</a> is a popular collection of C++ libraries generally accepted as the next tool to reach for beyond the standard library.
  Alex speaks positively of some parts (see <a href="http://stepanovpapers.com/siekforeword.pdf">his foreword</a> for &ldquo;The Boost Graph Library&rdquo;), but others he is more critical of.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
+See <a href="https://devblogs.microsoft.com/oldnewthing/20200728-00/?p=104012">&ldquo;A look back at memory models in 16-bit MS-DOS&rdquo;</a>
+for a brief overview of these various pointer types.
+The more general concept behind them is <a href="https://en.wikipedia.org/wiki/Memory_segmentation">memory segmentation</a>.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
 I think modern compilers have fixed this so you can
 write checks with more confidence that they won&rsquo;t affect release builds.
 Specifically the standard has mandated some rules about when
-<a href="https://en.cppreference.com/w/cpp/error/assert">assert</a> is enabled.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
-<li id="fn:4">
+<a href="https://en.cppreference.com/w/cpp/error/assert">assert</a> is enabled.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
 The Swift language and standard library
 actually implement very similar concepts and containers
 as C++. In their equivalent to <code>ForwardIterator</code>
 they actually <a href="https://forums.swift.org/t/dropping-comparable-requirement-for-indices/3290">did require comparable</a>,
 and bounds check with it,
 making it very difficult to write data structures like linked lists
-and probably makes Alex&rsquo;s pointer comparison trick impossible.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+and probably makes Alex&rsquo;s pointer comparison trick impossible.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

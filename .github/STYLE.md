@@ -1,3 +1,13 @@
+Style guide
+===========
+
+## Formatting
+
+The text should be standard markdown with the addition of the footnotes extension.
+It should be readable in markdown form.
+Avoid using HTML. 
+Simple HTML is allowed when there are no good alternatives.
+
 ## Accuracy of text
 
 These are course notes, not a transcript.
@@ -32,6 +42,11 @@ For example, the name of a school or person's wikipedia page can usually be link
 Many of the links may seem unnecessary as they are a quick Google search away.
 I added those for convenience and historical purposes.
 References which are obvious now may be difficult to track down in the future.
+
+### Location
+
+Links should be placed at the bottom of the section of the content they are related to.
+This makes it easier to move content around and.
 
 ## Story
 
@@ -74,7 +89,6 @@ For example:
 
 Quotation marks should be used in these cases.
 
-
 ## References
 
 When Alex references a piece of literature, individual, or event, we should find sources to support it.
@@ -87,4 +101,7 @@ Footnotes can be added for any of the following reasons:
 - connect it to another subject or topic
 - provide additional examples
 - Provide supporting references.
+
+
+
 

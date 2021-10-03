@@ -59,22 +59,20 @@ So, I chickened out.
 I said, "Yes, that's exactly what you guys have".
 I thought it was much better to win with the wrong name 
 than lose with the right name, so the name is stuck.
-It's in the standard, but again the concept which designates is not a
-concept of iterator in CLU or iterator in Python which is not iterator in Java.
-An iterator is a generalization of a coordinate in a data structure.
-It's a lightweight thing, it doesn't do anything.
-It just points to things.
+It's in the standard. But again, the concept which it designates is not a
+concept of iterator in CLU or iterator in Python or iterator in Java.
+Our iterator is a generalization of a coordinate in a data structure.
+It's a lightweight thing. It doesn't *do* anything,
+it just *points* to something.
 
-This argument is active again.
-There are Boost[^boost] guys 
-who say, "Iterator is all wrong. Let us, go back
+There are these arguments which I hear from people like the 
+Boost[^boost] guys, who say "Iterators are all wrong. Let us go back
 and do ranges."
-They're reinventing Barbara Liskov iterators.
-Just for the record, when I introduced my iterators,
-I was very familiar
-with the iterators in CLU.
- Moreover I was even very familiar with Barbara herself
-and with [Alan Snyder][snyder] who designed iterators. 
+Guess what? They're reinventing Barbara Liskov's iterators.
+Just for the record, when I introduced my iterators
+I was very familiar with the iterators in CLU.
+Moreover I was even very familiar with Barbara herself
+and with [Alan Snyder][snyder] who co-designed the iterators in CLU.
 I didn't do what they did because I wanted to do something else.
 It wasn't out of ignorance.
 Maybe I was stupid, 
@@ -103,11 +101,25 @@ code in C++ and what the notion is behind it.
 A key part of iterators is **affiliated types**.
 Iterators point to values and you want to know what those values are.
 Types don't work on their own.
-They come in clusters, or connected families.
-If you have `int*` there is an affiliated type `int`
-which are related.
-We want to be able to obtain `int` from `int*`.
-Even in Python which has [duck typing][duck].
+They come in clusters, or connected families of types.
+If you have a type `int*`, there is an affiliated type `int`.
+The two types are related. It would be terribly nice if we had a
+way to obtain `int` from `int*`. That is, if somebody
+gives me a pointer type, I want a way to find out what type
+it points to.
+
+To do this we need this notion of *type functions* which accept one type
+and return a different type.
+This problem of needing to obtain affiliated types is not specific to C and C++.
+It appears in Java and Python as well.
+In spite of Python's [duck typing][duck] there's *still* a connection
+between types, even if they are duck types.
+
+So we need this notion of *type functions*,
+but C doesn't let us do this,
+and neither does C++.
+Instead of type functions we are going to solve
+this problem for iterators by using typedefs.
 
 For an iterator, there are [5 types][cpp-iterator-traits] that we always need to define.
 Three of them are primary, two are secondary.
@@ -164,7 +176,7 @@ The fourth and fifth types to be defined are required only for historical reason
 Microsoft said they were going to vote against STL unless it accommodated
 multiple memory models.
 At the time, they had tiny pointers, huge pointers and
-[far pointers][far-ptr-article].
+far pointers.
 They wanted STL to somehow work with all of them.
 I had to figure out 
 how they work.
@@ -172,15 +184,16 @@ The difference between far pointer and huge pointer is really
 weird.
 They are both 32 bits.
 But, with far pointer if you add
-one to it, and the first low two bytes overflow, it rotates without propagation.
-With a huge, it does propagated to the 16th bit.
+one to it, and the two lowest bytes overflow,
+they wrap without propagation to the upper bytes.
+With a huge pointer, the carry *is* propagated to the upper bytes, but by adding
+8 to them[^ms-dos-pointers].
 
 So they demanded that I change the whole architecture to accommodate them.
 Guess how they voted?
 No.
 Now we're stuck for the next hundred years with stuff which was included to placate people that
  couldn't have been placated.
-
 
 So what does an iterator return when you dereference it?
 Normally a reference. It's an [`lvalue`][lvalue]
@@ -201,8 +214,13 @@ Here is our implementation:
 It's not particularly harmful, but it obfuscates things
 and it provides "language experts" with steady employment.
 
+[^ms-dos-pointers]: See ["A look back at memory models in 16-bit MS-DOS"][far-ptr-article]
+    for a brief overview of these various pointer types.
+    The more general concept behind them is [memory segmentation][memory-segmentation].
+
 [lvalue]: https://en.wikipedia.org/wiki/Value_(computer_science)#lrvalue
 [far-ptr-article]: https://devblogs.microsoft.com/oldnewthing/20200728-00/?p=104012
+[memory-segmentation]: https://en.wikipedia.org/wiki/Memory_segmentation
 
 ### Constructors
 
@@ -307,7 +325,7 @@ Notice I sometimes write assertions in comments:
 
     // assert(x.pool == y.pool);
 
-I don't use a real assert because it takes too long to check[^assert].
+I don't use a real assert because it takes too long to check[^assert-modern-compilers].
 There is nobody who should be comparing iterators from separate pools.
 If he does, he deserves what he gets.
 But, wouldn't it be good to guarantee safety?
@@ -340,7 +358,7 @@ I wouldn't use COBOL to write an operating system.
 [cobol]: https://en.wikipedia.org/wiki/COBOL
 [cpp-assert]: https://en.cppreference.com/w/cpp/error/assert
 
-[^assert]: I think modern compilers have fixed this so you can 
+[^assert-modern-compilers]: I think modern compilers have fixed this so you can 
     write checks with more confidence that they won't affect release builds.
     Specifically the standard has mandated some rules about when
     [assert][cpp-assert] is enabled.
