@@ -164,7 +164,7 @@ The 4th and 5th types to be defined are required only for historical reasons.
 Microsoft said they were going to vote against STL unless it accommodated
 multiple memory models.
 At the time, they had tiny pointers, huge pointers and
-[far pointers][far-ptr-article].
+far pointers.
 They wanted STL to somehow work with all of them.
 I had to figure out 
 how they work.
@@ -175,7 +175,7 @@ But, with far pointer if you add
 one to it, and the two lowest bytes overflow,
 they wrap without propagation to the upper bytes.
 With a huge pointer, the carry *is* propagated to the upper bytes, but by adding
-8 to them.
+8 to them[^ms-dos-pointers].
 
 So, they
 they demanded that I change the whole architecture to accommodate them.
@@ -183,7 +183,6 @@ Guess how they voted?
 No.
 Now we're stuck for the next hundred years with stuff which was included to placate people that
  couldn't have been placated.
-
 
 So what does an iterator return when you dereference it?
 Normally a reference. It's an [`lvalue`][lvalue]
@@ -204,8 +203,13 @@ Here is our implementation:
 It's not particularly harmful, bu it obfuscates things
 and it provides "language experts" with steady employment.
 
+[^ms-dos-pointers]: See ["A look back at memory models in 16-bit MS-DOS"][far-ptr-article]
+    for a brief overview of these various pointer types in Windows.
+    The more general concept behind these pointers is [memory segmentation][memory-segmentation].
+
 [lvalue]: https://en.wikipedia.org/wiki/Value_(computer_science)#lrvalue
 [far-ptr-article]: https://devblogs.microsoft.com/oldnewthing/20200728-00/?p=104012
+[memory-segmentation]: https://en.wikipedia.org/wiki/Memory_segmentation
 
 ### Constructors
 
