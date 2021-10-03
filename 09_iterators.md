@@ -101,11 +101,25 @@ code in C++ and what the notion is behind it.
 A key part of iterators is **affiliated types**.
 Iterators point to values and you want to know what those values are.
 Types don't work on their own.
-They come in clusters, or connected families.
-If you have `int*` there is an affiliated type `int`
-which are related.
-We want to be able to obtain `int` from `int*`.
-Even in Python which has [duck typing][duck].
+They come in clusters, or connected families of types.
+If you have a type `int*`, there is an affiliated type `int`.
+The two types are related. It would be terribly nice if we had a
+way to obtain `int` from `int*`. That is, if somebody
+gives me a pointer type, I want a way to find out what type
+it points to.
+
+To do this we need this notion of *type functions* which accept one type
+and return a different type.
+This problem of needing to obtain affiliated types is not specific to C and C++.
+It appears in Java and Python as well.
+In spite of Python's [duck typing][duck] there's *still* a connection
+between types, even if they are duck types.
+
+So we need this notion of *type functions*,
+but C doesn't let us do this,
+and neither does C++.
+Instead of type functions we are going to solve
+this problem for iterators by using typedefs.
 
 For an iterator, there are [5 types][cpp-iterator-traits] that we always need to define.
 3 are primary, 2 are secondary.
