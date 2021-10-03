@@ -286,8 +286,10 @@ The difference between far pointer and huge pointer is really
 weird.
 They are both 32 bits.
 But, with far pointer if you add
-one to it, and the first low two bytes overflow, it rotates without propagation.
-With a huge, it does propagated to the 16th bit.</p>
+one to it, and the two lowest bytes overflow,
+they wrap without propagation to the upper bytes.
+With a huge pointer, the carry <em>is</em> propagated to the upper bytes, but by adding
+8 to them.</p>
 
 <p>So, they
 they demanded that I change the whole architecture to accommodate them.
