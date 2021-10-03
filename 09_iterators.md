@@ -204,8 +204,8 @@ It's not particularly harmful, bu it obfuscates things
 and it provides "language experts" with steady employment.
 
 [^ms-dos-pointers]: See ["A look back at memory models in 16-bit MS-DOS"][far-ptr-article]
-    for a brief overview of these various pointer types in Windows.
-    The more general concept behind these pointers is [memory segmentation][memory-segmentation].
+    for a brief overview of these various pointer types.
+    The more general concept behind them is [memory segmentation][memory-segmentation].
 
 [lvalue]: https://en.wikipedia.org/wiki/Value_(computer_science)#lrvalue
 [far-ptr-article]: https://devblogs.microsoft.com/oldnewthing/20200728-00/?p=104012
@@ -314,7 +314,7 @@ Notice I sometimes write assertions in comments:
 
     // assert(x.pool === y.pool);
 
-I don't write it because it takes too long to check[^assert].
+I don't write it because it takes too long to check[^assert-modern-compilers].
 There is nobody who should be comparing iterators from separate pools.
 If he does, he deserves what he gets.
 But, wouldn't it be good to guarantee safety?
@@ -347,7 +347,7 @@ I wouldn't use Cobol to write an operating system.
 [cobol]: https://en.wikipedia.org/wiki/COBOL
 [cpp-assert]: https://en.cppreference.com/w/cpp/error/assert
 
-[^assert]: I think modern compilers have fixed this so you can 
+[^assert-modern-compilers]: I think modern compilers have fixed this so you can 
     write checks with more confidence that they won't affect release builds.
     Specifically the standard has mandated some rules about when
     [assert][cpp-assert] is enabled.
