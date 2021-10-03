@@ -209,9 +209,8 @@ But, with far and tiny pointers, you don't know what the reference
 type should be.
 So now we need to provide it.
 
-&nbsp;&nbsp;&nbsp;4. `reference`: the type of a reference to the value.<br/>
-&nbsp;&nbsp;&nbsp;5. `pointer`:  the type of a pointer to the value.
-
+&emsp;4. `reference`: the type of a reference to the value. <br/>
+&emsp;5. `pointer`:  the type of a pointer to the value.
 
 Here is our implementation:
 
