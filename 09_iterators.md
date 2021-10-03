@@ -141,7 +141,7 @@ Let's start with the primary:
     `InputIterators`, etc...
 
     In C++ (without concepts) we use tag types to designate the iterator categories.
-    Every iterator uses a tag type to signify which theory it supports.
+    Every iterator uses a tag type to denote which theory it supports.
     The tag lets you do compile time dispatch[^compile-time-dispatch].
 
     What category is the iterator for `list_pool` from last chapter?
