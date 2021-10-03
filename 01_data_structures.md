@@ -271,10 +271,11 @@ That is a lot.
 
 [^big-oh]: To say a function `f` is `O(g)` it's only required that `f` be bounded 
      by a constant multiple for all inputs beyond some point.
-    Formally, if `f(x) <= Ag(x)` for all `x > M`, where `A` and `M` are constant real numbers.
-    Alex will tend to say "order of" to distinguish `O(f)` from exactly `f`.
+    Formally, if `f(x) <= Ag(x)` for all `x > M`, where `A` and `M` are constant real numbers
+    (see "The Art of Computer Programming" 1.2.11).
 
-    Alex is observing that there is no requirement for `A` to be small.
+    Alex will tend to say "order of" to distinguish `O(f)` from exactly `f`.
+    In this section, Alex is observing that there is no requirement for `A` to be small.
 
 [^headers]: Alex: You didn't use to need `#include <set>` when I first did STL.
     I had one gigantic a file called `stl.h`
