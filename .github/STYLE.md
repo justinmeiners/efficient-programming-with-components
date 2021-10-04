@@ -35,15 +35,26 @@ Exercises may be solved in footnotes.
 
 ## Links
 
-When linking off to a page with more information, a footnote should be provided giving a brief explanation of the link.
-This does not apply when the link directly matches the text and the connection is obvious.
-For example, the name of a school or person's wikipedia page can usually be linked to directly.
+### When should I use inline links? 
+
+Inline links should correspond exactly with their subject.
+They should be obvious and only come from general sources.
+For example, we might provide an inline link to a persons's Wikipedia page
+or personal website when using their name.
+Another example is linking to a documentation page when mentioning 
+an STL function like `std::sort`.
+
+However, when linking off to more detailed explanations,
+or information from a specialized source, a footnote
+with a brief explanation should be provided.
+
+### Why use inline links at all?
 
 Many of the links may seem unnecessary as they are a quick Google search away.
 I added those for convenience and historical purposes.
 References which are obvious now may be difficult to track down in the future.
 
-### Location
+### Where should links be place in the markdown file? 
 
 Links should be placed at the bottom of the section of the content they are related to.
 This makes it easier to move content around and.
@@ -63,7 +74,7 @@ The code follows Alex's style including:
 
 ## References to literature
 
-Titles of books and articles are referred to with quotes: "The Art of Computer Programming"
+Titles of books and articles are referred to with quotes: "The Art of Computer Programming".
 
 ## Headings
 
@@ -89,11 +100,13 @@ For example:
 
 Quotation marks should be used in these cases.
 
-## References
+## Footnotes
+
+### When are foonotes required?
 
 When Alex references a piece of literature, individual, or event, we should find sources to support it.
 
-## Footnotes
+### When are optional footnotes appropriate?
 
 Footnotes can be added for any of the following reasons:
 
@@ -102,6 +115,15 @@ Footnotes can be added for any of the following reasons:
 - provide additional examples
 - Provide supporting references.
 
+### What sources should footnotes refer to?
 
+When providing additional explanation or reference material,
+we should prefer to use books which Alex recommends, over other materials.
+These include:
+
+- "The Art of Computer Programming"
+- "Structure and Interpretation of Computer Programs"
+- cppreference vs cplusplus
+- "Computer Architecture" (Brooks)
 
 
