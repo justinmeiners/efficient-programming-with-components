@@ -378,7 +378,7 @@ size_t n = sizeof(a) / sizeof(int);
 auto pair = minmax_element(a, a + n, std::less&lt;int&gt;());
 </code></pre>
 
-<p>This algorithm was invented by <a href="https://users.soe.ucsc.edu/~pohl/bio.htm">Ira Pohl</a><sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup> of UC Santa Cruz, in the mid-seventies.
+<p>This algorithm was invented by <a href="https://users.soe.ucsc.edu/~pohl/bio.htm">Ira Pohl</a> of UC Santa Cruz, in the mid-seventies<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.
 He also proved it was optimal.
 It&rsquo;s also practically good.
 It was <a href="https://en.cppreference.com/w/cpp/algorithm/minmax_element">added to</a> the standard in C++11.</p>
@@ -445,7 +445,7 @@ without being able to see the complete data.</p><a href="#fnref:5" rev="footnote
 First find the min (<code>n - 1</code> comparisons), then find the max (<code>n - 1</code> comparisons).
        <code>(n - 1) + (n - 1) = 2n - 2</code>.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
 <li id="fn:7">
-Alex has written more about Ira and this algorithm <a href="http://stepanovpapers.com/IraPohlFest.pdf">here</a><a href="#fnref:7" rev="footnote">&#8617;</a></li>
+For more about this algorithm, see Alex&rsquo;s presentation <a href="http://stepanovpapers.com/IraPohlFest.pdf">&ldquo;One algorithm from The Book: A tribute to Ira Pohl&rdquo;</a>.<a href="#fnref:7" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

@@ -298,7 +298,7 @@ Example:
     size_t n = sizeof(a) / sizeof(int);
     auto pair = minmax_element(a, a + n, std::less<int>());
 
-This algorithm was invented by [Ira Pohl][pohl][^pohl] of UC Santa Cruz, in the mid-seventies.
+This algorithm was invented by [Ira Pohl][pohl] of UC Santa Cruz, in the mid-seventies[^pohl].
 He also proved it was optimal.
 It's also practically good.
 It was [added to][cpp-minmax] the standard in C++11.
@@ -315,5 +315,5 @@ It was [added to][cpp-minmax] the standard in C++11.
 [^minmax]: First find the min (`n - 1` comparisons), then find the max (`n - 1` comparisons).
            `(n - 1) + (n - 1) = 2n - 2`.
 
-[^pohl]: Alex has written more about Ira and this algorithm [here](http://stepanovpapers.com/IraPohlFest.pdf)
+[^pohl]: For more about this algorithm, see Alex's presentation ["One algorithm from The Book: A tribute to Ira Pohl"](http://stepanovpapers.com/IraPohlFest.pdf).
             
