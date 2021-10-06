@@ -156,13 +156,13 @@ It never existed.
 It&rsquo;s a mythical language. It was never implemented.
 But, many people at <a href="https://en.wikipedia.org/wiki/Carnegie_Mellon_University">CMU</a> got tenure because of it.
 It has some interesting ideas, including the idea of a generator.
-For those of you who know <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>, it is like an <a href="https://wiki.python.org/moin/Iterator">iterator in Python</a>.
+For those of you who know <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>, it is like an iterator in Python<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
 Barbara Liskov said, wouldn&rsquo;t it be nice to write:</p>
 
 <pre><code>for x in thing
 </code></pre>
 
-<p>and iterators allow you to do that.
+<p>and iterators allow you to do that<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
 It is like a generator in Alphard.
 It is a procedure which returns multiple values, one by one.
 It&rsquo;s a procedural abstraction.
@@ -173,7 +173,7 @@ It was a generalization of a control structure.</p>
 <p>At the same time, I was working on how to do algorithms and I
 introduced the notion of position.
 A better name is coordinate, the name which Paul and I use
-in our book &ldquo;Elements of Programming&rdquo;<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
+in our book &ldquo;Elements of Programming&rdquo;<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
 A coordinate is some way of indicating where in the data structure you are.
 It is not a control structure, it&rsquo;s just the pointer into a data structure,
 or generalized notion of a coordinate.
@@ -197,7 +197,7 @@ It&rsquo;s a lightweight thing. It doesn&rsquo;t <em>do</em> anything,
 it just <em>points</em> to something.</p>
 
 <p>There are these arguments which I hear from people like the
-Boost<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> guys, who say &ldquo;Iterators are all wrong. Let us go back
+Boost<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> guys, who say &ldquo;Iterators are all wrong. Let us go back
 and do ranges.&rdquo;
 Guess what? They&rsquo;re reinventing Barbara Liskov&rsquo;s iterators.
 Just for the record, when I introduced my iterators
@@ -257,7 +257,7 @@ Let&rsquo;s start with the primary:</p>
 
 <p> In C++ (without concepts) we use tag types to designate the iterator categories.
  Every iterator uses a tag type to denote which theory it supports.
- The tag lets you do compile time dispatch<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+ The tag lets you do compile time dispatch<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.</p>
 
 <p> What category is the iterator for <code>list_pool</code> from last chapter?
  We need <code>ForwardIterator</code>, because there is no way in a singly linked list
@@ -299,7 +299,7 @@ But, with far pointer if you add
 one to it, and the two lowest bytes overflow,
 they wrap without propagation to the upper bytes.
 With a huge pointer, the carry <em>is</em> propagated to the upper bytes, but by adding
-8 to them<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
+8 to them<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
 
 <p>So they demanded that I change the whole architecture to accommodate them.
 Guess how they voted?
@@ -439,7 +439,7 @@ they used <code>=</code> and they used <code>x</code> and <code>y</code> and I t
 <pre><code>// assert(x.pool == y.pool);
 </code></pre>
 
-<p>I don&rsquo;t use a real assert because it takes too long to check<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
+<p>I don&rsquo;t use a real assert because it takes too long to check<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.
 There is nobody who should be comparing iterators from separate pools.
 If he does, he deserves what he gets.
 But, wouldn&rsquo;t it be good to guarantee safety?
@@ -476,7 +476,7 @@ A singly linked list.
 Forward iterators do not have &lsquo;less-than&rsquo; defined on them.
 Is that a good idea?
 You could do it for linked lists, but it&rsquo;s very expensive
-and not even guaranteed to terminate<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.
+and not even guaranteed to terminate<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.
 But you&rsquo;re assuming &ldquo;If I am less-than, then I am before&rdquo;.
 This is only one interpretation.
 Let me explain.</p>
@@ -544,35 +544,66 @@ A total ordering does not have to be topologically induced by the traversal.</p>
 <hr/>
 <ol>
 <li id="fn:1">
-Alex recommends chapter 7 of &ldquo;Elements of Programming&rdquo;
- on coordinate structures.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<p>Alex almost certainly means Python generators, not iterators, but I will describe both.</p>
+
+<p>An <a href="https://wiki.python.org/moin/Iterator">iterator</a> in Python is any object which implements a method called  <code>__next__()</code>.
+Unlike C++ iterators, the <code>__next__()</code> always returns another element of the sequence, not an iterator,
+so they do not resemble pointers or coordinates, neither are they comparable.
+They are most similar to <code>InputIterator</code> in that previous values in the sequence become inaccessible after advancing.
+The only thing special about the <code>__next__()</code> method is its compatibility with language constructs like <code>for</code> loops.</p>
+
+<p>A <a href="https://wiki.python.org/moin/Generators">generator</a> in Python is a kind of <code>iterator</code> that is typically implemented
+as a function with some helpful syntax additions.
+In a generator function, the <code>yield</code> keyword is used to return the next value in the sequence.
+If an additional value is requested after yielding,
+the function will resume at the point of the previous call to <code>yield</code>.
+This makes writing complex sequences more natural, as the control flow operates like other code.
+For example, the following returns square numbers:</p>
+
+<pre><code>def square_nums(count):
+    k = 0
+    while k &lt; count:
+        yield k * k
+        k += 1
+</code></pre>
+
+<p>It can be used in a <code>for</code> loop:</p>
+
+<pre><code>for x in square_nums(10):
+    print(x)
+# 0 1 4 ...
+</code></pre><a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
-<a href="https://www.boost.org/">Boost</a> is a popular collection of C++ libraries generally accepted as the next tool to reach for beyond the standard library.
- Alex speaks positively of some parts (see <a href="http://stepanovpapers.com/siekforeword.pdf">his foreword</a> for &ldquo;The Boost Graph Library&rdquo;), but others he is more critical of.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+See this <a href="http://web.mit.edu/ghudson/info/iterators">brief description of CLU iterators</a>.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
+See chapter 7 of &ldquo;Elements of Programming&rdquo; on coordinate structures.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+<a href="https://www.boost.org/">Boost</a> is a popular collection of C++ libraries generally accepted as the next tool to reach for beyond the standard library.
+ Alex speaks positively of some parts (see <a href="http://stepanovpapers.com/siekforeword.pdf">his foreword</a> for &ldquo;The Boost Graph Library&rdquo;), but others he is more critical of.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
 Some algorithms can be implemented more efficiently for certain
 iterator categories. For example <a href="https://en.cppreference.com/w/cpp/iterator/distance"><code>std::distance</code></a> can be
 implemented as a constant time algorithm for <code>RandomAccessIterators</code> but
 only a linear time algorithm for other iterator categories. The
 <code>iterator_category</code> tag allows the appropriate algorithm to be selected at
-compile time. This technique is known as <a href="https://quuxplusone.github.io/blog/2021/06/07/tag-dispatch-and-concept-overloading">tag disptach</a>.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
-<li id="fn:4">
+compile time. This technique is known as <a href="https://quuxplusone.github.io/blog/2021/06/07/tag-dispatch-and-concept-overloading">tag disptach</a>.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
 See <a href="https://devblogs.microsoft.com/oldnewthing/20200728-00/?p=104012">&ldquo;A look back at memory models in 16-bit MS-DOS&rdquo;</a>
 for a brief overview of these various pointer types.
-The more general concept behind them is <a href="https://en.wikipedia.org/wiki/Memory_segmentation">memory segmentation</a>.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
-<li id="fn:5">
+The more general concept behind them is <a href="https://en.wikipedia.org/wiki/Memory_segmentation">memory segmentation</a>.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<li id="fn:7">
 I think modern compilers have fixed this so you can
 write checks with more confidence that they won&rsquo;t affect release builds.
 Specifically the standard has mandated some rules about when
-<a href="https://en.cppreference.com/w/cpp/error/assert">assert</a> is enabled.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
-<li id="fn:6">
-The Swift language and standard library
-actually implement very similar concepts and containers
-as C++. In their equivalent to <code>ForwardIterator</code>
-they actually <a href="https://forums.swift.org/t/dropping-comparable-requirement-for-indices/3290">did require comparable</a>,
-and bounds check with it,
-making it very difficult to write data structures like linked lists
-and probably makes Alex&rsquo;s pointer comparison trick impossible.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<a href="https://en.cppreference.com/w/cpp/error/assert">assert</a> is enabled.<a href="#fnref:7" rev="footnote">&#8617;</a></li>
+<li id="fn:8">
+The <a href="https://en.wikipedia.org/wiki/Swift_(programming_language)">Swift</a> standard library actually takes a lot of inspiration from C++ and Alex&rsquo;s work.
+For example, the protocol <a href="https://developer.apple.com/documentation/swift/collection"><code>Collection</code></a> has an <code>Index</code> type which is equivalent to <code>ForwardIterator</code>,
+with some differences.
+One of these is the <code>Index</code> type <a href="https://forums.swift.org/t/dropping-comparable-requirement-for-indices/3290">must be comparable</a>,
+in order to support safety features like bounds checking.
+This restriction makes it difficult to write data structures like linked lists
+and probably makes Alex&rsquo;s pointer comparison trick impossible.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

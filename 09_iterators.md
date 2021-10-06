@@ -26,12 +26,12 @@ It never existed.
 It's a mythical language. It was never implemented.
 But, many people at [CMU][cmu] got tenure because of it.
 It has some interesting ideas, including the idea of a generator.
-For those of you who know [Python][python], it is like an [iterator in Python][py-iterator].
+For those of you who know [Python][python], it is like an iterator in Python[^python-iterator].
 Barbara Liskov said, wouldn't it be nice to write:
 
     for x in thing
 
-and iterators allow you to do that.
+and iterators allow you to do that[^clu-iterators].
 It is like a generator in Alphard.
 It is a procedure which returns multiple values, one by one.
 It's a procedural abstraction.
@@ -78,11 +78,42 @@ It wasn't out of ignorance.
 Maybe I was stupid, 
 but I wasn't ignorant.
 
-[^eop]: Alex recommends chapter 7 of "Elements of Programming"
-     on coordinate structures.
+[^eop]: See chapter 7 of "Elements of Programming" on coordinate structures.
      
 [^boost]: [Boost][boost] is a popular collection of C++ libraries generally accepted as the next tool to reach for beyond the standard library.
      Alex speaks positively of some parts (see [his foreword][alex-graph-foreword] for "The Boost Graph Library"), but others he is more critical of.
+
+
+[^python-iterator]:
+    Alex almost certainly means Python generators, not iterators, but I will describe both.
+
+    An [iterator](https://wiki.python.org/moin/Iterator) in Python is any object which implements a method called  `__next__()`.
+    Unlike C++ iterators, the `__next__()` always returns another element of the sequence, not an iterator,
+    so they do not resemble pointers or coordinates, neither are they comparable.
+    They are most similar to `InputIterator` in that previous values in the sequence become inaccessible after advancing.
+    The only thing special about the `__next__()` method is its compatibility with language constructs like `for` loops.
+
+    A [generator](https://wiki.python.org/moin/Generators) in Python is a kind of `iterator` that is typically implemented
+    as a function with some helpful syntax additions.
+    In a generator function, the `yield` keyword is used to return the next value in the sequence.
+    If an additional value is requested after yielding,
+    the function will resume at the point of the previous call to `yield`.
+    This makes writing complex sequences more natural, as the control flow operates like other code. 
+    For example, the following returns square numbers:
+
+        def square_nums(count):
+            k = 0
+            while k < count:
+                yield k * k
+                k += 1
+
+    It can be used in a `for` loop:
+
+        for x in square_nums(10):
+            print(x)
+        # 0 1 4 ...
+
+[^clu-iterators]: See this [brief description of CLU iterators](http://web.mit.edu/ghudson/info/iterators).
     
 [liskov]: https://en.wikipedia.org/wiki/Barbara_Liskov
 [clu]: https://en.wikipedia.org/wiki/CLU_(programming_language)
@@ -406,13 +437,16 @@ write it, and it will compile and it will work.
 So, that was not an option.
 
 
-[^swift-comparable]: The Swift language and standard library
-    actually implement very similar concepts and containers
-    as C++. In their equivalent to `ForwardIterator`
-    they actually [did require comparable](https://forums.swift.org/t/dropping-comparable-requirement-for-indices/3290),
-    and bounds check with it,
-    making it very difficult to write data structures like linked lists
+[^swift-comparable]: The [Swift][swift] standard library actually takes a lot of inspiration from C++ and Alex's work.
+    For example, the protocol [`Collection`][apple-swift-collection] has an `Index` type which is equivalent to `ForwardIterator`,
+    with some differences.
+    One of these is the `Index` type [must be comparable](https://forums.swift.org/t/dropping-comparable-requirement-for-indices/3290),
+    in order to support safety features like bounds checking.
+    This restriction makes it difficult to write data structures like linked lists
     and probably makes Alex's pointer comparison trick impossible.
+
+[swift]: https://en.wikipedia.org/wiki/Swift_(programming_language)
+[apple-swift-collection]: https://developer.apple.com/documentation/swift/collection
     
 
 ### Everything on a computer is totally ordered
