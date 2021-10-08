@@ -69,7 +69,7 @@ Reading Knuth has to become a lifelong activity.
     and ["The games of Lewis Carroll"](http://www.bananagrammer.com/2009/10/games-of-lewis-carroll.html).
 
     His book ["The Game of Logic"](https://en.wikipedia.org/wiki/The_Game_of_Logic) teaches formal logic
-    through a board. This book is also available from [Project Gutenberg](https://www.gutenberg.org/ebooks/4763).
+    using a board game. It is also available from [Project Gutenberg](https://www.gutenberg.org/ebooks/4763).
 
 [^alice-free-ebook]: The book is freely available from [Project Gutenberg](https://www.gutenberg.org/ebooks/11).
 
