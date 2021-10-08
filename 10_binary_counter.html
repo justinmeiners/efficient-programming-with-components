@@ -401,9 +401,9 @@ add small quantities to big quantitative.
 Bad things happen to the errors<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.
 So, you could use the same device for balancing your addition.
 If you want to implement <a href="https://en.wikipedia.org/wiki/Merge_sort">merge sort</a> you can use exactly the same device, since
-merge is associative<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.
-The idea with merge sort, is only want to merge lists if they are roughly the same length
-and this helps you do it.</p>
+merge is associative.
+The idea with merge sort, is you only want to merge lists if they are roughly the same length
+and this helps you do it (see Chapter 12).</p>
 
 <p>When we become grownups we learn about advanced data structures,
 such as <a href="https://en.wikipedia.org/wiki/Binomial_heap">binomial forest</a>.
@@ -472,6 +472,10 @@ T reduce_counter(I first, I last, Op op, const T&amp; zero) {
 Sometimes it will work with the operation so apply <code>op(x, zero)</code>
 gives you <code>x</code>, but sometimes that won&rsquo;t happen.
 So we can&rsquo;t really initialize to zero.</p>
+
+<p>If the algorithm is a bit unclear, don&rsquo;t worry.
+It will be discussed more in the next lesson.
+Working through a few concrete applications will also help:</p>
 
 <p><strong>Exercise:</strong> Use these functions to sum up an array of <code>double</code>.</p>
 
@@ -551,7 +555,7 @@ If you initialize in the body, it will first call default constructors
 for members, then you overwrite all the work with an assignment.</p>
 
 <p>I think it is very beautiful.
-We could compete with Steve Jobs for elegance of our design<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.</p>
+We could compete with Steve Jobs for elegance of our design<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.</p>
 
 <a name="What-is-in-2d-place-memory-usage-3f-"></a>
 <h3>What is in-place memory usage?</h3>
@@ -718,21 +722,10 @@ To try for yourself, compare the output of:</p>
 <pre><code>(152500.0 * 5000.0) + 0.01
 </code></pre><a href="#fnref:7" rev="footnote">&#8617;</a></li>
 <li id="fn:8">
-<p>If you are unfamiliar with assocativity or the
-algorithm is a bit unclear, don&rsquo;t worry.
-Working through a few concrete applications will help,
-such as one of the exercises here.
-The next lesson also goes through one.</p>
-
-<p>It also took me a while to understand the first time seeing it.
-However, after sharing it with my genius friend <a href="https://github.com/rpendleton">Ryan</a>
-he immediately wrote a version of merge sort, without any suggestion
-that was possible!</p><a href="#fnref:8" rev="footnote">&#8617;</a></li>
-<li id="fn:9">
 Alex: Maybe we should make it in China.
 That&rsquo;s a necessary prerequisite for beautiful design.
 <a href="https://signalvnoise.com/posts/2710-designed-by-apple-in-california">Designed in Cupertino</a> assembled in China.
-So let&rsquo;s try to assemble our machine in Palo Alto.<a href="#fnref:9" rev="footnote">&#8617;</a></li>
+So let&rsquo;s try to assemble our machine in Palo Alto.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

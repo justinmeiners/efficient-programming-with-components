@@ -337,9 +337,9 @@ add small quantities to big quantitative.
 Bad things happen to the errors[^errors].
 So, you could use the same device for balancing your addition.
 If you want to implement [merge sort][merge-sort] you can use exactly the same device, since
-merge is associative[^hint-for-counter].
-The idea with merge sort, is only want to merge lists if they are roughly the same length
-and this helps you do it.
+merge is associative.
+The idea with merge sort, is you only want to merge lists if they are roughly the same length
+and this helps you do it (see Chapter 12).
 
 When we become grownups we learn about advanced data structures,
 such as [binomial forest][binomial].
@@ -391,18 +391,6 @@ unless they are of the same weight it's a general algorithmic technique
         l_1  a_1  b_1   |_ l_2   a_2  b_2
 
     An **overflow** is when the last adder has a non-zero carry.
-
-    
-[^hint-for-counter]: If you are unfamiliar with assocativity or the 
-    algorithm is a bit unclear, don't worry.
-    Working through a few concrete applications will help, 
-    such as one of the exercises here.
-    The next lesson also goes through one.
-  
-    It also took me a while to understand the first time seeing it.
-    However, after sharing it with my genius friend [Ryan](https://github.com/rpendleton)
-    he immediately wrote a version of merge sort, without any suggestion
-    that was possible! 
 
 [^errors]: Numerical floating point calculation
     is a subtle subject, but the basic issue Alex is 
@@ -481,6 +469,11 @@ We have to be careful with zero.
 Sometimes it will work with the operation so apply `op(x, zero)`
 gives you `x`, but sometimes that won't happen.
 So we can't really initialize to zero.
+
+
+If the algorithm is a bit unclear, don't worry.
+It will be discussed more in the next lesson.
+Working through a few concrete applications will also help:
 
 **Exercise:** Use these functions to sum up an array of `double`. 
 
