@@ -26,6 +26,21 @@ Try to match Alex's voice.
 
 ## Exercises
 
+### When to include?
+
+Exercises may originate from Alex, or our own suggestion.
+They should always reinforce material learned,
+or offer challenges to prepare for upcoming material.
+
+Every chapter should have at least one.
+
+### How difficult shoult they be?
+
+They should not be obvious how to get started (avoid tricky puzzles)
+but may take some programming time. 
+
+### Provding solutions
+
 When exercises have a solution later in the text,
 this should be indicated by a parenthetical statement such as.
 
