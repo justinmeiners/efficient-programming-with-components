@@ -242,11 +242,11 @@ We distinguish between the left and right argument.
     able to "re-paranthesize" expressions.
 
 [^commutativity]: A binary function `f` is [commutative](https://en.wikipedia.org/wiki/Commutative_property)
-    if for all `a, b`, in its domain:
+    if for all `a, b` in its domain:
 
         f(a, b) = f(b, a)
 
-    Informally, it means it returns the same result, regardless of the order of the inputs.
+    Informally, it means it does the same thing, regardless of the order of the inputs.
     For example, multiplication of integers is commutative:
 
         a * b = b * a
@@ -268,7 +268,7 @@ We distinguish between the left and right argument.
 
     This proof is from [Dirichlet](https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet)
     (see Chapter 9.1 of "From Mathematics to Generic Programming").
-    An example of an operation which is not commutative is matrix multiplication.
+    An example of an operation which is not commutative is string concatenation. 
 
 ## Binary counting and reduction
 
@@ -279,7 +279,7 @@ They should have taught it in high school.
 But, they want to publish papers
 themselves and not tell you the general mechanism.
 
-We can create a counter, and in every bit of this counter we're
+We can create a counter and in every bit of this counter we're
 going to keep a singleton. 
 In each bit we keep the person who had `n` victories.
 We will never combine things unless they have the same weight/parity.
@@ -337,7 +337,7 @@ add small quantities to big quantitative.
 Bad things happen to the errors[^errors].
 So, you could use the same device for balancing your addition.
 If you want to implement [merge sort][merge-sort] you can use exactly the same device, since
-merge is associative[^ryan].
+merge is associative[^hint-for-counter].
 The idea with merge sort, is only want to merge lists if they are roughly the same length
 and this helps you do it.
 
@@ -345,7 +345,7 @@ When we become grownups we learn about advanced data structures,
 such as [binomial forest][binomial].
 They use the same idea.
 The counter helps us combine things only when they have the same weight.
-nless they are of the same weight it's a general algorithmic technique
+unless they are of the same weight it's a general algorithmic technique
 
 
 [^carry]: The terms **carry** and **carry propagation**
@@ -393,9 +393,16 @@ nless they are of the same weight it's a general algorithmic technique
     An **overflow** is when the last adder has a non-zero carry.
 
     
-[^ryan]: When I first learned about this algorithm, I showed a friend
-    and he immediately had the idea to use it 
-    for merge sort, without any hint this was possible!
+[^hint-for-counter]: If you are unfamiliar with assocativity or the 
+    algorithm is a bit unclear, don't worry.
+    Working through a few concrete applications will help, 
+    such as one of the exercises here.
+    The next lesson also goes through one.
+  
+    It also took me a while to understand the first time seeing it.
+    However, after sharing it with my genius friend [Ryan](https://github.com/rpendleton)
+    he immediately wrote a version of merge sort, without any suggestion
+    that was possible! 
 
 [^errors]: Numerical floating point calculation
     is a subtle subject, but the basic issue Alex is 
@@ -475,7 +482,7 @@ Sometimes it will work with the operation so apply `op(x, zero)`
 gives you `x`, but sometimes that won't happen.
 So we can't really initialize to zero.
 
-**Exercise:** Use these functions to sum up an array of `double`s. 
+**Exercise:** Use these functions to sum up an array of `double`. 
 
 **Exercise:** Rewrite `min_element` using these functions (just `min_element`, don't worry about second best).
 
