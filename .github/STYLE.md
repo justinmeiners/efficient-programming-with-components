@@ -1,7 +1,7 @@
 Style guide
 ===========
 
-## Formatting
+## File format
 
 The text should be standard markdown with the addition of the footnotes extension.
 It should be readable in markdown form.
@@ -99,6 +99,11 @@ For example:
     You might say: "Who are you to tell us?"
 
 Quotation marks should be used in these cases.
+
+## Definitions
+
+When defining or introducing a new word,
+it should be in **bold**.
 
 ## Footnotes
 
