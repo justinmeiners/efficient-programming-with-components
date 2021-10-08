@@ -551,7 +551,7 @@ The majority of computer scientists do not get it.
 There is absolutely no indication that getting it will make you rich.
 
 **Exercise:** Implement a visualizer (such as with console output) which illustrates
-    every step of merge sort with this algorithm.
+    every step of this merge sort algorithm. 
 
 **Exercise:** Implement merge sort with `std::accumulate` (left fold) instead of binary counter.
     This is a very inefficient merge sort, but can be helpful to understand how the binary

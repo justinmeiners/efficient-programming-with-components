@@ -246,7 +246,7 @@ We distinguish between the left and right argument.
 
         f(a, b) = f(b, a)
 
-    Informally, it means it does the same thing, regardless of the order of the inputs.
+    Informally, `f` does the same thing, regardless of the order of the inputs.
     For example, multiplication of integers is commutative:
 
         a * b = b * a
