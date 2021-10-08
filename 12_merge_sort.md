@@ -550,6 +550,13 @@ The majority of people do not get it.
 The majority of computer scientists do not get it.
 There is absolutely no indication that getting it will make you rich.
 
+**Exercise:** Implement a visualizer (such as console output) which shows
+    the contents of the counter at each step of the merge algorithm. 
+
+**Exercise:** Implement merge sort with `std::accumulate` (left fold) instead of binary counter.
+    This is a very inefficient merge sort, but can be helpful to understand how the binary
+    counter works.
+
 [^bad-code]: 
     Alex: If you want to see a really bad program
     see [Patrick Henry Winston][winston]'s

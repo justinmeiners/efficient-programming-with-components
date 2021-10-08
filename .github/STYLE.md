@@ -1,7 +1,7 @@
 Style guide
 ===========
 
-## Formatting
+## File format
 
 The text should be standard markdown with the addition of the footnotes extension.
 It should be readable in markdown form.
@@ -25,6 +25,21 @@ for educational purposes.
 Try to match Alex's voice.
 
 ## Exercises
+
+### When to include?
+
+Exercises may originate from Alex, or our own suggestion.
+They should always reinforce material learned,
+or offer challenges to prepare for upcoming material.
+
+Every chapter should have at least one.
+
+### How difficult shoult they be?
+
+They should not be obvious how to get started (avoid tricky puzzles)
+but may take some programming time. 
+
+### Provding solutions
 
 When exercises have a solution later in the text,
 this should be indicated by a parenthetical statement such as.
@@ -99,6 +114,11 @@ For example:
     You might say: "Who are you to tell us?"
 
 Quotation marks should be used in these cases.
+
+## Definitions
+
+When defining or introducing a new word,
+it should be in **bold**.
 
 ## Footnotes
 
