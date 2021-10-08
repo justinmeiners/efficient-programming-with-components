@@ -139,14 +139,14 @@ The problem has a very distinguished pedigree it was first addressed by a well-k
 <a href="https://en.wikipedia.org/wiki/Lewis_Carroll">Charles Dodgson</a> (Lewis Carroll).
 If you haven&rsquo;t heard of him, you should.
 There is a very important book which he wrote, not the <a href="https://www.gutenberg.org/ebooks/28696">mathematical book</a>
-, but the book called <a href="https://www.gutenberg.org/ebooks/11">&ldquo;Alice&rsquo;s Adventures in Wonderland&rdquo;</a>.
-If you haven&rsquo;t read it, do.
-No person should be hired ever unless you read &ldquo;Alice in Wonderland&rdquo;.
-in any case he was also a mathematician.
+, but the book called <a href="https://en.wikipedia.org/wiki/Alice%27s_Adventures_in_Wonderland">&ldquo;Alice&rsquo;s Adventures in Wonderland&rdquo;</a>.
+If you haven&rsquo;t read it, do<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
+No person should be hired ever unless they read &ldquo;Alice in Wonderland&rdquo;.
+In any case, he was also a mathematician.
 He also dabbled in all kind of games
-apparently he <a href="http://www.bananagrammer.com/2009/10/games-of-lewis-carroll.html">invented Scrabble</a> and bunch of other games.</p>
+apparently he invented Scrabble and bunch of other games<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.</p>
 
-<p>At some point he decided that there is a clear problem with tennis tournaments.
+<p>At some point he decided that there is a clear problem with lawn tennis tournaments.
 He observed that with a very high probability,
 if you have say a tournament with 64
 players, the guy who gets the second prize is actually not the second strongest.
@@ -166,9 +166,9 @@ number of comparisons but it took another thirty years, until 1964 when a
 Russian mathematician <a href="http://www.mathnet.ru/eng/person27000">Sergei S. Kislitsyn</a> published a paper which
 proved there is an optimal algorithm and described it.</p>
 
-<p>By the way, all of this information is available<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> in
+<p>By the way, all of this information is available in
 a
-book called <a href="https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming">&ldquo;The Art of Computer Programming&rdquo;</a> by <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> .
+book called <a href="https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming">&ldquo;The Art of Computer Programming&rdquo;</a> by <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
 You really should buy it.
 You make a certain commitment.
 You spend $150 saying that you really care about programming.
@@ -192,13 +192,12 @@ Reading Knuth has to become a lifelong activity.</p>
 <a name="Smallest-and-second-smallest-element"></a>
 <h2>Smallest and second smallest element</h2>
 
-<p>The problem of finding the smallest and second smallest element,
-is in &ldquo;The Art of Computer Programming&rdquo;, but somehow Knuth does not implement it.
-He describes it fully but doesn&rsquo;t implement it as an algorithm.
-As we shall see its actually a little tricky.
+<p>The problem of finding the smallest and second smallest element
+is described fully in &ldquo;The Art of Computer Programming&rdquo;, but somehow Knuth does not implement it.
+As we shall see it&rsquo;s actually a little tricky.
 I pick this algorithm not because it is of paramount importance for your future work.
 I pick this algorithm because it allows us to learn how to do decomposition
-and learn components along the way (like lists).</p>
+and learn components along the way (like the lists we started previously).</p>
 
 <p>How many comparisons do you need to solve this problem?
 Same as min-max from last time?
@@ -222,7 +221,7 @@ How many people did he beat?</p>
 
 <p>For example, <a href="https://en.wikipedia.org/wiki/The_Championships,_Wimbledon">Wimbledon</a> has 64 players who are admitted.
 The winner doesn&rsquo;t play 63 games.
-The tournament is structured as a binary tree.
+The tournament is structured as a <a href="https://en.wikipedia.org/wiki/Binary_tree">binary tree</a>.
 This tree is how deep?
 If you have <code>n</code> elements? It&rsquo;s <code>ceil(log_2(n))</code>.
 We could somehow arrange our tournament so that the
@@ -233,8 +232,7 @@ we just find the best out of them which is
 
 <p>To review, we
 have <code>n - 1</code> comparisons to get the winner.
-<code>ceil(log_2(n)) - 1</code> to get the second best,
-from the list he played.
+<code>ceil(log_2(n)) - 1</code> to get the second best, from the list he played.
 So the upper bound for the algorithm is:</p>
 
 <pre><code>n + ceil(log_2(n)) - 2
@@ -266,15 +264,14 @@ So we have another <code>n/2</code> comparisons.</p></li>
 </ol>
 
 
-<p>So that would be:</p>
+<p>So the total number of comparisons would be:</p>
 
-<pre><code>n/2 + (n/2 + n/4 + n/8 + ...)
-
+<pre><code>  n/2 + (n/2 + n/4 + n/8 + ...)
 = n/2 + n-1
+= 3n/2 - 1
 </code></pre>
 
-<p>total comparisons.
-That&rsquo;s not what we&rsquo;re trying to accomplish,
+<p>That&rsquo;s not what we&rsquo;re trying to accomplish,
 so divide and conquer doesn&rsquo;t always do what we think.</p>
 
 <a name="Tournament-tree-shapes"></a>
@@ -323,9 +320,9 @@ to be the number of games they have played.</p>
 the linear (unbalanced) tree and transform it into a balanced tree</em>.
 What mathematical property allows us to do such a transformation?
 Specifically why can we convert one kind of computation to the other.
-Associativity<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+<strong>Associativity</strong><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
 As long as our operation is associative,
-What property don&rsquo;t we need? Commutativity.
+What property don&rsquo;t we need? <strong>Commutativity</strong><sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
 We keep them in the same order,
 we just rebalanced parenthesis.</p>
 
@@ -387,7 +384,7 @@ What do we do?
 Whenever we don&rsquo;t know to proceed,
 do something sensible and let whomever uses it figure out what is a sensible thing
 to do.
-Return the carry<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+Return the carry<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
 
 <p>Let us be lazy.
 The great success in
@@ -401,10 +398,10 @@ we can make this counter and it will work for us.</p>
 <p>If you are familiar with <a href="https://en.wikipedia.org/wiki/Numerical_analysis">numerical analysis</a>,
 whenever you sum up large number you don&rsquo;t really want to
 add small quantities to big quantitative.
-Bad things happen to the errors<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+Bad things happen to the errors<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.
 So, you could use the same device for balancing your addition.
 If you want to implement <a href="https://en.wikipedia.org/wiki/Merge_sort">merge sort</a> you can use exactly the same device, since
-merge is associative<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
+merge is associative<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.
 The idea with merge sort, is only want to merge lists if they are roughly the same length
 and this helps you do it.</p>
 
@@ -554,13 +551,13 @@ If you initialize in the body, it will first call default constructors
 for members, then you overwrite all the work with an assignment.</p>
 
 <p>I think it is very beautiful.
-We could compete with Steve Jobs for elegance of our design<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
+We could compete with Steve Jobs for elegance of our design<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.</p>
 
 <a name="What-is-in-2d-place-memory-usage-3f-"></a>
 <h3>What is in-place memory usage?</h3>
 
 <p>How significant is the storage of our counter?
-We use the term <a href="https://en.wikipedia.org/wiki/In-place_algorithm">&ldquo;in-place&rdquo;</a> to indicate the memory
+We use the term <a href="https://en.wikipedia.org/wiki/In-place_algorithm"><strong>in-place</strong></a> to indicate the memory
 usage of an algorithm is not significant.
 A long time ago people thought
 algorithms were in-place if they didn&rsquo;t require any  extra memory.
@@ -593,25 +590,72 @@ but let&rsquo;s go with &ldquo;poly-logarithmic&rdquo; being &ldquo;in-place&rdq
 <hr/>
 <ol>
 <li id="fn:1">
-See chapter 5.3.3 in Volume 3 of &ldquo;The Art of Computer Programming&rdquo;.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+The book is freely available from <a href="https://www.gutenberg.org/ebooks/11">Project Gutenberg</a>.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
-<p><a href="https://mathworld.wolfram.com/Associative.html">Associativity</a> is a fundamental property studied in abstract
-algebra.
-Informally, it is that you can apply an operation to arguments
-in any order you want.
-Formally:</p>
+<p>The invention of Scrabble is attributed to Lewis Carroll&rsquo;s brief journal entry:
+&ldquo;A game might be made of letters, to be moved about on a chess board till they form words&rdquo; (Dec 19th,
+<a href="http://www.fullbooks.com/The-Life-and-Letters-of-Lewis-Carroll3.html">&ldquo;The Life and Letters of Lewis Carroll&rdquo;</a> ).
+See also <a href="https://scrabbledaily.blogspot.com/2008/05/history-of-scrabble.html">&ldquo;History of Scrabble&rdquo;</a>
+and <a href="http://www.bananagrammer.com/2009/10/games-of-lewis-carroll.html">&ldquo;The games of Lewis Carroll&rdquo;</a>.</p>
+
+<p>His book <a href="https://en.wikipedia.org/wiki/The_Game_of_Logic">&ldquo;The Game of Logic&rdquo;</a> teaches formal logic
+through a board. This book is also available from <a href="https://www.gutenberg.org/ebooks/4763">Project Gutenberg</a>.</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
+See chapter 5.3.3 in Volume 3 of &ldquo;The Art of Computer Programming&rdquo;.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
+<p>A binary function <code>f</code> is <a href="https://en.wikipedia.org/wiki/Associative_property">associative</a>
+if the the following holds for all <code>a, b, c</code> in its domain:</p>
 
 <pre><code>f(f(a, b), c)) = f(a, f(b, c))
 </code></pre>
 
-<p>For example, multiplication:</p>
+<p>Informally, <code>f</code> can be applied in any order.
+For example, addition of integers is associative:</p>
 
-<pre><code>(a * b) * c = a * (b * c)
+<pre><code>(a + b) + c = a + (b + c)
+</code></pre>
+
+<p>Subtraction of integers is not associative:</p>
+
+<pre><code>(3 - 2) - 1 != 3 - (2 - 1)
 </code></pre>
 
 <p>You can see why associativity is often referred to as being
-able to &ldquo;re-paranthesize&rdquo;.</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
-<li id="fn:3">
+able to &ldquo;re-paranthesize&rdquo; expressions.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
+<p>A binary function <code>f</code> is <a href="https://en.wikipedia.org/wiki/Commutative_property">commutative</a>
+if for all <code>a, b</code>, in its domain:</p>
+
+<pre><code>f(a, b) = f(b, a)
+</code></pre>
+
+<p>Informally, it means it returns the same result, regardless of the order of the inputs.
+For example, multiplication of integers is commutative:</p>
+
+<pre><code>a * b = b * a
+</code></pre>
+
+<p>This fact about integers can be proven in the following manner:
+If you arrange items into a block of columns and rows, such as:</p>
+
+<pre><code>* * * * *
+* * * * *
+* * * * *
+</code></pre>
+
+<p>The number of elements does not change regardless of how it is rotated:</p>
+
+<pre><code>* * *
+* * *
+* * *
+* * *
+* * *
+</code></pre>
+
+<p>This proof is from <a href="https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet">Dirichlet</a>
+(see Chapter 9.1 of &ldquo;From Mathematics to Generic Programming&rdquo;).
+An example of an operation which is not commutative is matrix multiplication.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
 <p>The terms <strong>carry</strong> and <strong>carry propagation</strong>
 are usually associated with the algorithm of binary addition
 and especially its implementation as
@@ -657,8 +701,8 @@ from lower place values.</p>
 l_1  a_1  b_1   |_ l_2   a_2  b_2
 </code></pre>
 
-<p>An <strong>overflow</strong> is when the last adder has a non-zero carry.</p><a href="#fnref:3" rev="footnote">&#8617;</a></li>
-<li id="fn:4">
+<p>An <strong>overflow</strong> is when the last adder has a non-zero carry.</p><a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<li id="fn:7">
 <p>Numerical floating point calculation
 is a subtle subject, but the basic issue Alex is
 referring to is straightforward.
@@ -672,16 +716,16 @@ To try for yourself, compare the output of:</p>
 <p>and</p>
 
 <pre><code>(152500.0 * 5000.0) + 0.01
-</code></pre><a href="#fnref:4" rev="footnote">&#8617;</a></li>
-<li id="fn:5">
+</code></pre><a href="#fnref:7" rev="footnote">&#8617;</a></li>
+<li id="fn:8">
 When I first learned about this algorithm, I showed a friend
 and he immediately had the idea to use it
-for merge sort, without any hint this was possible!<a href="#fnref:5" rev="footnote">&#8617;</a></li>
-<li id="fn:6">
+for merge sort, without any hint this was possible!<a href="#fnref:8" rev="footnote">&#8617;</a></li>
+<li id="fn:9">
 Alex: Maybe we should make it in China.
 That&rsquo;s a necessary prerequisite for beautiful design.
 <a href="https://signalvnoise.com/posts/2710-designed-by-apple-in-california">Designed in Cupertino</a> assembled in China.
-So let&rsquo;s try to assemble our machine in Palo Alto.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
+So let&rsquo;s try to assemble our machine in Palo Alto.<a href="#fnref:9" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

@@ -9,14 +9,14 @@ The problem has a very distinguished pedigree it was first addressed by a well-k
 [Charles Dodgson][carroll] (Lewis Carroll).
 If you haven't heard of him, you should.
 There is a very important book which he wrote, not the [mathematical book][carroll-logic]
-, but the book called ["Alice's Adventures in Wonderland"][alice].
-If you haven't read it, do.
-No person should be hired ever unless you read "Alice in Wonderland".
-in any case he was also a mathematician.
+, but the book called ["Alice's Adventures in Wonderland"][alice-in-wonderland].
+If you haven't read it, do[^alice-free-ebook].
+No person should be hired ever unless they read "Alice in Wonderland".
+In any case, he was also a mathematician.
 He also dabbled in all kind of games
-apparently he [invented Scrabble][scrabble] and bunch of other games.
+apparently he invented Scrabble and bunch of other games[^inventor-of-scrabble].
 
-At some point he decided that there is a clear problem with tennis tournaments.
+At some point he decided that there is a clear problem with lawn tennis tournaments.
 He observed that with a very high probability,
 if you have say a tournament with 64
 players, the guy who gets the second prize is actually not the second strongest.
@@ -36,9 +36,9 @@ number of comparisons but it took another thirty years, until 1964 when a
 Russian mathematician [Sergei S. Kislitsyn][sergei] published a paper which 
 proved there is an optimal algorithm and described it.
 
-By the way, all of this information is available[^aoc-ref] in 
+By the way, all of this information is available in 
 a
-book called ["The Art of Computer Programming"][aoc] by [Donald Knuth][knuth] .
+book called ["The Art of Computer Programming"][aoc] by [Donald Knuth][knuth][^aoc-second-smallest-ref].
 You really should buy it.
 You make a certain commitment.
 You spend $150 saying that you really care about programming.
@@ -59,9 +59,21 @@ They are  right at the end.
 Lots of very important algorithms are described in the solutions to his problems.
 Reading Knuth has to become a lifelong activity.
 
-[^aoc-ref]: See chapter 5.3.3 in Volume 3 of "The Art of Computer Programming".
+[^aoc-second-smallest-ref]: See chapter 5.3.3 in Volume 3 of "The Art of Computer Programming".
 
-[alice]: https://www.gutenberg.org/ebooks/11
+
+[^inventor-of-scrabble]: The invention of Scrabble is attributed to Lewis Carroll's brief journal entry:
+    "A game might be made of letters, to be moved about on a chess board till they form words" (Dec 19th,
+    ["The Life and Letters of Lewis Carroll"](http://www.fullbooks.com/The-Life-and-Letters-of-Lewis-Carroll3.html) ).
+    See also ["History of Scrabble"](https://scrabbledaily.blogspot.com/2008/05/history-of-scrabble.html)
+    and ["The games of Lewis Carroll"](http://www.bananagrammer.com/2009/10/games-of-lewis-carroll.html).
+
+    His book ["The Game of Logic"](https://en.wikipedia.org/wiki/The_Game_of_Logic) teaches formal logic
+    through a board. This book is also available from [Project Gutenberg](https://www.gutenberg.org/ebooks/4763).
+
+[^alice-free-ebook]: The book is freely available from [Project Gutenberg](https://www.gutenberg.org/ebooks/11).
+
+[alice-in-wonderland]: https://en.wikipedia.org/wiki/Alice%27s_Adventures_in_Wonderland
 [carroll]: https://en.wikipedia.org/wiki/Lewis_Carroll
 [scrabble]: http://www.bananagrammer.com/2009/10/games-of-lewis-carroll.html
 [seed]: https://en.wikipedia.org/wiki/Seed_(sports)
@@ -69,18 +81,18 @@ Reading Knuth has to become a lifelong activity.
 [aoc]: https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming
 [sergei]: http://www.mathnet.ru/eng/person27000
 [carroll-logic]: https://www.gutenberg.org/ebooks/28696
+[lawn-tennis]: https://en.wikipedia.org/wiki/History_of_tennis
 
 
 ## Smallest and second smallest element
 
 
-The problem of finding the smallest and second smallest element,
-is in "The Art of Computer Programming", but somehow Knuth does not implement it.
-He describes it fully but doesn't implement it as an algorithm.
-As we shall see its actually a little tricky.
+The problem of finding the smallest and second smallest element
+is described fully in "The Art of Computer Programming", but somehow Knuth does not implement it.
+As we shall see it's actually a little tricky.
 I pick this algorithm not because it is of paramount importance for your future work.
 I pick this algorithm because it allows us to learn how to do decomposition
-and learn components along the way (like lists).
+and learn components along the way (like the lists we started previously).
 
 How many comparisons do you need to solve this problem?
 Same as min-max from last time?
@@ -104,7 +116,7 @@ How many people did he beat?
 
 For example, [Wimbledon][wimbledon] has 64 players who are admitted.
 The winner doesn't play 63 games.
-The tournament is structured as a binary tree.
+The tournament is structured as a [binary tree][binary-tree].
 This tree is how deep? 
 If you have `n` elements? It's `ceil(log_2(n))`.
 We could somehow arrange our tournament so that the 
@@ -115,8 +127,7 @@ we just find the best out of them which is
 
 To review, we 
 have `n - 1` comparisons to get the winner.
-`ceil(log_2(n)) - 1` to get the second best, 
-from the list he played.
+`ceil(log_2(n)) - 1` to get the second best, from the list he played.
 So the upper bound for the algorithm is:
 
     n + ceil(log_2(n)) - 2
@@ -126,6 +137,7 @@ will require us to create several components.
 We will build these up over the next few lessons.
 
 [wimbledon]: https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
+[binary-tree]: https://en.wikipedia.org/wiki/Binary_tree
 
 ### Unoptimal divider and conquer approach
 
@@ -147,13 +159,12 @@ with simple mathematics.
 
 3. And so on...
 
-So that would be:
+So the total number of comparisons would be:
     
-    n/2 + (n/2 + n/4 + n/8 + ...)
-
+      n/2 + (n/2 + n/4 + n/8 + ...)
     = n/2 + n-1
+    = 3n/2 - 1
 
-total comparisons.
 That's not what we're trying to accomplish,
 so divide and conquer doesn't always do what we think.
 
@@ -200,9 +211,9 @@ Realize that suddenly we see something which has nothing to do with our problem.
 the linear (unbalanced) tree and transform it into a balanced tree*.
 What mathematical property allows us to do such a transformation?
 Specifically why can we convert one kind of computation to the other.
-Associativity[^associativity].
+**Associativity**[^associativity].
 As long as our operation is associative, 
-What property don't we need? Commutativity.
+What property don't we need? **Commutativity**[^commutativity].
 We keep them in the same order,
 we just rebalanced parenthesis.
 
@@ -213,23 +224,51 @@ But, because we want to preserve stability it is not.
 We distinguish between the left and right argument.
 
 
-[^associativity]: [Associativity][associative] is a fundamental property studied in abstract
-    algebra.
-    Informally, it is that you can apply an operation to arguments
-    in any order you want.
-    Formally:
+[^associativity]: A binary function `f` is [associative](https://en.wikipedia.org/wiki/Associative_property)
+    if the the following holds for all `a, b, c` in its domain:
 
         f(f(a, b), c)) = f(a, f(b, c))
 
-    For example, multiplication:
+    Informally, `f` can be applied in any order.
+    For example, addition of integers is associative:
 
-        (a * b) * c = a * (b * c)
+        (a + b) + c = a + (b + c)
+
+    Subtraction of integers is not associative:
+
+        (3 - 2) - 1 != 3 - (2 - 1)
 
     You can see why associativity is often referred to as being
-    able to "re-paranthesize".
+    able to "re-paranthesize" expressions.
 
-[associative]: https://mathworld.wolfram.com/Associative.html
+[^commutativity]: A binary function `f` is [commutative](https://en.wikipedia.org/wiki/Commutative_property)
+    if for all `a, b`, in its domain:
 
+        f(a, b) = f(b, a)
+
+    Informally, it means it returns the same result, regardless of the order of the inputs.
+    For example, multiplication of integers is commutative:
+
+        a * b = b * a
+
+    This fact about integers can be proven in the following manner:
+    If you arrange items into a block of columns and rows, such as: 
+
+        * * * * *
+        * * * * *
+        * * * * *
+
+    The number of elements does not change regardless of how it is rotated:
+
+        * * *
+        * * *
+        * * *
+        * * *
+        * * *
+
+    This proof is from [Dirichlet](https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet)
+    (see Chapter 9.1 of "From Mathematics to Generic Programming").
+    An example of an operation which is not commutative is matrix multiplication.
 
 ## Binary counting and reduction
 
@@ -522,7 +561,7 @@ We could compete with Steve Jobs for elegance of our design[^alex-joke].
 ### What is in-place memory usage?
 
 How significant is the storage of our counter?
-We use the term ["in-place"][in-place] to indicate the memory
+We use the term [**in-place**][in-place] to indicate the memory
 usage of an algorithm is not significant.
 A long time ago people thought 
 algorithms were in-place if they didn't require any  extra memory.
