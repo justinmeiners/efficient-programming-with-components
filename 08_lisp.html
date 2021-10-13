@@ -417,14 +417,6 @@ and construct them:</p>
 pair_type empty_queue() { return pair_type(end(), end()); }
 </code></pre>
 
-<p>You can remove an element from the front of the queue:</p>
-
-<pre><code>pair_type pop_front(const pair_type&amp; p) {
-  if (empty(p)) return p;
-  return pair_type(next(p.first), p.second);
-}
-</code></pre>
-
 <p>You can add an element to the front, or the back of the queue:</p>
 
 <pre><code>pair_type push_front(const pair_type&amp; p, const T&amp; value) {
@@ -438,6 +430,14 @@ pair_type push_back(const pair_type&amp; p, const T&amp; value) {
   if (empty(p)) return pair_type(new_node, new_node);
   next(p.second) = new_node;
   return pair_type(p.first, new_node);
+}
+</code></pre>
+
+<p>You can remove an element from the front of the queue<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>:</p>
+
+<pre><code>pair_type pop_front(const pair_type&amp; p) {
+  if (empty(p)) return p;
+  return pair_type(next(p.first), p.second);
 }
 </code></pre>
 
@@ -557,6 +557,13 @@ In Common Lisp one typically uses the higher-level macro <a href="http://www.lis
 <li id="fn:8">
 The assignment in this code is the same as <code>(setf (cdr x) free-list)</code> in Common Lisp,
 or <code>(set-cdr! x free-list)</code> in Scheme.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
+<li id="fn:9">
+Since we implement <code>pop_front</code>, you might also expect <code>pop_back</code>.
+A little thought will reveal there is no constant
+time implementation for singly linked lists.
+The queue has a reference to the last node in the queue,
+but removing it would require modification
+of the preceding node.<a href="#fnref:9" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

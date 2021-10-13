@@ -387,13 +387,6 @@ and construct them:
     bool empty(const pair_type& p) { return is_end(p.first); }
     pair_type empty_queue() { return pair_type(end(), end()); }
 
-You can remove an element from the front of the queue:
-
-    pair_type pop_front(const pair_type& p) {
-      if (empty(p)) return p;
-      return pair_type(next(p.first), p.second);
-    }
-
 You can add an element to the front, or the back of the queue:
 
     pair_type push_front(const pair_type& p, const T& value) {
@@ -409,10 +402,25 @@ You can add an element to the front, or the back of the queue:
       return pair_type(p.first, new_node);
     }
 
+You can remove an element from the front of the queue[^no-pop-back]:
+
+    pair_type pop_front(const pair_type& p) {
+      if (empty(p)) return p;
+      return pair_type(next(p.first), p.second);
+    }
+
 Now we can also free lists in constant time,
 simply by attaching the end of our list to the free list.
 
     void free(const pair_type& p) { free(p.first, p.second); }
+
+
+[^no-pop-back]: Since we implement `pop_front`, you might also expect `pop_back`.
+    A little thought will reveal there is no constant
+    time implementation for singly linked lists.
+    The queue has a reference to the last node in the queue,
+    but removing it would require modification
+    of the preceding node. 
 
 
 ## Code
