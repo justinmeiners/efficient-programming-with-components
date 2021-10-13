@@ -10,7 +10,7 @@ other algorithms and learn to write iterators right once
 and for all.
 
 Let me tell you a little about them.
-Anybody who programs in C++ is forced to use vector
+Anybody who programs in C++ is forced to use `std::vector`
 and those have iterators.
 But, there are lots of people who do not quite understand what they are,
 partially because iterators are called iterators.
@@ -27,11 +27,8 @@ It's a mythical language. It was never implemented.
 But, many people at [CMU][cmu] got tenure because of it.
 It has some interesting ideas, including the idea of a generator.
 For those of you who know [Python][python], it is like an iterator in Python[^python-iterator].
-Barbara Liskov said, wouldn't it be nice to write:
-
-    for x in thing
-
-and iterators allow you to do that[^clu-iterators].
+Barbara Liskov said, "wouldn't it be nice to write something like: `for x in thing`".
+Iterators allow you to do that[^clu-iterators].
 It is like a generator in Alphard.
 It is a procedure which returns multiple values, one by one.
 It's a procedural abstraction.
@@ -42,12 +39,12 @@ It was a generalization of a control structure.
 At the same time, I was working on how to do algorithms and I
 introduced the notion of position.
 A better name is coordinate, the name which Paul and I use
-in our book "Elements of Programming"[^eop].
+in our book "Elements of Programming".
 A coordinate is some way of indicating where in the data structure you are.
 It is not a control structure, it's just the pointer into a data structure,
 or generalized notion of a coordinate.
 It is something which allows me to navigate through the data structure in a
-natural way.
+natural way[^coordinate-references].
 
 Eventually I started talking to C++ guys and showed them coordinates
 and they said, "we call it iterator".
@@ -78,9 +75,13 @@ It wasn't out of ignorance.
 Maybe I was stupid, 
 but I wasn't ignorant.
 
-[^eop]: See chapter 7 of "Elements of Programming" on coordinate structures.
+[^coordinate-references]: See chapter 7 of "Elements of Programming" on coordinate structures.
+    An interesting discussion on the general idea of "coordinatisation"
+    is found in chapter 1 of  "Basic Notions of Algebra" by Shafarevich.
      
-[^boost]: [Boost][boost] is a popular collection of C++ libraries generally accepted as the next tool to reach for beyond the standard library.
+[^boost]: [Boost][boost] is a popular collection of C++ libraries, covering a wide range of uses,
+     generally accepted as the next tool to reach for beyond the standard library.
+     Many standard library features, such as smart pointers, were initially developed in Boost.
      Alex speaks positively of some parts (see [his foreword][alex-graph-foreword] for "The Boost Graph Library"), but others he is more critical of.
 
 
@@ -125,7 +126,8 @@ but I wasn't ignorant.
 [snyder]: https://dblp.org/pid/04/4444.html
 [alex-graph-foreword]: http://stepanovpapers.com/siekforeword.pdf
 
-## List pool iterators
+
+## Affiliated types for iterators
 
 We always need to distinguish between how we type
 code in C++ and what the notion is behind it.
@@ -139,18 +141,18 @@ way to obtain `int` from `int*`. That is, if somebody
 gives me a pointer type, I want a way to find out what type
 it points to.
 
-To do this we need this notion of *type functions* which accept one type
+To do this we need this notion of **type functions** which accept one type
 and return a different type.
 This problem of needing to obtain affiliated types is not specific to C and C++.
 It appears in Java and Python as well.
 In spite of Python's [duck typing][duck] there's *still* a connection
 between types, even if they are duck types.
 
-So we need this notion of *type functions*,
+So we need this notion of type functions,
 but C doesn't let us do this,
 and neither does C++.
 Instead of type functions we are going to solve
-this problem for iterators by using typedefs.
+this problem for iterators by using `typedef`s.
 
 For an iterator, there are [5 types][cpp-iterator-traits] that we always need to define.
 Three of them are primary, two are secondary.
@@ -175,40 +177,7 @@ Let's start with the primary:
     Every iterator uses a tag type to denote which theory it supports.
     The tag lets you do compile time dispatch[^compile-time-dispatch].
 
-    What category is the iterator for `list_pool` from last chapter?
-    We need `ForwardIterator`, because there is no way in a singly linked list
-    to go backwards.
-
-Let's define these types in the `list_pool` iterator.
-    
-    #include <iterator>
-
-    // class list_pool {
-    // ...
-
-         struct iterator {
-           typedef list_pool::value_type value_type;
-           typedef list_pool::list_type difference_type;
-           typedef std::forward_iterator_tag iterator_category;
-         };
-
-    // };
-
-
-[^compile-time-dispatch]: Some algorithms can be implemented more efficiently for certain
-    iterator categories. For example [`std::distance`][std-distance] can be
-    implemented as a constant time algorithm for `RandomAccessIterators` but
-    only a linear time algorithm for other iterator categories. The
-    `iterator_category` tag allows the appropriate algorithm to be selected at
-    compile time. This technique is known as [tag disptach][tag-dispatch].
-
-[duck]: https://en.wikipedia.org/wiki/Duck_typing
-[ptrdiff]: https://en.cppreference.com/w/c/types/ptrdiff_t
-[cpp-iterator-traits]: https://en.cppreference.com/w/cpp/iterator/iterator_traits
-[std-distance]: https://en.cppreference.com/w/cpp/iterator/distance
-[tag-dispatch]: https://quuxplusone.github.io/blog/2021/06/07/tag-dispatch-and-concept-overloading
-
-### Iterator reference types
+### Historical artifacts 
 
 The fourth and fifth types to be defined are required only for historical reasons.
 Microsoft said they were going to vote against STL unless it accommodated
@@ -243,11 +212,6 @@ So now we need to provide it.
 &emsp;4. `reference`: the type of a reference to the value. <br/>
 &emsp;5. `pointer`:  the type of a pointer to the value.
 
-Here is our implementation:
-
-    typedef value_type& reference;
-    typedef value_type* pointer;
-
 It's not particularly harmful, but it obfuscates things
 and it provides "language experts" with steady employment.
 
@@ -255,9 +219,43 @@ and it provides "language experts" with steady employment.
     for a brief overview of these various pointer types.
     The more general concept behind them is [memory segmentation][memory-segmentation].
 
+[^compile-time-dispatch]: Some algorithms can be implemented more efficiently for certain
+    iterator categories. For example [`std::distance`][std-distance] can be
+    implemented as a constant time algorithm for `RandomAccessIterators` but
+    only a linear time algorithm for other iterator categories. The
+    `iterator_category` tag allows the appropriate algorithm to be selected at
+    compile time. This technique is known as [tag disptach][tag-dispatch].
+
+[duck]: https://en.wikipedia.org/wiki/Duck_typing
+[ptrdiff]: https://en.cppreference.com/w/c/types/ptrdiff_t
+[cpp-iterator-traits]: https://en.cppreference.com/w/cpp/iterator/iterator_traits
+[std-distance]: https://en.cppreference.com/w/cpp/iterator/distance
+[tag-dispatch]: https://quuxplusone.github.io/blog/2021/06/07/tag-dispatch-and-concept-overloading
 [lvalue]: https://en.wikipedia.org/wiki/Value_(computer_science)#lrvalue
 [far-ptr-article]: https://devblogs.microsoft.com/oldnewthing/20200728-00/?p=104012
 [memory-segmentation]: https://en.wikipedia.org/wiki/Memory_segmentation
+
+## List pool iterators
+
+Let's define these types in the `list_pool` iterator.
+What category is the iterator for `list_pool` from last chapter?
+We need `ForwardIterator`, because there is no way in a singly linked list
+to go backwards.
+    
+    #include <iterator>
+
+    // class list_pool {
+    // ...
+
+         struct iterator {
+           typedef list_pool::value_type value_type;
+           typedef list_pool::list_type difference_type;
+           typedef std::forward_iterator_tag iterator_category;
+           typedef value_type& reference;
+           typedef value_type* pointer;
+         };
+
+    // };
 
 ### Constructors
 
@@ -472,7 +470,7 @@ A total ordering does not have to be topologically induced by the traversal.
 
 [lex]: https://en.wikipedia.org/wiki/Lexicographic_order
 
-**Exercise:** extend the iterator to linked iterator
+**Exercise:** Extend the iterator to linked iterator
     so we can assign the next on a node.
     Specifically we want to be able to modify the successor of 
     an iterator.
