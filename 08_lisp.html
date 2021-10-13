@@ -396,6 +396,10 @@ void free_list(list_pool&lt;T, N&gt;&amp; pool,
 }
 </code></pre>
 
+<p><strong>Exercise:</strong> Before moving on, get familiar with these operations.
+  Create a simple list inside a pool and print it by iterating through its contents
+  (solved in <code>test_list_pool.cpp</code> at the end of the chapter).</p>
+
 <a name="List-queue"></a>
 <h2>List queue</h2>
 
@@ -449,6 +453,7 @@ simply by attaching the end of our list to the free list.</p>
 <ul>
 <li><a href="code/list_pool.h">list_pool.h</a></li>
 <li><a href="code/list_pool_iterator.h">list_pool_iterator.h</a> (included by <code>list_pool.h</code>, but not discussed until Chapter 9)</li>
+<li><a href="code/test_list_pool.cpp">test_list_pool.cpp</a></li>
 </ul>
 
 <div class="footnotes">

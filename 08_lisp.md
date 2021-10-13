@@ -355,6 +355,10 @@ not just a node.
       while (!pool.is_empty(x)) x = pool.free(x); 
     }
 
+**Exercise:** Before moving on, get familiar with these operations.
+  Create a simple list inside a pool and print it by iterating through its contents
+  (solved in `test_list_pool.cpp` at the end of the chapter).
+
 
 [^rplaca-explanation]: `rplaca` and `rplacd` are unfriendly abbrevations of
     "replace car" and "replace cdr" (see "Lisp 1.5 Programmer's Manual").
@@ -415,3 +419,4 @@ simply by attaching the end of our list to the free list.
 
 - [list_pool.h](code/list_pool.h)
 - [list_pool_iterator.h](code/list_pool_iterator.h) (included by `list_pool.h`, but not discussed until Chapter 9)
+- [test_list_pool.cpp](code/test_list_pool.cpp)
