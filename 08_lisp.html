@@ -396,6 +396,10 @@ void free_list(list_pool&lt;T, N&gt;&amp; pool,
 }
 </code></pre>
 
+<p><strong>Exercise:</strong> Before moving on, get familiar with these operations.
+  Create a simple list inside a pool and print it by iterating through its contents
+  (solved in <code>test_list_pool.cpp</code> at the end of the chapter).</p>
+
 <a name="List-queue"></a>
 <h2>List queue</h2>
 
@@ -411,14 +415,6 @@ and construct them:</p>
 
 <pre><code>bool empty(const pair_type&amp; p) { return is_end(p.first); }
 pair_type empty_queue() { return pair_type(end(), end()); }
-</code></pre>
-
-<p>You can remove an element from the front of the queue:</p>
-
-<pre><code>pair_type pop_front(const pair_type&amp; p) {
-  if (empty(p)) return p;
-  return pair_type(next(p.first), p.second);
-}
 </code></pre>
 
 <p>You can add an element to the front, or the back of the queue:</p>
@@ -437,6 +433,14 @@ pair_type push_back(const pair_type&amp; p, const T&amp; value) {
 }
 </code></pre>
 
+<p>You can remove an element from the front of the queue<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>:</p>
+
+<pre><code>pair_type pop_front(const pair_type&amp; p) {
+  if (empty(p)) return p;
+  return pair_type(next(p.first), p.second);
+}
+</code></pre>
+
 <p>Now we can also free lists in constant time,
 simply by attaching the end of our list to the free list.</p>
 
@@ -449,6 +453,7 @@ simply by attaching the end of our list to the free list.</p>
 <ul>
 <li><a href="code/list_pool.h">list_pool.h</a></li>
 <li><a href="code/list_pool_iterator.h">list_pool_iterator.h</a> (included by <code>list_pool.h</code>, but not discussed until Chapter 9)</li>
+<li><a href="code/test_list_pool.cpp">test_list_pool.cpp</a></li>
 </ul>
 
 <div class="footnotes">
@@ -552,6 +557,13 @@ In Common Lisp one typically uses the higher-level macro <a href="http://www.lis
 <li id="fn:8">
 The assignment in this code is the same as <code>(setf (cdr x) free-list)</code> in Common Lisp,
 or <code>(set-cdr! x free-list)</code> in Scheme.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
+<li id="fn:9">
+Since we implement <code>pop_front</code>, you might also expect <code>pop_back</code>.
+A little thought will reveal there is no constant
+time implementation for singly linked lists.
+The queue has a reference to the last node in the queue,
+but removing it would require modification
+of the preceding node.<a href="#fnref:9" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

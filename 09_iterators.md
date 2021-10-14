@@ -351,6 +351,10 @@ for equality, as it violates mathematical tradition.
 But, oh well.
 When you took Algebra in grade school,
 they used `=` and they used `x` and `y` and I think it's good.
+
+**Exercise:** Experiment with list pool iterators by using
+  a standard library algorithm on them, such as `find` or `copy`
+  (see `test_list_pool_iterator.cpp` at the end of the chapter).
  
 ## Thoughts about iterator design
 
@@ -478,3 +482,4 @@ A total ordering does not have to be topologically induced by the traversal.
 ## Code
    
 - [list_pool_iterator.h](code/list_pool_iterator.h)
+- [test_list_pool_iterator.cpp](code/test_list_pool_iterator.cpp)
