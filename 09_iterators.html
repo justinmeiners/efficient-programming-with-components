@@ -140,7 +140,7 @@ other algorithms and learn to write iterators right once
 and for all.</p>
 
 <p>Let me tell you a little about them.
-Anybody who programs in C++ is forced to use vector
+Anybody who programs in C++ is forced to use <code>std::vector</code>
 and those have iterators.
 But, there are lots of people who do not quite understand what they are,
 partially because iterators are called iterators.
@@ -157,12 +157,8 @@ It&rsquo;s a mythical language. It was never implemented.
 But, many people at <a href="https://en.wikipedia.org/wiki/Carnegie_Mellon_University">CMU</a> got tenure because of it.
 It has some interesting ideas, including the idea of a generator.
 For those of you who know <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>, it is like an iterator in Python<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
-Barbara Liskov said, wouldn&rsquo;t it be nice to write:</p>
-
-<pre><code>for x in thing
-</code></pre>
-
-<p>and iterators allow you to do that<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+Barbara Liskov said, &ldquo;wouldn&rsquo;t it be nice to write something like: <code>for x in thing</code>&rdquo;.
+Iterators allow you to do that<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
 It is like a generator in Alphard.
 It is a procedure which returns multiple values, one by one.
 It&rsquo;s a procedural abstraction.
@@ -173,12 +169,12 @@ It was a generalization of a control structure.</p>
 <p>At the same time, I was working on how to do algorithms and I
 introduced the notion of position.
 A better name is coordinate, the name which Paul and I use
-in our book &ldquo;Elements of Programming&rdquo;<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+in our book &ldquo;Elements of Programming&rdquo;.
 A coordinate is some way of indicating where in the data structure you are.
 It is not a control structure, it&rsquo;s just the pointer into a data structure,
 or generalized notion of a coordinate.
 It is something which allows me to navigate through the data structure in a
-natural way.</p>
+natural way<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
 
 <p>Eventually I started talking to C++ guys and showed them coordinates
 and they said, &ldquo;we call it iterator&rdquo;.
@@ -209,8 +205,8 @@ It wasn&rsquo;t out of ignorance.
 Maybe I was stupid,
 but I wasn&rsquo;t ignorant.</p>
 
-<a name="List-pool-iterators"></a>
-<h2>List pool iterators</h2>
+<a name="Affiliated-types-for-iterators"></a>
+<h2>Affiliated types for iterators</h2>
 
 <p>We always need to distinguish between how we type
 code in C++ and what the notion is behind it.
@@ -224,18 +220,18 @@ way to obtain <code>int</code> from <code>int*</code>. That is, if somebody
 gives me a pointer type, I want a way to find out what type
 it points to.</p>
 
-<p>To do this we need this notion of <em>type functions</em> which accept one type
+<p>To do this we need this notion of <strong>type functions</strong> which accept one type
 and return a different type.
 This problem of needing to obtain affiliated types is not specific to C and C++.
 It appears in Java and Python as well.
 In spite of Python&rsquo;s <a href="https://en.wikipedia.org/wiki/Duck_typing">duck typing</a> there&rsquo;s <em>still</em> a connection
 between types, even if they are duck types.</p>
 
-<p>So we need this notion of <em>type functions</em>,
+<p>So we need this notion of type functions,
 but C doesn&rsquo;t let us do this,
 and neither does C++.
 Instead of type functions we are going to solve
-this problem for iterators by using typedefs.</p>
+this problem for iterators by using <code>typedef</code>s.</p>
 
 <p>For an iterator, there are <a href="https://en.cppreference.com/w/cpp/iterator/iterator_traits">5 types</a> that we always need to define.
 Three of them are primary, two are secondary.
@@ -257,32 +253,12 @@ Let&rsquo;s start with the primary:</p>
 
 <p> In C++ (without concepts) we use tag types to designate the iterator categories.
  Every iterator uses a tag type to denote which theory it supports.
- The tag lets you do compile time dispatch<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.</p>
-
-<p> What category is the iterator for <code>list_pool</code> from last chapter?
- We need <code>ForwardIterator</code>, because there is no way in a singly linked list
- to go backwards.</p></li>
+ The tag lets you do compile time dispatch<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.</p></li>
 </ol>
 
 
-<p>Let&rsquo;s define these types in the <code>list_pool</code> iterator.</p>
-
-<pre><code>#include &lt;iterator&gt;
-
-// class list_pool {
-// ...
-
-     struct iterator {
-       typedef list_pool::value_type value_type;
-       typedef list_pool::list_type difference_type;
-       typedef std::forward_iterator_tag iterator_category;
-     };
-
-// };
-</code></pre>
-
-<a name="Iterator-reference-types"></a>
-<h3>Iterator reference types</h3>
+<a name="Historical-artifacts"></a>
+<h3>Historical artifacts</h3>
 
 <p>The fourth and fifth types to be defined are required only for historical reasons.
 Microsoft said they were going to vote against STL unless it accommodated
@@ -317,14 +293,32 @@ So now we need to provide it.</p>
 <p>&emsp;4. <code>reference</code>: the type of a reference to the value. <br/>
 &emsp;5. <code>pointer</code>:  the type of a pointer to the value.</p>
 
-<p>Here is our implementation:</p>
-
-<pre><code>typedef value_type&amp; reference;
-typedef value_type* pointer;
-</code></pre>
-
 <p>It&rsquo;s not particularly harmful, but it obfuscates things
 and it provides &ldquo;language experts&rdquo; with steady employment.</p>
+
+<a name="List-pool-iterators"></a>
+<h2>List pool iterators</h2>
+
+<p>Let&rsquo;s define these types in the <code>list_pool</code> iterator.
+What category is the iterator for <code>list_pool</code> from last chapter?
+We need <code>ForwardIterator</code>, because there is no way in a singly linked list
+to go backwards.</p>
+
+<pre><code>#include &lt;iterator&gt;
+
+// class list_pool {
+// ...
+
+     struct iterator {
+       typedef list_pool::value_type value_type;
+       typedef list_pool::list_type difference_type;
+       typedef std::forward_iterator_tag iterator_category;
+       typedef value_type&amp; reference;
+       typedef value_type* pointer;
+     };
+
+// };
+</code></pre>
 
 <a name="Constructors"></a>
 <h3>Constructors</h3>
@@ -528,7 +522,7 @@ It has nothing to do with before and after,
 but it establishes a total ordering.
 A total ordering does not have to be topologically induced by the traversal.</p>
 
-<p><strong>Exercise:</strong> extend the iterator to linked iterator
+<p><strong>Exercise:</strong> Extend the iterator to linked iterator
     so we can assign the next on a node.
     Specifically we want to be able to modify the successor of
     an iterator.</p>
@@ -576,9 +570,13 @@ For example, the following returns square numbers:</p>
 <li id="fn:2">
 See this <a href="http://web.mit.edu/ghudson/info/iterators">brief description of CLU iterators</a>.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
-See chapter 7 of &ldquo;Elements of Programming&rdquo; on coordinate structures.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+See chapter 7 of &ldquo;Elements of Programming&rdquo; on coordinate structures.
+An interesting discussion on the general idea of &ldquo;coordinatisation&rdquo;
+is found in chapter 1 of  &ldquo;Basic Notions of Algebra&rdquo; by Shafarevich.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
-<a href="https://www.boost.org/">Boost</a> is a popular collection of C++ libraries generally accepted as the next tool to reach for beyond the standard library.
+<a href="https://www.boost.org/">Boost</a> is a popular collection of C++ libraries, covering a wide range of uses,
+ generally accepted as the next tool to reach for beyond the standard library.
+ Many standard library features, such as smart pointers, were initially developed in Boost.
  Alex speaks positively of some parts (see <a href="http://stepanovpapers.com/siekforeword.pdf">his foreword</a> for &ldquo;The Boost Graph Library&rdquo;), but others he is more critical of.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
 Some algorithms can be implemented more efficiently for certain
