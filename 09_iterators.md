@@ -474,11 +474,10 @@ A total ordering does not have to be topologically induced by the traversal.
 
 [lex]: https://en.wikipedia.org/wiki/Lexicographic_order
 
-**Exercise:** Extend the iterator to linked iterator
-    so we can assign the next on a node.
-    Specifically we want to be able to modify the successor of 
-    an iterator.
-
+**Exercise:** Extend the list pool iterator
+    with the ability to modify the `next` of the node it points to
+    (this is discussed and solved in chapter 12).
+    
 ## Code
    
 - [list_pool_iterator.h](code/list_pool_iterator.h)

@@ -108,7 +108,7 @@ So it's the combination of two things:
 We are slowly hinting more at concepts.
 How is a concept different from a class?
 How is a concept different than an abstract class
-or interface in java?
+or interface in Java?
 One way to see this is try to think of how to specify
 the concept of an iterator using them.
 Consider that iterators have a `value_type`.
@@ -155,7 +155,8 @@ all of which we have mentioned before:
     can be a better resource.
 
 [sgi-iterator-concepts]: https://www.boost.org/sgi/stl/Iterators.html
-### Linked iterator
+
+## Linked iterator
 
 There are some people who say, "concepts aren't important because Alex already exhausted them.
 there are just four kinds of iterators and that's all."
@@ -172,7 +173,7 @@ the normal operations:
 - `==`: equality
 - `*`: dereference
 
-It has one additional operation which allows
+it has one additional operation which allows
 you to set the successor.
 If you have an iterator and you have another one,
 you can just make the second iterator the successor
@@ -182,7 +183,6 @@ Of course, the standard model is a linked list.
 
 To make our `list_pool` iterator a `LinkedIterator`
 we simply add the following function:
-
 
     void set_successor(iterator x, iterator y) {
         x.pool->next(x.node) = y.node;
@@ -232,7 +232,7 @@ on a built-in type instead of a class.
 
 ### Linked iterator is "unsafe"
 
-As long as you don't do it, the topology remains.
+As long as you don't do `set_successor`, the topology remains.
 But, if you do, things change.
 This is a very unsafe operation.
 You can even make circular lists.
@@ -249,7 +249,7 @@ you will not be successful.
 But, it is a legitimate data structure.
 
 A long time ago when we programming in Lisp,
-there were people saying, "never use `rplcd`" (set successor).
+there were people saying, "never use set successor (`rplcd`)".
 They were wrong.
 Use whatever is given to you.
 But, be wise.
@@ -271,7 +271,7 @@ It will just replace one sort of bugs with another.
 Bad programmers are very creative,
 they find amazing things.
 
-## Reverse linked ranges
+### Reverse linked ranges
 
 To understand how this concept works
 we will look at a basic algorithm.
@@ -332,7 +332,7 @@ Also note that algorithmically there is no good reason why we evaluate
 On every single iteration, because only the one iterator
 we moved in the loop could become empty.
 
-**Exercise:** Write a theoretically more efficient merge which does not do this extra comparison (solved just below).
+**Exercise:** Try to write a variant of merge which does not do this extra comparison ever loop (solved just below).
 
 ### Merge with fewer comparisons
 
@@ -561,8 +561,10 @@ There is absolutely no indication that getting it will make you rich.
     Alex: If you want to see a really bad program
     see [Patrick Henry Winston][winston]'s
     book ["LISP 1st Edition"][lisp-book].
-    Look at his sorting algorithm for list: [radix_sort.lisp](code/other/radix_sort.lisp).
+    Look at his sorting algorithm for lists: [radix_sort.lisp](code/other/radix_sort.lisp).
     It posses many remarkable properties including using `n log(n)` extra storage.
+    It shouldn't need any extra storage.
+    It's also slow.
     Good example of a famous person at a respectable school
     publishing something terrible.
     Published does not mean good.

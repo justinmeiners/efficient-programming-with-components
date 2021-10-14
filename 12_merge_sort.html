@@ -226,7 +226,7 @@ So it&rsquo;s the combination of two things:</p>
 <p>We are slowly hinting more at concepts.
 How is a concept different from a class?
 How is a concept different than an abstract class
-or interface in java?
+or interface in Java?
 One way to see this is try to think of how to specify
 the concept of an iterator using them.
 Consider that iterators have a <code>value_type</code>.
@@ -268,7 +268,7 @@ all of which we have mentioned before:</p>
 
 
 <a name="Linked-iterator"></a>
-<h3>Linked iterator</h3>
+<h2>Linked iterator</h2>
 
 <p>There are some people who say, &ldquo;concepts aren&rsquo;t important because Alex already exhausted them.
 there are just four kinds of iterators and that&rsquo;s all.&rdquo;
@@ -288,7 +288,7 @@ the normal operations:</p>
 </ul>
 
 
-<p>It has one additional operation which allows
+<p>it has one additional operation which allows
 you to set the successor.
 If you have an iterator and you have another one,
 you can just make the second iterator the successor
@@ -329,7 +329,7 @@ on a built-in type instead of a class.</p>
 <a name="Linked-iterator-is--22-unsafe-22-"></a>
 <h3>Linked iterator is &ldquo;unsafe&rdquo;</h3>
 
-<p>As long as you don&rsquo;t do it, the topology remains.
+<p>As long as you don&rsquo;t do <code>set_successor</code>, the topology remains.
 But, if you do, things change.
 This is a very unsafe operation.
 You can even make circular lists.
@@ -346,7 +346,7 @@ you will not be successful.
 But, it is a legitimate data structure.</p>
 
 <p>A long time ago when we programming in Lisp,
-there were people saying, &ldquo;never use <code>rplcd</code>&rdquo; (set successor).
+there were people saying, &ldquo;never use set successor (<code>rplcd</code>)&rdquo;.
 They were wrong.
 Use whatever is given to you.
 But, be wise.
@@ -371,7 +371,7 @@ Bad programmers are very creative,
 they find amazing things.</p>
 
 <a name="Reverse-linked-ranges"></a>
-<h2>Reverse linked ranges</h2>
+<h3>Reverse linked ranges</h3>
 
 <p>To understand how this concept works
 we will look at a basic algorithm.
@@ -437,7 +437,7 @@ Also note that algorithmically there is no good reason why we evaluate</p>
 <p>On every single iteration, because only the one iterator
 we moved in the loop could become empty.</p>
 
-<p><strong>Exercise:</strong> Write a theoretically more efficient merge which does not do this extra comparison (solved just below).</p>
+<p><strong>Exercise:</strong> Try to write a variant of merge which does not do this extra comparison ever loop (solved just below).</p>
 
 <a name="Merge-with-fewer-comparisons"></a>
 <h3>Merge with fewer comparisons</h3>
@@ -708,8 +708,10 @@ sorting one million integers.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
 <p>Alex: If you want to see a really bad program
 see <a href="http://people.csail.mit.edu/phw/index.html">Patrick Henry Winston</a>&rsquo;s
 book <a href="http://people.csail.mit.edu/phw/Books/LISPBACK.HTML">&ldquo;LISP 1st Edition&rdquo;</a>.
-Look at his sorting algorithm for list: <a href="code/other/radix_sort.lisp">radix_sort.lisp</a>.
+Look at his sorting algorithm for lists: <a href="code/other/radix_sort.lisp">radix_sort.lisp</a>.
 It posses many remarkable properties including using <code>n log(n)</code> extra storage.
+It shouldn&rsquo;t need any extra storage.
+It&rsquo;s also slow.
 Good example of a famous person at a respectable school
 publishing something terrible.
 Published does not mean good.</p><a href="#fnref:9" rev="footnote">&#8617;</a></li>
