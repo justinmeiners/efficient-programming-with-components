@@ -332,7 +332,7 @@ Also note that algorithmically there is no good reason why we evaluate
 On every single iteration, because only the one iterator
 we moved in the loop could become empty.
 
-**Exercise:** Try to write a variant of merge which does not do this extra comparison ever loop (solved just below).
+**Exercise:** Write an alternative merge which does not do this extra comparison every loop (solved just below).
 
 ### Merge with fewer comparisons
 
