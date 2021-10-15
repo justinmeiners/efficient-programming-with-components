@@ -104,7 +104,7 @@ by quoting the man page:
 
 Notice it takes all these parameters,
 and it's a little messy because it's C.
-It's hard for them[^bsearch-hard].
+Components are hard for them[^bsearch-generics-hard].
 Nevermind what it takes.
 What's interesting is what it returns.
 
@@ -127,7 +127,10 @@ It's a typical story for binary search.
 Even when the book is written by famous people.
 I'll show you how to write it.
 
-[^bsearch-hard]: Specifically the usage of function pointers and `void*` instead of generics.
+[^bsearch-generics-hard]: C does not have `template` or any other type safe form of generics.
+  This makes it difficult to write reusable components in the way Alex teaches.
+  As a workaround, one can you use `void*` as a pointer to any type.
+  This is the method used by `bsearch` and `qsort`.
 
 ### What is correct code?
 
@@ -166,8 +169,7 @@ how hard simple things are.
 lots of very bright people cannot give it a correct interface.
 same with `bsearch`.
 
-You might say, "Alex just talks about his beef 
-with the standard committtee."
+You might say, "Alex just talks about his beef with the standard committtee."
 No.
 What I'm trying to tell you is that
 when you write things like that in your code,
@@ -358,7 +360,7 @@ So let's try writing `find_if_n`
     and how we need should consider the needs of the user
     and give them various convenience interfaces for algorithms.
 
-[^eop-range-kinds]: These two kinds of ranges are discussed in depth in "Elements of Programming".
+[^eop-range-kinds]: These two kinds of ranges are discussed in depth in "Elements of Programming" chapter 6.
 
 [cpp-find]: https://en.cppreference.com/w/cpp/algorithm/find
 [clhs-find]: http://clhs.lisp.se/Body/f_find_.htm
@@ -430,7 +432,6 @@ Now let's implement [`std::distance`][cpp-distance]:
 
 [cpp-advance]: https://en.cppreference.com/w/cpp/iterator/advance
 [cpp-distance]: https://en.cppreference.com/w/cpp/iterator/distance
-
 
 
 ## Code

@@ -223,7 +223,7 @@ by quoting the man page:</p>
 
 <p>Notice it takes all these parameters,
 and it&rsquo;s a little messy because it&rsquo;s C.
-It&rsquo;s hard for them<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+Components are hard for them<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
 Nevermind what it takes.
 What&rsquo;s interesting is what it returns.</p>
 
@@ -245,6 +245,10 @@ No.</p>
 It&rsquo;s a typical story for binary search.
 Even when the book is written by famous people.
 I&rsquo;ll show you how to write it.</p>
+
+<p>  This makes it difficult to write reusable components in the way Alex teaches.
+  As a workaround, one can you use <code>void*</code> as a pointer to any type.
+  This is the method used by <code>bsearch</code> and <code>qsort</code>.</p>
 
 <a name="What-is-correct-code-3f-"></a>
 <h3>What is correct code?</h3>
@@ -284,8 +288,7 @@ how hard simple things are.
 lots of very bright people cannot give it a correct interface.
 same with <code>bsearch</code>.</p>
 
-<p>You might say, &ldquo;Alex just talks about his beef
-with the standard committtee.&rdquo;
+<p>You might say, &ldquo;Alex just talks about his beef with the standard committtee.&rdquo;
 No.
 What I&rsquo;m trying to tell you is that
 when you write things like that in your code,
@@ -548,7 +551,7 @@ typename std::iterator_traits&lt;I&gt;::difference_type distance{I&amp; first, I
 <li id="fn:1">
 He does now!<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
-Specifically the usage of function pointers and <code>void*</code> instead of generics.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+C does not have <code>template</code> or any other type safe form of generics.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
 Alex: &ldquo;The name is stolen from Common Lisp <a href="http://clhs.lisp.se/Body/f_find_.htm"><code>find</code></a>.
 Always try to borrow from some place.
@@ -562,7 +565,7 @@ was such a helpful contribution
 and how we need should consider the needs of the user
 and give them various convenience interfaces for algorithms.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
-These two kinds of ranges are discussed in depth in &ldquo;Elements of Programming&rdquo;.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+These two kinds of ranges are discussed in depth in &ldquo;Elements of Programming&rdquo; chapter 6.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

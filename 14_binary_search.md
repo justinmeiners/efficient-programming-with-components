@@ -45,7 +45,7 @@ It is a great idea.
 
 ## Partitions
 
-We are still struggling on our path to binary search[^paul].
+We are still struggling on our path to binary search[^pauls-friend].
 It deals with two things.
 First
 it deals with a monotonically non-decreasing sequence.
@@ -191,17 +191,17 @@ We are also not trying to be lucky and find equal.
     }
 
 
-[^paul]: Alex: Paul McJones has a good friend [Butler Lampson][lampson] who is a Turing award
+[^pauls-friend]: Alex: Paul McJones has a good friend [Butler Lampson][lampson] who is a Turing award
     winner. We went to lunch and he told us binary search is the 
     only algorithm a programmer needs to know.
     I think sort should be there too, but we'll take his opinion.
  
 [^slow-comparison-example]: In writing my masters thesis
-    I actually came across a comparison operator which is very expensive to evaluate.
-    It is the Dehornoy ordering on [braid groups][braid-research].
+    I actually came across a comparison operator which is very expensive to evaluate,
+    called the Dehornoy ordering for [braid groups][braid-research].
     This is a total ordering which I used for sorting, removing duplicates,
     and other algorithms in a very similar style to STL.
-    Optimizing the number of comparisons made a large difference.
+    Optimizing the number of comparisons made a significant difference in performance.
 
 [lampson]: https://en.wikipedia.org/wiki/Butler_Lampson
 [braid-research]: https://github.com/justinmeiners/braid-rank-thesis
@@ -280,7 +280,7 @@ I made a choice that `<` is the primitive one.
     and there is a profound relation between `is_sorted` and `adjacent_find`
     but you're going to discover it yourself.
     Write a program that uses `std::adjacent_find` and 
-    think about this relationship.
+    try to figure out this relationship.
 
 [cpp-adjacent-find]: https://en.cppreference.com/w/cpp/algorithm/adjacent_find
 
@@ -330,9 +330,8 @@ a little faster, than separately.
 There is a function [`std::equal_range`][cpp-equal-range]
 which does that.
 
-[^partition-point]: Centering binary search around predicates solves an important problem.
-    One thing you might want to do is binary search an array of records by
-    a particular field.
+[^partition-point]: Choosing predicates as the basis of binary search solves an important problem.
+    One thing you might want to do is search an array of records by a particular field.
     You can of course make a record having arbitrary values for all the other
     fields besides the one you care about,
     but it would be nice to just provide the one you want.
@@ -347,19 +346,19 @@ which does that.
 
     This does not fit with the traditional theory of `StrictWeakOrdering` as 
     `Name` and `Person` are not elements of the same domain.
-    The comparison function is no longer an ordering
+    In this case the comparison function is no longer an ordering
     at all, or even an operation.
 
     By defining binary search as a partition point then this problem goes away.
-    Apparently this information was lost,
-    and you can see some of their discussions of this 
-    topic [here][standards-1] and [here][standards-2].
+    It appears the standard committee had some confusion about this for some
+    time 
+    (see ["Binary Search with Heterogeneous Comparison"][standards-1]
+    and ["Binary search requirements overly strict"][standards-2]).
 
 [standards-1]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2001/n1313.html
 [standards-2]: https://cplusplus.github.io/LWG/issue270
 [cpp-equal-range]: https://en.cppreference.com/w/cpp/algorithm/equal_range
 [cpp-binary-search]: https://en.cppreference.com/w/cpp/algorithm/binary_search
-
 
 First let's implement a function object
 which is our predicate for partitioning.

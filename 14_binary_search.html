@@ -391,7 +391,7 @@ I made a choice that <code>&lt;</code> is the primitive one.</p>
     and there is a profound relation between <code>is_sorted</code> and <code>adjacent_find</code>
     but you&rsquo;re going to discover it yourself.
     Write a program that uses <code>std::adjacent_find</code> and
-    think about this relationship.</p>
+    try to figure out this relationship.</p>
 
 <a name="Binary-search-with-partition-points"></a>
 <h2>Binary search with partition points</h2>
@@ -550,15 +550,14 @@ because they just don&rsquo;t listen to arguments.
 Whatever arguments you give them, they just say, &ldquo;It&rsquo;s the standard&rdquo;.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
 In writing my masters thesis
-I actually came across a comparison operator which is very expensive to evaluate.
-It is the Dehornoy ordering on <a href="https://github.com/justinmeiners/braid-rank-thesis">braid groups</a>.
+I actually came across a comparison operator which is very expensive to evaluate,
+called the Dehornoy ordering for <a href="https://github.com/justinmeiners/braid-rank-thesis">braid groups</a>.
 This is a total ordering which I used for sorting, removing duplicates,
 and other algorithms in a very similar style to STL.
-Optimizing the number of comparisons made a large difference.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+Optimizing the number of comparisons made a significant difference in performance.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
-<p>Centering binary search around predicates solves an important problem.
-One thing you might want to do is binary search an array of records by
-a particular field.
+<p>Choosing predicates as the basis of binary search solves an important problem.
+One thing you might want to do is search an array of records by a particular field.
 You can of course make a record having arbitrary values for all the other
 fields besides the one you care about,
 but it would be nice to just provide the one you want.
@@ -574,13 +573,14 @@ For example:</p>
 
 <p>This does not fit with the traditional theory of <code>StrictWeakOrdering</code> as
 <code>Name</code> and <code>Person</code> are not elements of the same domain.
-The comparison function is no longer an ordering
+In this case the comparison function is no longer an ordering
 at all, or even an operation.</p>
 
 <p>By defining binary search as a partition point then this problem goes away.
-Apparently this information was lost,
-and you can see some of their discussions of this
-topic <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2001/n1313.html">here</a> and <a href="https://cplusplus.github.io/LWG/issue270">here</a>.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
+It appears the standard committee had some confusion about this for some
+time
+(see <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2001/n1313.html">&ldquo;Binary Search with Heterogeneous Comparison&rdquo;</a>
+and <a href="https://cplusplus.github.io/LWG/issue270">&ldquo;Binary search requirements overly strict&rdquo;</a>).</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
 Alex: If you remember there was this
 grand review one day where the committee through out a bunch of useful functions.
