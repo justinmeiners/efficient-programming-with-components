@@ -52,7 +52,7 @@ struct iterator {
     }
 
   // extend the interface to Singly Linked List Iterator:
-  // (not discussed in the course.)
+  // (this concept and these methods are not discussed in the course.)
 
   friend 
     void push_front(iterator& x, const T& value) {

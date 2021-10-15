@@ -345,7 +345,7 @@ class foo {
 };
 </code></pre>
 
-<p>Obviously what you are trying to do is extract <code>T</code>&rsquo;s value type
+<p>Obviously what you are trying to do is extract <code>T</code>&rsquo;s <code>value_type</code>
 and use it here.
 Let us try to to follow the committees logic.
 The logic says maybe <code>T::value_type</code> refers to a static variable
@@ -365,18 +365,19 @@ The problem exists because <code>T</code>  is not specified.
 The language has no concepts.
 For example if we said <code>Container T</code>
 instead of <code>class T</code>, and had a concept <code>Container</code>, the definition of <code>Container</code> would say that it is required to have an affiliated type <code>value_type</code>.
-Then the compiler could figure out what we really mean.
-What often happens is that instead of
+Then the compiler could figure out what we really mean.</p>
+
+<p>What often happens is that instead of
 solving the real problem, a partial problem is solved.
 We still do not have concepts.
 One of the great things about C++
 is the language has been evolving for 40 years which is also one of the terrible
 problems.
-Originally, there was no idea of templates or concepts.
-No we are trying to add them in.
-It works with all kinds of quirks.
-So the advice Bjarne gives right now, is use <code>typename</code> whenever you can,
-even the context when it&rsquo;s not absolutely required.</p>
+All its features have been added over time.
+So, it works with all kinds of quirks.</p>
+
+<p>The advice Bjarne gives right now, is use <code>typename</code> whenever you can,
+even in the context when it&rsquo;s not absolutely required.</p>
 
 <a name="Code"></a>
 <h2>Code</h2>
