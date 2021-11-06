@@ -307,8 +307,8 @@ and you look at the guy in the first slot of the counter.
 The existing guy is either zero or not.
 If it's zero, put him in the counter.
 
-    1 2  ...   32           1 2  ...    32
-    0 0  ...   0     -->    x 0  ...    0
+    1 2  ...   32           1 2  ...   32
+    0 0  ...   0     -->    x 0  ...   0
 
 If it's not zero, he plays a game with the existing guy `y`.
 If he wins, he replaces the loser in the counter.
