@@ -308,13 +308,13 @@ The existing guy is either zero or not.
 If it's zero, put him in the counter.
 
     1 2  ...   32         1 2  ...    32
-    0 0  ...   0    >>>   x 0  ...    0
+    0 0  ...   0    -->   x 0  ...    0
 
 If it's not zero, he plays a game with the existing guy `y`.
 If he wins, he replaces the loser in the counter.
 
     1 2  ...   32           1 2  ...   32
-    y 0  ...   0     >>>    x 0  ...   0
+    y 0  ...   0     -->    x 0  ...   0
 
 
 Otherwise, the existing guy has now won a game.
@@ -323,7 +323,7 @@ he follows the same rules with the guy in that slot.
 It's a carry propagation.
 
     1 2  ...   32           1 2  ...   32
-    y 0  ...   0    >>>     0 y  ...   0
+    y 0  ...   0    -->     0 y  ...   0
 
 If we end up with a guy in slot 32, it's an **overflow**,
 exactly like integer arithmetic.

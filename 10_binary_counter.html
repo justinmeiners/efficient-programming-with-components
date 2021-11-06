@@ -363,14 +363,14 @@ The existing guy is either zero or not.
 If it&rsquo;s zero, put him in the counter.</p>
 
 <pre><code>1 2  ...   32         1 2  ...    32
-0 0  ...   0    &gt;&gt;&gt;   x 0  ...    0
+0 0  ...   0    --&gt;   x 0  ...    0
 </code></pre>
 
 <p>If it&rsquo;s not zero, he plays a game with the existing guy <code>y</code>.
 If he wins, he replaces the loser in the counter.</p>
 
 <pre><code>1 2  ...   32           1 2  ...   32
-y 0  ...   0     &gt;&gt;&gt;    x 0  ...   0
+y 0  ...   0     --&gt;    x 0  ...   0
 </code></pre>
 
 <p>Otherwise, the existing guy has now won a game.
@@ -379,7 +379,7 @@ he follows the same rules with the guy in that slot.
 It&rsquo;s a carry propagation.</p>
 
 <pre><code>1 2  ...   32           1 2  ...   32
-y 0  ...   0    &gt;&gt;&gt;     0 y  ...   0
+y 0  ...   0    --&gt;     0 y  ...   0
 </code></pre>
 
 <p>If we end up with a guy in slot 32, it&rsquo;s an <strong>overflow</strong>,
