@@ -8,8 +8,8 @@ of `n` elements, but the smallest and second smallest.
 The problem has a very distinguished pedigree it was first addressed by a well-known British mathematician 
 [Charles Dodgson][carroll] (Lewis Carroll).
 If you haven't heard of him, you should.
-There is a very important book which he wrote, not the [mathematical book][carroll-logic]
-, but the book called ["Alice's Adventures in Wonderland"][alice-in-wonderland].
+There is a very important book which he wrote, not the [mathematical book][carroll-logic],
+but the book called ["Alice's Adventures in Wonderland"][alice-in-wonderland].
 If you haven't read it, do[^alice-free-ebook].
 No person should be hired ever unless they read "Alice in Wonderland".
 In any case, he was also a mathematician.
@@ -24,7 +24,7 @@ He observed that the strongest and
 second strongest could be paired in the first round.
 Therefore the second strongest guy gets eliminated and doesn't get the second prize,
 in spite of his prowess.
-This is is why now they use a technique known is [seeding][seed] to assure
+This is is why they now use a technique known as [seeding][seed] to assure
 that people of similar ability are spread out to different parts of the tree.
 But, he wanted to come up with an algorithm
 which assures that the second guy is truly the second guy.
@@ -42,7 +42,7 @@ book called ["The Art of Computer Programming"][aoc] by [Donald Knuth][knuth][^a
 You really should buy it.
 You make a certain commitment.
 You spend $150 saying that you really care about programming.
-This is not a book which is "useful" meaning it's not "programming in Python for idiots",
+This is not a book which is "useful", meaning it's not "programming in Python for idiots",
 or "information retrieval for 21st century" or something like that.
 This is one of the fundamental books which you buy and then spend your
 lifetime getting the information out of it.
@@ -101,19 +101,19 @@ You can do it in fewer.
 Let us try to use some logic .
 How many comparisons do we need to find the winner of the
 tournament? `n - 1`.
-It is necessary to find the winner, in order to find the second place guy.
-We could sketch a proof.
-Let us assume there are two potential guys greater than him.
+It is necessary to find the winner in order to find the second place guy.
+We could sketch a proof of this.
+Let us assume there are two potential guys greater than the second place guy.
 If there is none, he isn't second place.
 If there are two, he isn't second place either.
 
-What do we know about second place,
-specifically the games he lost.
+What do we know about second place
+guy, specifically the games he lost?
 *He only lost one game, and it was to the winner*.
-If the winner remembers all the games he won,
-how could we determine second place?
-How many people did he beat?
+If the winner remembers all the games he won, and who he played,
+how could we determine second place? (We know the second place guy is one of them.)
 
+How many people does the winner beat to win?
 For example, [Wimbledon][wimbledon] has 64 players who are admitted.
 The winner doesn't play 63 games.
 The tournament is structured as a [binary tree][binary-tree].
@@ -121,14 +121,24 @@ This tree is how deep?
 If you have `n` elements? It's `ceil(log_2(n))`.
 We could somehow arrange our tournament so that the 
 winner will defeat this many people.
-Now that we have a list of the `ceil(log_2(n))` people who played the winner,
-we just find the best out of them which is 
-`ceil(log_2(n)) - 1` comparisons.
 
-To review, we 
-have `n - 1` comparisons to get the winner.
+     winner: d
+     second place: a or c
+     
+         d 
+        /  \
+       a    d
+      /\    /\
+     /  \  /  \
+    a   b c    d    ceil(log_2(4)) = 2
+
+Now that we have a list of the `ceil(log_2(n))` people who played the winner,
+we just find the best out of them which is `ceil(log_2(n)) - 1` comparisons.
+
+
+To review, we have `n - 1` comparisons to get the winner.
 `ceil(log_2(n)) - 1` to get the second best, from the list he played.
-So the upper bound for the algorithm is:
+So an upper bound on the comparisons for the algorithm is:
 
     n + ceil(log_2(n)) - 2
 
@@ -173,7 +183,8 @@ so divide and conquer doesn't always do what we think.
 First, we need rearrange the tournament we play.
 Right now `min_element` plays a tree structure that looks like this:
 
-    Unbalanced Tree
+    unbalanced tree
+
     /\
       /\
         /\
@@ -185,7 +196,8 @@ But, we don't want the winner to play `n - 1` matches.
 We need to transform that into the way they play Tennis.
 We need to balance the tree.
 
-    Balanced Tree
+    balanced tree
+
         / \
        /\ /\
         ...
@@ -193,10 +205,7 @@ We need to balance the tree.
 
 How do we do it?
 One way is to just pair up elements and build up.
-But then we need lots of memory to save the intermediate results.
-What do we mean when we say lots of memory?
-`O(n)` is bad, `O(sqrt(n))` is pretty bad.
-
+But then we need lots of memory to save the intermediate results[^early-ref-to-inplace].
 Note that once a bottom-level round has been played,
 they are ready to move up.
 Our goal is to basically to become eager.
@@ -215,14 +224,17 @@ Specifically why can we convert one kind of computation to the other.
 As long as our operation is associative, 
 What property don't we need? **Commutativity**[^commutativity].
 We keep them in the same order,
-we just rebalanced parenthesis.
+we just rebalanced parenthesis[^min-not-commutative].
 
-If you think about it,
-our `min` is not quite commutative.
-In mathematics `min` is commutative.
-But, because we want to preserve stability it is not.
-We distinguish between the left and right argument.
+[^early-ref-to-inplace]: Alex: What do we mean when we say lots of memory?
+    `O(n)` is bad, `O(sqrt(n))` is pretty bad.
+    See the definition of "in-place memory usage" at the end of the chapter. 
 
+[^min-not-commutative]: If you think about it,
+    our `min` is not quite commutative.
+    In mathematics `min` is commutative.
+    But, because we want to preserve stability it is not.
+    We distinguish between the left and right argument.
 
 [^associativity]: A binary function `f` is [associative](https://en.wikipedia.org/wiki/Associative_property)
     if the the following holds for all `a, b, c` in its domain:
@@ -283,37 +295,37 @@ We can create a counter and in every bit of this counter we're
 going to keep a singleton. 
 In each bit we keep the person who had `n` victories.
 We will never combine things unless they have the same weight/parity.
-
 Initially the counter has `zero` in every entry:
 
-    1 2  ...   32 (bits/singletons)
-    0 0  ...   0
+    initial counter
+
+       index: 1 2  ...   32
+    contents: 0 0  ...   0
 
 Take a new guy `x` who has never played any games,
 and you look at the guy in the first slot of the counter.
 The existing guy is either zero or not.
-If it's zero (`_`), put him in the counter.
+If it's zero, put him in the counter.
 
-    1 2  ...   32         1 2  ...    32
-    0 0  ...   0    >>>   x 0  ...    0
+    1 2  ...   32           1 2  ...   32
+    0 0  ...   0     -->    x 0  ...   0
 
-
-If it's not zero, he plays a game with the existing guy.
+If it's not zero, he plays a game with the existing guy `y`.
 If he wins, he replaces the loser in the counter.
 
     1 2  ...   32           1 2  ...   32
-    y 0  ...   0     >>>    x 0  ...   0
+    y 0  ...   0     -->    x 0  ...   0
 
 
 Otherwise, the existing guy has now won a game.
-So he needs to be promoted to the next level,
+So he needs to be promoted to the next level.
 he follows the same rules with the guy in that slot.
 It's a carry propagation.
 
     1 2  ...   32           1 2  ...   32
-    y 0  ...   0    >>>     0 y  ...   0
+    y 0  ...   0    -->     0 y  ...   0
 
-If we end up with a guy in slot 32, it's an overflow,
+If we end up with a guy in slot 32, it's an **overflow**,
 exactly like integer arithmetic.
 What do we do?
 Whenever we don't know to proceed,
@@ -345,7 +357,7 @@ When we become grownups we learn about advanced data structures,
 such as [binomial forest][binomial].
 They use the same idea.
 The counter helps us combine things only when they have the same weight.
-unless they are of the same weight it's a general algorithmic technique
+It's a general algorithmic technique.
 
 
 [^carry]: The terms **carry** and **carry propagation**
@@ -392,18 +404,21 @@ unless they are of the same weight it's a general algorithmic technique
 
     An **overflow** is when the last adder has a non-zero carry.
 
-[^errors]: Numerical floating point calculation
-    is a subtle subject, but the basic issue Alex is 
-    referring to is straightforward.
-    Floating point stores large numbers as decimals to some power.
-    If you add a small decimal to that, it may not change it all.
-    To try for yourself, compare the output of:
+[^errors]: Floating point arithemetic is a subject filled with subtle details,
+    but the basic issue Alex is referring to is straightforward.
+    We often use scientific notation to write larger numbers as a decimal to a power,
+    when they would otherwise be very long to write out.
+    For example `1,450,000,000 == 1.45 * 10^9`.
+    However, if adding two numbers in this form, can only be done accurately if they are roughly the same power,
+    otherwise the large of the two is still the best representation:
+    `1.45 * 10^9 + 1 ~= 1.45 * 10^9`. 
 
-        (152500.0 * 5000.0)
+    `float` and `double` have very similar limitations, and give the best results
+     when operations are applied to values of similar magnitudes. 
+     To try for yourself, compare these two  expressions in a program:
 
-    and
-
-        (152500.0 * 5000.0) + 0.01
+        double x = (152500.0 * 5000.0);
+        double y = (152500.0 * 5000.0) + 0.01;
 
 [adder]: https://en.wikipedia.org/wiki/Adder_(electronics)
 [numerics]: https://en.wikipedia.org/wiki/Numerical_analysis
@@ -439,7 +454,7 @@ it is evaluated in.
 Elements in the counter got there before, so they were to the left of the
 element we are inserting.
 
-Notice that zero is `const` reference because we don't plan to modify it,
+Notice that zero is `const T&` reference because we don't plan to modify it,
 but we do modify carry,
 so it should be passed by value.
 
@@ -511,7 +526,7 @@ So what do we think is the state of this counter?
 How should we store the counter?
 Don't we have millions of elements to reduce?
 The counter is size `log(n)` which will
-never be greater than 64.
+never be greater than `64`.
 So, it's actually a small fixed size.
 We will store it in a `std::vector`.
 
@@ -560,6 +575,7 @@ We could compete with Steve Jobs for elegance of our design[^alex-joke].
 
 ### What is in-place memory usage?
 
+
 How significant is the storage of our counter?
 We use the term [**in-place**][in-place] to indicate the memory
 usage of an algorithm is not significant.
@@ -576,7 +592,6 @@ So people say `log(n)` is good so that will count as in-place.
 Then they said , "what if we have nested things.
 So is `log(n)^2` ok"? 
 In our universe `log(n) <= 64` so this is 4096.
-
 Then theoreticians said it's really alright if we have "poly-logarithmic" storage
 Basically as long as the memory requirement is `O(p(log(n)))`
 where `p` is a polynomial, it's alright.
