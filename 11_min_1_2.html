@@ -195,20 +195,20 @@ return std::make_pair(min1, min2);
 these are the only instruction generating lines<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>:</p>
 
 <p>Before the loop we need to define these objects and types.
-Let&rsquo;s construct our counter. Do we know it&rsquo;s type? No.
-That&rsquo;s ok call it <code>counter_type</code>.</p>
+Let&rsquo;s construct our counter. Do we know its type? No.
+That&rsquo;s ok, call it <code>counter_type</code>.</p>
 
 <pre><code>counter_type counter(op, std::make_pair(last, pool.empty_queue()));
 </code></pre>
 
 <p>We need a counter operation.
 Do we know its type? No.
-Do the lazy thing call it <code>op_type</code>.</p>
+Do the lazy thing, call it <code>op_type</code>.</p>
 
 <pre><code>op_type op(cmp, pool);
 </code></pre>
 
-<p>Now define the pool. We do know it&rsquo;s type:</p>
+<p>Now define the pool. We do know its type:</p>
 
 <pre><code>list_pool&lt;I, std::size_t&gt; pool;
 </code></pre>
@@ -261,7 +261,7 @@ compare_type cmp_deref(cmp);
 
 <p>We will define a reduction function object
 to be used in the binary counter to find the <code>min</code>.
-What it will do is apply a comparison operation between two elements <code>cmp(a, b)</code>,
+What it will do is apply a comparison operation between two elements <code>cmp(a, b)</code>.
 When an element wins a comparison, the loser will be added
 to a list of elements which have lost to <code>a</code>.
 In other words, it will keep track of the elements which each element has beaten.
@@ -292,7 +292,7 @@ public:
 };
 </code></pre>
 
-<p>When an element wins, we can combine it&rsquo;s list of losers
+<p>When an element wins, we can combine its list of losers
 with the element it beat, due to transitivity.
 We want this operation to be stable, so we need to be careful with the order
 in which the losers are stored.
@@ -354,14 +354,14 @@ But, don&rsquo;t you know from the context that it&rsquo;s supposed to be a type
 Since they are very well educated, they say, &ldquo;but that will
 make our grammar <a href="https://en.wikipedia.org/wiki/Context-free_grammar">context-sensitive</a><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
 We need to figure out the meaning of
-a token without referring to  the context in which it appears&rdquo;.</p>
+a token without referring to the context in which it appears&rdquo;.</p>
 
 <p>So they came up with the following rule:
 If you don&rsquo;t put <code>typename</code>, the compiler must assume it is a variable,
 even if it is a type.
 This is done to maintain the property that you don&rsquo;t need to know outside context.
-Of course, the problem here does not really relate to typename.
-The problem exists because <code>T</code>  is not specified.
+Of course, the problem here does not really relate to <code>typename</code>.
+The problem exists because <code>T</code> is not specified.
 The language has no concepts.
 For example if we said <code>Container T</code>
 instead of <code>class T</code>, and had a concept <code>Container</code>, the definition of <code>Container</code> would say that it is required to have an affiliated type <code>value_type</code>.

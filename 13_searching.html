@@ -142,7 +142,7 @@ In 1946 he gave a brilliant series of
 lectures at the <a href="https://en.wikipedia.org/wiki/Moore_School_of_Electrical_Engineering">Moore School</a> at <a href="https://en.wikipedia.org/wiki/University_of_Pennsylvania">Pennsylvania University</a>
 on programming.
 For the first time,
-he described things like merge, merge sort, and binary search,
+he described things like merge, merge sort, and binary search.
 This is not a bad thing to be the first person to describe.
 He designed <a href="https://en.wikipedia.org/wiki/ENIAC">ENIAC</a> which should make him very famous.
 Indeed, he did some very fundamental work.</p>
@@ -150,7 +150,7 @@ Indeed, he did some very fundamental work.</p>
 <p>Then comes this interesting fact (from &ldquo;The Art of Computer Programming&rdquo;)
 It takes about 15 years for people to come up with binary search
 which sort of works for all possible inputs.
-Apparently people didn&rsquo;t have trouble coding binary search when  the length is
+Apparently people didn&rsquo;t have trouble coding binary search when the length is
 of the form <code>2^(n-1)</code>.
 Because it&rsquo;s easy, you take the middle element and
 then both sides will be of the same form
@@ -169,17 +169,17 @@ always terminated.</p>
 <p>I actually disagree with Knuth slightly
 and claim that the first correct binary search was published roughly at the same time,
 but a couple of years after,
-by a German computer science.
+by a German computer scientist.
 Once again, he is unjustly forgotten.
 He does not appear on Wikipedia<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
 His name is <a href="https://en.wikipedia.org/wiki/Hermann_Bottenbruch">Herman Bottenbruch</a><br/>
-His claim to fame is he was one of their people who invented <a href="https://en.wikipedia.org/wiki/ALGOL_58">Algol 58</a> the predecessor
+His claim to fame is he was one of the people who invented <a href="https://en.wikipedia.org/wiki/ALGOL_58">Algol 58</a>, the predecessor
 of Algol 60.
 He is one of the people who tried unsuccessfully to convince American
 delegates to Algol 58 committee that they should introduce block structures.
 He was one of the inventors of blocks.
 American representatives which included such brilliant people as <a href="https://en.wikipedia.org/wiki/John_Backus">John Backus</a>
-and <a href="https://en.wikipedia.org/wiki/Alan_Perlis">Alan Perlis</a> actually reject it as too hard to implement.
+and <a href="https://en.wikipedia.org/wiki/Alan_Perlis">Alan Perlis</a> actually rejected it as too hard to implement.
 They didn&rsquo;t know how to do stacks.
 But sadly enough he doesn&rsquo;t get much credit,
 especially credit for correct binary search.
@@ -189,9 +189,9 @@ We will be actually studying his version.</p>
 <h2>bsearch is wrong</h2>
 
 <p>If we think about merging two sequences of roughly the same length,
-or rather exactly the same length <code>n</code>, the expected number of comparison
-is going to be a to <code>2n - 1</code>.
-From which  follows a conjecture.
+or rather exactly the same length <code>n</code>, the expected number of comparisons
+is going to be <code>2n - 1</code>.
+From which follows a conjecture.
 If we have sequences
 of size <code>n</code> and size <code>m</code> the number of comparisons should be <code>n + m - 1</code>.
 Not every conjecture is true however, this one is definitely false.
@@ -199,9 +199,9 @@ Here is a simple counter example.
 Take a sequence of length 1000
 and a sequence of length 1.
 We only need <code>log(1000)</code> because
-we can binary search for it&rsquo;s index.</p>
+we can binary search for its index.</p>
 
-<p>So there  is a fundamental possibility
+<p>So there is a fundamental possibility
 for using binary search for merging, dramatically reducing the number of comparisons.
 <code>log(n)</code> is much smaller than <code>n</code>.</p>
 
@@ -229,7 +229,7 @@ What&rsquo;s interesting is what it returns.</p>
 
 <blockquote><p>returns a pointer to a matching member of the array, or NULL if no match is found.</p></blockquote>
 
-<p>So for our merge, it will most often return <code>NULL</code> .
+<p>So for our merge, it will most often return <code>NULL</code>.
 At which point, you will have to do linear search.
 So observe, ancient interface,
 done by brilliant people,
@@ -247,13 +247,13 @@ Even when the book is written by famous people.
 I&rsquo;ll show you how to write it.</p>
 
 <p>  This makes it difficult to write reusable components in the way Alex teaches.
-  As a workaround, one can you use <code>void*</code> as a pointer to any type.
+  As a workaround, one can use <code>void*</code> as a pointer to any type.
   This is the method used by <code>bsearch</code> and <code>qsort</code>.</p>
 
 <a name="What-is-correct-code-3f-"></a>
 <h3>What is correct code?</h3>
 
-<p>Here comes another philosphical point.
+<p>Here comes another philosophical point.
 <em>What does wrong mean?</em>
 <em>What does incorrect mean?</em>
 At school they told you that the program is incorrect when <em>it doesn&rsquo;t satisfy its specifications</em>.
@@ -278,17 +278,17 @@ Because, if you write wrong specification, you are the same guy who is going to 
 Most likely it will not make it correct.</p>
 
 <p>So it&rsquo;s a deeper thing.
-You have to establish correctness from  more fundamental principles.
+You have to establish correctness from more fundamental principles.
 <em>The program is correct if it returns desirable information</em>,
 if it does what it&rsquo;s supposed to do in some absolute sense.
 It&rsquo;s very hard to prove it.</p>
 
-<p>i think one of the lessons of this particular lecture is
+<p>I think one of the lessons of this particular lecture is
 how hard simple things are.
 lots of very bright people cannot give it a correct interface.
 same with <code>bsearch</code>.</p>
 
-<p>You might say, &ldquo;Alex just talks about his beef with the standard committtee.&rdquo;
+<p>You might say, &ldquo;Alex just talks about his beef with the standard committee.&rdquo;
 No.
 What I&rsquo;m trying to tell you is that
 when you write things like that in your code,
@@ -298,9 +298,9 @@ The great flaw in most code I see is there is no consideration
 for the other guy.
 People think, &ldquo;oh it works, so it&rsquo;s done.&rdquo;
 My dream is that we all write code thinking about other people.
-Then you say, &ldquo;well, then i have to do more work.&rdquo;
+Then you say, &ldquo;well, then I have to do more work.&rdquo;
 This is the beauty of sharing.
-Uou might have attended  kindergarten
+You might have attended kindergarten
 and had a teacher that taught you it&rsquo;s good to share toys.
 She was right.</p>
 
@@ -310,13 +310,14 @@ She was right.</p>
 <p>It would be very contrary to the way I do things to
 start with binary search.
 How could we do binary search if we cannot do linear search?
-In STL it is called <a href="https://en.cppreference.com/w/cpp/algorithm/find"><code>std::find</code></a> or <code>std::find_if</code><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>,
+In STL it is called <a href="https://en.cppreference.com/w/cpp/algorithm/find"><code>std::find</code></a> or <code>std::find_if</code><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
 Let&rsquo;s see how to write it.
 We can assume we know how to do it,
 and start from the top,
-or we could assume we don&rsquo;t know what are doing,
-which is usually then case when starting new things.
+or we could assume we don&rsquo;t know what we are doing,
+which is usually the case when starting new things.
 I seldom start writing code from the signature.
+I don&rsquo;t know what the signature is.
 I typically have some algorithmic idea,
 so I start with that,
 often an inner loop.
@@ -349,7 +350,7 @@ and say, &ldquo;we need to only have one <code>find_if</code>&rdquo;.
 That&rsquo;s what happened.
 After I submitted STL it had many fine functions,
 but Bjarne was very afraid that STL was too large and would not be accepted, as is.
-(It wasn&rsquo;t that enormous at that point)
+(It wasn&rsquo;t that enormous at that point.)
 He said, &ldquo;why don&rsquo;t I come to Palo Alto (I was at HP Labs)
 and bring along bunch of other standard committee people and we
 will trim it&rdquo;.
@@ -417,8 +418,8 @@ bool any_of(I first, I last, P pred) {
 }
 </code></pre>
 
-<a name="Bounded-and-counted-ranges."></a>
-<h2>Bounded and counted ranges.</h2>
+<a name="Bounded-and-counted-ranges"></a>
+<h2>Bounded and counted ranges</h2>
 
 <p>Once upon a time I believed ranges come in two kinds<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.</p>
 
@@ -433,7 +434,7 @@ bool any_of(I first, I last, P pred) {
 Both are good, and both are different.
 You cannot say one is better than the other.
 It depends on the algorithm.
-There used to be more bounded range algorithms in the STL, but they wre taken out.
+There used to be more bounded range algorithms in the STL, but they were taken out.
 For example we have <a href="https://en.cppreference.com/w/cpp/algorithm/copy"><code>std::copy</code></a> and
 <a href="https://en.cppreference.com/w/cpp/algorithm/copy_n"><code>std::copy_n</code></a>
 both are really convenient.</p>
@@ -507,9 +508,9 @@ void advance{I&amp; first, N n, std::random_access_iterator_tag) {
 </code></pre>
 
 <p>The dispatch between these is clearly done at compile time.
-I could have had every iterator have <code>+=</code> and <code>-</code> iterator.
+I could have had every iterator have <code>+=</code> and <code>-</code> operators.
 My thinking was that people have an expectation that those symbols are fast.
-Making it linear time will confuse many people.</p>
+Making it linear time will confuse many people.<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup></p>
 
 <p>Now let&rsquo;s implement <a href="https://en.cppreference.com/w/cpp/iterator/distance"><code>std::distance</code></a>:</p>
 
@@ -562,10 +563,15 @@ Everyone loves to make non-standard names.&rdquo;<a href="#fnref:3" rev="footnot
 This is an amusing comment because
 Alex just got done talking about why <code>find_if_not</code>
 was such a helpful contribution
-and how we need should consider the needs of the user
+and how we should consider the needs of the user
 and give them various convenience interfaces for algorithms.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
 These two kinds of ranges are discussed in depth in &ldquo;Elements of Programming&rdquo; chapter 6.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
+Alex: I am not saying I was right, because when we were writing
+&ldquo;Elements of Programming&rdquo;, Paul and I, we decided to abandon advance and distance,
+and just say that depending on iterator category,
+the complexity of these operators change.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

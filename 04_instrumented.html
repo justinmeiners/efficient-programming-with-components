@@ -158,7 +158,7 @@ Bjarne is literally the greatest language designer, at least after <a href="http
 John Backus invented the first useful programming language <a href="https://en.wikipedia.org/wiki/Fortran">Fortran</a>.
 It is still a very useful programming language.
 Then came C and C++.
-Dennis was  brilliant.
+Dennis was brilliant.
 He did C and then washed his hands and walked away,
 which is very wise.
 I sympathize.
@@ -182,7 +182,7 @@ There is some ugly stuff, but you could avoid it.
 Being able to evolve the language for that long is incredible.
 I have no other example, not just in language design, but in
 computer science.
-Ken Thompson did Unix but do you think he stayed
+Ken Thompson did UNIX but do you think he stayed
 with UNIX?
 No, in his Turing award speech he said he stopped working
 on UNIX a long time ago.
@@ -190,13 +190,13 @@ It&rsquo;s very difficult.</p>
 
 <p>I&rsquo;m a clear example
 of a lazy bum.
-STL was voted in August 1994,  20 years ago.
+STL was voted in August 1994, 20 years ago.
 How many times did I attend standard committee meetings after that?
 None.
-How many times did I look at proposals related to STL did I do anything related to this?
+How many times did I look at proposals related to STL? Did I do anything related to this?
 Nothing.
 This is why I have sanity but also this is
-why compared with Bjarne, I am a failure.
+why, compared with Bjarne, I am a failure.
 I let people do things with STL that should have been prevented.
 I did not evolve it.
 I did not grow it.
@@ -210,7 +210,8 @@ working.
 <a href="https://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)">McCarthy</a> invents Lisp.
 After <a href="https://archive.org/details/lisp15programmer00john">1.5</a> he&rsquo;s gone.
 He didn&rsquo;t follow.
-He didn&rsquo;t contribute, and so on.</p>
+He didn&rsquo;t contribute, and so on.
+Everybody does that, because we are weaklings.</p>
 
 <p>So C++ is a great accomplishment,
 but of course it has flaws.
@@ -308,7 +309,7 @@ Paul convinced me that <code>x</code> is just as good.</p>
 on singleton:</p>
 
 <pre><code>~instrumented() { ++counts[destructor]; }
-instrumented&amp; operator=(const instrumented&amp; x) {  
+instrumented&amp; operator=(const instrumented&amp; x) {
   ++counts[assignment];
   value = x.value;
   return *this;
@@ -321,7 +322,7 @@ bool operator==(const instrumented&amp; x, const instrumented&amp; y) {
 }
 // TotallyOrdered
 friend
-bool operator&lt;(const instrumented&amp; x, const instrumented&amp; y) { 
+bool operator&lt;(const instrumented&amp; x, const instrumented&amp; y) {
   ++counts[comparison];
   return x.value &lt; y.value;
 }
@@ -334,7 +335,7 @@ bool operator&lt;(const instrumented&amp; x, const instrumented&amp; y) {
 
 <p>What to do with all the counts?
 Where do they get stored?
-Every time this <code>instrumented</code> thing  happens we want some global count to be incremented.
+Every time this <code>instrumented</code> thing happens we want some global count to be incremented.
 We were told that using global variables is bad.
 If I were doing it just for me, I would have used globals.
 Old guys don&rsquo;t mind using global variables.
@@ -356,6 +357,10 @@ We will define a base class to hold this data:</p>
   static void initialize(size_t);
 };
 </code></pre>
+
+<p>This is a remarkable example of a class containing nothing.
+It is a very useful thing, we will use very many such classes.
+It&rsquo;s very cheap to pass things which contain nothing.</p>
 
 <p>A static member is a member which is one per class, not one per instance, and they&rsquo;re useful because we don&rsquo;t want to keep count per instance.
 We want to keep count per class.
@@ -381,12 +386,10 @@ This is false.
 Inheritance is very useful when you inherit from a class containing nothing because it couldn&rsquo;t do any harm.
 That&rsquo;s what we&rsquo;re going to do here.</p>
 
-<pre><code>struct instrumented : instrumented_base
+<pre><code>template &lt;typename T&gt;
+// T is Semiregular or Regular or TotallyOrdered
+struct instrumented : instrumented_base
 </code></pre>
-
-<p>This is a remarkable example of a class containing nothing.
-It is a very useful thing, we will use very many such classes.
-It&rsquo;s very cheap to pass things which contain nothing.</p>
 
 <p>There is a notorious problem in C++ with static
 members of templates, it&rsquo;s just not good.
@@ -416,7 +419,7 @@ the person who invented it was weird.
 Whether it worked there correctly or not remains to be seen.</p>
 
 <p>Dennis decided to bring it in,
-but the issue  is that it&rsquo;s not really a type.
+but the issue is that it&rsquo;s not really a type.
 C++ attempts to make it a type but it doesn&rsquo;t quite work.
 You could have a variable
 typed with the enum which has three different values and then you take totally
@@ -440,7 +443,7 @@ You go from this state to that state.
 You could write a loop with some conditional.
 Or, you could just <code>goto</code> and write very
 beautiful code, at least we believe so.
-Everything has its place, Dijkstra&rsquo;s structures not withstanding<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.</p>
+Everything has its place, Dijkstra&rsquo;s strictures not withstanding<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.</p>
 
 <a name="Using-instrumented-to-analyze-sort"></a>
 <h2>Using instrumented to analyze sort</h2>
@@ -526,10 +529,10 @@ Here is a sample of the output for heap sort<sup id="fnref:6"><a href="#fn:6" re
 <p>Another useful way to study operation counts is by <em>normalizing the data</em>.
 We know the asymptotic complexity of sort algorithms
 should be <code>O(n log(n))</code>.
-So,  what we can do is normalize the data
+So, what we can do is normalize the data
 to tell us for <code>n</code> elements, how many operations were done, per <code>n log(n)</code>.</p>
 
-<p>Here is an example of such a normalizing functions.</p>
+<p>Here is an example of such a normalizing function:</p>
 
 <pre><code>double normalized_by_nlogn(double x, double n) { 
   return x / (n * (log(n) / log(2))); 
@@ -568,7 +571,7 @@ were counted.</p>
 16777216        0.19        1.06        0.19        0.00        0.00        1.01         0.00
 </code></pre>
 
-<p>You remember Knuth (Author of &ldquo;The Art of Computer programming&rdquo;)?
+<p>You remember Knuth (Author of &ldquo;The Art of Computer Programming&rdquo;)?
 In the beginning of the first volume when he introduces complexity
 he tells you how to measure complexity.
 He says we measure it as a function where we have
@@ -614,7 +617,7 @@ normalize by the sum of the harmonic series up to <code>n</code>:</p>
 <p>The denominator is actually <code>ln(n) + gamma</code>
 where gamma is a small number<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.</p>
 
-<p><strong>Exercise:</strong>  Introduce variation into the shape of data and compare
+<p><strong>Exercise:</strong> Introduce variation into the shape of data and compare
 the sorting algorithms again.</p>
 
 <a name="Measuring-solution-to-unique-elements"></a>
@@ -622,7 +625,7 @@ the sorting algorithms again.</p>
 
 <p>Counting operations is only one measure of performance.
 If we apply <code>instrumented</code> to our problem of finding unique elements
-in the first chapter, we will actually find that using
+in the first chapter, we will find that using
 <code>std::set</code> actually uses fewer of almost
 every operation than first sorting with <code>std::sort</code>
 and then calling <code>std::unique</code>.
@@ -719,7 +722,7 @@ around at each <code>goto</code> statement.</p>
 <p>Dijkstra heavily criticized this approach in his famous paper:
 <a href="https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf">&ldquo;Go to statement considered harmful&rdquo;</a>.</p>
 
-<p>Alex is observing that it is a good  solution to many problems,
+<p>Alex is observing that it is a good solution to many problems,
 especially when used in a restricted context, and not as the primary
 way to organize programs.
 Later on he will give examples.</p>
@@ -740,7 +743,7 @@ another 15 years to catch up.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <p>Many programmers imagine the C++ standard library is a package like
 <code>sqlite</code> or <code>LaTeX</code> that is centrally developed
 and deployed to many platforms.
- This is not the case.
+This is not the case.
 Vendors who want to create a C++ compiler and support it on their platform typically develop
 their own library implementation in agreement with the standard.
 There is little or no collaboration on library code between platforms.</p>

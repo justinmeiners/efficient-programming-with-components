@@ -134,7 +134,7 @@ td { vertical-align: top; }
 <h2>Reflections on Trusting Trust</h2>
 
 <p><a href="https://en.wikipedia.org/wiki/Ken_Thompson">Ken Thompson</a> did many wonderful things. Probably more
-than any programmer, he influenced the programming style  which we have right
+than any programmer, he influenced the programming style which we have right
 now. While he did not invent C, that was done by his friend <a href="https://en.wikipedia.org/wiki/Dennis_Ritchie">Dennis Ritchie</a>,
 he invented the programming style which underlies C.
 Dealing with pointers,
@@ -148,7 +148,7 @@ have to be abolished<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>
 The idea was that pointer is illegitimate thing.
 Language designers were fully convinced that
 even if you provide pointers nobody should call them pointers.
-They  would call them something like <a href="http://goanna.cs.rmit.edu.au/dale/ada/aln/13_access_types.html">access types</a>.
+They would call them something like <a href="http://goanna.cs.rmit.edu.au/dale/ada/aln/13_access_types.html">access types</a>.
 They have to prohibit iterations, like you could never subtract pointers.
 <a href="https://en.wikipedia.org/wiki/Niklaus_Wirth">Niklaus Wirth</a>, the designer of Pascal, was very certain that you should never allow
 subtraction between pointers.
@@ -170,7 +170,7 @@ So Ken made them practical<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a>
 
 <p>Then he did UNIX, this totally brilliant operating system on which we all rely.
 All of our livelihoods come from Ken, in one shape or form.
-Do you remember the <a href="https://en.wikipedia.org/wiki/Fortune_(Unix)">fortune cookie program</a>?<br/>
+Do you remember the <a href="https://en.wikipedia.org/wiki/Fortune_(Unix)">fortune cookie program</a>?
 One of the fortune cookies was: &ldquo;it is all Ken&rsquo;s fault&rdquo;<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
 We have to remember that.</p>
 
@@ -180,7 +180,7 @@ Mind it, at that point as far as I know he
 barely knew the moves.
 There was total dominance by Russian chess playing
 program <a href="https://en.wikipedia.org/wiki/Kaissa">Kaissa</a> and two or three years he builds this specialized hardware,
-totally  revolutionizes the approach to just playing.
+totally revolutionizes the approach to just playing.
 Of course nobody remembers
 what Kaissa was.
 He is a guy who could enter in a
@@ -198,7 +198,7 @@ years of their collaboration not once they would attempt to do the same thing.
 They had this good sense to work on complementary things.
 Except once.
 Both of them needed to write an assembly program with about
-20 lines of code and continues Ken, &ldquo;I checked it was character by character
+20 lines of code and continues Ken, &ldquo;I checked, it was character by character
 identical&rdquo;.
 It sounds like mystical thing right, two people coming together,
 this is a Vulcan mind-meld (joke).</p>
@@ -233,7 +233,7 @@ Part of what I am trying to do here is to start discussing
 little things like, how do we name variables?
 Why is it important? We want to get to the point where
 everybody writes a consistent code, recognizable code.
-This is why I&rsquo;m I want to go slow and develop so that we
+This is why I want to go slow and develop so that we
 all agree<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.</p>
 
 <p>We have to start with a very very simple program. Most of you recognize it, right? <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">Hello World</a>.</p>
@@ -400,15 +400,15 @@ Its complexity is hidden but it&rsquo;s still there.</p>
 If you ask somebody to create a very
 complex data structure that&rsquo;s what you&rsquo;re going to get.
 You&rsquo;re going to get problems with node allocation.
-You are going to problems with rebalancing.
+You are going to get problems with rebalancing.
 You&rsquo;re going to get problem with whatever these advanced data
 structures do.
 These problems are going to get worse and worse.
 You&rsquo;re going to get a <a href="https://www.cs.cornell.edu/courses/cs3110/2014sp/lectures/26/memory.html">cache miss</a> on every step through the set.</p>
 
-<p>As our computers become faster, faster, and faster they&rsquo;re getting slower and
+<p>As our computers become faster and faster and faster they&rsquo;re getting slower and
 slower and slower<sup id="fnref:16"><a href="#fn:16" rel="footnote">16</a></sup>.
-Meaning that  going to the main memory is very slow.
+Meaning that going to the main memory is very slow.
 You want to have locality of reference. You want all your
 data that you are working on in the local cache. If you have a huge set or map it&rsquo;s not
 going to be like that.</p>
@@ -444,7 +444,7 @@ You need a <code>set</code> only if you need a thing which does not move things 
 As long as something gets into a <code>set</code> and it is not erased the pointer, it is fixed.
 For example, him sitting in this chair is in the <code>set</code>.
 As long as he&rsquo;s in this set he will not move from his chair.
-You could find him constant time.
+You could find him in constant time.
 It&rsquo;s a very useful thing except most people do not use set for that.</p>
 
 <a name="Two-fundamental-performance-metrics"></a>
@@ -514,10 +514,10 @@ and Turing machines from a philosophical and mathematical perspective.<a href="#
 <li id="fn:4">
 I have been unable to find any reference to this quote.
 Some older fortune files
-such as <a href="http://fortunes.cat-v.org/plan_9/">this file</a>  from plan-9 contain similar quotes,
+such as <a href="http://fortunes.cat-v.org/plan_9/">this file</a> from plan-9 contain similar quotes,
 such as &ldquo;Maybe I should have screwed up&rdquo;<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
-Alex: In my opinion Dennis wasn' at genius like Ken,
+Alex: In my opinion Dennis wasn&rsquo;t a genius like Ken,
  but obviously first class.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
 Alex: At Stanford there&rsquo;s one guy who knows, but he&rsquo;s an emeritus (Donald Knuth).<a href="#fnref:6" rev="footnote">&#8617;</a></li>
@@ -541,8 +541,8 @@ I have archived the <a href="https://github.com/justinmeiners/sgi-stl">SGI STL c
 especially for understanding concepts.</p><a href="#fnref:9" rev="footnote">&#8617;</a></li>
 <li id="fn:10">
 Alex: You didn&rsquo;t use to need <code>#include &lt;set&gt;</code> when I first did STL.
-I had one gigantic a file called <code>stl.h</code>
-At that time people said it&rsquo;s utterly unacceptable to twenty thousand lines of code.
+I had one gigantic file called <code>stl.h</code>
+At that time people said it&rsquo;s utterly unacceptable, you have twenty thousand lines of code.
 If you think about it nowadays it appears to be very funny. Twenty thousand is nothing.
 That&rsquo;s why <code>stl.h</code> was replaced with a gazillion little headers.
 Sometimes I have no idea what they are.<a href="#fnref:10" rev="footnote">&#8617;</a></li>
@@ -558,7 +558,7 @@ made a similar mistake.
 Some of you think it was a great language.
 They carefully designed a bunch of algorithms which work on arbitrary sequences
 and one of the algorithms was called <a href="http://clhs.lisp.se/Body/f_rm_dup.htm"><code>remove-duplicates</code></a> and it relied on equality.
-It actually would go through  <code>N</code> times rremoving things.
+It actually would go through <code>N</code> times removing things.
 They did not sort.
 They use equality.
 It did work and it worked exceptionally well for most of the applications.
@@ -567,7 +567,7 @@ The moment you go to larger lists things stop working.
 Quadratic algorithms are slow.<a href="#fnref:13" rev="footnote">&#8617;</a></li>
 <li id="fn:14">
 <p>To say a function <code>f</code> is <code>O(g)</code> it&rsquo;s only required that <code>f</code> be bounded
- by a constant multiple for all inputs beyond some point.
+by a constant multiple for all inputs beyond some point.
 Formally, if <code>f(x) &lt;= Ag(x)</code> for all <code>x &gt; M</code>, where <code>A</code> and <code>M</code> are constant real numbers
 (see &ldquo;The Art of Computer Programming&rdquo; 1.2.11).</p>
 

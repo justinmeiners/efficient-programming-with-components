@@ -150,7 +150,7 @@ In this video the words will be first introduced by a great English pianist <a h
 She is also a beautiful woman.
 Let us proceed&hellip; (<a href="https://www.youtube.com/watch?v=Bm_AKMV0ME0">Video here</a>).</p>
 
-<p>Shuebert was 18 years old when he composed it.
+<p>Shubert was 18 years old when he composed it.
 <em>If I had a choice between founding Facebook or writing this song, as my lifetime
 accomplishment, I would not hesitate one second, and it&rsquo;s not going to be the
 Facebook</em>.
@@ -176,11 +176,11 @@ very good algorithm and we&rsquo;ll need it later in the course.
 It&rsquo;s a very important component to be used in multiple places.
 For example, when implementing quicksort.
 Plus, we will be able to investigate
-several interesting techniques  and discover one deep problem on this very
+several interesting techniques and discover one deep problem on this very
 simple sorting algorithm.
 Binary search is not always a good thing to do.</p>
 
-<p>Remember insertion sort is good  when things are almost sorted.
+<p>Remember insertion sort is good when things are almost sorted.
 They are pretty close to where they should be.
 Binary search is going to poke far away.
 It&rsquo;s going to do a little poking, logarithmic poking,
@@ -286,7 +286,7 @@ I linear_insertion_sort_n(I first, N n, R r) {
 <p>Let&rsquo;s write the version for bounded ranges.
 It&rsquo;s very easy.
 As a base case in our induction, an empty range, and a one
-element range are both sorted.</p>
+element range, are both sorted.</p>
 
 <pre><code>// I is BidirectionalIterator
 // R is WeakStrictOrdering on the value type of I 
@@ -326,7 +326,7 @@ I was using sentinels before, but from that point on I decided
 to make an effort to use them more.</p>
 
 <p>This is a valid argument.
-We are not here to impose some theoretical conditions on algorithms we are here to
+We are not here to impose some theoretical conditions on algorithms, we are here to
 take existing efficient algorithms and find how to express them.
 We have to write whatever we write to enable this code to work.
 What this means is that we sometimes have to reject or ignore
@@ -477,7 +477,7 @@ void insertion_sort_unstable(I first, I last, R r) {
 
 <p>This leads us to another classical sort,
 it&rsquo;s very slow, but since it&rsquo;s classical and takes only a few lines
-we will discovery it.</p>
+we will discover it.</p>
 
 <p>What&rsquo;s the idea of selection sort?
 You find the min, put him in the first place.
@@ -497,7 +497,7 @@ void selection_sort(I first, I last, R r) {
 </code></pre>
 
 <p>It&rsquo;s not stable, but it&rsquo;s not hard to fix.
-The problem is swap might skip over lot&rsquo;s of equal guys.</p>
+The problem is swap might skip over lots of equal guys.</p>
 
 <pre><code>template &lt;typename I, typename R&gt;
 // I is ForwardIterator
@@ -514,7 +514,7 @@ void stable_selection_sort(I first, I last, R r) {
 Imagine they are big buildings that need to be carried.
 The unstable is actually amazing in that it just does <code>n - 1</code> swaps,
 always.
-Merge sort, quicksort, the do like <code>n log(n)</code>.
+Merge sort, quicksort, they do like <code>n log(n)</code>.
 Is it practically important? No.
 Not once have I needed it.
 However, it shows us how to create a sentinel.</p>
@@ -544,13 +544,13 @@ Why not use that?</p></li>
 be a uniform random shuffle.
 It is screwed up, but it requires probability theory or Knuth.
 These people at Google just don&rsquo;t read.
- The brightest people do not need to read (joke).</p></li>
+The brightest people do not need to read (joke).</p></li>
 <li><p>My dear friend Dave Musser who was on sabbatical at Google ventured to post
 that he did not satisfy the preconditions.
- Random true/false is not a weak strict ordering,
+Random true/false is not a weak strict ordering,
 or any ordering whatsoever.
- He tried to explain, but they said no.
- It should work with whatever I pass to it.</p></li>
+He tried to explain, but they said no.
+It should work with whatever I pass to it.</p></li>
 </ol>
 
 

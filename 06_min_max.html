@@ -218,12 +218,12 @@ In case of weak ordering it says it&rsquo;s greater, or less, or <em>equivalent<
 There is some equivalence relation, such as last name.</p>
 
 <p>Some people would say, well equal is a kind of equivalence,
-so  let&rsquo;s define <code>&lt;</code> to just be weak ordering.
+so let&rsquo;s define <code>&lt;</code> to just be weak ordering.
 I say it&rsquo;s evil.
 Why?
 Because for <code>TotallyOrdered</code> we need to be able to know</p>
 
-<pre><code>!(a &lt; b)  &lt;=&gt; (a &gt;= b)
+<pre><code>!(a &lt; b) &lt;=&gt; (a &gt;= b)
 </code></pre>
 
 <p>The <code>==</code> is equality, not another equivalence relation.
@@ -298,8 +298,7 @@ It&rsquo;s very easy to make a mistake and it&rsquo;s really hard to fix it.</p>
 <a name="Correct-implementation"></a>
 <h3>Correct implementation</h3>
 
-<p>Now we have a correct version for <code>TotallyOrdered</code>, let&rsquo;s generalize it
- for <code>StrictWeakOrdering</code>.
+<p>Now we have a correct version for <code>TotallyOrdered</code>, let&rsquo;s generalize it for <code>StrictWeakOrdering</code>.
 We no longer can rely on the <code>&lt;</code> operator on the type, as there may be many
 orderings and equivalence relations on a type.</p>
 
@@ -332,7 +331,7 @@ It&rsquo;s slow especially if it sits inside a loop and is called a gazillion ti
 <p>It&rsquo;s somewhat inconvenient to pass <code>cmp</code> when you actually want to use a <code>TotallyOrdered</code> type.
 Therefore there should be a version of <code>min</code> which doesn&rsquo;t take that parameter.
 The wrong way is to use a default template argument.
-Sometimes you want to get a pointer to function the function <code>min</code>
+Sometimes you want to get a pointer to the function <code>min</code>
 with a comparison function inserted.
 For example:</p>
 
@@ -398,7 +397,7 @@ Let us see why.</p>
 So why do we need it?
 We still want to provide what is convenient for the customer.
 When they think <code>max</code> and go looking for it, it should somehow work.
-But, its a little bit more.</p>
+But, it&rsquo;s a little bit more.</p>
 
 <a name="Sort2"></a>
 <h3>Sort2</h3>
@@ -420,7 +419,7 @@ void sort2(T&amp; a, T&amp; b, Compare cmp) {
 one by first copying, and then applying the in-place algorithm.</p>
 
 <p>Note once again the order of comparison.
-We have to be careful that aren&rsquo;t going to swap when they are equal.
+We have to be careful that we aren&rsquo;t going to swap when they are equal.
 I want the following invariant, after <code>sort2</code>
 <code>a</code> contains min and <code>b</code> contains max.
 It&rsquo;s very natural.
@@ -502,7 +501,7 @@ and is utterly invisible to you.
 The problem actually appears when people do complicated things.
 Perhaps they do millions of computations and then sort them.
 Sort assumes that equality and inequality work like
-they should  and bad things happen.</p>
+they should and bad things happen.</p>
 
 <p>The <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE floating point standard</a> is one of the great accomplishments of
 computer science. One of the top five.
@@ -535,8 +534,8 @@ There are two solutions</p>
 <p>I&rsquo;m advocating the second one.
 We keep the laws and define singularities.
 If there are singular values, the universe collapses,
-you know  nothing applies.
-you have to assure that singular values do not appear in your computation.</p>
+you know nothing applies.
+You have to assure that singular values do not appear in your computation.</p>
 
 <a name="Final-code"></a>
 <h2>Final code</h2>

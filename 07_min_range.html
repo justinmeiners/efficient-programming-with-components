@@ -430,11 +430,11 @@ which compresses it.</p>
 
 <p>The two programs run concurrently not sequentially.
 When <code>head</code> reads a small chunk of data, it can be immediately
-be written to <code>gzip</code>.
+written to <code>gzip</code>.
 In this way, the data transfer operates like <code>InputIterator</code>.
 Neither program has access to all the data at once.
 They can only read pieces of data as they come in.
-It can&rsquo;t seek back earlier in the input.
+They can&rsquo;t seek back earlier in the input.
 Once it is read, it is gone.</p>
 
 <p>The ability of <code>gzip</code> to operate on &ldquo;input iterator&rdquo;-like

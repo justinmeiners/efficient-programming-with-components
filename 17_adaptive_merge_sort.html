@@ -212,11 +212,11 @@ void merge_with_buffer(I first, I middle, I last, R r, B buffer) {
 }
 </code></pre>
 
-<p>Even though we aren&rsquo;t worry about it now, we can see the buffer
+<p>Even though we aren&rsquo;t worried about it now, we can see the buffer
 will need to be big enough to copy the entire left half in,
 so about size <code>n/2</code>.</p>
 
-<p>Note that the buffer doens&rsquo;t have to match the type of the container.
+<p>Note that the buffer doesn&rsquo;t have to match the type of the container.
 We will probably use an array for buffer,
 but <code>I</code> could be an iterator for a linked list.
 This is a general principle, relax type requirements.</p>
