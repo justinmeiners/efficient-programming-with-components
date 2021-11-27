@@ -103,10 +103,11 @@ This is a non-commercial project.
 Most of the code comes from [Ryan Ernst's repo](https://github.com/rjernst),
 who attended the lectures.
 
-Special thanks to [Alastair Harrison][aharrison] and [Ryan Pendleton][ryanp] for help with editing.
+Special thanks to [Alastair Harrison][aharrison], [Petter Holmberg][petter], and [Ryan Pendleton][ryanp] for help with editing.
 
 [aharrison]: https://github.com/aharrison24
 [ryanp]: https://github.com/rpendleton
+[petter]: https://github.com/petter-holmberg
 
 # FAQ
 
