@@ -31,31 +31,27 @@ Knuth claims that the first correct implementation was done by
 He is someone you should know about
 as a very great computer scientist.
 He did amazing amount of work on computational number theory,
-things like sieves for discovering large primes and many other
-important things.
-Among other things, he published a binary search which at least
-always terminated.
+things like sieves for discovering large primes and many other important things.
+Among other things, he published a binary search which at least always terminated.
 
 I actually disagree with Knuth slightly
 and claim that the first correct binary search was published roughly at the same time,
 but a couple of years after,
 by a German computer scientist.
 Once again, he is unjustly forgotten.
-He does not appear on Wikipedia[^wiki].
-His name is [Herman Bottenbruch][bottenbruch]  
-His claim to fame is he was one of the people who invented [Algol 58][algol-58], the predecessor
-of Algol 60.
+He does not appear on Wikipedia[^bottenbruch-not-on-wiki].
+His name is [Herman Bottenbruch][bottenbruch].
+His claim to fame is he was one of the people who invented [Algol 58][algol-58], the predecessor of Algol 60.
 He is one of the people who tried unsuccessfully to convince American
 delegates to Algol 58 committee that they should introduce block structures.
 He was one of the inventors of blocks.
 American representatives which included such brilliant people as [John Backus][backus]
 and [Alan Perlis][perlis] actually rejected it as too hard to implement.
 They didn't know how to do stacks.
-But sadly enough he doesn't get much credit,
-especially credit for correct binary search.
+But sadly enough he doesn't get much credit, especially credit for correct binary search.
 We will be actually studying his version.
 
-[^wiki]: He does now!
+[^bottenbruch-not-on-wiki]: He does [now][bottenbruch]!
 
 [mauchly]: https://en.wikipedia.org/wiki/John_Mauchly
 [moore-school]: https://en.wikipedia.org/wiki/Moore_School_of_Electrical_Engineering
