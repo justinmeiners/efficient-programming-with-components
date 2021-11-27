@@ -5,8 +5,8 @@
 
 Bisection is an idea which is pretty ancient.
 It was first used in a mathematical setting by [Lagrange][lagrange] who applied it for
-finding roots of polynomials that was around 1796.
-Two people independently discovered
+finding roots of polynomials, that was around 1796.
+Two people independently discovered it
 in late 1810s.
 The first is [Bernard Bolzano][bolzano]
 the second is [Augustin-Louis Cauchy][cauchy].
@@ -47,10 +47,9 @@ It is a great idea.
 
 We are still struggling on our path to binary search[^pauls-friend].
 It deals with two things.
-First
-it deals with a monotonically non-decreasing sequence.
+First, it deals with a monotonically non-decreasing sequence.
 Second of all it has some
-binary predicate which  establishes `StrictWeakOrdering`
+binary predicate which establishes `StrictWeakOrdering`
 on the sequence and which allows you to compare elements.
 This is too much, even for people who design APIs.
 In order to write it correctly we need to reduce it to a simpler problem.
@@ -121,7 +120,7 @@ There is only one special thing,
 the partition point.
 If we understand the partition
 point everything else will be very simple and there is no ambiguity.
-`find_if` actually finds the partitioned point.
+`find_if` actually finds the partition point.
 But, it does too many predicate applications.
 We could do better if our range is at least forward iterable.
 
@@ -130,7 +129,7 @@ if your predicate is very expensive,
 while iteration is relatively fast[^slow-comparison-example],
 you still could reduce the number of tests to `log(n)`.
 As we shall see we have a very good bound on the number of traversal
-operations which is literally `n`, not order of `n`, 
+operations which is literally `n`, not order of `n`.
 So we can get it so it works for everything.
 Then it works on arrays much much faster
 than linked lists. 
@@ -208,7 +207,6 @@ We are also not trying to be lucky and find equal.
 
 ## Upper and lower bound
 
-
 We need to talk a little bit about sorted ranges.
 A precondition to binary search is not that the range is partitioned,
 but it is sorted.
@@ -220,7 +218,7 @@ then you would be wrong.
 Increasing is too much.
 If I want to sort my coins and there are
 two pennies however much I want to sort,
-I'm no going to have an ascending sequence.
+I'm not going to have an ascending sequence.
 What we need to guarantee is that for no pair of elements
 `x_i`, `x_j` where `j > i`
 that `x_i > x_j`.
@@ -312,7 +310,7 @@ to all these bad binary search that return `-1`,
 because they only look for `5`. 
 
 As far as I could ascertain, these names are invented by me but I think they're good names,
-`upper_bound` and `lower_bound`. there are two.
+`upper_bound` and `lower_bound`, there are two.
 So what property does the upper bound have?
 It is the first element which is greater.
 Both lower bound and upper
@@ -437,12 +435,12 @@ of expensive `n log(n)` algorithms.
 I want you to think about this partitioning,
 especially in terms of our wonderful `binary_counter` device.
 However, we also want the partition to be **stable**.
-You want to move all the bad guys up front and good guys the tail end.
+You want to move all the bad guys up front and good guys to the tail end.
 You will return an iterator pointing to the partition point
 separating good from bad.
 This partition is *stable if the relative order of good guys and bad guys
 is maintained*,
-meaning if I have a alphabetically sorted list of employees and I
+meaning if I have an alphabetically sorted list of employees and I
 want to divide them by say gender,
 if I partition them, they will still be alphabetically sorted.
 

@@ -119,7 +119,7 @@ I say, look I'm not interested, because I want to see solutions to simple proble
 But people always think that exciting things have to be complicated.
 I claim exciting things tend to be very simple and basic.
 
-So you say,  "Alex, why don't we use a new language?"
+So you say, "Alex, why don't we use a new language?"
 Go try implementing these three program in your favorite language.
 Do them in a general way.
 If they're at least relatively efficient, that is, they are not slower than specific things 
@@ -135,7 +135,7 @@ Why is swap important? What does it deal with?
 Apparently it's not self-evident.
 Once upon a time I was talking to a very famous programmer,
 supposedly the best programmer A9 ever had.
-I told him about these three things and  he looks at me
+I told him about these three things and he looks at me
 and said, "I never had to use swap in my life".
 I don't know... I was very impressed because
 you swap for sorting,
@@ -354,8 +354,8 @@ So two rules:
 
 2. Don't optimize uncommon cases
 
-[^xor]: The ^ symbol is  bitwise [exclusive or](https://en.wikipedia.org/wiki/Exclusive_or).
-    The statement `a XOR b` means  a is true, or b is true, but not both.
+[^xor]: The `^` symbol is bitwise [exclusive or](https://en.wikipedia.org/wiki/Exclusive_or).
+    The expression `a ^ b` means `a` is true, or `b` is true, but not both.
     It is defined by the following truth table:
 
         a | b | a XOR b
@@ -392,7 +392,7 @@ Of course if it went into
 the register you could never use address operator `&` because obviously registers do not have addresses.
 It was a very special thing you needed to worry about.
 It was important in my measurements at the time.
-Stripping `register` declarations from fundamental algorithms caused a slow down by a factor of three.
+Stripping `register` declarations from fundamental algorithms caused a slowdown by a factor of three.
 Why? 
 For every call to `++` the assembly code first did a load 
 and then after it stored the result.
@@ -403,11 +403,11 @@ This is no longer true, meaning that computers no longer
 execute one operation at a time, as we will discover.
 For sure, you never need to worry about registers.
 In modern computers this is utterly idiotic; you should never do it.
-In the same way the compiler is perfectly  theoretically capable
+In the same way the compiler is perfectly theoretically capable
 of figuring out what needs to be `inline`, much more than you.
 
 But, we're living in
-this  transition time. 
+this transition time.
 I think about five years from now you will never need
 to write `inline`.
 Compilers will do it.

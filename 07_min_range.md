@@ -91,8 +91,6 @@ Suppose `last` is actually last and you point to the same place.
 That indicates a range of one element.
 There is no way to do zero.
 
-
-
 Later, we will look at algorithms for partitioning.
 We want to partition good people from bad people.
 After the partition we will return a pointer which separates good from bad.
@@ -171,11 +169,11 @@ So it must be a `ForwardIterator`.
 
     The two programs run concurrently not sequentially.
     When `head` reads a small chunk of data, it can be immediately
-    be written to `gzip`.
+    written to `gzip`.
     In this way, the data transfer operates like `InputIterator`.
     Neither program has access to all the data at once.
     They can only read pieces of data as they come in.
-    It can't seek back earlier in the input.
+    They can't seek back earlier in the input.
     Once it is read, it is gone.
 
     The ability of `gzip` to operate on "input iterator"-like

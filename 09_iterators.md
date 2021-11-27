@@ -77,18 +77,17 @@ but I wasn't ignorant.
 
 [^coordinate-references]: See chapter 7 of "Elements of Programming" on coordinate structures.
     An interesting discussion on the general idea of "coordinatisation"
-    is found in chapter 1 of  "Basic Notions of Algebra" by Shafarevich.
+    is found in chapter 1 of "Basic Notions of Algebra" by Shafarevich.
      
 [^boost]: [Boost][boost] is a popular collection of C++ libraries, covering a wide range of uses,
      generally accepted as the next tool to reach for beyond the standard library.
      Many standard library features, such as smart pointers, were initially developed in Boost.
      Alex speaks positively of some parts (see [his foreword][alex-graph-foreword] for "The Boost Graph Library"), but others he is more critical of.
 
-
 [^python-iterator]:
     Alex almost certainly means Python generators, not iterators, but I will describe both.
 
-    An [iterator](https://wiki.python.org/moin/Iterator) in Python is any object which implements a method called  `__next__()`.
+    An [iterator](https://wiki.python.org/moin/Iterator) in Python is any object which implements a method called `__next__()`.
     Unlike C++ iterators, the `__next__()` always returns another element of the sequence, not an iterator,
     so they do not resemble pointers or coordinates, neither are they comparable.
     They are most similar to `InputIterator` in that previous values in the sequence become inaccessible after advancing.
@@ -200,7 +199,7 @@ So they demanded that I change the whole architecture to accommodate them.
 Guess how they voted?
 No.
 Now we're stuck for the next hundred years with stuff which was included to placate people that
- couldn't have been placated.
+couldn't have been placated.
 
 So what does an iterator return when you dereference it?
 Normally a reference. It's an [`lvalue`][lvalue]
@@ -210,7 +209,7 @@ type should be.
 So now we need to provide it.
 
 &emsp;4. `reference`: the type of a reference to the value. <br/>
-&emsp;5. `pointer`:  the type of a pointer to the value.
+&emsp;5. `pointer`: the type of a pointer to the value.
 
 It's not particularly harmful, but it obfuscates things
 and it provides "language experts" with steady employment.
@@ -224,7 +223,7 @@ and it provides "language experts" with steady employment.
     implemented as a constant time algorithm for `RandomAccessIterators` but
     only a linear time algorithm for other iterator categories. The
     `iterator_category` tag allows the appropriate algorithm to be selected at
-    compile time. This technique is known as [tag disptach][tag-dispatch].
+    compile time. This technique is known as [tag dispatch][tag-dispatch].
 
 [duck]: https://en.wikipedia.org/wiki/Duck_typing
 [ptrdiff]: https://en.cppreference.com/w/c/types/ptrdiff_t
@@ -264,7 +263,6 @@ Let's write constructors for our iterator:
     iterator() {}
     iterator(list_pool& p, list_pool::list_type node) :
         pool(&p), node(node) {}
-
 
 We should explicitly call a constructor when we can.
 Default constructor shouldn't really be used
@@ -322,7 +320,6 @@ move to the next node.
 just to distinguish pre and post.
 Post-increment could be automatically generated
 and it would be criminal to do anything else.
-
 
 ### Equality
 
@@ -425,7 +422,7 @@ search, whether in a map, or whether in a sorted array.
 For example, suppose I want to see if an iterator
 is in the structure, such as inclusion in a set.
 The only effective way is comparison.
-I was torn  because I knew I could not include it,
+I was torn because I knew I could not include it,
 because most people would attempt to write
 code in STL the old way they learned which is:
 

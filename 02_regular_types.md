@@ -79,7 +79,7 @@ You might think you can just put any type in a map,
 but actually there are requirements on the type,
 certain properties which are required for these containers to function.
 
-Let, us think about what my task was when I started working on the C++ STL.
+Let us think about what my task was when I started working on the C++ STL.
 It was to define standard data structures which will work for any reasonable subset of types.
 What is a reasonable subset of types?
 This is a little bit tricky but it's of paramount importance.
@@ -93,7 +93,7 @@ even more important than `int`.
 It has to work for pointer. 
 
 To understand all this, we're going to become a little bit theoretical.
-None of this stuff actually works  unless you understand at least a
+None of this stuff actually works unless you understand at least a
 little bit of theory.
 We will call such reasonable types `Regular`.
 What we will do is formally define a set of operators that all `Regular` types must have,
@@ -221,7 +221,7 @@ a copy, the original and the copy are equal.
 `!=` should always behave like: `!(a == b)`.
 My very strong point is that the semantics of
 inequality (`!=`) is absolutely and totally bound to the semantics of equality (`==`).
-You should not even be able to have a situation where they have different  semantics.
+You should not even be able to have a situation where they have different semantics.
 But, the standards committee disagrees with me on that.
 They say that you could have equality be equality and
 inequality be multiplication operator.
@@ -237,7 +237,7 @@ So even the paradigm of a member is the wrong paradigm.
 They are symmetric.
 
 [^smart-pointers]: This is likely a reference to how [`std::shared_ptr`][cpp-shared-ptr] behaves
-    which provides a form of automatic memory management.,
+    which provides a form of automatic memory management.
 
 ## Total orderings
 
@@ -255,7 +255,7 @@ to `TotallyOrdered`.
 
 `<` must obey the following [mathematical properties][total-order]:
 
-**Axiom 1:** Anti-reflexive: `!(a < a)`
+**Axiom 1:** Anti-reflexive: `!(a < a)`.
 
 **Axiom 2:** Transitive: If `a < b` and `b < c` then `a < c`.
 
@@ -265,7 +265,7 @@ to `TotallyOrdered`.
 
 In the same way that the semantics of `==` is related to `!=`,
 we can see the semantics of `<` must be totally bound to the semantics of equality.
-But furthermore,  `<` is related to four other operations which must also be defined:
+But furthermore, `<` is related to three other operations which must also be defined:
 
 1. `<` less than
 2. `>` greater than
@@ -273,7 +273,7 @@ But furthermore,  `<` is related to four other operations which must also be def
 4. `>=` greater than or equal to
 
 If you provide them then they have to have natural meaning.
-For example, `!(a < b)`  should be `a >= b` otherwise the world
+For example, `!(a < b)` should be `a >= b` otherwise the world
 perishes.
 
 Later we will talk more about orderings, and define several different

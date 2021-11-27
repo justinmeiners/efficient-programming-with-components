@@ -28,7 +28,7 @@ Bjarne is literally the greatest language designer, at least after [John Backus]
 John Backus invented the first useful programming language [Fortran][fortran].
 It is still a very useful programming language.
 Then came C and C++.
-Dennis was  brilliant.
+Dennis was brilliant.
 He did C and then washed his hands and walked away,
 which is very wise.
 I sympathize. 
@@ -52,7 +52,7 @@ There is some ugly stuff, but you could avoid it.
 Being able to evolve the language for that long is incredible.
 I have no other example, not just in language design, but in
 computer science.
-Ken Thompson did Unix but do you think he stayed
+Ken Thompson did UNIX but do you think he stayed
 with UNIX?
 No, in his Turing award speech he said he stopped working 
 on UNIX a long time ago.
@@ -60,13 +60,13 @@ It's very difficult.
 
 I'm a clear example
 of a lazy bum. 
-STL was voted in August 1994,  20 years ago.
+STL was voted in August 1994, 20 years ago.
 How many times did I attend standard committee meetings after that?
 None.
-How many times did I look at proposals related to STL did I do anything related to this?
+How many times did I look at proposals related to STL? Did I do anything related to this?
 Nothing.
 This is why I have sanity but also this is
-why compared with Bjarne, I am a failure.
+why, compared with Bjarne, I am a failure.
 I let people do things with STL that should have been prevented.
 I did not evolve it.
 I did not grow it.
@@ -81,6 +81,7 @@ working.
 After [1.5][lisp15] he's gone.
 He didn't follow.
 He didn't contribute, and so on.
+Everybody does that, because we are weaklings.
 
 So C++ is a great accomplishment, 
 but of course it has flaws.
@@ -180,7 +181,7 @@ Continue making similar replacements for the rest of the operations
 on singleton:
 
     ~instrumented() { ++counts[destructor]; }
-    instrumented& operator=(const instrumented& x) {  
+    instrumented& operator=(const instrumented& x) {
       ++counts[assignment];
       value = x.value;
       return *this;
@@ -193,7 +194,7 @@ on singleton:
     }
     // TotallyOrdered
     friend
-    bool operator<(const instrumented& x, const instrumented& y) { 
+    bool operator<(const instrumented& x, const instrumented& y) {
       ++counts[comparison];
       return x.value < y.value;
     }
@@ -207,7 +208,7 @@ on singleton:
 
 What to do with all the counts?
 Where do they get stored?
-Every time this `instrumented` thing  happens we want some global count to be incremented.
+Every time this `instrumented` thing happens we want some global count to be incremented.
 We were told that using global variables is bad.
 If I were doing it just for me, I would have used globals.
 Old guys don't mind using global variables.
@@ -229,7 +230,9 @@ We will define a base class to hold this data:
       static void initialize(size_t);
     };
 
-
+This is a remarkable example of a class containing nothing.
+It is a very useful thing, we will use very many such classes.
+It's very cheap to pass things which contain nothing.
 
 A static member is a member which is one per class, not one per instance, and they're useful because we don't want to keep count per instance.
 We want to keep count per class.
@@ -254,11 +257,9 @@ This is false.
 Inheritance is very useful when you inherit from a class containing nothing because it couldn't do any harm.
 That's what we're going to do here.
 
+    template <typename T>
+    // T is Semiregular or Regular or TotallyOrdered
     struct instrumented : instrumented_base
-
-This is a remarkable example of a class containing nothing.
-It is a very useful thing, we will use very many such classes.
-It's very cheap to pass things which contain nothing.
 
 There is a notorious problem in C++ with static
 members of templates, it's just not good.
@@ -287,7 +288,7 @@ the person who invented it was weird.
 Whether it worked there correctly or not remains to be seen.
 
 Dennis decided to bring it in,
-but the issue  is that it's not really a type.
+but the issue is that it's not really a type.
 C++ attempts to make it a type but it doesn't quite work.
 You could have a variable
 typed with the enum which has three different values and then you take totally
@@ -297,8 +298,6 @@ My recommendation is still to use them. Enums are very good when used
 in a limited way.
 But, do not depend on any operations.
 Never depend on a value of a given enum.
-
-
 
 
 [^kandr]: K&R (Kernighan and Ritchie) is a nickname for the book ["The C Programming Language"][c-lang].
@@ -321,7 +320,7 @@ You go from this state to that state.
 You could write a loop with some conditional.
 Or, you could just `goto` and write very
 beautiful code, at least we believe so.
-Everything has its place, Dijkstra's structures not withstanding[^goto].
+Everything has its place, Dijkstra's strictures not withstanding[^goto].
 
 
 [^goto]: Goto used to be the primary way to do control flow in programs,
@@ -346,7 +345,7 @@ Everything has its place, Dijkstra's structures not withstanding[^goto].
     Dijkstra heavily criticized this approach in his famous paper:
     ["Go to statement considered harmful"][goto-paper].
 
-    Alex is observing that it is a good  solution to many problems,
+    Alex is observing that it is a good solution to many problems,
     especially when used in a restricted context, and not as the primary
     way to organize programs.
     Later on he will give examples.
@@ -452,7 +451,7 @@ Here is a sample of the output for heap sort[^pc-info]:
 [^implementations]: Many programmers imagine the C++ standard library is a package like
     `sqlite` or `LaTeX` that is centrally developed
     and deployed to many platforms.
-     This is not the case.
+    This is not the case.
     Vendors who want to create a C++ compiler and support it on their platform typically develop
     their own library implementation in agreement with the standard.
     There is little or no collaboration on library code between platforms.
@@ -473,10 +472,10 @@ Here is a sample of the output for heap sort[^pc-info]:
 Another useful way to study operation counts is by *normalizing the data*.
 We know the asymptotic complexity of sort algorithms
 should be `O(n log(n))`.
-So,  what we can do is normalize the data
+So, what we can do is normalize the data
 to tell us for `n` elements, how many operations were done, per `n log(n)`.
 
-Here is an example of such a normalizing functions.
+Here is an example of such a normalizing function:
 
     double normalized_by_nlogn(double x, double n) { 
       return x / (n * (log(n) / log(2))); 
@@ -513,7 +512,7 @@ Here is a sample of data for heap sort with measurements normalized:
      8388608        0.20        1.06        0.20        0.00        0.00        1.02         0.00
     16777216        0.19        1.06        0.19        0.00        0.00        1.01         0.00
 
-You remember Knuth (Author of "The Art of Computer programming")?
+You remember Knuth (Author of "The Art of Computer Programming")?
 In the beginning of the first volume when he introduces complexity
 he tells you how to measure complexity.
 He says we measure it as a function where we have
@@ -558,7 +557,7 @@ normalize by the sum of the harmonic series up to `n`:
 The denominator is actually `ln(n) + gamma`
 where gamma is a small number[^stirling].
 
-**Exercise:**  Introduce variation into the shape of data and compare
+**Exercise:** Introduce variation into the shape of data and compare
 the sorting algorithms again. 
 
 
@@ -576,7 +575,7 @@ the sorting algorithms again.
 
 Counting operations is only one measure of performance.
 If we apply `instrumented` to our problem of finding unique elements
-in the first chapter, we will actually find that using
+in the first chapter, we will find that using
 `std::set` actually uses fewer of almost
 every operation than first sorting with `std::sort`
 and then calling `std::unique`.

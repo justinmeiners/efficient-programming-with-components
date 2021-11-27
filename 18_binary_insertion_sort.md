@@ -8,7 +8,7 @@ I used to tell you stories but right now I decided
 I'll just occasionally share a song or something like that
 which would indicate what mood I'm in.
 This is a very great song by [Franz Schubert][schubert] but it also
-perfectly reflects will go on with the course in how I feel.
+perfectly reflects what will go on with the course in how I feel.
 The song is called ["The Organ Grinder"][winter-journey] (Der Liermann).
 The singer is [Dietrich fischer-dieskau][dietrich] maybe the greatest
 leader, or art song singer of the last 50, 60, or 70 years.
@@ -35,12 +35,12 @@ We basically want to grow it, one element at a time,
 while ensuring it stays sorted.
 By repeating it inductively, eventually the whole range is sorted.
 So, main idea is to pick an element in the unsorted piece,
- find where the element goes, and insert it there.
+find where the element goes, and insert it there.
 
 ### Insertion sort variations
 
 How many algorithmic versions of insertion sort are there?
-Finding where it could go be done with either:
+Finding where it should go could be done with either:
 
 1. Linear search
 2. Binary search
@@ -53,7 +53,7 @@ insertion sort you have to do two things:
 1. You have to guard that you're not crossing by size 
 2. Guard that you're not crossing the first
 
-This makes the insertion sort  do two comparisons per cycle.
+This makes the insertion sort do two comparisons per cycle.
 You could have an insertion sort with a guard,
 assume that somebody puts (by hook or by crook)
 the smallest element first.
@@ -81,8 +81,8 @@ This is an interesting point we should discuss.
 
 3. Insertion sort is going to move an element
   from where it is, to where it should be,
- one step at a time.
- So another case is when the average distance
+  one step at a time.
+  So another case is when the average distance
   from where it is, to where it should be,
   is small.
   It's "nearly sorted".
@@ -153,7 +153,7 @@ It sort of works, you know, slowly.
     4. [`std::nth_element`](https://en.cppreference.com/w/cpp/algorithm/nth_element).
         Not quite a sort, but it's sort related.
         What it does is pin, for example the 30th percentile
-        element, and put all the smaller before, adn all the larger. 
+        element, and put all the smaller before, and then all the larger.
         If I want to find another one, I can pin again, and sort inbetween, etc.
 
 ## Binary insertion sort
@@ -201,7 +201,7 @@ You might want to use the `upper_bound` we wrote together.
 But, remember it calls `std::distance` which is linear for `ForwardIterator`.
 So let's use `upper_bound_n`
 
-What we will first write a function for finding where an element
+What we will first write is a function for finding where an element
 goes and placing it there.
 Then we will structure our loop[^for-loop] around that.
 
@@ -220,7 +220,6 @@ Then we will structure our loop[^for-loop] around that.
 `rotate_right_by_one` will be discussed in just a bit.
 It's important to return here, in case someone
 else wants to use this function.
-
 
 To write the loop that calls this function,
 I suggest that we carefully write invariants.
@@ -311,7 +310,7 @@ If we have a one-element sequence `a_0` and we want to rotate it,
 how do we do it?
 Done.
 That allows us to consider an inductive solution.
-Somehow, by hook or crook we have an algorithm which knows how to shift things 
+Somehow, by hook or by crook we have an algorithm which knows how to shift
 `n` things,
 such as the range:
 
@@ -343,6 +342,7 @@ swap the first element, and the one following our range:
 
     [2 1] 3
         
+
 Now we have the first two rotated.
 To rotate the full sequence
 we once again swap the first and last:
@@ -360,7 +360,6 @@ It might not be the fastest, but it is going to be much more elegant.
         while (++current != last) std::swap(first, current);
     }
 
-
 Let's write a dispatch for both versions,
 it will compile to no code[^concepts].
 
@@ -374,7 +373,7 @@ it will compile to no code[^concepts].
 [^concepts]: Alex: Someday we will get concepts
     in the C++ standard and not have to write these things.
     But that will be at least 5 years and I won't be programming.
-    I'm like an old man planting an Apple tree.
+    I'm like an old man planting an apple tree.
 
 ### Should we support forward iterator?
 
@@ -399,14 +398,12 @@ next, so eventually you get to a point where everything is scattered
 all over memory.
 
 STL used to have a sentence in the container
-section which the standard commitee threw out.
+section which the standard committee threw out.
 Use a vector.
 This is a true statement.
 Unless you are absolutely positive
 you need something else, use a vector
 or a C array[^sutter-advice].
-
-
 
 
 [^for-loop]: Alex: Could we use a `for` loop instead of a `while`?
@@ -433,7 +430,7 @@ or a C array[^sutter-advice].
     I was making decisions by saying,
     "I know how to do it in the more general case.
     But, I will not let programmers do it because
-    they are immature.".
+    they are immature."
     This "nanny" control is not necessarily a good thing.
     I am of two minds here.
     I am trying to not be a nanny here.

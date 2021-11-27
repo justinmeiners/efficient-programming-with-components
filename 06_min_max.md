@@ -88,12 +88,12 @@ There is some equivalence relation, such as last name.
 
 
 Some people would say, well equal is a kind of equivalence,
-so  let's define `<` to just be weak ordering.
+so let's define `<` to just be weak ordering.
 I say it's evil.
 Why?
 Because for `TotallyOrdered` we need to be able to know
 
-    !(a < b)  <=> (a >= b)
+    !(a < b) <=> (a >= b)
 
 The `==` is equality, not another equivalence relation.
 We can't conclude that with a weak ordering.
@@ -172,8 +172,7 @@ It's very easy to make a mistake and it's really hard to fix it.
 
 ### Correct implementation
 
-Now we have a correct version for `TotallyOrdered`, let's generalize it
- for `StrictWeakOrdering`.
+Now we have a correct version for `TotallyOrdered`, let's generalize it for `StrictWeakOrdering`.
 We no longer can rely on the `<` operator on the type, as there may be many
 orderings and equivalence relations on a type.
 
@@ -202,7 +201,7 @@ There are two reasons:
 It's somewhat inconvenient to pass `cmp` when you actually want to use a `TotallyOrdered` type.
 Therefore there should be a version of `min` which doesn't take that parameter.
 The wrong way is to use a default template argument.
-Sometimes you want to get a pointer to function the function `min`
+Sometimes you want to get a pointer to the function `min`
 with a comparison function inserted.
 For example:
 
@@ -217,7 +216,6 @@ So we write a second interface:
     const T& min(const T& a, const T& b) {
         return min(a, b, std::less<T>());
     }
-
 
 Let's implement a standard class called [`std::less`][cpp-less].
 It overrides the evaluation operator so it can be called just like a function[^function-objects].
@@ -286,7 +284,7 @@ It seems that `max` is just `min` with `>`.
 So why do we need it?
 We still want to provide what is convenient for the customer.
 When they think `max` and go looking for it, it should somehow work.
-But, its a little bit more.
+But, it's a little bit more.
 
 ### Sort2
 
@@ -306,7 +304,7 @@ It's always preferable to sort in-place because we can obtain a composable
 one by first copying, and then applying the in-place algorithm.
 
 Note once again the order of comparison.
-We have to be careful that aren't going to swap when they are equal.
+We have to be careful that we aren't going to swap when they are equal.
 I want the following invariant, after `sort2`
 `a` contains min and `b` contains max.
 It's very natural.
@@ -382,7 +380,7 @@ and is utterly invisible to you.
 The problem actually appears when people do complicated things.
 Perhaps they do millions of computations and then sort them.
 Sort assumes that equality and inequality work like 
-they should  and bad things happen.
+they should and bad things happen.
 
 The [IEEE floating point standard][float] is one of the great accomplishments of
 computer science. One of the top five.
@@ -411,8 +409,8 @@ There are two solutions
 I'm advocating the second one.
 We keep the laws and define singularities.
 If there are singular values, the universe collapses,
-you know  nothing applies.
-you have to assure that singular values do not appear in your computation.
+you know nothing applies.
+You have to assure that singular values do not appear in your computation.
 
 [float]: https://en.wikipedia.org/wiki/IEEE_754
 
