@@ -4,7 +4,7 @@
 ## Reflections on Trusting Trust
 
 [Ken Thompson][ken] did many wonderful things. Probably more
-than any programmer, he influenced the programming style  which we have right
+than any programmer, he influenced the programming style which we have right
 now. While he did not invent C, that was done by his friend [Dennis Ritchie][dennis],
 he invented the programming style which underlies C.
 Dealing with pointers,
@@ -18,7 +18,7 @@ have to be abolished[^hoare-speech].
 The idea was that pointer is illegitimate thing. 
 Language designers were fully convinced that
 even if you provide pointers nobody should call them pointers.
-They  would call them something like [access types][access-types].
+They would call them something like [access types][access-types].
 They have to prohibit iterations, like you could never subtract pointers.
 [Niklaus Wirth][wirth], the designer of Pascal, was very certain that you should never allow
 subtraction between pointers.
@@ -40,7 +40,7 @@ So Ken made them practical[^minsky].
 
 Then he did UNIX, this totally brilliant operating system on which we all rely.
 All of our livelihoods come from Ken, in one shape or form.
-Do you remember the [fortune cookie program][fortune]?  
+Do you remember the [fortune cookie program][fortune]?
 One of the fortune cookies was: "it is all Ken's fault"[^fortune-quote].
 We have to remember that.
 
@@ -50,7 +50,7 @@ Mind it, at that point as far as I know he
 barely knew the moves.
 There was total dominance by Russian chess playing
 program [Kaissa][russia-chess] and two or three years he builds this specialized hardware,
-totally  revolutionizes the approach to just playing.
+totally revolutionizes the approach to just playing.
 Of course nobody remembers
 what Kaissa was.
 He is a guy who could enter in a
@@ -68,7 +68,7 @@ years of their collaboration not once they would attempt to do the same thing.
 They had this good sense to work on complementary things.
 Except once.
 Both of them needed to write an assembly program with about
-20 lines of code and continues Ken, "I checked it was character by character
+20 lines of code and continues Ken, "I checked, it was character by character
 identical".
 It sounds like mystical thing right, two people coming together,
 this is a Vulcan mind-meld (joke).
@@ -94,10 +94,10 @@ Imagine how wonderful it would be if you could understand what someone else wrot
 
 [^fortune-quote]: I have been unable to find any reference to this quote.
     Some older fortune files
-    such as [this file][plan-9-fortune]  from plan-9 contain similar quotes,
+    such as [this file][plan-9-fortune] from plan-9 contain similar quotes,
     such as "Maybe I should have screwed up"
 
-[^dennis]: Alex: In my opinion Dennis wasn' at genius like Ken,
+[^dennis]: Alex: In my opinion Dennis wasn't a genius like Ken,
      but obviously first class.
 
 [^teaching-programming]: Alex: At Stanford there's one guy who knows, but he's an emeritus (Donald Knuth).
@@ -141,7 +141,7 @@ Part of what I am trying to do here is to start discussing
 little things like, how do we name variables?
 Why is it important? We want to get to the point where
 everybody writes a consistent code, recognizable code.
-This is why I'm I want to go slow and develop so that we
+This is why I want to go slow and develop so that we
 all agree[^conventions].
 
 We have to start with a very very simple program. Most of you recognize it, right? [Hello World][hello-world].
@@ -268,9 +268,8 @@ That is a lot.
     One possible algorithm is using a lookup table.
     For example, one could allocate an array with `2^32` entries and count how many times integers are found only once.
 
-
-[^big-oh]: To say a function `f` is `O(g)` it's only required that `f` be bounded 
-     by a constant multiple for all inputs beyond some point.
+[^big-oh]: To say a function `f` is `O(g)` it's only required that `f` be bounded
+    by a constant multiple for all inputs beyond some point.
     Formally, if `f(x) <= Ag(x)` for all `x > M`, where `A` and `M` are constant real numbers
     (see "The Art of Computer Programming" 1.2.11).
 
@@ -278,8 +277,8 @@ That is a lot.
     In this section, Alex is observing that there is no requirement for `A` to be small.
 
 [^headers]: Alex: You didn't use to need `#include <set>` when I first did STL.
-    I had one gigantic a file called `stl.h`
-    At that time people said it's utterly unacceptable to twenty thousand lines of code.
+    I had one gigantic file called `stl.h`
+    At that time people said it's utterly unacceptable, you have twenty thousand lines of code.
     If you think about it nowadays it appears to be very funny. Twenty thousand is nothing.
     That's why `stl.h` was replaced with a gazillion little headers.
     Sometimes I have no idea what they are.
@@ -289,7 +288,7 @@ That is a lot.
     Some of you think it was a great language.
     They carefully designed a bunch of algorithms which work on arbitrary sequences
     and one of the algorithms was called [`remove-duplicates`][clhs-duplicates] and it relied on equality.
-    It actually would go through  `N` times rremoving things.
+    It actually would go through `N` times removing things.
     They did not sort. 
     They use equality.
     It did work and it worked exceptionally well for most of the applications.
@@ -365,15 +364,15 @@ Miracles are not possible.
 If you ask somebody to create a very
 complex data structure that's what you're going to get.
 You're going to get problems with node allocation.
-You are going to problems with rebalancing.
+You are going to get problems with rebalancing.
 You're going to get problem with whatever these advanced data
 structures do.
 These problems are going to get worse and worse.
 You're going to get a [cache miss][cache] on every step through the set.
 
-As our computers become faster, faster, and faster they're getting slower and
+As our computers become faster and faster and faster they're getting slower and
 slower and slower[^slower].
-Meaning that  going to the main memory is very slow.
+Meaning that going to the main memory is very slow.
 You want to have locality of reference. You want all your
 data that you are working on in the local cache. If you have a huge set or map it's not
 going to be like that. 
@@ -407,7 +406,7 @@ You need a `set` only if you need a thing which does not move things around.
 As long as something gets into a `set` and it is not erased the pointer, it is fixed.
 For example, him sitting in this chair is in the `set`.
 As long as he's in this set he will not move from his chair.
-You could find him constant time.
+You could find him in constant time.
 It's a very useful thing except most people do not use set for that.
 
 [^slower]: This performance description is based on several trends in computer architecture.

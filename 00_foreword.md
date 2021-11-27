@@ -50,7 +50,7 @@ code is reduced to its essential function,
 as opposed to traditional black-box layering
 which merely hides information.
 Programs written this way also tend to be fast,
-which contributes to its reusability.
+which contributes to their reusability.
 If a component doesn't perform, 
 there will always be some performance-sensitive application
 that can't use it.
@@ -145,7 +145,7 @@ this presentation will probably be difficult
 to follow.
 Try the first lesson.
 
-**How similar is Alex's vision to the  "modern C++" style?**
+**How similar is Alex's vision to the "modern C++" style?**
 
 The emphasis on value types and templates over dynamically allocated
 objects with virtual members is similar,

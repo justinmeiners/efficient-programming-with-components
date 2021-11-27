@@ -76,7 +76,7 @@ So it tells us we can do better.
 The numbers are nano-seconds per element.
 Our merge sort is called `inplace`.
 We start off ok, and then gradually get slower and slower in comparison.
-Obviously, as the size increase you have to do more work.
+Obviously, as the size increases you have to do more work.
 It's not linear.
 But, ours is clearly 3-4x slower than that.
 
@@ -84,7 +84,7 @@ But, ours is clearly 3-4x slower than that.
 
 [cpp-stable-sort]: https://en.cppreference.com/w/cpp/algorithm/stable_sort
 
-## A plan for improvement.
+## A plan for improvement
 
 We are going to write a faster one.
 I am going to work with the class but I will not always tell you
@@ -124,10 +124,10 @@ so we can remove them later if needed.
     Within 5-10% of the `std::stable_sort`.
     What would be great?
     Observe STL also has [`std::sort`][cpp-sort] because it's faster.
-    If it's as fast as sort[^dream].
+    If it's as fast as sort, that would be great.[^dream].
 
 [^dream]: Alex: It has been my dream for decades 
-    to make stable sort as fast as sort,
+    to make my stable sort as fast as my sort,
     at which point I could throw away the other and just have one sort.
     But, I make progress with stable sort, then I make progress with sort.
 
@@ -171,7 +171,7 @@ What is the complexity of merge sort, in terms of comparisons?
 What is the specific coefficient for insertion sort?
 The sorted portion is on average half the length of the original input.
 In addition, on average when we an insert an element we
-only have to go half the length before finding it's location.
+only have to go half the length before finding its location.
 Therefore the complexity
 is roughly: `n^2/4`.
 
@@ -212,9 +212,9 @@ otherwise do that".
 The term is *adaptive*.
 
 You might think everybody can write a good merge.
-If you Google "std merge` it shows you [this][merge-code]:
+If you Google "std merge" it shows you [this][merge-code]:
 Since you're a normal programmer
-you migth say, "oh it's on the web, therefore I can copy and paste and use
+you might say, "oh it's on the Web, therefore I can copy and paste and use
 it in my code." 
 
     template <class InputIterator1, class InputIterator2, class OutputIterator>
@@ -235,7 +235,6 @@ An empty range will melt the computer.
 [merge-code]: https://web.archive.org/web/20130812111552/https://www.cplusplus.com/reference/algorithm/merge/
 
 **Faster rotate**
-
 
 What is the complexity of `std::rotate`?
 It's tricky, because it depends on the kind of iterators which you have.
@@ -258,7 +257,7 @@ which is for sure less than `3n`.
 
 There's lots of things to do.
 How should we go about it?
-The problem the problem with programming, specifically designing components
+The problem with programming, specifically designing components
 and decomposing the system is that you do not know what is right in isolation.
 You never know what the correct interface is
 until you see it in other algorithms,
@@ -273,12 +272,11 @@ what you need to pass,
 what is the right thing to do, and that's what
 I am trying to teach.
 
-
 When should we try insertion point?
-As a rule we want to fix the asmyptotic complexity.
+As a rule we want to fix the asymptotic complexity.
 Doing insertion sort at the bottom won't help that.
 Right now we have a problem with our asymptotic complexity.
-It's `O(n log^2(n))` we want to get rid of that square
+It's `O(n log^2(n))`. We want to get rid of that square
 as fast as possible.
 
 I'm very lazy.

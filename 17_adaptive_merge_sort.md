@@ -15,7 +15,6 @@ But, I needed to ship it, and in order to do that, I couldn't just
 require them to add a hook.
 So I wrote the following thing:
 
-
     // ask for n, system gives you as much as it can, but not more than n.
     std::pair<void*, size_t> get_temporary_buffer(size_t n) { 
       // this is bogus code and needs to be replaced
@@ -104,11 +103,11 @@ but later we will write a better one.
     }
 
 
-Even though we aren't worry about it now, we can see the buffer
+Even though we aren't worried about it now, we can see the buffer
 will need to be big enough to copy the entire left half in,
 so about size `n/2`.
 
-Note that the buffer doens't have to match the type of the container.
+Note that the buffer doesn't have to match the type of the container.
 We will probably use an array for buffer,
 but `I` could be an iterator for a linked list.
 This is a general principle, relax type requirements.

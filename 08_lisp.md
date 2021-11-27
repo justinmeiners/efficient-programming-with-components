@@ -7,8 +7,7 @@ A long time ago there was a programming language called [Lisp][lisp]
 or for you younger folks [Scheme][scheme].
 Scheme might have been wrong, but it was great[^community].
 The whole language centers around very simple [linked lists][linked-list]
- which are based on three fundamental
-operations[^sicp]:
+which are based on three fundamental operations[^sicp]:
 
 1. [`cons`](http://www.lispworks.com/documentation/lw50/CLHS/Body/f_cons.htm): create a pair.
 2. [`car`](http://clhs.lisp.se/Body/f_car_c.htm#car): get first element of pair.
@@ -33,7 +32,7 @@ But, we're going to build it so it's blindingly fast.
 How are we going to do that? 
 You want to avoid memory fragmentation.
 If you have lists
-with nodes spread all over  memory, every time
+with nodes spread all over memory, every time
 you access one, it is a cache miss.
 Modern computer caches do not really help if you do long jumps.
 We have lots of nodes,
@@ -172,7 +171,7 @@ is overrated.
 
 
 [^difference]: A significant difference between Alex's lists and those
-    in Lisp is that they are homogenous,
+    in Lisp is that they are homogeneous,
     they can only store one type of value.
     In Lisp, heterogeneous lists are everywhere,
     especially nested lists, which are what
@@ -218,7 +217,7 @@ and `N` will be an index type.
 What should `N` be? Why not `size_t`?
 Because it's 64 bits.
 For our application we could probably
-use `uint16` so our whole node fits in 32 bits.
+use `uint16_t` so our whole node fits in 32 bits.
 But, we should define a default.
 
     typename N = size_t;
@@ -241,7 +240,6 @@ also act as [`rplaca`][rplaca][^rplaca-explanation].
     const T& value(list_type x) const {
       return node(x).value;
     }
-
 
 ### Next (cdr)
 

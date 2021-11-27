@@ -20,8 +20,7 @@ In this video the words will be first introduced by a great English pianist [Ger
 She is also a beautiful woman.
 Let us proceed... ([Video here][to-music]).
 
-
-Shuebert was 18 years old when he composed it.
+Shubert was 18 years old when he composed it.
 *If I had a choice between founding Facebook or writing this song, as my lifetime
 accomplishment, I would not hesitate one second, and it's not going to be the
 Facebook*.
@@ -53,11 +52,11 @@ very good algorithm and we'll need it later in the course.
 It's a very important component to be used in multiple places.
 For example, when implementing quicksort.
 Plus, we will be able to investigate
-several interesting techniques  and discover one deep problem on this very
+several interesting techniques and discover one deep problem on this very
 simple sorting algorithm.
 Binary search is not always a good thing to do.
 
-Remember insertion sort is good  when things are almost sorted.
+Remember insertion sort is good when things are almost sorted.
 They are pretty close to where they should be.
 Binary search is going to poke far away.
 It's going to do a little poking, logarithmic poking,
@@ -104,7 +103,6 @@ These termination proofs are not usually very profound.
 
 In our code we will call `hole`, `current`:
 
-
     template <typename I, typename R>
     // I is BidirectionalIterator
     // R is WeakStrictOrdering on the value type of I 
@@ -137,7 +135,6 @@ Of course, we need to define predecessor:
 Now linear insertion sort is about identical to binary insertion sort,
 we just use `linear_insert`, instead of `binary_insert`.
 
-
     template <typename I, typename N, typename R>
     // I is BidirectionalIterator
     // N is Integral
@@ -158,7 +155,7 @@ we just use `linear_insert`, instead of `binary_insert`.
 Let's write the version for bounded ranges.
 It's very easy.
 As a base case in our induction, an empty range, and a one
-element range are both sorted.
+element range, are both sorted.
 
     // I is BidirectionalIterator
     // R is WeakStrictOrdering on the value type of I 
@@ -196,7 +193,7 @@ I was using sentinels before, but from that point on I decided
 to make an effort to use them more.
 
 This is a valid argument.
-We are not here to impose some theoretical conditions on algorithms we are here to
+We are not here to impose some theoretical conditions on algorithms, we are here to
 take existing efficient algorithms and find how to express them.
 We have to write whatever we write to enable this code to work.
 What this means is that we sometimes have to reject or ignore
@@ -217,7 +214,6 @@ and let's rewrite the precondition.
       //               current is a valid iterator &&
       //               first != current &&
       //               !r(*current, *first)
- 
 
 Now we can remove the condition:
  
@@ -321,7 +317,6 @@ So let us copy `linear_insertion_sort` and make our definitive `insertion_sort`.
       insertion_sort_suffix(current, last, r);
     }
 
-
 Copy paste, and make the unstable version
 by replacing rotate with swap.
 
@@ -345,7 +340,7 @@ by replacing rotate with swap.
 
 This leads us to another classical sort,
 it's very slow, but since it's classical and takes only a few lines
-we will discovery it.
+we will discover it.
 
 What's the idea of selection sort?
 You find the min, put him in the first place.
@@ -364,7 +359,7 @@ Could we write it?
     }
 
 It's not stable, but it's not hard to fix.
-The problem is swap might skip over lot's of equal guys.
+The problem is swap might skip over lots of equal guys.
 
     template <typename I, typename R>
     // I is ForwardIterator
@@ -376,12 +371,11 @@ The problem is swap might skip over lot's of equal guys.
       }
     }
 
-
 Comparison is typically fast, but swap we tend to think of as slow.
 Imagine they are big buildings that need to be carried.
 The unstable is actually amazing in that it just does `n - 1` swaps,
 always.
-Merge sort, quicksort, the do like `n log(n)`.
+Merge sort, quicksort, they do like `n log(n)`.
 Is it practically important? No.
 Not once have I needed it.
 However, it shows us how to create a sentinel.
@@ -410,14 +404,14 @@ Let's argue why he shouldn't do what he did.
    be a uniform random shuffle.
    It is screwed up, but it requires probability theory or Knuth.
    These people at Google just don't read.
-    The brightest people do not need to read (joke).
+   The brightest people do not need to read (joke).
 
 3. My dear friend Dave Musser who was on sabbatical at Google ventured to post
    that he did not satisfy the preconditions.
-    Random true/false is not a weak strict ordering,
+   Random true/false is not a weak strict ordering,
    or any ordering whatsoever.
-    He tried to explain, but they said no.
-    It should work with whatever I pass to it.
+   He tried to explain, but they said no.
+   It should work with whatever I pass to it.
 
 As you can imagine, we cannot rely on any properties, like sentinel with this
 going on.

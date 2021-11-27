@@ -14,10 +14,10 @@ There was another solution
 by a wonderful Argentinian computer scientist
 [Luis Pardo][pardo] (Knuth's student).
 
-So, was thinking and thinking and thinking and once I was
+So, I was thinking and thinking and thinking and once I was
 waking up in the phase between Twilight, when you wake up but still see
 dreams but you're not quite asleep.
-I saw the algorithm on the board,  it does happen.
+I saw the algorithm on the board, it does happen.
 I was ecstatic.
 I think it was 1984.
 What do you do if you find a really beautiful algorithm?
@@ -39,7 +39,7 @@ It was very sad.
 But, we often reinvent things.
 
 Meanwhile Knuth heard about it from his friend
-[Ian Pratt][pratt] who told him about it.
+[Vaughan Pratt][pratt] who told him about it.
 So he gives the attribution to his friend,
 and not the two polish guys.
 As an algorithm itself, it's utterly useless.
@@ -50,7 +50,7 @@ can be used by us after appropriate modification.
 [pardo]: https://www.genealogy.math.ndsu.nodak.edu/id.php?id=47194
 [musser]: https://en.wikipedia.org/wiki/David_Musser
 [kaltofen]: https://kaltofen.math.ncsu.edu/
-[pratt]: https://en.wikipedia.org/wiki/Ian_Pratt_(computer_scientist)
+[pratt]: https://en.wikipedia.org/wiki/Vaughan_Pratt
 
 ## Merging adjacent lists
 
@@ -119,7 +119,6 @@ naming doesn't work.
 We have to use one letter names with indices,
 like math.
 
-
         n0     n1
        /      /
       /      /
@@ -138,7 +137,7 @@ So then we let `f0_0 = f0`,
 and `f0_1` be the bisection
 of the first interval.
 Then `f1_1` is found from the right using `lower_bound`.
-(that should take  `O(log(n))` comparisons).
+(that should take `O(log(n))` comparisons).
 
         n0     n1
        /      /
@@ -180,7 +179,6 @@ intervals:
      /     /
     /     /
     f0_0  f0_1
-
 
 Now notice that we have 4 adjacent sequences,
 each of which is individually sorted, so we
@@ -358,7 +356,7 @@ Nobody does any work except `merge_inplace_n`[^inductive-algorithm].
 It's a good algorithm.
 It's stable.
 It uses no extra storage.
-Whether, that's really needed or not, we don't know.
+Whether that's really needed or not, we don't know.
 It has `log(n)` levels.
 At every level we have a merge which is `O(n log(n))`.
 so the overall complexity is `O(n log^2(n))`.
