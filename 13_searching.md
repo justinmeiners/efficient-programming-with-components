@@ -429,11 +429,10 @@ Now let's implement [`std::distance`][cpp-distance]:
       return last - first;
     }
 
-[^eop-advance-distance]: Alex: "I am not saying I was right, because when we were writing
-    Elements of Programming, Paul and I, we decided to abandon advance and distance,
+[^eop-advance-distance]: Alex: I am not saying I was right, because when we were writing
+    "Elements of Programming", Paul and I, we decided to abandon advance and distance,
     and just say that depending on iterator category,
-    the complexity of these operators change."
-
+    the complexity of these operators change.
 
 [cpp-advance]: https://en.cppreference.com/w/cpp/iterator/advance
 [cpp-distance]: https://en.cppreference.com/w/cpp/iterator/distance
