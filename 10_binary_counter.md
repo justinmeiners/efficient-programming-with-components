@@ -14,7 +14,7 @@ If you haven't read it, do[^alice-free-ebook].
 No person should be hired ever unless they read "Alice in Wonderland".
 In any case, he was also a mathematician.
 He also dabbled in all kind of games.
-Apparently he invented Scrabble and bunch of other games[^inventor-of-scrabble].
+Apparently he invented Scrabble and a bunch of other games[^inventor-of-scrabble].
 
 At some point he decided that there is a clear problem with lawn tennis tournaments.
 He observed that with a very high probability,
@@ -24,14 +24,14 @@ He observed that the strongest and
 second strongest could be paired in the first round.
 Therefore the second strongest guy gets eliminated and doesn't get the second prize,
 in spite of his prowess.
-This is is why they now use a technique known as [seeding][seed] to assure
+This is why they now use a technique known as [seeding][seed] to assure
 that people of similar ability are spread out to different parts of the tree.
-But, he wanted to come up with an algorithm
-which assures that the second guy is truly the second guy.
+But he wanted to come up with an algorithm
+which assures that the second-placed guy is truly the second best player.
 He published it in 1883.
 The algorithm wasn't quite an algorithm and it was clearly not optimal.
 It took 50 more years before the problem was stated correctly.
-People realized that you could talk about minimum
+People realized that you could talk about the minimum
 number of comparisons but it took another thirty years, until 1964 when a
 Russian mathematician [Sergei S. Kislitsyn][sergei] published a paper which 
 proved there is an optimal algorithm and described it.
@@ -51,7 +51,7 @@ It's not a perfect book, it is just the greatest book we've got.
 Some people think it's a good reference book.
 No, it's not, because you have to
 basically do linear search to find what you're interested in.
-Another important thing, do not spend too much time solving problems.
+Another important thing: do not spend too much time solving problems.
 Read the solutions.
 They are right at the end.
 Lots of very important algorithms are described in the solutions to his problems.
@@ -100,11 +100,11 @@ tournament? `n - 1`.
 It is necessary to find the winner in order to find the second place guy.
 We could sketch a proof of this.
 Let us assume there are two potential guys greater than the second place guy.
-If there is none, he isn't second place.
+If there are none, he isn't second place.
 If there are two, he isn't second place either.
 
 What do we know about second place
-guy, specifically the games he lost?
+guy (specifically the games he lost)?
 *He only lost one game, and it was to the winner*.
 If the winner remembers all the games he won, and who he played,
 how could we determine second place? (We know the second place guy is one of them.)
@@ -147,8 +147,8 @@ We will build these up over the next few lessons.
 ### Unoptimal divider and conquer approach
 
 It might appear you could use divide and conquer.
-First split it in two, 
-find min and second min of the first half,
+First split the list of players in two, 
+find the min and second min of the first half,
 and the second half, and then merge them together doing two comparisons.
 It sounds very elegant because it's all recursive.
 But, let us think about how many comparisons it's going to do
@@ -187,8 +187,8 @@ Right now `min_element` plays a tree structure that looks like this:
            /\
 
 It has `n - 1` internal nodes.
-But, we don't want the winner to play `n - 1` matches.
-We need to transform that into the way they play tennis.
+But we don't want the winner to play `n - 1` matches.
+We need to transform the tree into the way they play tennis tournaments.
 We need to balance the tree.
 
     balanced tree
@@ -202,34 +202,33 @@ How do we do it?
 One way is to just pair up elements and build up.
 But then we need lots of memory to save the intermediate results[^early-ref-to-inplace].
 Note that once a bottom-level round has been played,
-they are ready to move up.
+the players are ready to move up.
 Our goal is basically to become eager.
 Whenever guys are ready to be paired we want to pair them.
-So if we only store only the winner at each level,
+So if we store only the winner at each level,
 we never need to store `log(n)` things.
-We can define the **power** of each element
+We can define the **power** of each player
 to be the number of games they have played.
 
 Realize that suddenly we see something which has nothing to do with our problem.
 *The foundation of our algorithm is the ability to take a tree like
 the linear (unbalanced) tree and transform it into a balanced tree*.
 What mathematical property allows us to do such a transformation?
-Specifically why can we convert one kind of computation to the other.
+Specifically why can we convert one kind of computation to the other?
 **Associativity**[^associativity].
 As long as our operation is associative, 
-What property don't we need? **Commutativity**[^commutativity].
-We keep them in the same order,
-we just rebalanced parenthesis[^min-not-commutative].
+what property don't we need? **Commutativity**[^commutativity].
+We keep the elements in the same order,
+we're just rebalancing parentheses[^min-not-commutative].
 
 [^early-ref-to-inplace]: Alex: What do we mean when we say lots of memory?
     `O(n)` is bad, `O(sqrt(n))` is pretty bad.
     See the definition of "in-place memory usage" at the end of the chapter. 
 
-[^min-not-commutative]: If you think about it,
-    our `min` is not quite commutative.
-    In mathematics `min` is commutative.
-    But, because we want to preserve stability it is not.
-    We distinguish between the left and right argument.
+[^min-not-commutative]: In mathematics `min` is commutative. If you think about
+    it, our `min` implementation is not quite commutative because we want it to
+    preserve stability (when used in sorting algorithms). When the two arguments
+    are equal `min` always returns a reference to the *left* argument.
 
 [^associativity]: A binary function `f` is [associative](https://en.wikipedia.org/wiki/Associative_property)
     if the the following holds for all `a, b, c` in its domain:
@@ -253,7 +252,7 @@ we just rebalanced parenthesis[^min-not-commutative].
 
         f(a, b) = f(b, a)
 
-    Informally, `f` does the same thing, regardless of the order of the inputs.
+    Informally, `f` gets the same result regardless of the order of the inputs.
     For example, multiplication of integers is commutative:
 
         a * b = b * a
@@ -595,5 +594,3 @@ but let's go with "poly-logarithmic" being "in-place".
 ## Code
 
 - [binary_counter.h](code/binary_counter.h)
-
-
