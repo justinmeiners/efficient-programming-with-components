@@ -263,8 +263,8 @@ we're just rebalancing parenthesis[^min-not-commutative].
 
         a * b = b * a
 
-    In Chapter 9.1 of "From Mathematics to Generic Programming", Alex shows
-    a neat geometric proof of the commutativity of positive integers:
+    In Chapter 9.1 of "From Mathematics to Generic Programming", Alex gives
+    a neat visual proof of the commutativity of positive integers:
 
                       * * *
         * * * * *     * * *
