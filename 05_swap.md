@@ -80,7 +80,7 @@ After all, I didn't start with C++.
 I still program in C++ because as far as I could ascertain it's the only language which allows me
 generality and absolute efficiency.
 I can program as general as I like.
-I can talk about things like [monoids][monoid] and [semi-groups][semi-group]. 
+I can talk about things like [monoids][monoid] and [semi-groups][semi-group][^group-theory]. 
 When it compiles I could look at assembly code and see it is good.
 It is absolutely efficient.
 
@@ -146,7 +146,7 @@ Basically if you do something with a
 sequence, you swap.
 So it is very important practically.
 But it also happens to be very important
-theoretically, because a long time ago when people were starting group theory[^group-theory]
+theoretically, because a long time ago when people were starting [group theory][group-theory]
 they discovered that any permutation of a sequence could be generated out of swap[^permutation].
 Swap is the most primitive operation.
 The reason is sequence. And any other
@@ -159,16 +159,31 @@ the greatest language was great, and since it couldn't do swap,
 what do you do?
 You deny the utility of swap.
 
-[^group-theory]: [Group theory](https://en.wikipedia.org/wiki/Group_theory) 
-    is one of the main subjects of abstract algebra.
-    The key idea is that many mathematical structures behave similarly.
-    You can add and subtract numbers, you can add and subtract vectors and matrices.
-    Can we study all structures which can add and subtract all together?
-    It turns out you can, and one such structure is a group.
+[group-theory]: https://en.wikipedia.org/wiki/Group_theory
 
-    Alex's ideas about generic programming are inspired
-    by abstract algebra.
+[^group-theory]: Groups, monoids, and rings are a few of the subjects of abstract algebra,
+    a field which studies the fundamental properties of mathematical structures.
+    The key idea is that many different mathematical objects appear to function similarly.
+    Vectors and matrices can be "added" and "subtracted" just like inteers.
+    In what ways are they fundmanentally the same?
+    One explanation is that all of them form a group.
+    Below is a formal definition:
+    
+    A **group** is set `G` with a binary operation `* : G x G -> G` such that:
 
+    1. `G` contains an identity element `e` in `G` such that `e * x = x * e = x` for all `x` in `G`.
+    2. The operation `*` is associative. So `((x * y) * z)  = (x * (y * z))` for all `x, y, z` in `G`.
+    3. Every element `x` in `G` has an inverse element `y` such that x * y = y * x = e.
+
+    For example `G` might be the set of integers and `*` might be addition.
+
+    1. `0 + x = x + 0 = x`
+    2. `((x + y) + z) = (x + (y + z))`.
+    3. `x + (-x) = (-x) + x = 0`.
+
+    The process of discovering and using generic concepts is very similar.
+    Alex introduces the basics of abstract algebra, from a programmers perspective,
+    in his book "From Mathematics to Generic Programming".
 
 [^permutation]: A [permutation](https://en.wikipedia.org/wiki/Permutation_group) 
     is a bijection (1-1, onto) map from a set to itself.
@@ -261,8 +276,7 @@ and the `T` parameter is still generic.
 
 [^tropical]: Alex himself uses Tropical semi-rings to describe
     several algorithms in his book "From Mathematics to Generic Programming" (See chapter 8.6).
-    So his issue here is not algebraic abstractions, but pursuing abstraction
-    with enormous cost.
+    So his issue here is not abstraction itself, rather that it can become too costly.
 
 [^move]:
     Since C++11 this issue has been addressed by [move semantics](https://en.cppreference.com/w/cpp/language/move_constructor)
