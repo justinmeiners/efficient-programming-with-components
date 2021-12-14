@@ -210,7 +210,7 @@ One way is to just pair up elements and build up.
 But then we need lots of memory to save the intermediate results[^early-ref-to-inplace].
 Note that once a bottom-level round has been played, they are ready to move up.
 Our goal is to basically to become eager.
-Whenever elements are ready to be paired together we want to pair and compare them.
+Whenever elements are ready to be paired together, we want to pair them.
 So if we store only the winner at each level, we never need to store `log(n)` things.
 We can define the **power** of each element
 to be the number of "games they have played", in other words, the number of times they have been compared.
@@ -291,7 +291,7 @@ themselves and not tell you the general mechanism.
 We can create a "counter" which is an array of "bits"/entries.
 In every bit of this counter we're going to keep a single element. 
 The element in the `nth` bit will be the one that has had `n` victories.
-Our goal is to only combine elements that have had the same weight/parity.
+Our goal is to only combine elements that have the same weight/power.
 Initially the counter has `zero` in every entry:
 
     initial counter
@@ -397,7 +397,7 @@ It's a general algorithmic technique.
 
     An **overflow** is when the last adder has a non-zero carry.
 
-[^errors]: Floating point arithemetic always involves a lot of subtle details,
+[^errors]: Floating point arithemetic can involve many tricky details,
     but the basic issue Alex is referring to is straightforward.
     We often use scientific notation to write larger numbers as a decimal to a power,
     when they would otherwise be very long to write out.

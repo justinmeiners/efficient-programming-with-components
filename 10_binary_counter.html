@@ -317,7 +317,7 @@ One way is to just pair up elements and build up.
 But then we need lots of memory to save the intermediate results<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.
 Note that once a bottom-level round has been played, they are ready to move up.
 Our goal is to basically to become eager.
-Whenever elements are ready to be paired together we want to pair and compare them.
+Whenever elements are ready to be paired together, we want to pair them.
 So if we store only the winner at each level, we never need to store <code>log(n)</code> things.
 We can define the <strong>power</strong> of each element
 to be the number of &ldquo;games they have played&rdquo;, in other words, the number of times they have been compared.</p>
@@ -345,7 +345,7 @@ themselves and not tell you the general mechanism.</p>
 <p>We can create a &ldquo;counter&rdquo; which is an array of &ldquo;bits&rdquo;/entries.
 In every bit of this counter we&rsquo;re going to keep a single element.
 The element in the <code>nth</code> bit will be the one that has had <code>n</code> victories.
-Our goal is to only combine elements that have had the same weight/parity.
+Our goal is to only combine elements that have the same weight/power.
 Initially the counter has <code>zero</code> in every entry:</p>
 
 <pre><code>initial counter
@@ -715,7 +715,7 @@ l_1  a_1  b_1   |_ l_2   a_2  b_2
 
 <p>An <strong>overflow</strong> is when the last adder has a non-zero carry.</p><a href="#fnref:10" rev="footnote">&#8617;</a></li>
 <li id="fn:11">
-<p>Floating point arithemetic always involves a lot of subtle details,
+<p>Floating point arithemetic can involve many tricky details,
 but the basic issue Alex is referring to is straightforward.
 We often use scientific notation to write larger numbers as a decimal to a power,
 when they would otherwise be very long to write out.
