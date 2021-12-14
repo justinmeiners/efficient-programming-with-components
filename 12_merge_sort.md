@@ -20,14 +20,14 @@ worked at this Institute recommended me to this group.
 I knew I was going to go
 there for for an interview and I'd have to say some wonderful things or they
 would not give me a job.
-Right before my interview,  terrible thing happened.
+Right before my interview, terrible thing happened.
 I ate some raw fish and it was very tasty but within
- eight hours my temperature was 103.
+eight hours my temperature was 103.
 I was in a bad situation.
 
 I'm in the hospital flying above my bed.
 That happens to you when you have high fever.
-But,  what I'm thinking about is this upcoming interview about parallel computers.
+But, what I'm thinking about is this upcoming interview about parallel computers.
 I know nothing about parallel computers not now, nor
 ever, but I really want the job.
 So I need to come up with some brilliant idea.
@@ -47,7 +47,7 @@ When you're sick amazing things happen in your mind.
 Then I realized the second great thing, while still floating.
 It could be multiplication and the same thing will work.
 I started realizing more and more
-functions  will work `min`, `max`, but division will not work.
+functions will work `min`, `max`, but division will not work.
 Then I realized it's good to be sick.
 It has to do something which I almost forgot called abstract algebra.
 How is this related?
@@ -61,7 +61,7 @@ how could I write algorithms like that?
 When I came to United States somewhere along the way,
 maybe in Austria, I realized that merge was associative
 It was a very big deal because I never even thought about merge in terms of `+` and `*`, but merge is associative.
-Then I realized  I could do merge sort with parallel reduction.
+Then I realized I could do merge sort with parallel reduction.
 That's the summary.
 Alex, what have you been doing all your life? This.
 You might say, "that's not good enough".
@@ -103,7 +103,7 @@ things like that.
 So it's the combination of two things:
 
 1. Doing programming in mathematical theories
-2. not losing efficiency
+2. Not losing efficiency
 
 We are slowly hinting more at concepts.
 How is a concept different from a class?
@@ -127,7 +127,7 @@ The second argument stays the same.
 In Java you can kind of fix it by doing lots of casting.
 But, the other problem is more serious as you can't fix the fundamental variance on `value_type`.
 
-People say, "but couldn't there be a correct inheritance?
+People say, "but couldn't there be a correct inheritance?"
 Of course, yes.
 But it's not the inheritance we have in C++ or Java.
 
@@ -248,7 +248,7 @@ Of course, if you try to get to the end,
 you will not be successful.
 But, it is a legitimate data structure.
 
-A long time ago when we programming in Lisp,
+A long time ago when we were programming in Lisp,
 there were people saying, "never use set successor (`rplcd`)".
 They were wrong.
 Use whatever is given to you.
@@ -261,9 +261,9 @@ That doesn't terminate.
 Well maybe just `while (true)` is bad.
 
     a = 1;
-    while (a > 0)  { do stuff }
+    while (a > 0) { do stuff }
 
-There many ways of writing bad code
+There are many ways of writing bad code
 and syntax can't help you.
 No smart pointer or syntactic constraint
 will make a bad programmer into a good programmer.
@@ -276,7 +276,7 @@ they find amazing things.
 To understand how this concept works
 we will look at a basic algorithm.
 If I hadn't already shown you `set_successor`
-we can learn it's use from this algorithm.
+we can learn its use from this algorithm.
 It takes two lists, reverses the first,
 and attaches it to the second.
 It's a very important list algorithm.
@@ -423,7 +423,7 @@ and attach it, I need to be able to modify
 the successor of the final node.
 But, if we return the end, it's probably
 `nil` so I don't have it.
-Just return you all the information.
+You just return all the information.
 The caller can do whatever they please.
 If they want to ignore it, ignore it.
 
@@ -439,7 +439,7 @@ Not as efficiently[^without-goto].
 [harmful]: papers/goto-harmful.pdf
 
 
-[^without-goto]: Alex:  I have this in code going back to 1985.
+[^without-goto]: Alex: I have this in code going back to 1985.
     I wrote it then in Scheme without `goto`,
     but it had other efficiency problems.
     Since then I have published the code, multiple times.
@@ -465,7 +465,7 @@ Not as efficiently[^without-goto].
 
 We now have two programs.
 One of them is oh so very simple.
-The other one is elegant, but long and does a  minimal number of operations.
+The other one is elegant, but long and does a minimal number of operations.
 Which one should we use in practice?
 We need to do a lot of experiments to establish certainty
 of what we are doing[^test-result].
@@ -534,15 +534,14 @@ Observe it is the same machine as we had before.
 It is very efficient, and doesn't do any kind of list splitting[^bad-code].
 If you don't find it's beautiful I have nothing to teach you.
 We aren't on the same wavelength.
-In the modern world, you meet somebody
-somebody and
+In the modern world, you meet somebody and
 say, "[Bach][bach] is a great composer".
 He says, "nah, [Lady Gaga][gaga] is much more gifted".
 It's a free world.
 People are allowed to say whatever they like.
-Some  people will say,  "oh this is not object-oriented", or "this is not functional",
+Some people will say, "oh this is not object-oriented", or "this is not functional",
 which it isn't and I'm very proud of it.
-But, in some sense this is literally the essence of my life work, this piece of
+But, in some sense this is literally the essence of my life's work, this piece of
 code. 
 That's where it started.
 That's where it ends.
@@ -562,7 +561,7 @@ There is absolutely no indication that getting it will make you rich.
     see [Patrick Henry Winston][winston]'s
     book ["LISP 1st Edition"][lisp-book].
     Look at his sorting algorithm for lists: [radix_sort.lisp](code/other/radix_sort.lisp).
-    It posses many remarkable properties including using `n log(n)` extra storage.
+    It possesses many remarkable properties including using `n log(n)` extra storage.
     It shouldn't need any extra storage.
     It's also slow.
     Good example of a famous person at a respectable school

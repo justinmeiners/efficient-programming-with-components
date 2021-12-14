@@ -138,7 +138,7 @@ I used to tell you stories but right now I decided
 I&rsquo;ll just occasionally share a song or something like that
 which would indicate what mood I&rsquo;m in.
 This is a very great song by <a href="https://en.wikipedia.org/wiki/Franz_Schubert">Franz Schubert</a> but it also
-perfectly reflects will go on with the course in how I feel.
+perfectly reflects what will go on with the course in how I feel.
 The song is called <a href="https://www.britannica.com/topic/Winterreise">&ldquo;The Organ Grinder&rdquo;</a> (Der Liermann).
 The singer is <a href="https://en.wikipedia.org/wiki/Dietrich_Fischer-Dieskau">Dietrich fischer-dieskau</a> maybe the greatest
 leader, or art song singer of the last 50, 60, or 70 years.
@@ -162,13 +162,13 @@ We basically want to grow it, one element at a time,
 while ensuring it stays sorted.
 By repeating it inductively, eventually the whole range is sorted.
 So, main idea is to pick an element in the unsorted piece,
- find where the element goes, and insert it there.</p>
+find where the element goes, and insert it there.</p>
 
 <a name="Insertion-sort-variations"></a>
 <h3>Insertion sort variations</h3>
 
 <p>How many algorithmic versions of insertion sort are there?
-Finding where it could go be done with either:</p>
+Finding where it should go could be done with either:</p>
 
 <ol>
 <li>Linear search</li>
@@ -187,7 +187,7 @@ insertion sort you have to do two things:</p>
 </ol>
 
 
-<p>This makes the insertion sort  do two comparisons per cycle.
+<p>This makes the insertion sort do two comparisons per cycle.
 You could have an insertion sort with a guard,
 assume that somebody puts (by hook or by crook)
 the smallest element first.
@@ -313,7 +313,7 @@ You might want to use the <code>upper_bound</code> we wrote together.
 But, remember it calls <code>std::distance</code> which is linear for <code>ForwardIterator</code>.
 So let&rsquo;s use <code>upper_bound_n</code></p>
 
-<p>What we will first write a function for finding where an element
+<p>What we will first write is a function for finding where an element
 goes and placing it there.
 Then we will structure our loop<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> around that.</p>
 
@@ -414,7 +414,7 @@ If we have a one-element sequence <code>a_0</code> and we want to rotate it,
 how do we do it?
 Done.
 That allows us to consider an inductive solution.
-Somehow, by hook or crook we have an algorithm which knows how to shift things
+Somehow, by hook or by crook we have an algorithm which knows how to shift
 <code>n</code> things,
 such as the range:</p>
 
@@ -505,7 +505,7 @@ next, so eventually you get to a point where everything is scattered
 all over memory.</p>
 
 <p>STL used to have a sentence in the container
-section which the standard commitee threw out.
+section which the standard committee threw out.
 Use a vector.
 This is a true statement.
 Unless you are absolutely positive
@@ -542,7 +542,7 @@ How many sorts are in STL?</p>
 <li><a href="https://en.cppreference.com/w/cpp/algorithm/nth_element"><code>std::nth_element</code></a>.
  Not quite a sort, but it&rsquo;s sort related.
  What it does is pin, for example the 30th percentile
- element, and put all the smaller before, adn all the larger.
+ element, and put all the smaller before, and then all the larger.
  If I want to find another one, I can pin again, and sort inbetween, etc.</li>
 </ol>
 <a href="#fnref:1" rev="footnote">&#8617;</a></li>
@@ -564,7 +564,7 @@ since I started C++, <code>while</code> loops never changed.<a href="#fnref:3" r
 Alex: Someday we will get concepts
 in the C++ standard and not have to write these things.
 But that will be at least 5 years and I won&rsquo;t be programming.
-I&rsquo;m like an old man planting an Apple tree.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+I&rsquo;m like an old man planting an apple tree.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
 <p>Alex:
 I actually drop this requirement in STL and require
@@ -584,7 +584,7 @@ sort stuff there, and then copy back.</p>
 I was making decisions by saying,
 &ldquo;I know how to do it in the more general case.
 But, I will not let programmers do it because
-they are immature.&rdquo;.
+they are immature.&rdquo;
 This &ldquo;nanny&rdquo; control is not necessarily a good thing.
 I am of two minds here.
 I am trying to not be a nanny here.

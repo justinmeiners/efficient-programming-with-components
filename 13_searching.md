@@ -12,7 +12,7 @@ In 1946 he gave a brilliant series of
 lectures at the [Moore School][moore-school] at [Pennsylvania University][penn] 
 on programming.
 For the first time,
-he described things like merge, merge sort, and binary search,
+he described things like merge, merge sort, and binary search.
 This is not a bad thing to be the first person to describe.
 He designed [ENIAC][eniac] which should make him very famous.
 Indeed, he did some very fundamental work.
@@ -20,7 +20,7 @@ Indeed, he did some very fundamental work.
 Then comes this interesting fact (from "The Art of Computer Programming")
 It takes about 15 years for people to come up with binary search
 which sort of works for all possible inputs.
-Apparently people didn't have trouble coding binary search when  the length is
+Apparently people didn't have trouble coding binary search when the length is
 of the form `2^(n-1)`.
 Because it's easy, you take the middle element and
 then both sides will be of the same form
@@ -31,31 +31,27 @@ Knuth claims that the first correct implementation was done by
 He is someone you should know about
 as a very great computer scientist.
 He did amazing amount of work on computational number theory,
-things like sieves for discovering large primes and many other
-important things.
-Among other things, he published a binary search which at least
-always terminated.
+things like sieves for discovering large primes and many other important things.
+Among other things, he published a binary search which at least always terminated.
 
 I actually disagree with Knuth slightly
 and claim that the first correct binary search was published roughly at the same time,
 but a couple of years after,
-by a German computer science.
+by a German computer scientist.
 Once again, he is unjustly forgotten.
-He does not appear on Wikipedia[^wiki].
-His name is [Herman Bottenbruch][bottenbruch]  
-His claim to fame is he was one of their people who invented [Algol 58][algol-58] the predecessor
-of Algol 60.
+He does not appear on Wikipedia[^bottenbruch-not-on-wiki].
+His name is [Herman Bottenbruch][bottenbruch].
+His claim to fame is he was one of the people who invented [Algol 58][algol-58], the predecessor of Algol 60.
 He is one of the people who tried unsuccessfully to convince American
 delegates to Algol 58 committee that they should introduce block structures.
 He was one of the inventors of blocks.
 American representatives which included such brilliant people as [John Backus][backus]
-and [Alan Perlis][perlis] actually reject it as too hard to implement.
+and [Alan Perlis][perlis] actually rejected it as too hard to implement.
 They didn't know how to do stacks.
-But sadly enough he doesn't get much credit,
-especially credit for correct binary search.
+But sadly enough he doesn't get much credit, especially credit for correct binary search.
 We will be actually studying his version.
 
-[^wiki]: He does now!
+[^bottenbruch-not-on-wiki]: He does [now][bottenbruch]!
 
 [mauchly]: https://en.wikipedia.org/wiki/John_Mauchly
 [moore-school]: https://en.wikipedia.org/wiki/Moore_School_of_Electrical_Engineering
@@ -70,9 +66,9 @@ We will be actually studying his version.
 ## bsearch is wrong
 
 If we think about merging two sequences of roughly the same length,
-or rather exactly the same length `n`, the expected number of comparison
-is going to be a to `2n - 1`.
-From which  follows a conjecture.
+or rather exactly the same length `n`, the expected number of comparisons
+is going to be `2n - 1`.
+From which follows a conjecture.
 If we have sequences
 of size `n` and size `m` the number of comparisons should be `n + m - 1`.
 Not every conjecture is true however, this one is definitely false.
@@ -80,12 +76,11 @@ Here is a simple counter example.
 Take a sequence of length 1000
 and a sequence of length 1.
 We only need `log(1000)` because
-we can binary search for it's index.
+we can binary search for its index.
 
-So there  is a fundamental possibility
+So there is a fundamental possibility
 for using binary search for merging, dramatically reducing the number of comparisons.
 `log(n)` is much smaller than `n`.
-
 
 You might think we can just use binary search from
 a standard library, such as C [`bsearch(3)`][bsearch].
@@ -110,7 +105,7 @@ What's interesting is what it returns.
 
 > returns a pointer to a matching member of the array, or NULL if no match is found.
 
-So for our merge, it will most often return `NULL` .
+So for our merge, it will most often return `NULL`.
 At which point, you will have to do linear search.
 So observe, ancient interface,
 done by brilliant people,
@@ -129,12 +124,12 @@ I'll show you how to write it.
 
 [^bsearch-generics-hard]: C does not have `template` or any other type safe form of generics.
   This makes it difficult to write reusable components in the way Alex teaches.
-  As a workaround, one can you use `void*` as a pointer to any type.
+  As a workaround, one can use `void*` as a pointer to any type.
   This is the method used by `bsearch` and `qsort`.
 
 ### What is correct code?
 
-Here comes another philosphical point.
+Here comes another philosophical point.
 *What does wrong mean?*
 *What does incorrect mean?*
 At school they told you that the program is incorrect when *it doesn't satisfy its specifications*.
@@ -159,17 +154,17 @@ Because, if you write wrong specification, you are the same guy who is going to 
 Most likely it will not make it correct.
 
 So it's a deeper thing.
-You have to establish correctness from  more fundamental principles.
+You have to establish correctness from more fundamental principles.
 *The program is correct if it returns desirable information*,
 if it does what it's supposed to do in some absolute sense.
 It's very hard to prove it.
 
-i think one of the lessons of this particular lecture is
+I think one of the lessons of this particular lecture is
 how hard simple things are.
 lots of very bright people cannot give it a correct interface.
 same with `bsearch`.
 
-You might say, "Alex just talks about his beef with the standard committtee."
+You might say, "Alex just talks about his beef with the standard committee."
 No.
 What I'm trying to tell you is that
 when you write things like that in your code,
@@ -179,9 +174,9 @@ The great flaw in most code I see is there is no consideration
 for the other guy.
 People think, "oh it works, so it's done."
 My dream is that we all write code thinking about other people.
-Then you say, "well, then i have to do more work."
+Then you say, "well, then I have to do more work."
 This is the beauty of sharing.
-Uou might have attended  kindergarten
+You might have attended kindergarten
 and had a teacher that taught you it's good to share toys.
 She was right.
 
@@ -192,13 +187,14 @@ She was right.
 It would be very contrary to the way I do things to
 start with binary search.
 How could we do binary search if we cannot do linear search?
-In STL it is called [`std::find`][cpp-find] or `std::find_if`[^name],
+In STL it is called [`std::find`][cpp-find] or `std::find_if`[^name].
 Let's see how to write it.
 We can assume we know how to do it,
 and start from the top,
-or we could assume we don't know what are doing,
-which is usually then case when starting new things.
+or we could assume we don't know what we are doing,
+which is usually the case when starting new things.
 I seldom start writing code from the signature.
+I don't know what the signature is.
 I typically have some algorithmic idea,
 so I start with that,
 often an inner loop.
@@ -228,7 +224,7 @@ and say, "we need to only have one `find_if`".
 That's what happened.
 After I submitted STL it had many fine functions,
 but Bjarne was very afraid that STL was too large and would not be accepted, as is.
-(It wasn't that enormous at that point)
+(It wasn't that enormous at that point.)
 He said, "why don't I come to Palo Alto (I was at HP Labs)
 and bring along bunch of other standard committee people and we
 will trim it". 
@@ -298,7 +294,7 @@ They are just wrappers[^wrapper].
 [cpp-not1]: https://en.cppreference.com/w/cpp/utility/functional/not1
 [cpp-not2]: https://en.cppreference.com/w/cpp/utility/functional/not2
 
-## Bounded and counted ranges.
+## Bounded and counted ranges
 
 Once upon a time I believed ranges come in two kinds[^eop-range-kinds].
 
@@ -310,7 +306,7 @@ Which one is better?
 Both are good, and both are different.
 You cannot say one is better than the other.
 It depends on the algorithm.
-There used to be more bounded range algorithms in the STL, but they wre taken out.
+There used to be more bounded range algorithms in the STL, but they were taken out.
 For example we have [`std::copy`][cpp-copy] and
 [`std::copy_n`][cpp-copy-n]
 both are really convenient.
@@ -357,7 +353,7 @@ So let's try writing `find_if_n`
 [^wrapper]: This is an amusing comment because
     Alex just got done talking about why `find_if_not`
     was such a helpful contribution
-    and how we need should consider the needs of the user
+    and how we should consider the needs of the user
     and give them various convenience interfaces for algorithms.
 
 [^eop-range-kinds]: These two kinds of ranges are discussed in depth in "Elements of Programming" chapter 6.
@@ -400,9 +396,9 @@ Here is how it works:
     }
 
 The dispatch between these is clearly done at compile time.
-I could have had every iterator have `+=` and `-` iterator.
+I could have had every iterator have `+=` and `-` operators.
 My thinking was that people have an expectation that those symbols are fast.
-Making it linear time will confuse many people.
+Making it linear time will confuse many people.[^eop-advance-distance]
 
 Now let's implement [`std::distance`][cpp-distance]:
 
@@ -429,10 +425,13 @@ Now let's implement [`std::distance`][cpp-distance]:
       return last - first;
     }
 
+[^eop-advance-distance]: Alex: I am not saying I was right, because when we were writing
+    "Elements of Programming", Paul and I, we decided to abandon advance and distance,
+    and just say that depending on iterator category,
+    the complexity of these operators change.
 
 [cpp-advance]: https://en.cppreference.com/w/cpp/iterator/advance
 [cpp-distance]: https://en.cppreference.com/w/cpp/iterator/distance
-
 
 ## Code
 

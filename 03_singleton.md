@@ -4,7 +4,7 @@
 ## Learning C++ isn't as hard as it appears
 
 I talked to someone and he said "I have been programming in C++ for about eight years, but I never learned C++".
- That is a very common thing.
+That is a very common thing.
 He was just honestly admitting something which happens to be the case for most people.
 Most of us never learn programming languages.
 I never learned C++ I was just very
@@ -71,7 +71,7 @@ Why do I need template? Because we want to write something which takes one type 
 another type.
 Let's forget C++ for a second.
 Mathematically speaking we want to write a type function: a thing which takes a type in
-and  generates new types.
+and generates new types.
 The `template` is the mechanism in C++ for doing just that.
 
 There are of course other type functions, even type functions in C. 
@@ -135,7 +135,7 @@ There is no reason to write to it before you first deallocate.
 Another way to think about it is to help preserve an invariant.
 There is some condition we need to assure that the values cannot change.
 
-For `singleton`, we pick struct because it's less typing.
+For `singleton`, we pick `struct` because it's less typing.
 *We should find the most minimal way of saying what we want to say*.
 
 [^communist]: Alex: Don't be so eager with making members of classes private.
@@ -280,10 +280,10 @@ I am showing you how you could program differently.
 If you program in an object-oriented way then many good things might happen.
 I don't know what they are but you are not going to be efficient.
 Bjarne used to joke that object
-oriented systems are those that slow graphics.
+oriented systems are those that have slow graphics.
 
 As time progresses, `++` is getting faster and faster and virtual function is getting slower and slower.
-Their spread is growing  and we're not going to address
+Their spread is growing and we're not going to address
 any parts of C++ in this course which slow the computations.
 
 If you want to learn about virtual I'm sure there are lots
@@ -395,7 +395,6 @@ They were not copyable and you couldn't pass them as arguments.
 Then they fixed it. 
 They said, "we'll just copy the bits" and things would work.
 
-
 Equality is defined for all built-in types; `int`, `double`, `short`, `char`, pointers, etc.
 So, if you have a struct, why can't you generate an equality that uses those?
 Two things are equal if all their members are equal.
@@ -404,7 +403,7 @@ It's a sensible rule a compiler could do.
 I never managed to ask Dennis Ritchie about it.
 But, I asked probably the second best person on the subject, [Steve Johnson][johnson], because
 he actually implemented all these assignments for structures and things like that.
-Steve told me,  "it was very hard because the bits in the padding might not be equal.
+Steve told me, "it was very hard because the bits in the padding might not be equal.
 If you compare bit by bit things which have equal members, but not equal bits in the padding, it will not work"[^padding].
 
 But, why should you compare bit by bit?
@@ -506,12 +505,11 @@ but expect nothing from them.
 Understand how all the other operators are defined in terms of `<`.
 Contemplate it.
 It's really important.
-It is mathematics, but that's mathematics every programmer should be able to do .
+It is mathematics, but that's mathematics every programmer should be able to do.
 
 [ip-quote]: https://en.wikipedia.org/wiki/Robustness_principle
 
 ### Specifying concepts
-
 
 Now let's talk about what kind of type `T` could be.
 Because we implemented all these operators, 
@@ -528,7 +526,6 @@ In `singleton` we add a comment to describe this:
 
 It's a good example of a **disjunctive concept**.
 `T` could be any of them.
-
 
 You might wonder how `==` will work, if you plug-in only a type `T`
 which is only `SemiRegular`.
@@ -569,8 +566,7 @@ Why did these Bell Labs guys introduce such a thing?
 Were they mad? 
 It was because they were lazy.
 They couldn't do it elegantly because they didn't
-have
-[function overloading][overloading].
+have [function overloading][overloading].
 
 In C++ we have `sqrt(int)`, `sqrt(double)`, etc
 You can pass `int`, or `double` and it does the right thing.
@@ -620,10 +616,10 @@ But, it did.
 
 `std::cin` is convertible to a pointer.
 If it fails, it returns `null` with type `void*`.
-Since  it is convertible to a pointer, you can apply one
+Since it is convertible to a pointer, you can apply one
 more conversion and convert this pointer to a Boolean.
 Then you could convert it to an integer.
-So `std::cin` becomes zero and you shifted by forty two positions.
+So `std::cin` becomes zero and you shifted by forty-two positions.
 Isn't that beautiful (joke)?
 
 The problem is they fixed this problem by
@@ -634,8 +630,9 @@ So they had to break the rule.
 Explicit conversions are not going to be called implicitly, unless
 they are in `while`, `if`, and other conditions which people used for input streams.
 So, the entire type system is screwed up (technical term), to work around some
+ancient design feature.
 The end of the story is avoid implicit conversions.
-Never rely on them it's impossible to avoid them.
+Never rely on them, it's impossible to avoid them.
 Even if you declare everything explicit there is still a
 context in C++ where implicit conversion will be done. 
 You should never rely on one type

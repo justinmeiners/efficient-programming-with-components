@@ -207,12 +207,12 @@ So it tells us we can do better.
 The numbers are nano-seconds per element.
 Our merge sort is called <code>inplace</code>.
 We start off ok, and then gradually get slower and slower in comparison.
-Obviously, as the size increase you have to do more work.
+Obviously, as the size increases you have to do more work.
 It&rsquo;s not linear.
 But, ours is clearly 3-4x slower than that.</p>
 
-<a name="A-plan-for-improvement."></a>
-<h2>A plan for improvement.</h2>
+<a name="A-plan-for-improvement"></a>
+<h2>A plan for improvement</h2>
 
 <p>We are going to write a faster one.
 I am going to work with the class but I will not always tell you
@@ -251,7 +251,7 @@ so we can remove them later if needed.</p>
  Within 5-10% of the <code>std::stable_sort</code>.
  What would be great?
  Observe STL also has <a href="https://en.cppreference.com/w/cpp/algorithm/sort"><code>std::sort</code></a> because it&rsquo;s faster.
- If it&rsquo;s as fast as sort<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.</p></li>
+ If it&rsquo;s as fast as sort, that would be great.<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.</p></li>
 </ol>
 
 
@@ -295,7 +295,7 @@ What is the complexity of merge sort, in terms of comparisons?
 What is the specific coefficient for insertion sort?
 The sorted portion is on average half the length of the original input.
 In addition, on average when we an insert an element we
-only have to go half the length before finding it&rsquo;s location.
+only have to go half the length before finding its location.
 Therefore the complexity
 is roughly: <code>n^2/4</code>.</p>
 
@@ -336,9 +336,9 @@ otherwise do that&rdquo;.
 The term is <em>adaptive</em>.</p>
 
 <p>You might think everybody can write a good merge.
-If you Google &ldquo;std merge` it shows you <a href="https://web.archive.org/web/20130812111552/https://www.cplusplus.com/reference/algorithm/merge/">this</a>:
+If you Google &ldquo;std merge&rdquo; it shows you <a href="https://web.archive.org/web/20130812111552/https://www.cplusplus.com/reference/algorithm/merge/">this</a>:
 Since you&rsquo;re a normal programmer
-you migth say, "oh it&rsquo;s on the web, therefore I can copy and paste and use
+you might say, &ldquo;oh it&rsquo;s on the Web, therefore I can copy and paste and use
 it in my code.&rdquo;</p>
 
 <pre><code>template &lt;class InputIterator1, class InputIterator2, class OutputIterator&gt;
@@ -380,7 +380,7 @@ which is for sure less than <code>3n</code>.</p>
 
 <p>There&rsquo;s lots of things to do.
 How should we go about it?
-The problem the problem with programming, specifically designing components
+The problem with programming, specifically designing components
 and decomposing the system is that you do not know what is right in isolation.
 You never know what the correct interface is
 until you see it in other algorithms,
@@ -396,10 +396,10 @@ what is the right thing to do, and that&rsquo;s what
 I am trying to teach.</p>
 
 <p>When should we try insertion point?
-As a rule we want to fix the asmyptotic complexity.
+As a rule we want to fix the asymptotic complexity.
 Doing insertion sort at the bottom won&rsquo;t help that.
 Right now we have a problem with our asymptotic complexity.
-It&rsquo;s <code>O(n log^2(n))</code> we want to get rid of that square
+It&rsquo;s <code>O(n log^2(n))</code>. We want to get rid of that square
 as fast as possible.</p>
 
 <p>I&rsquo;m very lazy.
@@ -414,7 +414,7 @@ I think we can do it in <code>n/2</code>.</p>
 AMD Ryzen 5 2400G (8 core, 3.6 GHz). GCC 9.3.0<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
 Alex: It has been my dream for decades
-to make stable sort as fast as sort,
+to make my stable sort as fast as my sort,
 at which point I could throw away the other and just have one sort.
 But, I make progress with stable sort, then I make progress with sort.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 </ol>

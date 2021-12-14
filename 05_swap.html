@@ -247,7 +247,7 @@ I say, look I&rsquo;m not interested, because I want to see solutions to simple 
 But people always think that exciting things have to be complicated.
 I claim exciting things tend to be very simple and basic.</p>
 
-<p>So you say,  &ldquo;Alex, why don&rsquo;t we use a new language?&rdquo;
+<p>So you say, &ldquo;Alex, why don&rsquo;t we use a new language?&rdquo;
 Go try implementing these three program in your favorite language.
 Do them in a general way.
 If they&rsquo;re at least relatively efficient, that is, they are not slower than specific things
@@ -264,7 +264,7 @@ Why is swap important? What does it deal with?
 Apparently it&rsquo;s not self-evident.
 Once upon a time I was talking to a very famous programmer,
 supposedly the best programmer A9 ever had.
-I told him about these three things and  he looks at me
+I told him about these three things and he looks at me
 and said, &ldquo;I never had to use swap in my life&rdquo;.
 I don&rsquo;t know&hellip; I was very impressed because
 you swap for sorting,
@@ -445,7 +445,7 @@ Of course if it went into
 the register you could never use address operator <code>&amp;</code> because obviously registers do not have addresses.
 It was a very special thing you needed to worry about.
 It was important in my measurements at the time.
-Stripping <code>register</code> declarations from fundamental algorithms caused a slow down by a factor of three.
+Stripping <code>register</code> declarations from fundamental algorithms caused a slowdown by a factor of three.
 Why?
 For every call to <code>++</code> the assembly code first did a load
 and then after it stored the result.
@@ -456,11 +456,11 @@ So by adding a load and store around everything, it basically tripled the time.<
 execute one operation at a time, as we will discover.
 For sure, you never need to worry about registers.
 In modern computers this is utterly idiotic; you should never do it.
-In the same way the compiler is perfectly  theoretically capable
+In the same way the compiler is perfectly theoretically capable
 of figuring out what needs to be <code>inline</code>, much more than you.</p>
 
 <p>But, we&rsquo;re living in
-this  transition time.
+this transition time.
 I think about five years from now you will never need
 to write <code>inline</code>.
 Compilers will do it.
@@ -559,8 +559,8 @@ Alex himself uses Tropical semi-rings to describe
 several algorithms in his book &ldquo;From Mathematics to Generic Programming&rdquo; (See chapter 8.6).
 So his issue here is not abstraction itself, rather that it can become too costly.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
-<p>The ^ symbol is  bitwise <a href="https://en.wikipedia.org/wiki/Exclusive_or">exclusive or</a>.
-The statement <code>a XOR b</code> means  a is true, or b is true, but not both.
+<p>The <code>^</code> symbol is bitwise <a href="https://en.wikipedia.org/wiki/Exclusive_or">exclusive or</a>.
+The expression <code>a ^ b</code> means <code>a</code> is true, or <code>b</code> is true, but not both.
 It is defined by the following truth table:</p>
 
 <pre><code>a | b | a XOR b

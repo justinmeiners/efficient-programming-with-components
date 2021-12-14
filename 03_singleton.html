@@ -134,7 +134,7 @@ td { vertical-align: top; }
 <h2>Learning C++ isn&rsquo;t as hard as it appears</h2>
 
 <p>I talked to someone and he said &ldquo;I have been programming in C++ for about eight years, but I never learned C++&rdquo;.
- That is a very common thing.
+That is a very common thing.
 He was just honestly admitting something which happens to be the case for most people.
 Most of us never learn programming languages.
 I never learned C++ I was just very
@@ -196,7 +196,7 @@ Why do I need template? Because we want to write something which takes one type 
 another type.
 Let&rsquo;s forget C++ for a second.
 Mathematically speaking we want to write a type function: a thing which takes a type in
-and  generates new types.
+and generates new types.
 The <code>template</code> is the mechanism in C++ for doing just that.</p>
 
 <p>There are of course other type functions, even type functions in C.
@@ -254,7 +254,7 @@ There is no reason to write to it before you first deallocate.
 Another way to think about it is to help preserve an invariant.
 There is some condition we need to assure that the values cannot change.</p>
 
-<p>For <code>singleton</code>, we pick struct because it&rsquo;s less typing.
+<p>For <code>singleton</code>, we pick <code>struct</code> because it&rsquo;s less typing.
 <em>We should find the most minimal way of saying what we want to say</em>.</p>
 
 <a name="Semi-2d-regular-singleton"></a>
@@ -381,10 +381,10 @@ I am showing you how you could program differently.
 If you program in an object-oriented way then many good things might happen.
 I don&rsquo;t know what they are but you are not going to be efficient.
 Bjarne used to joke that object
-oriented systems are those that slow graphics.</p>
+oriented systems are those that have slow graphics.</p>
 
 <p>As time progresses, <code>++</code> is getting faster and faster and virtual function is getting slower and slower.
-Their spread is growing  and we&rsquo;re not going to address
+Their spread is growing and we&rsquo;re not going to address
 any parts of C++ in this course which slow the computations.</p>
 
 <p>If you want to learn about virtual I&rsquo;m sure there are lots
@@ -464,7 +464,7 @@ It&rsquo;s a sensible rule a compiler could do.</p>
 <p>I never managed to ask Dennis Ritchie about it.
 But, I asked probably the second best person on the subject, <a href="https://en.wikipedia.org/wiki/Stephen_C._Johnson">Steve Johnson</a>, because
 he actually implemented all these assignments for structures and things like that.
-Steve told me,  &ldquo;it was very hard because the bits in the padding might not be equal.
+Steve told me, &ldquo;it was very hard because the bits in the padding might not be equal.
 If you compare bit by bit things which have equal members, but not equal bits in the padding, it will not work&rdquo;<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup>.</p>
 
 <p>But, why should you compare bit by bit?
@@ -541,7 +541,7 @@ but expect nothing from them.</p>
 <p>Understand how all the other operators are defined in terms of <code>&lt;</code>.
 Contemplate it.
 It&rsquo;s really important.
-It is mathematics, but that&rsquo;s mathematics every programmer should be able to do .</p>
+It is mathematics, but that&rsquo;s mathematics every programmer should be able to do.</p>
 
 <a name="Specifying-concepts"></a>
 <h3>Specifying concepts</h3>
@@ -594,8 +594,7 @@ Why did these Bell Labs guys introduce such a thing?
 Were they mad?
 It was because they were lazy.
 They couldn&rsquo;t do it elegantly because they didn&rsquo;t
-have
-<a href="https://en.cppreference.com/w/cpp/language/overload_resolution">function overloading</a>.</p>
+have <a href="https://en.cppreference.com/w/cpp/language/overload_resolution">function overloading</a>.</p>
 
 <p>In C++ we have <code>sqrt(int)</code>, <code>sqrt(double)</code>, etc
 You can pass <code>int</code>, or <code>double</code> and it does the right thing.
@@ -648,10 +647,10 @@ But, it did.</p>
 
 <p><code>std::cin</code> is convertible to a pointer.
 If it fails, it returns <code>null</code> with type <code>void*</code>.
-Since  it is convertible to a pointer, you can apply one
+Since it is convertible to a pointer, you can apply one
 more conversion and convert this pointer to a Boolean.
 Then you could convert it to an integer.
-So <code>std::cin</code> becomes zero and you shifted by forty two positions.
+So <code>std::cin</code> becomes zero and you shifted by forty-two positions.
 Isn&rsquo;t that beautiful (joke)?</p>
 
 <p>The problem is they fixed this problem by
@@ -662,8 +661,9 @@ But then the <code>while</code> statement stopped working:</p>
 Explicit conversions are not going to be called implicitly, unless
 they are in <code>while</code>, <code>if</code>, and other conditions which people used for input streams.
 So, the entire type system is screwed up (technical term), to work around some
+ancient design feature.
 The end of the story is avoid implicit conversions.
-Never rely on them it&rsquo;s impossible to avoid them.
+Never rely on them, it&rsquo;s impossible to avoid them.
 Even if you declare everything explicit there is still a
 context in C++ where implicit conversion will be done.
 You should never rely on one type

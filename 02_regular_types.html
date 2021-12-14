@@ -196,7 +196,7 @@ You might think you can just put any type in a map,
 but actually there are requirements on the type,
 certain properties which are required for these containers to function.</p>
 
-<p>Let, us think about what my task was when I started working on the C++ STL.
+<p>Let us think about what my task was when I started working on the C++ STL.
 It was to define standard data structures which will work for any reasonable subset of types.
 What is a reasonable subset of types?
 This is a little bit tricky but it&rsquo;s of paramount importance.</p>
@@ -210,7 +210,7 @@ even more important than <code>int</code>.
 It has to work for pointer.</p>
 
 <p>To understand all this, we&rsquo;re going to become a little bit theoretical.
-None of this stuff actually works  unless you understand at least a
+None of this stuff actually works unless you understand at least a
 little bit of theory.
 We will call such reasonable types <code>Regular</code>.
 What we will do is formally define a set of operators that all <code>Regular</code> types must have,
@@ -329,7 +329,7 @@ a copy, the original and the copy are equal.</p>
 <p><code>!=</code> should always behave like: <code>!(a == b)</code>.
 My very strong point is that the semantics of
 inequality (<code>!=</code>) is absolutely and totally bound to the semantics of equality (<code>==</code>).
-You should not even be able to have a situation where they have different  semantics.
+You should not even be able to have a situation where they have different semantics.
 But, the standards committee disagrees with me on that.
 They say that you could have equality be equality and
 inequality be multiplication operator.
@@ -361,7 +361,7 @@ to <code>TotallyOrdered</code>.</p>
 
 <p><code>&lt;</code> must obey the following <a href="https://en.wikipedia.org/wiki/Total_order">mathematical properties</a>:</p>
 
-<p><strong>Axiom 1:</strong> Anti-reflexive: <code>!(a &lt; a)</code></p>
+<p><strong>Axiom 1:</strong> Anti-reflexive: <code>!(a &lt; a)</code>.</p>
 
 <p><strong>Axiom 2:</strong> Transitive: If <code>a &lt; b</code> and <code>b &lt; c</code> then <code>a &lt; c</code>.</p>
 
@@ -371,7 +371,7 @@ to <code>TotallyOrdered</code>.</p>
 
 <p>In the same way that the semantics of <code>==</code> is related to <code>!=</code>,
 we can see the semantics of <code>&lt;</code> must be totally bound to the semantics of equality.
-But furthermore,  <code>&lt;</code> is related to four other operations which must also be defined:</p>
+But furthermore, <code>&lt;</code> is related to three other operations which must also be defined:</p>
 
 <ol>
 <li><code>&lt;</code> less than</li>
@@ -382,7 +382,7 @@ But furthermore,  <code>&lt;</code> is related to four other operations which mu
 
 
 <p>If you provide them then they have to have natural meaning.
-For example, <code>!(a &lt; b)</code>  should be <code>a &gt;= b</code> otherwise the world
+For example, <code>!(a &lt; b)</code> should be <code>a &gt;= b</code> otherwise the world
 perishes.</p>
 
 <p>Later we will talk more about orderings, and define several different
@@ -420,7 +420,7 @@ of the base types they are constructed from.
 Containers of <code>Regular</code> types should be <code>Regular</code>.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
 This is likely a reference to how <a href="https://en.cppreference.com/w/cpp/memory/shared_ptr"><code>std::shared_ptr</code></a> behaves
-which provides a form of automatic memory management.,<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+which provides a form of automatic memory management.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
 <a href="https://www.stroustrup.com/">Bjarne Stroustrup</a> is the creator of C++, author of many C++ books,
 and always has been an active member of the community.<a href="#fnref:6" rev="footnote">&#8617;</a></li>

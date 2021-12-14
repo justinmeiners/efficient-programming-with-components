@@ -137,8 +137,7 @@ td { vertical-align: top; }
 or for you younger folks <a href="https://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</a>.
 Scheme might have been wrong, but it was great<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
 The whole language centers around very simple <a href="https://en.wikipedia.org/wiki/Linked_list">linked lists</a>
- which are based on three fundamental
-operations<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>:</p>
+which are based on three fundamental operations<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>:</p>
 
 <ol>
 <li><a href="http://www.lispworks.com/documentation/lw50/CLHS/Body/f_cons.htm"><code>cons</code></a>: create a pair.</li>
@@ -166,7 +165,7 @@ If you don&rsquo;t want to muck around, just use vectors.</p>
 How are we going to do that?
 You want to avoid memory fragmentation.
 If you have lists
-with nodes spread all over  memory, every time
+with nodes spread all over memory, every time
 you access one, it is a cache miss.
 Modern computer caches do not really help if you do long jumps.
 We have lots of nodes,
@@ -248,7 +247,7 @@ class list_pool {
 <p>What should <code>N</code> be? Why not <code>size_t</code>?
 Because it&rsquo;s 64 bits.
 For our application we could probably
-use <code>uint16</code> so our whole node fits in 32 bits.
+use <code>uint16_t</code> so our whole node fits in 32 bits.
 But, we should define a default.</p>
 
 <pre><code>typename N = size_t;
@@ -528,7 +527,7 @@ STL containers on Microsoft platforms do not attempt to
 ensure thread safety with locks.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
 <p>A significant difference between Alex&rsquo;s lists and those
-in Lisp is that they are homogenous,
+in Lisp is that they are homogeneous,
 they can only store one type of value.
 In Lisp, heterogeneous lists are everywhere,
 especially nested lists, which are what

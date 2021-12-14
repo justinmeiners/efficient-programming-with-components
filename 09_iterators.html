@@ -281,7 +281,7 @@ With a huge pointer, the carry <em>is</em> propagated to the upper bytes, but by
 Guess how they voted?
 No.
 Now we&rsquo;re stuck for the next hundred years with stuff which was included to placate people that
- couldn&rsquo;t have been placated.</p>
+couldn&rsquo;t have been placated.</p>
 
 <p>So what does an iterator return when you dereference it?
 Normally a reference. It&rsquo;s an <a href="https://en.wikipedia.org/wiki/Value_(computer_science)#lrvalue"><code>lvalue</code></a>
@@ -291,7 +291,7 @@ type should be.
 So now we need to provide it.</p>
 
 <p>&emsp;4. <code>reference</code>: the type of a reference to the value. <br/>
-&emsp;5. <code>pointer</code>:  the type of a pointer to the value.</p>
+&emsp;5. <code>pointer</code>: the type of a pointer to the value.</p>
 
 <p>It&rsquo;s not particularly harmful, but it obfuscates things
 and it provides &ldquo;language experts&rdquo; with steady employment.</p>
@@ -490,7 +490,7 @@ search, whether in a map, or whether in a sorted array.
 For example, suppose I want to see if an iterator
 is in the structure, such as inclusion in a set.
 The only effective way is comparison.
-I was torn  because I knew I could not include it,
+I was torn because I knew I could not include it,
 because most people would attempt to write
 code in STL the old way they learned which is:</p>
 
@@ -544,7 +544,7 @@ A total ordering does not have to be topologically induced by the traversal.</p>
 <li id="fn:1">
 <p>Alex almost certainly means Python generators, not iterators, but I will describe both.</p>
 
-<p>An <a href="https://wiki.python.org/moin/Iterator">iterator</a> in Python is any object which implements a method called  <code>__next__()</code>.
+<p>An <a href="https://wiki.python.org/moin/Iterator">iterator</a> in Python is any object which implements a method called <code>__next__()</code>.
 Unlike C++ iterators, the <code>__next__()</code> always returns another element of the sequence, not an iterator,
 so they do not resemble pointers or coordinates, neither are they comparable.
 They are most similar to <code>InputIterator</code> in that previous values in the sequence become inaccessible after advancing.
@@ -576,7 +576,7 @@ See this <a href="http://web.mit.edu/ghudson/info/iterators">brief description o
 <li id="fn:3">
 See chapter 7 of &ldquo;Elements of Programming&rdquo; on coordinate structures.
 An interesting discussion on the general idea of &ldquo;coordinatisation&rdquo;
-is found in chapter 1 of  &ldquo;Basic Notions of Algebra&rdquo; by Shafarevich.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+is found in chapter 1 of &ldquo;Basic Notions of Algebra&rdquo; by Shafarevich.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
 <a href="https://www.boost.org/">Boost</a> is a popular collection of C++ libraries, covering a wide range of uses,
  generally accepted as the next tool to reach for beyond the standard library.
@@ -588,7 +588,7 @@ iterator categories. For example <a href="https://en.cppreference.com/w/cpp/iter
 implemented as a constant time algorithm for <code>RandomAccessIterators</code> but
 only a linear time algorithm for other iterator categories. The
 <code>iterator_category</code> tag allows the appropriate algorithm to be selected at
-compile time. This technique is known as <a href="https://quuxplusone.github.io/blog/2021/06/07/tag-dispatch-and-concept-overloading">tag disptach</a>.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+compile time. This technique is known as <a href="https://quuxplusone.github.io/blog/2021/06/07/tag-dispatch-and-concept-overloading">tag dispatch</a>.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
 See <a href="https://devblogs.microsoft.com/oldnewthing/20200728-00/?p=104012">&ldquo;A look back at memory models in 16-bit MS-DOS&rdquo;</a>
 for a brief overview of these various pointer types.
