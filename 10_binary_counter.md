@@ -319,7 +319,7 @@ It's a carry propagation.
 
 If we end up with a guy in slot 32, it's an **overflow**, exactly like integer arithmetic.
 What do we do?
-Whenever we don't know to proceed,
+Whenever we don't know how to proceed,
 do something sensible and let whomever uses it figure out what is a sensible thing to do.
 Return the carry[^carry].
 
