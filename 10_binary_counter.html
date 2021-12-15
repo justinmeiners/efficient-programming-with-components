@@ -383,11 +383,12 @@ x 0  ...   0     --&gt;    0 x  ...   0
 <p>What if the index <code>1</code> slot was non-zero, after comparing <code>x</code> and <code>y</code>?
 Then the guy there already won one game.
 So, we must <strong>carry propogate</strong><sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup>.
-Repeat the same process all the way up the counter, until we find a slot which is zero.</p>
+Repeat the same process all the way up the counter, until we find a slot which is zero.
+What if the counter is full, and has no zero slots?
+That&rsquo;s called an <strong>overflow</strong>.</p>
 
-<p>What if the counter is full, and has no zero slots?
-That&rsquo;s called an an <strong>overflow</strong>.
-There is a close analogy between our counter and binary integer counting:</p>
+<p>We borrow terminology from binary integer arithemtic because
+our counter works just like a binary integer counting up:</p>
 
 <pre><code>0 0 0
 1 0 0
@@ -569,7 +570,7 @@ We could compete with Steve Jobs for elegance of our design<sup id="fnref:11"><a
     whenever you sum up large number you don&rsquo;t really want to
     add small quantities to big quantities.
     Bad things happen to the errors<sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup>.
-    Use this code to write a sum function for arrays of <code>double</code>.</p>
+    Use this code to write a function which sums arrays of <code>double</code>.</p>
 
 <p><strong>Exercise:</strong> Rewrite <code>min_element</code> using this code (just <code>min_element</code>, don&rsquo;t worry about second best).</p>
 

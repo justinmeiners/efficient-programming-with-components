@@ -325,10 +325,11 @@ What if the index `1` slot was non-zero, after comparing `x` and `y`?
 Then the guy there already won one game.
 So, we must **carry propogate**[^adder-circuit].
 Repeat the same process all the way up the counter, until we find a slot which is zero.
-
 What if the counter is full, and has no zero slots?
-That's called an an **overflow**.
-There is a close analogy between our counter and binary integer counting:
+That's called an **overflow**.
+
+We borrow terminology from binary integer arithemtic because
+our counter works just like a binary integer counting up:
 
     0 0 0
     1 0 0
@@ -566,7 +567,7 @@ We could compete with Steve Jobs for elegance of our design[^alex-apple-joke].
     whenever you sum up large number you don't really want to
     add small quantities to big quantities.
     Bad things happen to the errors[^errors].
-    Use this code to write a sum function for arrays of `double`. 
+    Use this code to write a function which sums arrays of `double`.
 
 **Exercise:** Rewrite `min_element` using this code (just `min_element`, don't worry about second best).
 
