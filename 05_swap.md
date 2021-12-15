@@ -165,7 +165,7 @@ You deny the utility of swap.
     a field which studies the fundamental properties of mathematical structures.
     The key idea is that many different mathematical objects appear to function similarly.
     Vectors and matrices can be "added" and "subtracted" just like integers.
-    In what ways are they fundmanentally the same?
+    In what ways are they fundamentally the same?
     One explanation is that all of them form a group.
     Below is a formal definition:
     
