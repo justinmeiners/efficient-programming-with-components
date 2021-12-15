@@ -169,7 +169,7 @@ You deny the utility of swap.
     One explanation is that all of them form a group.
     Below is a formal definition:
     
-    A **group** is set `G` with a binary operation `* : G x G -> G` such that:
+    A **group** is a set `G` with a binary operation `* : G x G -> G` such that:
 
     1. `G` contains an identity element `e` in `G` such that `e * x = x * e = x` for all `x` in `G`.
     2. The operation `*` is associative. So `((x * y) * z)  = (x * (y * z))` for all `x, y, z` in `G`.
