@@ -175,13 +175,13 @@ You deny the utility of swap.
     2. The operation `*` is associative. So `((x * y) * z)  = (x * (y * z))` for all `x, y, z` in `G`.
     3. Every element `x` in `G` has an inverse element `y` such that x * y = y * x = e.
 
-    For example `G` might be the set of integers and `*` might be addition.
+    For example integers are a group with the operation of addition and the identity element 0.
 
     1. `0 + x = x + 0 = x`
     2. `((x + y) + z) = (x + (y + z))`.
     3. `x + (-x) = (-x) + x = 0`.
 
-    The process of discovering and using generic concepts is very similar.
+    The process of discovering and applying generic concepts is very similar.
     Alex introduces the basics of abstract algebra, from a programmers perspective,
     in his book "From Mathematics to Generic Programming".
 
