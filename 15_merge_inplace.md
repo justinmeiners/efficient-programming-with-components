@@ -25,7 +25,7 @@ Meanwhile, he starts telling faculty around him.
 
 Here comes the bad news.
 One of his colleagues, [Erich Kaltofen][kaltofen] who is a distinguished specialist in computer algebra, came to Dave and said
-"Yeah it's nice, but there are these two Polish guys Dudzinski and Dydek who published it in 1981 (two years before)."[^on-a-stable-minimum-storage-merge]
+"Yeah it's nice, but there are these two Polish guys Dudzinski and Dydek who published it in 1981[^on-a-stable-minimum-storage-merge] (two years before)."
 It was very sad.
 But, we often reinvent things.
 Meanwhile Knuth heard about it from his friend [Vaughan Pratt][pratt] who told him about it.
