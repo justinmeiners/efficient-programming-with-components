@@ -140,41 +140,29 @@ Many people worked on it.
 The first solution was done by a Russian computer scientist
 <a href="https://en.wikipedia.org/wiki/Alexander_Kronrod">Alexander Kronrod</a>,
 but it wasn&rsquo;t stable.
-There was another solution
-by a wonderful Argentinian computer scientist
-<a href="https://www.genealogy.math.ndsu.nodak.edu/id.php?id=47194">Luis Pardo</a> (Knuth&rsquo;s student).</p>
+There was another solution by a wonderful Argentinian computer scientist <a href="https://www.genealogy.math.ndsu.nodak.edu/id.php?id=47194">Luis Pardo</a> (Knuth&rsquo;s student).</p>
 
-<p>So, I was thinking and thinking and thinking and once I was
-waking up in the phase between Twilight, when you wake up but still see
-dreams but you&rsquo;re not quite asleep.
+<p>So, I was thinking and thinking and thinking and once I was waking up in the phase between Twilight,
+when you wake up but still see dreams but you&rsquo;re not quite asleep.
 I saw the algorithm on the board, it does happen.
 I was ecstatic.
 I think it was 1984.
 What do you do if you find a really beautiful algorithm?
 If you&rsquo;re me, you call your friends.
-So I called <a href="https://en.wikipedia.org/wiki/David_Musser">Dave Musser</a>
-and said, &ldquo;this is absolutely gorgeous&rdquo;
-and he agreed.
+So I called <a href="https://en.wikipedia.org/wiki/David_Musser">Dave Musser</a> and said, &ldquo;this is absolutely gorgeous&rdquo; and he agreed.
 I started implementing and doing measurements.
 Meanwhile, he starts telling faculty around him.</p>
 
-<p>Here comes the bad news. One of his colleagues,
-<a href="https://kaltofen.math.ncsu.edu/">Erich Kaltofen</a> who is a distinguished
-specialist in computer algebra,
-came to Dave and said &ldquo;Yeah it&rsquo;s nice,
-but there are these two Polish guys
-Dudzinski and Dydek
-who <a href="papers/on-stable-merge.pdf">published it</a> in 1981 (two years before).&rdquo;
+<p>Here comes the bad news.
+One of his colleagues, <a href="https://kaltofen.math.ncsu.edu/">Erich Kaltofen</a> who is a distinguished specialist in computer algebra, came to Dave and said
+&ldquo;Yeah it&rsquo;s nice, but there are these two Polish guys Dudzinski and Dydek who published it in 1981 (two years before).&rdquo;<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>
 It was very sad.
-But, we often reinvent things.</p>
+But, we often reinvent things.
+Meanwhile Knuth heard about it from his friend <a href="https://en.wikipedia.org/wiki/Vaughan_Pratt">Vaughan Pratt</a> who told him about it.
+So he gives the attribution to his friend, and not the two polish guys<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.</p>
 
-<p>Meanwhile Knuth heard about it from his friend
-<a href="https://en.wikipedia.org/wiki/Vaughan_Pratt">Vaughan Pratt</a> who told him about it.
-So he gives the attribution to his friend,
-and not the two polish guys.
-As an algorithm itself, it&rsquo;s utterly useless.
-Sometimes algorithms published by theoreticians
-can be used by us after appropriate modification.</p>
+<p>As an algorithm itself, it&rsquo;s utterly useless.
+But, sometimes algorithms published by theoreticians can be used by us after appropriate modification.</p>
 
 <a name="Merging-adjacent-lists"></a>
 <h2>Merging adjacent lists</h2>
@@ -278,7 +266,7 @@ Then <code>f1_1</code> is found from the right using <code>lower_bound</code>.
 f0_0   f1
 </code></pre>
 
-<p>Now we are going to rotate (C++11 <a href="https://en.cppreference.com/w/cpp/algorithm/rotate"><code>std::rotate</code></a><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>).
+<p>Now we are going to rotate (C++11 <a href="https://en.cppreference.com/w/cpp/algorithm/rotate"><code>std::rotate</code></a><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>).
 Rotating swaps elements in the range
 <code>[f0_1, f1_1)</code>
 in such a way that <code>f1</code> becomes the first.
@@ -464,7 +452,7 @@ The first statement is that an empty list is sorted.
 The second is that a one element list is sorted.
 Now, we just call it recursively and ask
 it to sort itself.
-Nobody does any work except <code>merge_inplace_n</code><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.</p>
+Nobody does any work except <code>merge_inplace_n</code><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
 
 <pre><code>template &lt;typename I, typename N, typename R&gt;
 // I is ForwardIterator
@@ -518,12 +506,17 @@ lesson.</p>
 <hr/>
 <ol>
 <li id="fn:1">
+<a href="papers/on-stable-merge.pdf">&ldquo;On a Stable Minimum Storage Merging Algorithm&rdquo;</a>. Information Processing Letters. 1981.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
+See exercise 5.5.3 (Pg. 390) in Volume 3 of &ldquo;The Art of Computer Programming&rdquo;.
+The algorithm itself and the attirbution to Vaughan Pratt is in the solution (Pg. 701).<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
 When I first put <code>std::rotate</code> in STL
 it returned <code>void</code>.
 In 1995 I discovered what it should return and how to do it efficiently.
 When you rotate you return what the new middle is.
-It took literally 20 years.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
-<li id="fn:2">
+It took literally 20 years.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
 <p>If you are not familiar with recursion or mathematical induction
 this kind of code can look tricky.
 The key property is that every iteration the problem space is made smaller,
@@ -531,7 +524,7 @@ in a way that it preserves essential properties of the original problem.</p>
 
 <p>In this case, we assume we can sort both halves. That wouldn&rsquo;t solve the
 problem normally, except that the merge algorithm gives us a way to combine them
-to get a solution for the full input space.</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
+to get a solution for the full input space.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 
