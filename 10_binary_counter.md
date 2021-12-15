@@ -359,7 +359,7 @@ The great success in programming comes because there are lazy people who say,
 I'll find out later."
 Right now we are solving this problem.
 We have an associative binary operation of some kind
-on type `T` and what we discovered that if we have associativity,
+on type `T` and what we discovered is if we have associativity,
 we can make this counter and it will work for us.
 
 [^adder-circuit]: The terms **carry** and **overflow**
