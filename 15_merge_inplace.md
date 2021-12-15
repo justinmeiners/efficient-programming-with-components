@@ -10,41 +10,34 @@ Many people worked on it.
 The first solution was done by a Russian computer scientist
 [Alexander Kronrod][kronrod],
 but it wasn't stable.
-There was another solution
-by a wonderful Argentinian computer scientist
-[Luis Pardo][pardo] (Knuth's student).
+There was another solution by a wonderful Argentinian computer scientist [Luis Pardo][pardo] (Knuth's student).
 
-So, I was thinking and thinking and thinking and once I was
-waking up in the phase between Twilight, when you wake up but still see
-dreams but you're not quite asleep.
+So, I was thinking and thinking and thinking and once I was waking up in the phase between Twilight,
+when you wake up but still see dreams but you're not quite asleep.
 I saw the algorithm on the board, it does happen.
 I was ecstatic.
 I think it was 1984.
 What do you do if you find a really beautiful algorithm?
 If you're me, you call your friends.
-So I called [Dave Musser][musser]
-and said, "this is absolutely gorgeous"
-and he agreed.
+So I called [Dave Musser][musser] and said, "this is absolutely gorgeous" and he agreed.
 I started implementing and doing measurements.
 Meanwhile, he starts telling faculty around him.
 
-Here comes the bad news. One of his colleagues,
-[Erich Kaltofen][kaltofen] who is a distinguished
-specialist in computer algebra, 
-came to Dave and said "Yeah it's nice,
-but there are these two Polish guys
-Dudzinski and Dydek 
-who [published it](papers/on-stable-merge.pdf) in 1981 (two years before)."
+Here comes the bad news.
+One of his colleagues, [Erich Kaltofen][kaltofen] who is a distinguished specialist in computer algebra, came to Dave and said
+"Yeah it's nice, but there are these two Polish guys Dudzinski and Dydek who published it in 1981[^on-a-stable-minimum-storage-merge] (two years before)."
 It was very sad.
 But, we often reinvent things.
+Meanwhile Knuth heard about it from his friend [Vaughan Pratt][pratt] who told him about it.
+So he gives the attribution to his friend, and not the two polish guys[^merge-sort-exercise].
 
-Meanwhile Knuth heard about it from his friend
-[Vaughan Pratt][pratt] who told him about it.
-So he gives the attribution to his friend,
-and not the two polish guys.
 As an algorithm itself, it's utterly useless.
-Sometimes algorithms published by theoreticians 
-can be used by us after appropriate modification.
+But, sometimes algorithms published by theoreticians can be used by us after appropriate modification.
+
+[^merge-sort-exercise]: See exercise 5.5.3 (Pg. 390) in Volume 3 of "The Art of Computer Programming".
+    The algorithm itself and the attirbution to Vaughan Pratt is in the solution (Pg. 701).
+
+[^on-a-stable-minimum-storage-merge]: ["On a Stable Minimum Storage Merging Algorithm"](papers/on-stable-merge.pdf). Information Processing Letters. 1981.
 
 [kronrod]: https://en.wikipedia.org/wiki/Alexander_Kronrod
 [pardo]: https://www.genealogy.math.ndsu.nodak.edu/id.php?id=47194
@@ -194,8 +187,7 @@ Why?
 To preserve stability we need to make sure equal
 guys don't jump over each other.
 
-[^rotate]: When I first put `std::rotate` in STL
-    it returned `void`.
+[^rotate]: Alex: When I first put `std::rotate` in STL it returned `void`.
     In 1995 I discovered what it should return and how to do it efficiently.
     When you rotate you return what the new middle is.
     It took literally 20 years.
