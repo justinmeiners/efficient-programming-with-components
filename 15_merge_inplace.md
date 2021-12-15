@@ -187,8 +187,7 @@ Why?
 To preserve stability we need to make sure equal
 guys don't jump over each other.
 
-[^rotate]: When I first put `std::rotate` in STL
-    it returned `void`.
+[^rotate]: Alex: When I first put `std::rotate` in STL it returned `void`.
     In 1995 I discovered what it should return and how to do it efficiently.
     When you rotate you return what the new middle is.
     It took literally 20 years.
