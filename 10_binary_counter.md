@@ -144,7 +144,7 @@ will require us to create several components.
 [wimbledon]: https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
 [binary-tree]: https://en.wikipedia.org/wiki/Binary_tree
 
-### What about divider and conquer?
+### What about divide and conquer?
 
 It might appear you could use divide and conquer.
 First split the list of elements in two, 
@@ -186,7 +186,7 @@ Right now `min_element` plays a tree structure that looks like this:
            /\
 
 It has `n - 1` internal nodes.
-But we don't want the winning element to do `n - 1` comparisons.
+But we don't want the winning element to be compared `n - 1` times.
 We need to transform that into the way they play tennis tournaments.
 We need to balance the tree.
 
@@ -204,7 +204,7 @@ Note that once a bottom-level round has been played, they are ready to move up.
 Our goal is basically to become eager.
 Whenever elements are ready to be paired together, we want to pair and compare them.
 
-So if we store only the winner at each level, we never need to store `log(n)` things.
+So if we store only the winner at each level, we only need to store `log(n)` things.
 We can define the **power** of each element
 to be the number of games they have played.
 
@@ -217,7 +217,7 @@ Why can we convert one kind of computation to the other?
 As long as our operation is associative, 
 what property don't we need? **Commutativity**[^commutativity].
 We keep the elements in the same order,
-we're just rebalancing parenthesis[^min-not-commutative].
+we're just rebalancing parentheses[^min-not-commutative].
 
 [^early-ref-to-inplace]: Alex: What do we mean when we say lots of memory?
     `O(n)` is bad, `O(sqrt(n))` is pretty bad.
@@ -257,7 +257,7 @@ we're just rebalancing parenthesis[^min-not-commutative].
         a * b = b * a
 
     In Chapter 9.1 of "From Mathematics to Generic Programming", Alex gives
-    a neat visual proof of the commutativity of positive integers:
+    a neat visual proof of this fact for integer multiplication:
 
                       * * *
         * * * * *     * * *

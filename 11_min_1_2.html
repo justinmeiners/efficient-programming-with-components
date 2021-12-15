@@ -192,10 +192,13 @@ to write <code>min_element_1_2</code> along with type scaffolding.</p>
 and discuss the main loop:</p>
 
 <ol>
-<li><p>Do a <code>while</code> loop and add things to a <code>binary_counter</code>.</p></li>
+<li><p>Do a <code>while</code> loop over a range of elements and add them to a <code>binary_counter</code>.</p>
+
+<p>We will store their iterators in our counter,
+rather than the values they point to, so we can return all the useful return (as discussed previously).</p></li>
 <li><p>Reduce the counter. The result will be the minimum element.</p></li>
 <li><p>The winner will also have a list of other elements it was compared with.
-Use <code>std::min_element</code> to find the second place elemen in the list of losers.</p></li>
+Use <code>std::min_element</code> to find the second place element in the list of losers.</p></li>
 <li><p>Take the result of 2 and 3 and combine them in a pair.</p></li>
 </ol>
 

@@ -80,7 +80,7 @@ After all, I didn't start with C++.
 I still program in C++ because as far as I could ascertain it's the only language which allows me
 generality and absolute efficiency.
 I can program as general as I like.
-I can talk about things like [monoids][monoid] and [semi-groups][semi-group][^group-theory]. 
+I can talk about things like [monoids][monoid] and [semi-groups][semi-group][^about-group-theory]. 
 When it compiles I could look at assembly code and see it is good.
 It is absolutely efficient.
 
@@ -161,7 +161,7 @@ You deny the utility of swap.
 
 [group-theory]: https://en.wikipedia.org/wiki/Group_theory
 
-[^group-theory]: Groups, monoids, and rings are a few of the subjects of abstract algebra,
+[^about-group-theory]: Groups, monoids, and rings are a few of the subjects of abstract algebra,
     a field which studies the fundamental properties of mathematical structures.
     The key idea is that many different mathematical objects appear to function similarly.
     Vectors and matrices can be "added" and "subtracted" just like integers.

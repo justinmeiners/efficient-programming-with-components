@@ -245,8 +245,8 @@ So an upper bound on the comparisons for the algorithm is:</p>
 <p>Actually implementing this algorithm effectively
 will require us to create several components.</p>
 
-<a name="What-about-divider-and-conquer-3f-"></a>
-<h3>What about divider and conquer?</h3>
+<a name="What-about-divide-and-conquer-3f-"></a>
+<h3>What about divide and conquer?</h3>
 
 <p>It might appear you could use divide and conquer.
 First split the list of elements in two,
@@ -292,7 +292,7 @@ Right now <code>min_element</code> plays a tree structure that looks like this:<
 </code></pre>
 
 <p>It has <code>n - 1</code> internal nodes.
-But we don&rsquo;t want the winning element to do <code>n - 1</code> comparisons.
+But we don&rsquo;t want the winning element to be compared <code>n - 1</code> times.
 We need to transform that into the way they play tennis tournaments.
 We need to balance the tree.</p>
 
@@ -311,7 +311,7 @@ Note that once a bottom-level round has been played, they are ready to move up.
 Our goal is basically to become eager.
 Whenever elements are ready to be paired together, we want to pair and compare them.</p>
 
-<p>So if we store only the winner at each level, we never need to store <code>log(n)</code> things.
+<p>So if we store only the winner at each level, we only need to store <code>log(n)</code> things.
 We can define the <strong>power</strong> of each element
 to be the number of games they have played.</p>
 
@@ -324,7 +324,7 @@ Why can we convert one kind of computation to the other?
 As long as our operation is associative,
 what property don&rsquo;t we need? <strong>Commutativity</strong><sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.
 We keep the elements in the same order,
-we&rsquo;re just rebalancing parenthesis<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.</p>
+we&rsquo;re just rebalancing parentheses<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.</p>
 
 <a name="Binary-counting-and-reduction"></a>
 <h2>Binary counting and reduction</h2>
@@ -670,7 +670,7 @@ For example, multiplication of integers is commutative:</p>
 </code></pre>
 
 <p>In Chapter 9.1 of &ldquo;From Mathematics to Generic Programming&rdquo;, Alex gives
-a neat visual proof of the commutativity of positive integers:</p>
+a neat visual proof of this fact for integer multiplication:</p>
 
 <pre><code>              * * *
 * * * * *     * * *
