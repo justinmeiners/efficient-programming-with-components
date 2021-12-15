@@ -3,7 +3,7 @@
 
 ## Alice in wonderland 
 
-Let us attack the problem of finding not just the smallest
+Let us introduce the problem of finding not just the smallest
 of `n` elements, but the smallest and second smallest.
 The problem has a very distinguished pedigree, it was first addressed by a well-known British mathematician
 [Charles Dodgson][carroll] (Lewis Carroll).
@@ -62,7 +62,7 @@ Reading Knuth has to become a lifelong activity.
 [^not-an-algorithm]: Knuth: it is not formulated precisely enough to qualify as an algorithm.
 
 [^lawn-tennis-article]: "Lawn tennis tournaments; the true method of assigning prizes with a proof of
-  the fallacy of the present method". London, Macmillan and co., 1883.
+    the fallacy of the present method". London, Macmillan and co., 1883.
 
 [^inventor-of-scrabble]: The invention of Scrabble is attributed to Lewis Carroll's brief journal entry:
     "A game might be made of letters, to be moved about on a chess board till they form words" (Dec 19th,
@@ -91,9 +91,7 @@ Reading Knuth has to become a lifelong activity.
 The problem of finding the smallest and second smallest element
 is described fully in "The Art of Computer Programming", but somehow Knuth does not implement it.
 As we shall see it's actually a little tricky.
-I pick this algorithm not because it is of paramount importance for your future work.
-I pick this algorithm because it allows us to learn how to do decomposition
-and learn components along the way (like the lists we started previously).
+It will take two chapters to complete.
 
 How many comparisons do you need to solve this problem?
 Same as `minmax_element` from last time?
@@ -142,12 +140,11 @@ So an upper bound on the comparisons for the algorithm is:
 
 Actually implementing this algorithm effectively
 will require us to create several components.
-We will build these up over the next few lessons.
 
 [wimbledon]: https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
 [binary-tree]: https://en.wikipedia.org/wiki/Binary_tree
 
-### Unoptimal divider and conquer approach
+### What about divider and conquer?
 
 It might appear you could use divide and conquer.
 First split the list of elements in two, 
@@ -155,7 +152,7 @@ find the min and second min of the first half,
 and the second half, and then merge them together doing two comparisons.
 It sounds very elegant because it's all recursive.
 But, let us think about how many comparisons it's going to do
-with simple mathematics.
+using simple mathematics.
 
 1. We start with `n`. We need to pair and compare them,
    so the first round is `n/2` comparisons.
@@ -173,12 +170,11 @@ So the total number of comparisons would be:
     = n/2 + n-1
     = 3n/2 - 1
 
-That's not what we're trying to accomplish,
-so divide and conquer doesn't always do what we think.
+That's not what we're trying to accomplish, so divide and conquer doesn't always do what we think.
 
 ### Tournament tree shapes
 
-First, we need to rearrange the tournament we play.
+To get the number of comparisons that we want, we need to rearrange the tournament we play.
 Right now `min_element` plays a tree structure that looks like this:
 
     unbalanced tree
@@ -206,16 +202,17 @@ One way is to just pair up elements and build up.
 But then we need lots of memory to save the intermediate results[^early-ref-to-inplace].
 Note that once a bottom-level round has been played, they are ready to move up.
 Our goal is basically to become eager.
-Whenever elements are ready to be paired together, we want to pair them.
+Whenever elements are ready to be paired together, we want to pair and compare them.
+
 So if we store only the winner at each level, we never need to store `log(n)` things.
 We can define the **power** of each element
-to be the number of "games they have played", in other words, the number of times they have been compared.
+to be the number of games they have played.
 
 Realize that suddenly we see something which has nothing to do with our problem.
-*The foundation of our algorithm is the ability to take a tree like
-the linear (unbalanced) tree and transform it into a balanced tree*.
+*The foundation of our algorithm is the ability to take a tree, like
+the linear (unbalanced) tree, and transform it into a balanced tree*.
 What mathematical property allows us to do such a transformation?
-Specifically why can we convert one kind of computation to the other.
+Why can we convert one kind of computation to the other?
 **Associativity**[^associativity].
 As long as our operation is associative, 
 what property don't we need? **Commutativity**[^commutativity].
@@ -274,87 +271,101 @@ we're just rebalancing parenthesis[^min-not-commutative].
 
         "Hello, " + "World!" != "World!" + "Hello, "
 
-[dirchlet]: https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet)
+[dirichlet]: https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet)
 
 ## Binary counting and reduction
 
 Here we come to the amazing idea of how to do this transformation.
 This is one of the most beautiful ideas which they kept secret from you.
 They should have taught it in high school.
-But, they want to publish papers
-themselves and not tell you the general mechanism.
+But, they want to publish papers themselves and not tell you the general mechanism.
 
-We can create a "counter" which is an array of "bits"/entries.
-In every bit of this counter we're going to keep a single element. 
-The element in the `nth` bit will be the one that has had `n` victories.
-Our goal is to only combine elements that have the same weight/power.
-Initially the counter has `zero` in every entry:
+Let us assume we have elements of type `T` that need to be paired or combined in some way,
+whether with `min`, `+`, `merge`, or any other assocative operation on `T`.
+What we can do is create an array called a "counter".
+
+       index: 0  1  ...   31
+    contents: x1 x2  ...  x32
+
+The `nth` slot of the counter will store the element that has had `n` "victories" so far.
+So if there is a guy in slot 0 he hasn't played any games yet.
+If there is a guy in slot 2 he has won 2 games, and so on.
+This structure will help us to only pair up elements that have the same power.
+
+The following example using `min` as the operation should make this clear.
+Initially the counter has zero in every entry:
 
     initial counter
 
-       index: 1 2  ...   32
+       index: 0 1  ...   31
     contents: 0 0  ...   0
 
 Take a new guy `x` who has never played any games,
-and you look at the guy in the first slot of the counter.
+and look at the guy in the first slot of the counter.
 The existing guy is either zero or not.
-If it's zero, put him in the counter.
+If it's zero, put the new guy `x` in the counter at index `0` (he has not played any games).
 
-    1 2  ...   32           1 2  ...   32
+    0 1  ...   31           0 1  ...   31
     0 0  ...   0     -->    x 0  ...   0
 
-If it's not zero, he plays a game with the existing guy `y`.
-If he wins, he replaces the loser in the counter.
+Now take another guy `y`. Since `x` is in first slot of the counter, we must pair them up.
+The winner moves on up to the next slot in the counter,
+as they have now one a game.
+So if `y` wins:
 
-    1 2  ...   32           1 2  ...   32
-    y 0  ...   0     -->    x 0  ...   0
+    0 1  ...   31           0 1  ...   31
+    x 0  ...   0     -->    0 y  ...   0
 
-Otherwise, the existing guy has now won a game.
-So he needs to be promoted to the next level.
-he follows the same rules with the guy in that slot.
-It's a carry propagation.
+Otherwise `x` wins:
 
-    1 2  ...   32           1 2  ...   32
-    y 0  ...   0    -->     0 y  ...   0
+    0 1  ...   31           0 1  ...   31
+    x 0  ...   0     -->    0 x  ...   0
 
-If we end up with a guy in slot 32, it's an **overflow**, exactly like integer arithmetic.
-What do we do?
+What if the index `1` slot was non-zero, after comparing `x` and `y`?
+Then the guy there already won one game.
+So, we must **carry propogate**[^adder-circuit].
+Repeat the same process all the way up the counter, until we find a slot which is zero.
+
+What if the counter is full, and has no zero slots?
+That's called an an **overflow**.
+There is a close analogy between our counter and binary integer counting:
+
+    0 0 0
+    1 0 0
+    0 1 0
+    1 1 0
+    0 0 1
+    1 0 1
+    0 1 1
+    1 1 1
+
+But instead of 0 and 1 in each slot or "bit" we have arbitary elements that are combined with an associative operation.
+
+### Handling overflow
+
+What do we do if the counter overflows?
 Whenever we don't know how to proceed,
 do something sensible and let whomever uses it figure out what is a sensible thing to do.
-Return the carry[^carry].
+Return the carry.
+If the return is non-zero the programmer who called the counter will know
+it overflowed and can decide what to do.
+Maybe they will extend the counter or throw an error.
+It's his business not ours.
 
 Let us be lazy. 
-The great success in
-programming comes because there are lazy people who say, "I don't want to know now,
+The great success in programming comes because there are lazy people who say,
+"I don't want to know now,
 I'll find out later."
 Right now we are solving this problem.
 We have an associative binary operation of some kind
-and what we discovered that if we have associativity,
+on type `T` and what we discovered that if we have associativity,
 we can make this counter and it will work for us.
 
-If you are familiar with [numerical analysis][numerics],
-whenever you sum up large number you don't really want to
-add small quantities to big quantities.
-Bad things happen to the errors[^errors].
-So, you could use the same device for balancing your addition.
-If you want to implement [merge sort][merge-sort] you can use exactly the same device, since
-merge is associative.
-The idea with merge sort, is you only want to merge lists if they are roughly the same length
-and this helps you do it (see Chapter 12).
+[^adder-circuit]: The terms **carry** and **overflow**
+    are closely associated the implementation of binary counting
+    or addition as an electrical circuit, called an [adder][adder].
 
-When we become grownups we learn about advanced data structures,
-such as [binomial forest][binomial].
-They use the same idea.
-The counter helps us combine things only when they have the same weight.
-It's a general algorithmic technique.
-
-
-[^carry]: The terms **carry** and **carry propagation**
-    are usually associated with the algorithm of binary addition
-    and especially its implementation as
-    an electronic/logical circuit called an [adder][adder].
-
-    An adder has two inputs `a` and `b` for
+    A single bit adder has two inputs `a` and `b` for
     the two digits to add together.
     It outputs a digit `s` which is the digit
     to display for this place value.
@@ -417,6 +428,7 @@ It's a general algorithmic technique.
 
 ### Implementation
 
+Now we have to write the code.
 The first function will add an element to the counter
 using the process we just described.
 
@@ -447,8 +459,12 @@ Notice that zero is `const T&` reference because we don't plan to modify it,
 but we do modify carry,
 so it should be passed by value.
 
-The second function applies the operation
-to all the elements left sitting in the counter.
+After we finish adding all our elements to the counter, they might not all be reduced to one element.
+There may be several elements left sitting at various levels of the counter.
+We need to do one more pass of the operation to combine them into the final result.
+
+This second function does that. It applies the operation,
+in the same manner to the elements left sitting in the counter.
 
     template <typename T, typename I, typename Op>
     // requires Op is BinaryOperation(T)
@@ -474,15 +490,7 @@ Sometimes it will work with the operation so apply `op(x, zero)`
 gives you `x`, but sometimes that won't happen.
 So we can't really initialize to zero.
 
-If the algorithm is a bit unclear, don't worry.
-It will be discussed more in the next lesson.
-Working through a few concrete applications will also help:
-
-**Exercise:** Use these functions to sum up an array of `double`. 
-
-**Exercise:** Rewrite `min_element` using these functions (just `min_element`, don't worry about second best).
-
-## Binary counter object
+## Binary counter class
 
 ### Start with algorithms
 
@@ -552,9 +560,23 @@ If you initialize in the body, it will first call default constructors
 for members, then you overwrite all the work with an assignment.
 
 I think it is very beautiful.
-We could compete with Steve Jobs for elegance of our design[^alex-joke].
+We could compete with Steve Jobs for elegance of our design[^alex-apple-joke].
 
-[^alex-joke]: Alex: Maybe we should make it in China.
+**Exercise:** If you are familiar with [numerical analysis][numerics],
+    whenever you sum up large number you don't really want to
+    add small quantities to big quantities.
+    Bad things happen to the errors[^errors].
+    Use this code to write a sum function for arrays of `double`. 
+
+**Exercise:** Rewrite `min_element` using this code (just `min_element`, don't worry about second best).
+
+**Exercise:**  If you want to implement [merge sort][merge-sort] you can use exactly the same device, since merge is associative. The idea with merge sort, is you only want to merge lists if they are roughly the same length and this helps you do it (see Chapter 12).
+    Write the associtative binary operation `merge` which can combine two sorted arrays into a sorted array.
+
+**Exercise:** When we become grownups we learn about advanced data structures, such as [binomial forest][binomial]. They use the same idea. Learn about this data structure and try to figure out where
+    the counter could be used. 
+
+[^alex-apple-joke]: Alex: Maybe we should make it in China.
     That's a necessary prerequisite for beautiful design.
     [Designed in Cupertino][designed-by-apple], assembled in China.
     So let's try to assemble our machine in Palo Alto.
@@ -588,8 +610,10 @@ but let's go with "poly-logarithmic" being "in-place".
 [quicksort]: https://en.wikipedia.org/wiki/Quicksort
 [in-place]: https://en.wikipedia.org/wiki/In-place_algorithm
 
+
 ## Code
 
 - [binary_counter.h](code/binary_counter.h)
+
 
 

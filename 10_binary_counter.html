@@ -133,7 +133,7 @@ td { vertical-align: top; }
 <a name="Alice-in-wonderland"></a>
 <h2>Alice in wonderland</h2>
 
-<p>Let us attack the problem of finding not just the smallest
+<p>Let us introduce the problem of finding not just the smallest
 of <code>n</code> elements, but the smallest and second smallest.
 The problem has a very distinguished pedigree, it was first addressed by a well-known British mathematician
 <a href="https://en.wikipedia.org/wiki/Lewis_Carroll">Charles Dodgson</a> (Lewis Carroll).
@@ -187,17 +187,13 @@ They are right at the end.
 Lots of very important algorithms are described in the solutions to his problems.
 Reading Knuth has to become a lifelong activity.</p>
 
-<p>  the fallacy of the present method". London, Macmillan and co., 1883.</p>
-
 <a name="Smallest-and-second-smallest-element"></a>
 <h2>Smallest and second smallest element</h2>
 
 <p>The problem of finding the smallest and second smallest element
 is described fully in &ldquo;The Art of Computer Programming&rdquo;, but somehow Knuth does not implement it.
 As we shall see it&rsquo;s actually a little tricky.
-I pick this algorithm not because it is of paramount importance for your future work.
-I pick this algorithm because it allows us to learn how to do decomposition
-and learn components along the way (like the lists we started previously).</p>
+It will take two chapters to complete.</p>
 
 <p>How many comparisons do you need to solve this problem?
 Same as <code>minmax_element</code> from last time?
@@ -247,11 +243,10 @@ So an upper bound on the comparisons for the algorithm is:</p>
 </code></pre>
 
 <p>Actually implementing this algorithm effectively
-will require us to create several components.
-We will build these up over the next few lessons.</p>
+will require us to create several components.</p>
 
-<a name="Unoptimal-divider-and-conquer-approach"></a>
-<h3>Unoptimal divider and conquer approach</h3>
+<a name="What-about-divider-and-conquer-3f-"></a>
+<h3>What about divider and conquer?</h3>
 
 <p>It might appear you could use divide and conquer.
 First split the list of elements in two,
@@ -259,7 +254,7 @@ find the min and second min of the first half,
 and the second half, and then merge them together doing two comparisons.
 It sounds very elegant because it&rsquo;s all recursive.
 But, let us think about how many comparisons it&rsquo;s going to do
-with simple mathematics.</p>
+using simple mathematics.</p>
 
 <ol>
 <li><p>We start with <code>n</code>. We need to pair and compare them,
@@ -279,13 +274,12 @@ So we have another <code>n/2</code> comparisons.</p></li>
 = 3n/2 - 1
 </code></pre>
 
-<p>That&rsquo;s not what we&rsquo;re trying to accomplish,
-so divide and conquer doesn&rsquo;t always do what we think.</p>
+<p>That&rsquo;s not what we&rsquo;re trying to accomplish, so divide and conquer doesn&rsquo;t always do what we think.</p>
 
 <a name="Tournament-tree-shapes"></a>
 <h3>Tournament tree shapes</h3>
 
-<p>First, we need to rearrange the tournament we play.
+<p>To get the number of comparisons that we want, we need to rearrange the tournament we play.
 Right now <code>min_element</code> plays a tree structure that looks like this:</p>
 
 <pre><code>unbalanced tree
@@ -315,16 +309,17 @@ One way is to just pair up elements and build up.
 But then we need lots of memory to save the intermediate results<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.
 Note that once a bottom-level round has been played, they are ready to move up.
 Our goal is basically to become eager.
-Whenever elements are ready to be paired together, we want to pair them.
-So if we store only the winner at each level, we never need to store <code>log(n)</code> things.
+Whenever elements are ready to be paired together, we want to pair and compare them.</p>
+
+<p>So if we store only the winner at each level, we never need to store <code>log(n)</code> things.
 We can define the <strong>power</strong> of each element
-to be the number of &ldquo;games they have played&rdquo;, in other words, the number of times they have been compared.</p>
+to be the number of games they have played.</p>
 
 <p>Realize that suddenly we see something which has nothing to do with our problem.
-<em>The foundation of our algorithm is the ability to take a tree like
-the linear (unbalanced) tree and transform it into a balanced tree</em>.
+<em>The foundation of our algorithm is the ability to take a tree, like
+the linear (unbalanced) tree, and transform it into a balanced tree</em>.
 What mathematical property allows us to do such a transformation?
-Specifically why can we convert one kind of computation to the other.
+Why can we convert one kind of computation to the other?
 <strong>Associativity</strong><sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.
 As long as our operation is associative,
 what property don&rsquo;t we need? <strong>Commutativity</strong><sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.
@@ -337,81 +332,101 @@ we&rsquo;re just rebalancing parenthesis<sup id="fnref:9"><a href="#fn:9" rel="f
 <p>Here we come to the amazing idea of how to do this transformation.
 This is one of the most beautiful ideas which they kept secret from you.
 They should have taught it in high school.
-But, they want to publish papers
-themselves and not tell you the general mechanism.</p>
+But, they want to publish papers themselves and not tell you the general mechanism.</p>
 
-<p>We can create a &ldquo;counter&rdquo; which is an array of &ldquo;bits&rdquo;/entries.
-In every bit of this counter we&rsquo;re going to keep a single element.
-The element in the <code>nth</code> bit will be the one that has had <code>n</code> victories.
-Our goal is to only combine elements that have the same weight/power.
-Initially the counter has <code>zero</code> in every entry:</p>
+<p>Let us assume we have elements of type <code>T</code> that need to be paired or combined in some way,
+whether with <code>min</code>, <code>+</code>, <code>merge</code>, or any other assocative operation on <code>T</code>.
+What we can do is create an array called a &ldquo;counter&rdquo;.</p>
+
+<pre><code>   index: 0  1  ...   31
+contents: x1 x2  ...  x32
+</code></pre>
+
+<p>The <code>nth</code> slot of the counter will store the element that has had <code>n</code> &ldquo;victories&rdquo; so far.
+So if there is a guy in slot 0 he hasn&rsquo;t played any games yet.
+If there is a guy in slot 2 he has won 2 games, and so on.
+This structure will help us to only pair up elements that have the same power.</p>
+
+<p>The following example using <code>min</code> as the operation should make this clear.
+Initially the counter has zero in every entry:</p>
 
 <pre><code>initial counter
 
-   index: 1 2  ...   32
+   index: 0 1  ...   31
 contents: 0 0  ...   0
 </code></pre>
 
 <p>Take a new guy <code>x</code> who has never played any games,
-and you look at the guy in the first slot of the counter.
+and look at the guy in the first slot of the counter.
 The existing guy is either zero or not.
-If it&rsquo;s zero, put him in the counter.</p>
+If it&rsquo;s zero, put the new guy <code>x</code> in the counter at index <code>0</code> (he has not played any games).</p>
 
-<pre><code>1 2  ...   32           1 2  ...   32
+<pre><code>0 1  ...   31           0 1  ...   31
 0 0  ...   0     --&gt;    x 0  ...   0
 </code></pre>
 
-<p>If it&rsquo;s not zero, he plays a game with the existing guy <code>y</code>.
-If he wins, he replaces the loser in the counter.</p>
+<p>Now take another guy <code>y</code>. Since <code>x</code> is in first slot of the counter, we must pair them up.
+The winner moves on up to the next slot in the counter,
+as they have now one a game.
+So if <code>y</code> wins:</p>
 
-<pre><code>1 2  ...   32           1 2  ...   32
-y 0  ...   0     --&gt;    x 0  ...   0
+<pre><code>0 1  ...   31           0 1  ...   31
+x 0  ...   0     --&gt;    0 y  ...   0
 </code></pre>
 
-<p>Otherwise, the existing guy has now won a game.
-So he needs to be promoted to the next level.
-he follows the same rules with the guy in that slot.
-It&rsquo;s a carry propagation.</p>
+<p>Otherwise <code>x</code> wins:</p>
 
-<pre><code>1 2  ...   32           1 2  ...   32
-y 0  ...   0    --&gt;     0 y  ...   0
+<pre><code>0 1  ...   31           0 1  ...   31
+x 0  ...   0     --&gt;    0 x  ...   0
 </code></pre>
 
-<p>If we end up with a guy in slot 32, it&rsquo;s an <strong>overflow</strong>, exactly like integer arithmetic.
-What do we do?
+<p>What if the index <code>1</code> slot was non-zero, after comparing <code>x</code> and <code>y</code>?
+Then the guy there already won one game.
+So, we must <strong>carry propogate</strong><sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup>.
+Repeat the same process all the way up the counter, until we find a slot which is zero.</p>
+
+<p>What if the counter is full, and has no zero slots?
+That&rsquo;s called an an <strong>overflow</strong>.
+There is a close analogy between our counter and binary integer counting:</p>
+
+<pre><code>0 0 0
+1 0 0
+0 1 0
+1 1 0
+0 0 1
+1 0 1
+0 1 1
+1 1 1
+</code></pre>
+
+<p>But instead of 0 and 1 in each slot or &ldquo;bit&rdquo; we have arbitary elements that are combined with an associative operation.</p>
+
+<a name="Handling-overflow"></a>
+<h3>Handling overflow</h3>
+
+<p>What do we do if the counter overflows?
 Whenever we don&rsquo;t know how to proceed,
 do something sensible and let whomever uses it figure out what is a sensible thing to do.
-Return the carry<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup>.</p>
+Return the carry.
+If the return is non-zero the programmer who called the counter will know
+it overflowed and can decide what to do.
+Maybe they will extend the counter or throw an error.
+It&rsquo;s his business not ours.</p>
 
 <p>Let us be lazy.
-The great success in
-programming comes because there are lazy people who say, &ldquo;I don&rsquo;t want to know now,
+The great success in programming comes because there are lazy people who say,
+&ldquo;I don&rsquo;t want to know now,
 I&rsquo;ll find out later.&rdquo;
 Right now we are solving this problem.
 We have an associative binary operation of some kind
-and what we discovered that if we have associativity,
+on type <code>T</code> and what we discovered that if we have associativity,
 we can make this counter and it will work for us.</p>
-
-<p>If you are familiar with <a href="https://en.wikipedia.org/wiki/Numerical_analysis">numerical analysis</a>,
-whenever you sum up large number you don&rsquo;t really want to
-add small quantities to big quantities.
-Bad things happen to the errors<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup>.
-So, you could use the same device for balancing your addition.
-If you want to implement <a href="https://en.wikipedia.org/wiki/Merge_sort">merge sort</a> you can use exactly the same device, since
-merge is associative.
-The idea with merge sort, is you only want to merge lists if they are roughly the same length
-and this helps you do it (see Chapter 12).</p>
-
-<p>When we become grownups we learn about advanced data structures,
-such as <a href="https://en.wikipedia.org/wiki/Binomial_heap">binomial forest</a>.
-They use the same idea.
-The counter helps us combine things only when they have the same weight.
-It&rsquo;s a general algorithmic technique.</p>
 
 <a name="Implementation"></a>
 <h3>Implementation</h3>
 
-<p>The first function will add an element to the counter
+<p>Now we have to write the code.
+The first function will add an element to the counter
 using the process we just described.</p>
 
 <pre><code>template &lt;typename T, typename I, typename Op&gt;
@@ -442,8 +457,12 @@ element we are inserting.</p>
 but we do modify carry,
 so it should be passed by value.</p>
 
-<p>The second function applies the operation
-to all the elements left sitting in the counter.</p>
+<p>After we finish adding all our elements to the counter, they might not all be reduced to one element.
+There may be several elements left sitting at various levels of the counter.
+We need to do one more pass of the operation to combine them into the final result.</p>
+
+<p>This second function does that. It applies the operation,
+in the same manner to the elements left sitting in the counter.</p>
 
 <pre><code>template &lt;typename T, typename I, typename Op&gt;
 // requires Op is BinaryOperation(T)
@@ -470,16 +489,8 @@ Sometimes it will work with the operation so apply <code>op(x, zero)</code>
 gives you <code>x</code>, but sometimes that won&rsquo;t happen.
 So we can&rsquo;t really initialize to zero.</p>
 
-<p>If the algorithm is a bit unclear, don&rsquo;t worry.
-It will be discussed more in the next lesson.
-Working through a few concrete applications will also help:</p>
-
-<p><strong>Exercise:</strong> Use these functions to sum up an array of <code>double</code>.</p>
-
-<p><strong>Exercise:</strong> Rewrite <code>min_element</code> using these functions (just <code>min_element</code>, don&rsquo;t worry about second best).</p>
-
-<a name="Binary-counter-object"></a>
-<h2>Binary counter object</h2>
+<a name="Binary-counter-class"></a>
+<h2>Binary counter class</h2>
 
 <a name="Start-with-algorithms"></a>
 <h3>Start with algorithms</h3>
@@ -552,7 +563,21 @@ If you initialize in the body, it will first call default constructors
 for members, then you overwrite all the work with an assignment.</p>
 
 <p>I think it is very beautiful.
-We could compete with Steve Jobs for elegance of our design<sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup>.</p>
+We could compete with Steve Jobs for elegance of our design<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup>.</p>
+
+<p><strong>Exercise:</strong> If you are familiar with <a href="https://en.wikipedia.org/wiki/Numerical_analysis">numerical analysis</a>,
+    whenever you sum up large number you don&rsquo;t really want to
+    add small quantities to big quantities.
+    Bad things happen to the errors<sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup>.
+    Use this code to write a sum function for arrays of <code>double</code>.</p>
+
+<p><strong>Exercise:</strong> Rewrite <code>min_element</code> using this code (just <code>min_element</code>, don&rsquo;t worry about second best).</p>
+
+<p><strong>Exercise:</strong>  If you want to implement <a href="https://en.wikipedia.org/wiki/Merge_sort">merge sort</a> you can use exactly the same device, since merge is associative. The idea with merge sort, is you only want to merge lists if they are roughly the same length and this helps you do it (see Chapter 12).
+    Write the associtative binary operation <code>merge</code> which can combine two sorted arrays into a sorted array.</p>
+
+<p><strong>Exercise:</strong> When we become grownups we learn about advanced data structures, such as <a href="https://en.wikipedia.org/wiki/Binomial_heap">binomial forest</a>. They use the same idea. Learn about this data structure and try to figure out where
+    the counter could be used.</p>
 
 <a name="What-is-in-2d-place-memory-usage-3f-"></a>
 <h3>What is in-place memory usage?</h3>
@@ -601,7 +626,8 @@ and <a href="http://www.bananagrammer.com/2009/10/games-of-lewis-carroll.html">&
 <p>His book <a href="https://en.wikipedia.org/wiki/The_Game_of_Logic">&ldquo;The Game of Logic&rdquo;</a> teaches formal logic
 using a board game. It is also available from <a href="https://www.gutenberg.org/ebooks/4763">Project Gutenberg</a>.</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
-&ldquo;Lawn tennis tournaments; the true method of assigning prizes with a proof of<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+&ldquo;Lawn tennis tournaments; the true method of assigning prizes with a proof of
+the fallacy of the present method&rdquo;. London, Macmillan and co., 1883.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
 Knuth: it is not formulated precisely enough to qualify as an algorithm.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
@@ -653,7 +679,7 @@ a neat visual proof of the commutativity of positive integers:</p>
               * * *
 </code></pre>
 
-<p>Or as [Dirchlet][dirichlet] put it: &ldquo;Whether you arrange soldiers in rows or columns, you still have the same number of soldiers&rdquo;.</p>
+<p>Or as <a href="https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet)">Dirchlet</a> put it: &ldquo;Whether you arrange soldiers in rows or columns, you still have the same number of soldiers&rdquo;.</p>
 
 <p>An example of an operation which is not commutative is string concatenation.</p>
 
@@ -666,12 +692,11 @@ In mathematics <code>min</code> is commutative.
 But because we want to preserve stability, it is not.
 We distinguish between the left and right argument.<a href="#fnref:9" rev="footnote">&#8617;</a></li>
 <li id="fn:10">
-<p>The terms <strong>carry</strong> and <strong>carry propagation</strong>
-are usually associated with the algorithm of binary addition
-and especially its implementation as
-an electronic/logical circuit called an <a href="https://en.wikipedia.org/wiki/Adder_(electronics)">adder</a>.</p>
+<p>The terms <strong>carry</strong> and <strong>overflow</strong>
+are closely associated the implementation of binary counting
+or addition as an electrical circuit, called an <a href="https://en.wikipedia.org/wiki/Adder_(electronics)">adder</a>.</p>
 
-<p>An adder has two inputs <code>a</code> and <code>b</code> for
+<p>A single bit adder has two inputs <code>a</code> and <code>b</code> for
 the two digits to add together.
 It outputs a digit <code>s</code> which is the digit
 to display for this place value.
@@ -713,6 +738,11 @@ l_1  a_1  b_1   |_ l_2   a_2  b_2
 
 <p>An <strong>overflow</strong> is when the last adder has a non-zero carry.</p><a href="#fnref:10" rev="footnote">&#8617;</a></li>
 <li id="fn:11">
+Alex: Maybe we should make it in China.
+That&rsquo;s a necessary prerequisite for beautiful design.
+<a href="https://signalvnoise.com/posts/2710-designed-by-apple-in-california">Designed in Cupertino</a>, assembled in China.
+So let&rsquo;s try to assemble our machine in Palo Alto.<a href="#fnref:11" rev="footnote">&#8617;</a></li>
+<li id="fn:12">
 <p>Floating point arithemetic can involve many tricky details,
 but the basic issue Alex is referring to is straightforward.
 We often use scientific notation to write larger numbers as a decimal to a power,
@@ -728,12 +758,7 @@ To try for yourself, compare these two expressions in a program:</p>
 
 <pre><code>double x = (152500.0 * 5000.0);
 double y = (152500.0 * 5000.0) + 0.01;
-</code></pre><a href="#fnref:11" rev="footnote">&#8617;</a></li>
-<li id="fn:12">
-Alex: Maybe we should make it in China.
-That&rsquo;s a necessary prerequisite for beautiful design.
-<a href="https://signalvnoise.com/posts/2710-designed-by-apple-in-california">Designed in Cupertino</a>, assembled in China.
-So let&rsquo;s try to assemble our machine in Palo Alto.<a href="#fnref:12" rev="footnote">&#8617;</a></li>
+</code></pre><a href="#fnref:12" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 
