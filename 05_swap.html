@@ -210,7 +210,7 @@ After all, I didn&rsquo;t start with C++.
 I still program in C++ because as far as I could ascertain it&rsquo;s the only language which allows me
 generality and absolute efficiency.
 I can program as general as I like.
-I can talk about things like <a href="https://en.wikipedia.org/wiki/Monoid">monoids</a> and <a href="https://en.wikipedia.org/wiki/Semigroup">semi-groups</a>.
+I can talk about things like <a href="https://en.wikipedia.org/wiki/Monoid">monoids</a> and <a href="https://en.wikipedia.org/wiki/Semigroup">semi-groups</a><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
 When it compiles I could look at assembly code and see it is good.
 It is absolutely efficient.</p>
 
@@ -275,7 +275,7 @@ Basically if you do something with a
 sequence, you swap.
 So it is very important practically.
 But it also happens to be very important
-theoretically, because a long time ago when people were starting group theory<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>
+theoretically, because a long time ago when people were starting <a href="https://en.wikipedia.org/wiki/Group_theory">group theory</a>
 they discovered that any permutation of a sequence could be generated out of swap<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
 Swap is the most primitive operation.
 The reason is sequence. And any other
@@ -482,15 +482,35 @@ is a bad sequence.</p>
 <hr/>
 <ol>
 <li id="fn:1">
-<p><a href="https://en.wikipedia.org/wiki/Group_theory">Group theory</a>
-is one of the main subjects of abstract algebra.
-The key idea is that many mathematical structures behave similarly.
-You can add and subtract numbers, you can add and subtract vectors and matrices.
-Can we study all structures which can add and subtract all together?
-It turns out you can, and one such structure is a group.</p>
+<p>Groups, monoids, and rings are a few of the subjects of abstract algebra,
+a field which studies the fundamental properties of mathematical structures.
+The key idea is that many different mathematical objects appear to function similarly.
+Vectors and matrices can be &ldquo;added&rdquo; and &ldquo;subtracted&rdquo; just like integers.
+In what ways are they fundamentally the same?
+One explanation is that all of them form a group.
+Below is a formal definition:</p>
 
-<p>Alex&rsquo;s ideas about generic programming are inspired
-by abstract algebra.</p><a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<p>A <strong>group</strong> is a set <code>G</code> with a binary operation <code>* : G x G -&gt; G</code> such that:</p>
+
+<ol>
+<li><code>G</code> contains an identity element <code>e</code> in <code>G</code> such that <code>e * x = x * e = x</code> for all <code>x</code> in <code>G</code>.</li>
+<li>The operation <code>*</code> is associative. So <code>((x * y) * z)  = (x * (y * z))</code> for all <code>x, y, z</code> in <code>G</code>.</li>
+<li>Every element <code>x</code> in <code>G</code> has an inverse element <code>y</code> such that x * y = y * x = e.</li>
+</ol>
+
+
+<p>For example integers are a group with the operation of addition and the identity element 0.</p>
+
+<ol>
+<li><code>0 + x = x + 0 = x</code></li>
+<li><code>((x + y) + z) = (x + (y + z))</code>.</li>
+<li><code>x + (-x) = (-x) + x = 0</code>.</li>
+</ol>
+
+
+<p>The process of discovering and applying generic concepts is very similar.
+Alex introduces the basics of abstract algebra, from a programmers perspective,
+in his book &ldquo;From Mathematics to Generic Programming&rdquo;.</p><a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
 <p>A <a href="https://en.wikipedia.org/wiki/Permutation_group">permutation</a>
 is a bijection (1-1, onto) map from a set to itself.
@@ -537,8 +557,7 @@ instead of every algorithm which might use it.</p><a href="#fnref:3" rev="footno
 <li id="fn:4">
 Alex himself uses Tropical semi-rings to describe
 several algorithms in his book &ldquo;From Mathematics to Generic Programming&rdquo; (See chapter 8.6).
-So his issue here is not algebraic abstractions, but pursuing abstraction
-with enormous cost.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+So his issue here is not abstraction itself, rather that it can become too costly.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
 <p>The <code>^</code> symbol is bitwise <a href="https://en.wikipedia.org/wiki/Exclusive_or">exclusive or</a>.
 The expression <code>a ^ b</code> means <code>a</code> is true, or <code>b</code> is true, but not both.

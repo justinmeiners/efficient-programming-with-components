@@ -130,8 +130,8 @@ td { vertical-align: top; }
 <a name="L11.-Smallest-and-second-2d-smallest-element"></a>
 <h1>11. Smallest and second-smallest element</h1>
 
-<a name="Program-design-approach"></a>
-<h2>Program design approach</h2>
+<a name="Write-code-backward"></a>
+<h2>Write code backward</h2>
 
 <p>You all learned that the first thing you do when programming is define abstract things,
 then do specific things.
@@ -151,31 +151,54 @@ For most algorithms you also need objects.
 So you can design those after.
 All the best programmers are lazy.
 If they were not lazy, they would do work with their hands.
-They invented programming languages to be lazy.
-Imitate them.</p>
+They invented programming languages to be lazy. Imitate them.</p>
+
+<a name="Overview"></a>
+<h2>Overview</h2>
+
+<p>We will call the function which finds the smallest and second smallest element <code>min_element1_2</code>.
+Note that I picked this algorithm not because it is of paramount importance
+for your future work.
+I pick this algorithm because it allows us to learn how to do decomposition
+and learn these components like <code>list_pool</code> and <code>binary_counter</code> along the way.</p>
+
+<p>Let me sketch the grand plan of the whole alogorithm.</p>
+
+<ol>
+<li><p>We already showed that we want to arrange our comparisons like a tennis tournmant,
+and <code>binary_counter</code> helps us do this.
+Instead of comparing by left reduction, we compare by balanced reduction.</p></li>
+<li><p>We also want to keep a history for each element of all
+the other elements which they have beat.
+This history will be used to determine the second-place guy.</p></li>
+</ol>
+
+
+<p>We will store this history as a list (using <code>list_pool</code>)
+with each element in the binary counter.
+Note that the counter works on generic elements, so it doesn&rsquo;t
+need to be modified or know about this history tracking.</p>
+
+<p>From where we are now, it should only take 4-5 lines of code
+to write <code>min_element_1_2</code> along with type scaffolding.</p>
 
 <a name="Combining-binary-counter-and-list-pool"></a>
 <h2>Combining binary counter and list pool</h2>
 
-<p>We built a machine for doing reduction.
-We also built a pool for very fast lists.
-Now we have to combine all that so it produces the final algorithm.
-From where we are now, it should only take 4-5 lines of code
-to write <code>min_element_1_2</code>
-along with type scaffolding.</p>
-
 <a name="Inner-loop"></a>
 <h3>Inner loop</h3>
 
-<p>Let us imagine you have all the materials to build it (we don&rsquo;t)
-and let&rsquo;s discuss the main loop:</p>
+<p>To start, let us imagine you have all the materials to build it (we don&rsquo;t)
+and discuss the main loop:</p>
 
 <ol>
-<li>We will do a <code>while</code> loop and add things to a counter.</li>
-<li><p>We will reduce the counter.
-The result will have the minimum in the list.</p></li>
-<li><p>Use <code>std::min_element</code> to find the second place element
- in the list of losers.</p></li>
+<li><p>Do a <code>while</code> loop over a range of elements and add them to a <code>binary_counter</code>.</p>
+
+<p>We will store their iterators in our counter,
+rather than the values they point to, so we can return all the useful return (as discussed previously).</p></li>
+<li><p>Reduce the counter. The result will be the minimum element.</p></li>
+<li><p>The winner will also have a list of other elements it was compared with.
+Use <code>std::min_element</code> to find the second place element in the list of losers.</p></li>
 <li><p>Take the result of 2 and 3 and combine them in a pair.</p></li>
 </ol>
 
@@ -327,8 +350,7 @@ There is quite a lot of complexity going on.
 This sense of wonder does not disappear.</p>
 
 <p><strong>Exercise:</strong> Implement this algorithm in another language.
-    It will help you see language limitations and
-    understand the algorithm better.</p>
+    It will help you see language limitations and understand the algorithm better.</p>
 
 <a name="Why-do-we-need-the-typename-keyword-3f-"></a>
 <h2>Why do we need the typename keyword?</h2>

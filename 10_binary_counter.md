@@ -3,7 +3,7 @@
 
 ## Alice in wonderland 
 
-Let us attack the problem of finding not just the smallest
+Let us introduce the problem of finding not just the smallest
 of `n` elements, but the smallest and second smallest.
 The problem has a very distinguished pedigree, it was first addressed by a well-known British mathematician
 [Charles Dodgson][carroll] (Lewis Carroll).
@@ -14,7 +14,7 @@ If you haven't read it, do[^alice-free-ebook].
 No person should be hired ever unless they read "Alice in Wonderland".
 In any case, he was also a mathematician.
 He also dabbled in all kind of games.
-Apparently he invented Scrabble and bunch of other games[^inventor-of-scrabble].
+Apparently he invented Scrabble and a bunch of other games[^inventor-of-scrabble].
 
 At some point he decided that there is a clear problem with lawn tennis tournaments.
 He observed that with a very high probability,
@@ -24,14 +24,14 @@ He observed that the strongest and
 second strongest could be paired in the first round.
 Therefore the second strongest guy gets eliminated and doesn't get the second prize,
 in spite of his prowess.
-This is is why they now use a technique known as [seeding][seed] to assure
+This is why they now use a technique known as [seeding][seed] to assure
 that people of similar ability are spread out to different parts of the tree.
-But, he wanted to come up with an algorithm
-which assures that the second guy is truly the second guy.
-He published it in 1883.
-The algorithm wasn't quite an algorithm and it was clearly not optimal.
+But he wanted to come up with an algorithm
+which assures that the second-placed guy is truly the second best player.
+He published it in 1883[^lawn-tennis-article].
+The algorithm wasn't quite an algorithm[^not-an-algorithm] and it was clearly not optimal.
 It took 50 more years before the problem was stated correctly.
-People realized that you could talk about minimum
+People realized that you could talk about the minimum
 number of comparisons but it took another thirty years, until 1964 when a
 Russian mathematician [Sergei S. Kislitsyn][sergei] published a paper which 
 proved there is an optimal algorithm and described it.
@@ -51,13 +51,18 @@ It's not a perfect book, it is just the greatest book we've got.
 Some people think it's a good reference book.
 No, it's not, because you have to
 basically do linear search to find what you're interested in.
-Another important thing, do not spend too much time solving problems.
+Another important thing; do not spend too much time solving problems.
 Read the solutions.
 They are right at the end.
 Lots of very important algorithms are described in the solutions to his problems.
 Reading Knuth has to become a lifelong activity.
 
 [^aoc-second-smallest-ref]: See chapter 5.3.3 in Volume 3 of "The Art of Computer Programming".
+
+[^not-an-algorithm]: Knuth: it is not formulated precisely enough to qualify as an algorithm.
+
+[^lawn-tennis-article]: "Lawn tennis tournaments; the true method of assigning prizes with a proof of
+    the fallacy of the present method". London, Macmillan and co., 1883.
 
 [^inventor-of-scrabble]: The invention of Scrabble is attributed to Lewis Carroll's brief journal entry:
     "A game might be made of letters, to be moved about on a chess board till they form words" (Dec 19th,
@@ -86,28 +91,24 @@ Reading Knuth has to become a lifelong activity.
 The problem of finding the smallest and second smallest element
 is described fully in "The Art of Computer Programming", but somehow Knuth does not implement it.
 As we shall see it's actually a little tricky.
-I pick this algorithm not because it is of paramount importance for your future work.
-I pick this algorithm because it allows us to learn how to do decomposition
-and learn components along the way (like the lists we started previously).
 
 How many comparisons do you need to solve this problem?
-Same as min-max from last time?
+Same as `minmax_element` from last time?
 No. 
 You can do it in fewer.
 Let us try to use some logic.
-How many comparisons do we need to find the winner of the
-tournament? `n - 1`.
-It is necessary to find the winner in order to find the second place guy.
+How many comparisons do we need to find the winner of the tournament? `n - 1`
+because it is necessary to find the winner in order to find the second place guy.
 We could sketch a proof of this.
 Let us assume there are two potential guys greater than the second place guy.
-If there is none, he isn't second place.
-If there are two, he isn't second place either.
+If neither are greater than him, he is first place, not second place.
+If both of them are, he isn't second place.
 
-What do we know about second place
-guy, specifically the games he lost?
+What do we know about the second place guy, specifically about the games he lost?
 *He only lost one game, and it was to the winner*.
-If the winner remembers all the games he won, and who he played,
-how could we determine second place? (We know the second place guy is one of them.)
+This is a very important property which tells us why we don't need to do many comparisons. 
+If the winner remembers all the games he won, and who he played how do we find second place?
+We determine the best from the subset of players he beat.
 
 How many people does the winner beat to win?
 For example, [Wimbledon][wimbledon] has 64 players who are admitted.
@@ -139,20 +140,19 @@ So an upper bound on the comparisons for the algorithm is:
 
 Actually implementing this algorithm effectively
 will require us to create several components.
-We will build these up over the next few lessons.
 
 [wimbledon]: https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
 [binary-tree]: https://en.wikipedia.org/wiki/Binary_tree
 
-### Unoptimal divider and conquer approach
+### What about divide and conquer?
 
 It might appear you could use divide and conquer.
-First split it in two, 
-find min and second min of the first half,
+First split the list of elements in two, 
+find the min and second min of the first half,
 and the second half, and then merge them together doing two comparisons.
 It sounds very elegant because it's all recursive.
 But, let us think about how many comparisons it's going to do
-with simple mathematics.
+using simple mathematics.
 
 1. We start with `n`. We need to pair and compare them,
    so the first round is `n/2` comparisons.
@@ -170,12 +170,11 @@ So the total number of comparisons would be:
     = n/2 + n-1
     = 3n/2 - 1
 
-That's not what we're trying to accomplish,
-so divide and conquer doesn't always do what we think.
+That's not what we're trying to accomplish, so divide and conquer doesn't always do what we think.
 
 ### Tournament tree shapes
 
-First, we need to rearrange the tournament we play.
+To get the number of comparisons that we want, we need to rearrange the tournament we play.
 Right now `min_element` plays a tree structure that looks like this:
 
     unbalanced tree
@@ -187,8 +186,8 @@ Right now `min_element` plays a tree structure that looks like this:
            /\
 
 It has `n - 1` internal nodes.
-But, we don't want the winner to play `n - 1` matches.
-We need to transform that into the way they play tennis.
+But we don't want the winning element to be compared `n - 1` times.
+We need to transform that into the way they play tennis tournaments.
 We need to balance the tree.
 
     balanced tree
@@ -201,34 +200,33 @@ We need to balance the tree.
 How do we do it?
 One way is to just pair up elements and build up.
 But then we need lots of memory to save the intermediate results[^early-ref-to-inplace].
-Note that once a bottom-level round has been played,
-they are ready to move up.
+Note that once a bottom-level round has been played, they are ready to move up.
 Our goal is basically to become eager.
-Whenever guys are ready to be paired we want to pair them.
-So if we only store only the winner at each level,
-we never need to store `log(n)` things.
+Whenever elements are ready to be paired together, we want to pair and compare them.
+
+So if we store only the winner at each level, we only need to store `log(n)` things.
 We can define the **power** of each element
 to be the number of games they have played.
 
 Realize that suddenly we see something which has nothing to do with our problem.
-*The foundation of our algorithm is the ability to take a tree like
-the linear (unbalanced) tree and transform it into a balanced tree*.
+*The foundation of our algorithm is the ability to take a tree, like
+the linear (unbalanced) tree, and transform it into a balanced tree*.
 What mathematical property allows us to do such a transformation?
-Specifically why can we convert one kind of computation to the other.
+Why can we convert one kind of computation to the other?
 **Associativity**[^associativity].
 As long as our operation is associative, 
-What property don't we need? **Commutativity**[^commutativity].
-We keep them in the same order,
-we just rebalanced parenthesis[^min-not-commutative].
+what property don't we need? **Commutativity**[^commutativity].
+We keep the elements in the same order,
+we're just rebalancing parentheses[^min-not-commutative].
 
 [^early-ref-to-inplace]: Alex: What do we mean when we say lots of memory?
     `O(n)` is bad, `O(sqrt(n))` is pretty bad.
     See the definition of "in-place memory usage" at the end of the chapter. 
 
-[^min-not-commutative]: If you think about it,
+[^min-not-commutative]: Alex: If you think about it,
     our `min` is not quite commutative.
     In mathematics `min` is commutative.
-    But, because we want to preserve stability it is not.
+    But because we want to preserve stability, it is not.
     We distinguish between the left and right argument.
 
 [^associativity]: A binary function `f` is [associative](https://en.wikipedia.org/wiki/Associative_property)
@@ -253,112 +251,122 @@ we just rebalanced parenthesis[^min-not-commutative].
 
         f(a, b) = f(b, a)
 
-    Informally, `f` does the same thing, regardless of the order of the inputs.
+    Informally, `f` gets the same result, regardless of the order of the inputs.
     For example, multiplication of integers is commutative:
 
         a * b = b * a
 
-    This fact about integers can be proven in the following manner:
-    If you arrange items into a block of columns and rows, such as: 
+    In Chapter 9.1 of "From Mathematics to Generic Programming", Alex gives
+    a neat visual proof of this fact for integer multiplication:
 
-        * * * * *
-        * * * * *
-        * * * * *
+                      * * *
+        * * * * *     * * *
+        * * * * *  =  * * *
+        * * * * *     * * *
+                      * * *
 
-    The number of elements does not change regardless of how it is rotated:
+    Or as [Dirchlet][dirichlet] put it: "Whether you arrange soldiers in rows or columns, you still have the same number of soldiers".
 
-        * * *
-        * * *
-        * * *
-        * * *
-        * * *
-
-    This proof is from [Dirichlet](https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet)
-    (see Chapter 9.1 of "From Mathematics to Generic Programming").
     An example of an operation which is not commutative is string concatenation. 
+
+        "Hello, " + "World!" != "World!" + "Hello, "
+
+[dirichlet]: https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet)
 
 ## Binary counting and reduction
 
 Here we come to the amazing idea of how to do this transformation.
-This is one of the most beautiful ideas which they
-kept secret from you.
+This is one of the most beautiful ideas which they kept secret from you.
 They should have taught it in high school.
-But, they want to publish papers
-themselves and not tell you the general mechanism.
+But, they want to publish papers themselves and not tell you the general mechanism.
 
-We can create a counter and in every bit of this counter we're
-going to keep a singleton. 
-In each bit we keep the person who had `n` victories.
-We will never combine things unless they have the same weight/parity.
-Initially the counter has `zero` in every entry:
+Let us assume we have elements of type `T` that need to be paired or combined in some way,
+whether with `min`, `+`, `merge`, or any other assocative operation on `T`.
+What we can do is create an array called a "counter".
+
+       index: 0  1  ...   31
+    contents: x1 x2  ...  x32
+
+The `nth` slot of the counter will store the element that has had `n` "victories" so far.
+So if there is a guy in slot 0 he hasn't played any games yet.
+If there is a guy in slot 2 he has won 2 games, and so on.
+This structure will help us to only pair up elements that have the same power.
+
+The following example using `min` as the operation should make this clear.
+Initially the counter has zero in every entry:
 
     initial counter
 
-       index: 1 2  ...   32
+       index: 0 1  ...   31
     contents: 0 0  ...   0
 
 Take a new guy `x` who has never played any games,
-and you look at the guy in the first slot of the counter.
+and look at the guy in the first slot of the counter.
 The existing guy is either zero or not.
-If it's zero, put him in the counter.
+If it's zero, put the new guy `x` in the counter at index `0` (he has not played any games).
 
-    1 2  ...   32           1 2  ...   32
+    0 1  ...   31           0 1  ...   31
     0 0  ...   0     -->    x 0  ...   0
 
-If it's not zero, he plays a game with the existing guy `y`.
-If he wins, he replaces the loser in the counter.
+Now take another guy `y`. Since `x` is in the first slot of the counter, we must pair them up.
+The winner moves on up to the next slot in the counter,
+as they have now won a game.
+So if `y` wins:
 
-    1 2  ...   32           1 2  ...   32
-    y 0  ...   0     -->    x 0  ...   0
+    0 1  ...   31           0 1  ...   31
+    x 0  ...   0     -->    0 y  ...   0
 
-Otherwise, the existing guy has now won a game.
-So he needs to be promoted to the next level.
-he follows the same rules with the guy in that slot.
-It's a carry propagation.
+Otherwise `x` wins:
 
-    1 2  ...   32           1 2  ...   32
-    y 0  ...   0    -->     0 y  ...   0
+    0 1  ...   31           0 1  ...   31
+    x 0  ...   0     -->    0 x  ...   0
 
-If we end up with a guy in slot 32, it's an **overflow**,
-exactly like integer arithmetic.
-What do we do?
-Whenever we don't know to proceed,
-do something sensible and let whomever uses it figure out what is a sensible thing
-to do.
-Return the carry[^carry].
+What if the index `1` slot was non-zero, after comparing `x` and `y`?
+Then the guy there already won one game.
+So, we must **carry propogate**[^adder-circuit].
+Repeat the same process all the way up the counter, until we find a slot which is zero.
+What if the counter is full, and has no zero slots?
+That's called an **overflow**.
+
+We borrow terminology from binary integer arithemtic because
+our counter works just like a binary integer counting up:
+
+    0 0 0
+    1 0 0
+    0 1 0
+    1 1 0
+    0 0 1
+    1 0 1
+    0 1 1
+    1 1 1
+
+But instead of 0 and 1 in each slot or "bit" we have arbitary elements that are combined with an associative operation.
+
+### Handling overflow
+
+What do we do if the counter overflows?
+Whenever we don't know how to proceed,
+do something sensible and let whomever uses it figure out what is a sensible thing to do.
+Return the carry.
+If the return is non-zero the programmer who called the counter will know
+it overflowed and can decide what to do.
+Maybe they will extend the counter or throw an error.
+It's his business not ours.
 
 Let us be lazy. 
-The great success in
-programming comes because there are lazy people who say, "I don't want to know now,
+The great success in programming comes because there are lazy people who say,
+"I don't want to know now,
 I'll find out later."
 Right now we are solving this problem.
 We have an associative binary operation of some kind
-and what we discovered that if we have associativity,
+on type `T` and what we discovered is if we have associativity,
 we can make this counter and it will work for us.
 
-If you are familiar with [numerical analysis][numerics],
-whenever you sum up large number you don't really want to
-add small quantities to big quantities.
-Bad things happen to the errors[^errors].
-So, you could use the same device for balancing your addition.
-If you want to implement [merge sort][merge-sort] you can use exactly the same device, since
-merge is associative.
-The idea with merge sort, is you only want to merge lists if they are roughly the same length
-and this helps you do it (see Chapter 12).
+[^adder-circuit]: The terms **carry** and **overflow**
+    are closely associated the implementation of binary counting
+    or addition as an electrical circuit, called an [adder][adder].
 
-When we become grownups we learn about advanced data structures,
-such as [binomial forest][binomial].
-They use the same idea.
-The counter helps us combine things only when they have the same weight.
-It's a general algorithmic technique.
-
-
-[^carry]: The terms **carry** and **carry propagation**
-    are usually associated with the algorithm of binary addition
-    and especially its implementation as
-    an electronic/logical circuit called an [adder][adder].
-
-    An adder has two inputs `a` and `b` for
+    A single bit adder has two inputs `a` and `b` for
     the two digits to add together.
     It outputs a digit `s` which is the digit
     to display for this place value.
@@ -397,7 +405,7 @@ It's a general algorithmic technique.
 
     An **overflow** is when the last adder has a non-zero carry.
 
-[^errors]: Floating point arithemetic is a subject filled with subtle details,
+[^errors]: Floating point arithemetic can involve many tricky details,
     but the basic issue Alex is referring to is straightforward.
     We often use scientific notation to write larger numbers as a decimal to a power,
     when they would otherwise be very long to write out.
@@ -421,6 +429,7 @@ It's a general algorithmic technique.
 
 ### Implementation
 
+Now we have to write the code.
 The first function will add an element to the counter
 using the process we just described.
 
@@ -451,8 +460,14 @@ Notice that zero is `const T&` reference because we don't plan to modify it,
 but we do modify carry,
 so it should be passed by value.
 
-The second function applies the operation
-to all the elements left sitting in the counter.
+### Reduction
+
+After we finish adding all our elements to the counter, they might not all be reduced to one element.
+There may be several elements left sitting at various levels of the counter.
+We need to do one more pass of the operation to combine them into the final result.
+
+This second function does that. It applies the operation,
+in the same manner to the elements left sitting in the counter.
 
     template <typename T, typename I, typename Op>
     // requires Op is BinaryOperation(T)
@@ -478,15 +493,7 @@ Sometimes it will work with the operation so apply `op(x, zero)`
 gives you `x`, but sometimes that won't happen.
 So we can't really initialize to zero.
 
-If the algorithm is a bit unclear, don't worry.
-It will be discussed more in the next lesson.
-Working through a few concrete applications will also help:
-
-**Exercise:** Use these functions to sum up an array of `double`. 
-
-**Exercise:** Rewrite `min_element` using these functions (just `min_element`, don't worry about second best).
-
-## Binary counter object
+## Binary counter class
 
 ### Start with algorithms
 
@@ -502,15 +509,15 @@ Figure out what you're going to do first.
 But you don't have to stop there. 
 Because you can then put things together into an object.
 
-It's very easy when you write an algorithm to
-have a minimal iterator interface.
-They externalize the counter.
+It's very easy when you write an algorithm to have a minimal iterator interface.
+In this case, the iterators externalize the counter.
 We say, "we don't want to know about him,
 we're just algorithms people".
 We assume the principle that we will have no state for about
 five minutes, and stay very functional, but then
 turn around and deal with state.
 We look at the whole thing.
+
 
 ### Counter storage
 
@@ -547,7 +554,7 @@ We will store it in a `std::vector`.
       }
     };
 
-Counter is private, we don't
+`counter` is private, we don't
 want people to muck up our counter.
 Same with our operation.
 
@@ -556,9 +563,23 @@ If you initialize in the body, it will first call default constructors
 for members, then you overwrite all the work with an assignment.
 
 I think it is very beautiful.
-We could compete with Steve Jobs for elegance of our design[^alex-joke].
+We could compete with Steve Jobs for elegance of our design[^alex-apple-joke].
 
-[^alex-joke]: Alex: Maybe we should make it in China.
+**Exercise:** In [numerical analysis][numerics],
+    whenever you sum up large number you don't really want to
+    add small quantities to big quantities.
+    Bad things happen to the errors[^errors].
+    Use this code to write a function which sums arrays of `double`.
+
+**Exercise:** Rewrite `min_element` using this code (just `min_element`, don't worry about second best).
+
+**Exercise:**  If you want to implement [merge sort][merge-sort] you can use exactly the same device, since merge is associative. The idea with merge sort, is you only want to merge lists if they are roughly the same length and this helps you do it (see Chapter 12).
+    Write the associtative binary operation `merge` which can combine two sorted arrays into a sorted array.
+
+**Exercise:** When we become grownups we learn about advanced data structures, such as [binomial forest][binomial]. They use the same idea. Learn about this data structure and try to figure out where
+    the counter could be used. 
+
+[^alex-apple-joke]: Alex: Maybe we should make it in China.
     That's a necessary prerequisite for beautiful design.
     [Designed in Cupertino][designed-by-apple], assembled in China.
     So let's try to assemble our machine in Palo Alto.
@@ -592,8 +613,10 @@ but let's go with "poly-logarithmic" being "in-place".
 [quicksort]: https://en.wikipedia.org/wiki/Quicksort
 [in-place]: https://en.wikipedia.org/wiki/In-place_algorithm
 
+
 ## Code
 
 - [binary_counter.h](code/binary_counter.h)
+
 
 
