@@ -542,7 +542,7 @@ Same for total ordering, etc.
 [^concepts-proposal]: [Concepts][cpp-concepts] as a language feature went through many
     iterations and delays before finally being included in the C++20 standard.
     When the course was given, a group at A9 (including Alex) was working to get them included in C++14.
-    You can read their [proposal](papers/concepts_proposal.pdf).
+    You can read their [proposal](papers/concepts-proposal.pdf).
     Bjarne actually visits A9 to give a guest lecture on concepts as part of the course,
     however this is not included in the notes as it is a departure from the rest of the material.
 
