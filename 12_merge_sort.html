@@ -306,7 +306,7 @@ we simply add the following function:</p>
 
 <p>We want it to be a function not a member
 because primitive/built-in
-types don&rsquo;t have member functions.
+types don&rsquo;t have member functions[^member-functions-on-primitives].
 Furthermore, in the case of an iterator,
 it might be a pointer, not a class.
 In general, I don&rsquo;t like member functions.
@@ -659,26 +659,21 @@ This story can also be found in <a href="http://stepanovpapers.com/LoRusso_Inter
 This is a subject for which the <a href="https://www.boost.org/sgi/stl/Iterators.html">SGI Documentation</a>
 can be a better resource.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
-I suspect he is referring to <a href="https://en.wikipedia.org/wiki/Andrei_Alexandrescu">Andrei Alexandrescu</a> who gave a talk
+Alex is likely referring to <a href="https://en.wikipedia.org/wiki/Andrei_Alexandrescu">Andrei Alexandrescu</a> who gave a talk
 <a href="https://accu.org/conf-docs/PDFs_2009/AndreiAlexandrescu_iterators-must-go.pdf">&ldquo;Iterators must Go&rdquo;</a>.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
-<p>This argument doesn&rsquo;t hold up if there are arguments:</p>
+<p>This argument doesn&rsquo;t hold if the function requires more than one argument.
+These two forms both require 8 characters to type:</p>
 
-<pre><code>x.foo(y)
+<pre><code>x.foo(y)    foo(x, y)
 </code></pre>
 
-<p>Versus:</p>
-
-<pre><code>foo(x, y)
-</code></pre>
-
-<p>I suppose you could drop the space:</p>
+<p>Perhaps the space could be dropped:</p>
 
 <pre><code>foo(x,y)
 </code></pre>
 
-<p>Many languages such as Swift now also allow you to add member functions
-to primitive types like <code>int</code>.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<p>However Alex doesn&rsquo;t follow this convention:</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
 In &ldquo;Elements of Programming&rdquo;, Alex often follows the pattern
 of creating a function which requires strict assumptions

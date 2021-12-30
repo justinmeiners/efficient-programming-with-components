@@ -190,7 +190,7 @@ we simply add the following function:
 
 We want it to be a function not a member
 because primitive/built-in
-types don't have member functions.
+types don't have member functions[^member-functions-on-primitives].
 Furthermore, in the case of an iterator,
 it might be a pointer, not a class.
 In general, I don't like member functions.
@@ -203,30 +203,26 @@ Or
     foo(x)
 
 There is at least one provable advantage.
-It has one fewer character[^character].
+It has one fewer character[^member-functions-more-typing].
 But, since we think generically, a better
 question is whether the function could operate
 on a built-in type instead of a class.
 
-[^andrei]: I suspect he is referring to [Andrei Alexandrescu](https://en.wikipedia.org/wiki/Andrei_Alexandrescu) who gave a talk
+[^andrei]: Alex is likely referring to [Andrei Alexandrescu](https://en.wikipedia.org/wiki/Andrei_Alexandrescu) who gave a talk
     ["Iterators must Go"][iterators-must-go].
 
-[^character]:
-    This argument doesn't hold up if there are arguments:
+[^member-functions-more-typing]: This argument doesn't hold if the function requires more than one argument.
+    These two forms both require 8 characters to type:
 
-        x.foo(y)
+        x.foo(y)    foo(x, y)
 
-    Versus:
-
-        foo(x, y)
-
-    I suppose you could drop the space:
+    Perhaps the space could be dropped: 
 
         foo(x,y)
 
-    Many languages such as Swift now also allow you to add member functions
-    to primitive types like `int`.
+    However Alex doesn't follow this convention:
 
+[^member-functions-on-primtives]: Other programming languages, such as Swift, allow you to extend primitive types like `int` with additional member functions.
 
 [iterators-must-go]: https://accu.org/conf-docs/PDFs_2009/AndreiAlexandrescu_iterators-must-go.pdf
 
