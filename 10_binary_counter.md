@@ -308,7 +308,7 @@ If it's zero, put the new guy `x` in the counter at index `0` (he has not played
     0 1  ...   31           0 1  ...   31
     0 0  ...   0     -->    x 0  ...   0
 
-Now take another guy `y`. Since `x` is in first slot of the counter, we must pair them up.
+Now take another guy `y`. Since `x` is in the first slot of the counter, we must pair them up.
 The winner moves on up to the next slot in the counter,
 as they have now one a game.
 So if `y` wins:
