@@ -46,10 +46,9 @@ class binary_counter
 private:
   Op op;
   T zero;
+  std::vector<T> counter; 
 
 public:
-  std::vector<T> counter; // should be private. public for debug.
-
   binary_counter(const Op& op, const T& zero) :
     op(op), zero(zero) {}
   
@@ -63,6 +62,15 @@ public:
   // returns: value of the counter
   T reduce() {
     return reduce_counter(counter.begin(), counter.end(), op, zero);
+  }
+ 
+  // For debug. Not in the course.
+  typename std::vector<T>::iterator begin() {
+      return counter.begin();
+  }
+
+  typename std::vector<T>::iterator end() {
+      return counter.end();
   }
 };
 

@@ -1,17 +1,8 @@
 #include <iostream>
 #include <functional>
 #include <algorithm>
+#include <iterator>
 #include "binary_counter.h"
-
-template <typename I>
-void show_counter(I first, I last)
-{
-  while (first != last) {
-    std::cout << (*first) << " ";
-    ++first;
-  }
-  std::cout << std::endl;
-}
 
 template<typename T>
 struct min_op {
@@ -33,7 +24,11 @@ int main() {
   while (first != last) {
     std::cout << "add: " << *first << std::endl;
     counter.add(*first);
-    show_counter(counter.counter.begin(), counter.counter.end());
+
+    std::ostream_iterator<char> out(std::cout, " ");
+    std::copy(counter.begin(), counter.end(), out);
+    std::cout << std::endl;
+
     ++first;
   }
   std::cout << "min (after reduce): " << counter.reduce() << std::endl;
