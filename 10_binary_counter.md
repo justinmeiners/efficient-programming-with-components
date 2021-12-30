@@ -91,24 +91,24 @@ Reading Knuth has to become a lifelong activity.
 The problem of finding the smallest and second smallest element
 is described fully in "The Art of Computer Programming", but somehow Knuth does not implement it.
 As we shall see it's actually a little tricky.
-It will take two chapters to complete.
 
 How many comparisons do you need to solve this problem?
 Same as `minmax_element` from last time?
 No. 
 You can do it in fewer.
 Let us try to use some logic.
-How many comparisons do we need to find the winner of the tournament? `n - 1`.
-It is necessary to find the winner in order to find the second place guy.
+How many comparisons do we need to find the winner of the tournament? `n - 1`
+because it is necessary to find the winner in order to find the second place guy.
 We could sketch a proof of this.
 Let us assume there are two potential guys greater than the second place guy.
-If there are none, he isn't second place.
-If there are two, he isn't second place either.
+If neither are greater than him, he is first place, not second place.
+If both of them are, he isn't second place.
 
-What do we know about second place guy (specifically the games he lost)?
+What do we know about the second place guy, specifically about the games he lost?
 *He only lost one game, and it was to the winner*.
-If the winner remembers all the games he won, and who he played,
-how could we determine second place? (We know the second place guy is one of them.)
+This is a very important property which tells us why we don't need to do many comparisons. 
+If the winner remembers all the games he won, and who he played how do we find second place?
+We determine the best from the subset of players he beat.
 
 How many people does the winner beat to win?
 For example, [Wimbledon][wimbledon] has 64 players who are admitted.
@@ -460,6 +460,8 @@ Notice that zero is `const T&` reference because we don't plan to modify it,
 but we do modify carry,
 so it should be passed by value.
 
+### Reduction
+
 After we finish adding all our elements to the counter, they might not all be reduced to one element.
 There may be several elements left sitting at various levels of the counter.
 We need to do one more pass of the operation to combine them into the final result.
@@ -507,15 +509,15 @@ Figure out what you're going to do first.
 But you don't have to stop there. 
 Because you can then put things together into an object.
 
-It's very easy when you write an algorithm to
-have a minimal iterator interface.
-They externalize the counter.
+It's very easy when you write an algorithm to have a minimal iterator interface.
+In this case, the iterators externalize the counter.
 We say, "we don't want to know about him,
 we're just algorithms people".
 We assume the principle that we will have no state for about
 five minutes, and stay very functional, but then
 turn around and deal with state.
 We look at the whole thing.
+
 
 ### Counter storage
 
@@ -552,7 +554,7 @@ We will store it in a `std::vector`.
       }
     };
 
-Counter is private, we don't
+`counter` is private, we don't
 want people to muck up our counter.
 Same with our operation.
 
@@ -563,7 +565,7 @@ for members, then you overwrite all the work with an assignment.
 I think it is very beautiful.
 We could compete with Steve Jobs for elegance of our design[^alex-apple-joke].
 
-**Exercise:** If you are familiar with [numerical analysis][numerics],
+**Exercise:** In [numerical analysis][numerics],
     whenever you sum up large number you don't really want to
     add small quantities to big quantities.
     Bad things happen to the errors[^errors].
