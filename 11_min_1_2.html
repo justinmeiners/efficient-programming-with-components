@@ -170,14 +170,14 @@ and <code>binary_counter</code> helps us do this.
 Instead of comparing by left reduction, we compare by balanced reduction.</p></li>
 <li><p>We also want to keep a history for each element of all
 the other elements which they have beat.
-This history will be used to determine the second-place guy.</p></li>
+This history will be used to determine the second-place guy.</p>
+
+<p> We will store this history in a list (using <code>list_pool</code>)
+ along with each element in the binary counter.
+ Note that the counter works on generic elements, so it doesn&rsquo;t
+ need to be modified to know about this history tracking.</p></li>
 </ol>
 
-
-<p>We will store this history as a list (using <code>list_pool</code>)
-with each element in the binary counter.
-Note that the counter works on generic elements, so it doesn&rsquo;t
-need to be modified or know about this history tracking.</p>
 
 <p>From where we are now, it should only take 4-5 lines of code
 to write <code>min_element_1_2</code> along with type scaffolding.</p>
@@ -194,12 +194,12 @@ and discuss the main loop:</p>
 <ol>
 <li><p>Do a <code>while</code> loop over a range of elements and add them to a <code>binary_counter</code>.</p>
 
-<p>We will store their iterators in our counter,
-rather than the values they point to, so we can return all the useful return (as discussed previously).</p></li>
+<p>Actually we will store iterators pointing to the elements, rather than the elements themselves
+so we can return all the useful information.</p></li>
 <li><p>Reduce the counter. The result will be the minimum element.</p></li>
 <li><p>The winner will also have a list of other elements it was compared with.
 Use <code>std::min_element</code> to find the second place element in the list of losers.</p></li>
-<li><p>Take the result of 2 and 3 and combine them in a pair.</p></li>
+<li><p>Take the result of 2 and 3 and combine them in a pair. Return it.</p></li>
 </ol>
 
 
@@ -419,9 +419,9 @@ I included this section to illustrate the process.
 If you are confused refer to the final code
 at the end of the lesson.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
-These are the only lines which generate
+These are the only lines of code which generate
 assembly instructions for the CPU to execute.
-All other lines are just to make the C++ type system work.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+All other lines of code are just to make the C++ type system work.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
 <p>Much of the scaffolding can be removed in modern C++.
 Most of the ugly <code>typename ...</code> definitions

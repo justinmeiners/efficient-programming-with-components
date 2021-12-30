@@ -192,25 +192,25 @@ Reading Knuth has to become a lifelong activity.</p>
 
 <p>The problem of finding the smallest and second smallest element
 is described fully in &ldquo;The Art of Computer Programming&rdquo;, but somehow Knuth does not implement it.
-As we shall see it&rsquo;s actually a little tricky.
-It will take two chapters to complete.</p>
+As we shall see it&rsquo;s actually a little tricky.</p>
 
 <p>How many comparisons do you need to solve this problem?
 Same as <code>minmax_element</code> from last time?
 No.
 You can do it in fewer.
 Let us try to use some logic.
-How many comparisons do we need to find the winner of the tournament? <code>n - 1</code>.
-It is necessary to find the winner in order to find the second place guy.
+How many comparisons do we need to find the winner of the tournament? <code>n - 1</code>
+because it is necessary to find the winner in order to find the second place guy.
 We could sketch a proof of this.
 Let us assume there are two potential guys greater than the second place guy.
-If there are none, he isn&rsquo;t second place.
-If there are two, he isn&rsquo;t second place either.</p>
+If neither are greater than him, he is first place, not second place.
+If both of them are, he isn&rsquo;t second place.</p>
 
-<p>What do we know about second place guy (specifically the games he lost)?
+<p>What do we know about the second place guy, specifically about the games he lost?
 <em>He only lost one game, and it was to the winner</em>.
-If the winner remembers all the games he won, and who he played,
-how could we determine second place? (We know the second place guy is one of them.)</p>
+This is a very important property which tells us why we don&rsquo;t need to do many comparisons.
+If the winner remembers all the games he won, and who he played how do we find second place?
+We determine the best from the subset of players he beat.</p>
 
 <p>How many people does the winner beat to win?
 For example, <a href="https://en.wikipedia.org/wiki/The_Championships,_Wimbledon">Wimbledon</a> has 64 players who are admitted.
@@ -365,9 +365,9 @@ If it&rsquo;s zero, put the new guy <code>x</code> in the counter at index <code
 0 0  ...   0     --&gt;    x 0  ...   0
 </code></pre>
 
-<p>Now take another guy <code>y</code>. Since <code>x</code> is in first slot of the counter, we must pair them up.
+<p>Now take another guy <code>y</code>. Since <code>x</code> is in the first slot of the counter, we must pair them up.
 The winner moves on up to the next slot in the counter,
-as they have now one a game.
+as they have now won a game.
 So if <code>y</code> wins:</p>
 
 <pre><code>0 1  ...   31           0 1  ...   31
@@ -458,6 +458,9 @@ element we are inserting.</p>
 but we do modify carry,
 so it should be passed by value.</p>
 
+<a name="Reduction"></a>
+<h3>Reduction</h3>
+
 <p>After we finish adding all our elements to the counter, they might not all be reduced to one element.
 There may be several elements left sitting at various levels of the counter.
 We need to do one more pass of the operation to combine them into the final result.</p>
@@ -508,9 +511,8 @@ Figure out what you&rsquo;re going to do first.
 But you don&rsquo;t have to stop there.
 Because you can then put things together into an object.</p>
 
-<p>It&rsquo;s very easy when you write an algorithm to
-have a minimal iterator interface.
-They externalize the counter.
+<p>It&rsquo;s very easy when you write an algorithm to have a minimal iterator interface.
+In this case, the iterators externalize the counter.
 We say, &ldquo;we don&rsquo;t want to know about him,
 we&rsquo;re just algorithms people&rdquo;.
 We assume the principle that we will have no state for about
@@ -555,7 +557,7 @@ public:
 };
 </code></pre>
 
-<p>Counter is private, we don&rsquo;t
+<p><code>counter</code> is private, we don&rsquo;t
 want people to muck up our counter.
 Same with our operation.</p>
 
@@ -566,7 +568,7 @@ for members, then you overwrite all the work with an assignment.</p>
 <p>I think it is very beautiful.
 We could compete with Steve Jobs for elegance of our design<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup>.</p>
 
-<p><strong>Exercise:</strong> If you are familiar with <a href="https://en.wikipedia.org/wiki/Numerical_analysis">numerical analysis</a>,
+<p><strong>Exercise:</strong> In <a href="https://en.wikipedia.org/wiki/Numerical_analysis">numerical analysis</a>,
     whenever you sum up large number you don&rsquo;t really want to
     add small quantities to big quantities.
     Bad things happen to the errors<sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup>.
