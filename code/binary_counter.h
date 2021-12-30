@@ -65,11 +65,11 @@ public:
   }
  
   // For debug. Not in the course.
-  typename std::vector<T>::iterator begin() {
+  typename std::vector<T>::const_iterator begin() const {
       return counter.begin();
   }
 
-  typename std::vector<T>::iterator end() {
+  typename std::vector<T>::const_iterator end() const {
       return counter.end();
   }
 };
