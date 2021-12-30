@@ -3,31 +3,6 @@
 
 #include <vector>
 
-template <typename Op, typename T = typename Op::argument_type>
-class binary_counter
-{
-private:
-  std::vector<T> counter;
-  Op op;
-  T zero;
-
-public:
-  binary_counter(const Op& op, const T& zero) :
-    op(op), zero(zero) {}
-  
-  void reserve(size_t n) { counter.reserve(n); }
-
-  void add(T x) {
-    x = add_to_counter(counter.begin(), counter.end(), op, zero, x);
-    if (x != zero) counter.push_back(x);
-  }
-
-  // returns: value of the counter
-  T reduce() {
-    return reduce_counter(counter.begin(), counter.end(), op, zero);
-  }
-};
-
 template <typename T, typename I, typename Op>
 // requires Op is BinaryOperation(T)
 // and Op is associative 
@@ -64,4 +39,31 @@ T reduce_counter(I first, I last, Op op, const T& zero) {
     }
     return result;
 }
+
+template <typename Op, typename T = typename Op::argument_type>
+class binary_counter
+{
+private:
+  Op op;
+  T zero;
+
+public:
+  std::vector<T> counter; // should be private. public for debug.
+
+  binary_counter(const Op& op, const T& zero) :
+    op(op), zero(zero) {}
+  
+  void reserve(size_t n) { counter.reserve(n); }
+
+  void add(T x) {
+    x = add_to_counter(counter.begin(), counter.end(), op, zero, x);
+    if (x != zero) counter.push_back(x);
+  }
+
+  // returns: value of the counter
+  T reduce() {
+    return reduce_counter(counter.begin(), counter.end(), op, zero);
+  }
+};
+
 #endif
