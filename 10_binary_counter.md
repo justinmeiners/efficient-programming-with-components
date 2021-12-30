@@ -617,6 +617,8 @@ but let's go with "poly-logarithmic" being "in-place".
 ## Code
 
 - [binary_counter.h](code/binary_counter.h)
+- [test_binary_counter.cpp](code/test_binary_counter.cpp)
+
 
 
 
