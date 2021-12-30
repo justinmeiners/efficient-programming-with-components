@@ -310,7 +310,7 @@ If it's zero, put the new guy `x` in the counter at index `0` (he has not played
 
 Now take another guy `y`. Since `x` is in the first slot of the counter, we must pair them up.
 The winner moves on up to the next slot in the counter,
-as they have now one a game.
+as they have now won a game.
 So if `y` wins:
 
     0 1  ...   31           0 1  ...   31
