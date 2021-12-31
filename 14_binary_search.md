@@ -406,7 +406,7 @@ found in the final code.
 
 
 [^binary-search]: Alex: If you remember there was this
-    grand review one day where the committee through out a bunch of useful functions.
+    grand review one day where the committee threw out a bunch of useful functions.
     Well they inserted some too.
     One is called [`std::binary_search`][cpp-binary-search].
     A friend asked me, "where is binary search?"
