@@ -404,13 +404,13 @@ Now let's implement [`std::distance`][cpp-distance]:
 
     template<typename I>
     inline
-    typename std::iterator_traits<I>::difference_type distance{I& first, I& last) {
+    typename std::iterator_traits<I>::difference_type distance(I& first, I& last) {
       return distance(first, last, std::iterator_traits<I>::iterator_category);
     }
 
     template<typename I>
     inline
-    typename std::iterator_traits<I>::difference_type distance{I& first, I& last, std::input_iterator_tag) {
+    typename std::iterator_traits<I>::difference_type distance(I& first, I& last, std::input_iterator_tag) {
       typename std::iterator_traits<I>::difference_type n;
       while (first != last) {
         ++first;
@@ -421,7 +421,7 @@ Now let's implement [`std::distance`][cpp-distance]:
 
     template<typename I>
     inline
-    typename std::iterator_traits<I>::difference_type distance{I& first, I& last, std::random_access_iterator_tag) {
+    typename std::iterator_traits<I>::difference_type distance(I& first, I& last, std::random_access_iterator_tag) {
       return last - first;
     }
 

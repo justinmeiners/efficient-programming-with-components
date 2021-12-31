@@ -512,13 +512,13 @@ Making it linear time will confuse many people.<sup id="fnref:6"><a href="#fn:6"
 
 <pre><code>template&lt;typename I&gt;
 inline
-typename std::iterator_traits&lt;I&gt;::difference_type distance{I&amp; first, I&amp; last) {
+typename std::iterator_traits&lt;I&gt;::difference_type distance(I&amp; first, I&amp; last) {
   return distance(first, last, std::iterator_traits&lt;I&gt;::iterator_category);
 }
 
 template&lt;typename I&gt;
 inline
-typename std::iterator_traits&lt;I&gt;::difference_type distance{I&amp; first, I&amp; last, std::input_iterator_tag) {
+typename std::iterator_traits&lt;I&gt;::difference_type distance(I&amp; first, I&amp; last, std::input_iterator_tag) {
   typename std::iterator_traits&lt;I&gt;::difference_type n;
   while (first != last) {
     ++first;
@@ -529,7 +529,7 @@ typename std::iterator_traits&lt;I&gt;::difference_type distance{I&amp; first, I
 
 template&lt;typename I&gt;
 inline
-typename std::iterator_traits&lt;I&gt;::difference_type distance{I&amp; first, I&amp; last, std::random_access_iterator_tag) {
+typename std::iterator_traits&lt;I&gt;::difference_type distance(I&amp; first, I&amp; last, std::random_access_iterator_tag) {
   return last - first;
 }
 </code></pre>
