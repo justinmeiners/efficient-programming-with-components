@@ -431,19 +431,18 @@ Nowadays I wonder.
 What should we do when we build components?
 Should we assume that we build them the fastest way and carefully
 specify preconditions?
-Or should we build idiot-proof or Google quality components.
+Or should we build idiot-proof (Google quality) components?
 This is a difficult question.
 I do not know the answer.
 
 ## Final project
 
-Write the fastest version of stable sort that you can, utilizing the ideas
-in these tools.
+Write the fastest version of stable sort that you can, utilizing the ideas in these tools.
 We have all the algorithmic ideas we need.
 But, I invite you to read books.
 I invite you to test and measure.
 If you want you can even go read old STL code I wrote.
-It's a competition, consider teaming up and sharing ideas.
+It's a competition! Consider teaming up and sharing ideas.
 
 ## Code
 
