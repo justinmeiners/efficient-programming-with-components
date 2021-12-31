@@ -376,13 +376,13 @@ Here is how it works:
 
     template<typename I, typename N>
     inline
-    void advance{I& first, N n) {
+    void advance(I& first, N n) {
       advance(first, n, std::iterator_traits<I>::iterator_category);
     }
 
     template<typename I, typename N>
     inline
-    void advance{I& first, N n, std::input_iterator_tag) {
+    void advance(I& first, N n, std::input_iterator_tag) {
       while (n > 0) {
         ++first;
         --n;
@@ -391,7 +391,7 @@ Here is how it works:
 
     template<typename I, typename N>
     inline
-    void advance{I& first, N n, std::random_access_iterator_tag) {
+    void advance(I& first, N n, std::random_access_iterator_tag) {
       first += n;
     }
 
