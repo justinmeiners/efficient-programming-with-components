@@ -283,6 +283,7 @@ The algorithm is called: [`std::copy_backward`][cpp-copy-back].
       typedef typename std::iterator_traits<I>::value_type T;
       T butlast = last;
       --butlast;
+      T x = *butlast; 
       std::copy_backward(first, butlast, last);
       *first = x;
     }
