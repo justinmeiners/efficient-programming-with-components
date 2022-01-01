@@ -12,7 +12,7 @@ struct min_op {
 };
 
 int main() {
-  char letters[] = { 'C', 'H', 'B',  'F', 'I', 'D', 'E', 'G', 'A', 'J' };
+  char letters[] = { 'C', 'H', 'B', 'F', 'I', 'D', 'E', 'G', 'A', 'J' };
 
   char* first = letters;
   char* last = letters + (sizeof(letters) / sizeof(char));

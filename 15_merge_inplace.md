@@ -121,7 +121,7 @@ like math.
 
 We will first bisect one of the ranges and pick a guy
 from the middle.
-Then we ask, "where would it fit in the other sequence?".
+Then we ask, "where would it fit in the other sequence?"
 Do we have a function for that?
 We do. It's called `lower_bound`.
 
@@ -140,11 +140,11 @@ Then `f1_1` is found from the right using `lower_bound`.
     /      /
     f0_0   f1
 
-Now we are going to rotate (C++11 [`std::rotate`][cpp-rotate][^rotate]).
+Now we are going to rotate.
 Rotating swaps elements in the range
 `[f0_1, f1_1)` 
 in such a way that `f1` becomes the first.
-`[f0_0, f0_1)` and `[f1_1, n1)` remain fixed.
+`[f0_0, f0_1)` and `[f1_1, n1)` remain fixed (see [`std::rotate`][cpp-rotate]).
 
                     n0     n1
                     /      /
@@ -187,11 +187,6 @@ Why?
 To preserve stability we need to make sure equal
 guys don't jump over each other.
 
-[^rotate]: Alex: When I first put `std::rotate` in STL it returned `void`.
-    In 1995 I discovered what it should return and how to do it efficiently.
-    When you rotate you return what the new middle is.
-    It took literally 20 years.
-
 
 [cpp-rotate]: https://en.cppreference.com/w/cpp/algorithm/rotate
 
@@ -232,6 +227,9 @@ and return 4 of them.
       n1_0 = (n0 - n0_0) - 1;
       n1_1 = n1 - n0_1;
     }
+
+Note that this `std::rotate` is the C++11 version which returns an iterator
+rather than `void`[^rotate-return].
 
 Now implement the right sub-problem,
 it is basically the same idea.
@@ -297,6 +295,11 @@ Now we combine them in a function that does no work.
       merge_inplace_n(f0_0, n0_0, f0_1, n0_1, r);
       merge_inplace_n(f1_0, n1_0, f1_1, n1_1, r);
     }
+
+[^rotate-return]: Alex: When I first put `std::rotate` in STL it returned `void`.
+    In 1995 I discovered what it should return and how to do it efficiently.
+    When you rotate you return what the new middle is.
+    It took literally 20 years.
 
 ### Naming things
 

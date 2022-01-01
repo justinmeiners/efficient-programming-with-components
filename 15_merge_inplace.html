@@ -246,7 +246,7 @@ f0     f1
 
 <p>We will first bisect one of the ranges and pick a guy
 from the middle.
-Then we ask, &ldquo;where would it fit in the other sequence?&rdquo;.
+Then we ask, &ldquo;where would it fit in the other sequence?&rdquo;
 Do we have a function for that?
 We do. It&rsquo;s called <code>lower_bound</code>.</p>
 
@@ -266,11 +266,11 @@ Then <code>f1_1</code> is found from the right using <code>lower_bound</code>.
 f0_0   f1
 </code></pre>
 
-<p>Now we are going to rotate (C++11 <a href="https://en.cppreference.com/w/cpp/algorithm/rotate"><code>std::rotate</code></a><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>).
+<p>Now we are going to rotate.
 Rotating swaps elements in the range
 <code>[f0_1, f1_1)</code>
 in such a way that <code>f1</code> becomes the first.
-<code>[f0_0, f0_1)</code> and <code>[f1_1, n1)</code> remain fixed.</p>
+<code>[f0_0, f0_1)</code> and <code>[f1_1, n1)</code> remain fixed (see <a href="https://en.cppreference.com/w/cpp/algorithm/rotate"><code>std::rotate</code></a>).</p>
 
 <pre><code>                n0     n1
                 /      /
@@ -353,6 +353,9 @@ void merge_inplace_left_subproblem(I  f0,   N  n0,
   n1_1 = n1 - n0_1;
 }
 </code></pre>
+
+<p>Note that this <code>std::rotate</code> is the C++11 version which returns an iterator
+rather than <code>void</code><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
 
 <p>Now implement the right sub-problem,
 it is basically the same idea.
