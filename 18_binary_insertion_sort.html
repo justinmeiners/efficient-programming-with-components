@@ -419,18 +419,18 @@ Somehow, by hook or by crook we have an algorithm which knows how to shift
 <code>n</code> things,
 such as the range:</p>
 
-<pre><code>a_{0}, ..., a_{n-1}
+<pre><code>a_{0} ... a_{n-1}
 </code></pre>
 
 <p>Then the question is, how could we get an algorithm for</p>
 
-<pre><code>a_{0}, ..., a_{n-1}, a_{n}
+<pre><code>a_{0} ... a_{n-1} a_{n}
 </code></pre>
 
 <p>How do we add one additional element?
 After the shift the first <code>n</code> elements (leaving <code>a_{n}</code> fixed) we have:</p>
 
-<pre><code>a_{n-1}, a_{0}, ... a_{n-2}, a_{n} 
+<pre><code>a_{n-1} a_{0} ... a_{n-2} a_{n} 
 </code></pre>
 
 <p>What do we need to do to solve the problem?
@@ -586,7 +586,7 @@ I was making decisions by saying,
 &ldquo;I know how to do it in the more general case.
 But, I will not let programmers do it because
 they are immature.&rdquo;
-This &ldquo;nanny&rdquo; control is not necessarily a good thing.
+This nanny control is not necessarily a good thing.
 I am of two minds here.
 I am trying to not be a nanny here.
 I&rsquo;m trying to show you the spectrum.
@@ -595,12 +595,12 @@ It doesn&rsquo;t happen often.
 It probably will never happen in your life.
 But, it just might for at least one of you.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
-Alex: Because they threw it out, people like
-<a href="https://en.wikipedia.org/wiki/Herb_Sutter">Herb Sutter</a> used to recommend to the world
+Alex: Because they threw out that instruction, people like
+<a href="https://en.wikipedia.org/wiki/Herb_Sutter">Herb Sutter</a> use to recommend to the world
 to use <a href="https://en.cppreference.com/w/cpp/container/deque"><code>std::deque</code></a> (see <a href="http://www.gotw.ca/gotw/054.htm">&ldquo;Using Vector and Deque&rdquo;</a>).
 I&rsquo;m not making it up.
-He thought, that it&rsquo;s better because it supports more operations.
-He was wrong, I wrote both <code>std::vector</code> and <code>std::deque</code>.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
+He thought that it&rsquo;s better because it supports more operations.
+He was wrong and I wrote both <code>std::vector</code> and <code>std::deque</code>.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 

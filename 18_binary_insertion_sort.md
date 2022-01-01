@@ -315,16 +315,16 @@ Somehow, by hook or by crook we have an algorithm which knows how to shift
 `n` things,
 such as the range:
 
-    a_{0}, ..., a_{n-1}
+    a_{0} ... a_{n-1}
 
 Then the question is, how could we get an algorithm for
 
-    a_{0}, ..., a_{n-1}, a_{n}
+    a_{0} ... a_{n-1} a_{n}
 
 How do we add one additional element?
 After the shift the first `n` elements (leaving `a_{n}` fixed) we have:
 
-    a_{n-1}, a_{0}, ... a_{n-2}, a_{n} 
+    a_{n-1} a_{0} ... a_{n-2} a_{n} 
 
 What do we need to do to solve the problem?
 Just swap `a_{n-1}` and `a_{n}`.
@@ -362,7 +362,7 @@ It might not be the fastest, but it is going to be much more elegant.
     }
 
 Let's write a dispatch for both versions,
-it will compile to no code[^concepts].
+it will compile to no code[^concepts-soon].
 
     template <typename I>
     inline
@@ -371,7 +371,7 @@ it will compile to no code[^concepts].
     }
 
 
-[^concepts]: Alex: Someday we will get concepts
+[^concepts-soon]: Alex: Someday we will get concepts
     in the C++ standard and not have to write these things.
     But that will be at least 5 years and I won't be programming.
     I'm like an old man planting an apple tree.
@@ -404,8 +404,7 @@ Use a vector.
 This is a true statement.
 Unless you are absolutely positive
 you need something else, use a vector
-or a C array[^sutter-advice].
-
+or a C array[^sutter-deque].
 
 [^for-loop]: Alex: Could we use a `for` loop instead of a `while`?
     Yes, but I hate `for` loops.
@@ -432,7 +431,7 @@ or a C array[^sutter-advice].
     "I know how to do it in the more general case.
     But, I will not let programmers do it because
     they are immature."
-    This "nanny" control is not necessarily a good thing.
+    This nanny control is not necessarily a good thing.
     I am of two minds here.
     I am trying to not be a nanny here.
     I'm trying to show you the spectrum.
@@ -441,12 +440,12 @@ or a C array[^sutter-advice].
     It probably will never happen in your life.
     But, it just might for at least one of you.
 
-[^sutter-advice]: Alex: Because they threw it out, people like
-    [Herb Sutter][sutter] used to recommend to the world
+[^sutter-deque]: Alex: Because they threw out that instruction, people like
+    [Herb Sutter][sutter] use to recommend to the world
     to use [`std::deque`][cpp-deque] (see ["Using Vector and Deque"][vector-and-deque]).
     I'm not making it up.
-    He thought, that it's better because it supports more operations.
-    He was wrong, I wrote both `std::vector` and `std::deque`.
+    He thought that it's better because it supports more operations.
+    He was wrong and I wrote both `std::vector` and `std::deque`.
 
 [vector-and-deque]: http://www.gotw.ca/gotw/054.htm
 [cpp-copy-back]: https://en.cppreference.com/w/cpp/algorithm/copy_backward
