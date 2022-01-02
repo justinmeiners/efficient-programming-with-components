@@ -241,17 +241,12 @@ It's tricky, because it depends on the kind of iterators which you have.
 With `RandomAccessIterator` the best theoretical algorithm
 does `n + gcd(n1, n2)` assignments, not swaps.
 On average GCD is small, but larger than one.
-So we can get almost to `n` assignments, which is a lot better
-than `n` swaps.
-For ForwardIterators it happens to be `n - gcd(n1, n2)` swaps.
-It is roughly `n` for bidirectional iterators.
+So we can get almost to `n` assignments, which is a lot better than `n` swaps.
+For `ForwardIterator` it happens to be `n - gcd(n1, n2)` swaps.
+It is roughly `n` for `BidirectionalIterator`.
 
-As we will observe, we can use a faster rotate than the rotate in STL
-because we have this additional storage.
-If you want to rotate and you have enough storage,
-then you only need `n + n1` assignments,
-which is for sure less than `3n`.
-
+As we will observe, we can use a faster rotate than the rotate in STL because we have this additional storage.
+If you want to rotate and you have enough storage, then you only need `n + 1` assignments which is for sure less than `3n`.
 
 ### First steps
 
