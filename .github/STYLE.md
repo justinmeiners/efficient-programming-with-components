@@ -146,4 +146,9 @@ These include:
 - cppreference vs cplusplus
 - "Computer Architecture" (Brooks)
 
+## Math
+
+Indexed variables should have an underscore between the variable and index. `a_1`.
+Otherwise, there might be confusion as to whether the numbers are part of the expression.
+
 
