@@ -89,7 +89,6 @@ For bounded (not counted) it will take three iterators:
 But our algorithm will greatly benefit from counted ranges.
 When do we need counted ranges? When we do bisection,
 or something like binary search.
-I like to use counted ranges.
 We will use two of them:
  
     [first1, count1)
@@ -105,10 +104,8 @@ If you don't know how to do something, the old
 advice is to look for divide and conquer.
 The following is a graph of the two sorted ranges adjacent to each other.
 The graph for each moves up and to the right to illustrate they are ascending.
-When we have lots of variables,
-naming doesn't work.
-We have to use one letter names with indices,
-like math.
+When we have lots of variables naming doesn't work.
+We have to use one letter names with indices, like math.
 
         n0     n1
        /      /
@@ -117,16 +114,13 @@ like math.
     /      /
     f0     f1
 
-We will first bisect one of the ranges and pick a guy
-from the middle.
+We will first bisect one of the ranges and pick a guy from the middle.
 Then we ask, "where would it fit in the other sequence?"
 Do we have a function for that?
 We do. It's called `lower_bound`.
 
 Assume we bisect the left.
-So then we let `f0_0 = f0`, 
-and `f0_1` be the bisection
-of the first interval.
+Then let `f0_0 = f0` and `f0_1` be the bisection of the first interval.
 Then `f1_1` is found from the right using `lower_bound`.
 (that should take `O(log(n))` comparisons).
 
@@ -153,12 +147,10 @@ in such a way that `f1` becomes the first.
     /     /
     f0_0  f1
 
-Now we know `f0_1` is in his rightful place,
+Now we know `f0_1` is in his rightful place (all lower are to the left and all greater are to the right),
 so we will let `x = f0_1`,
-as he won't be moved again (all lower are to the left)
-(all greater are to the right).
-So, we shrink the range
-by one step by assigning `f1_0 = f0_1 + 1`,
+as he won't be moved again 
+So, we shrink the range by one step by assigning `f1_0 = f0_1 + 1`,
 and then just figure out the lengths of the remaining
 intervals:
 

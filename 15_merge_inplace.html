@@ -211,7 +211,6 @@ are not stable, so stability will be lost.</p>
 <p>But our algorithm will greatly benefit from counted ranges.
 When do we need counted ranges? When we do bisection,
 or something like binary search.
-I like to use counted ranges.
 We will use two of them:</p>
 
 <pre><code>[first1, count1)
@@ -229,10 +228,8 @@ and our post condition is the entire range will be sorted.</p>
 advice is to look for divide and conquer.
 The following is a graph of the two sorted ranges adjacent to each other.
 The graph for each moves up and to the right to illustrate they are ascending.
-When we have lots of variables,
-naming doesn&rsquo;t work.
-We have to use one letter names with indices,
-like math.</p>
+When we have lots of variables naming doesn&rsquo;t work.
+We have to use one letter names with indices, like math.</p>
 
 <pre><code>    n0     n1
    /      /
@@ -242,16 +239,13 @@ like math.</p>
 f0     f1
 </code></pre>
 
-<p>We will first bisect one of the ranges and pick a guy
-from the middle.
+<p>We will first bisect one of the ranges and pick a guy from the middle.
 Then we ask, &ldquo;where would it fit in the other sequence?&rdquo;
 Do we have a function for that?
 We do. It&rsquo;s called <code>lower_bound</code>.</p>
 
 <p>Assume we bisect the left.
-So then we let <code>f0_0 = f0</code>,
-and <code>f0_1</code> be the bisection
-of the first interval.
+Then let <code>f0_0 = f0</code> and <code>f0_1</code> be the bisection of the first interval.
 Then <code>f1_1</code> is found from the right using <code>lower_bound</code>.
 (that should take <code>O(log(n))</code> comparisons).</p>
 
@@ -280,12 +274,10 @@ in such a way that <code>f1</code> becomes the first.
 f0_0  f1
 </code></pre>
 
-<p>Now we know <code>f0_1</code> is in his rightful place,
+<p>Now we know <code>f0_1</code> is in his rightful place (all lower are to the left and all greater are to the right),
 so we will let <code>x = f0_1</code>,
-as he won&rsquo;t be moved again (all lower are to the left)
-(all greater are to the right).
-So, we shrink the range
-by one step by assigning <code>f1_0 = f0_1 + 1</code>,
+as he won&rsquo;t be moved again
+So, we shrink the range by one step by assigning <code>f1_0 = f0_1 + 1</code>,
 and then just figure out the lengths of the remaining
 intervals:</p>
 
