@@ -26,7 +26,7 @@ So I wrote the following thing:
       return std::make_pair(buffer, n);
     }
 
-So it binary searches for a buffer small enough to fit[^malloc-info].
+So it binary searches for a buffer small enough to fit[^malloc-return-value].
 Is it a useful piece of code? No.
 But, I had to ship.
 Guess what happened after that.
@@ -48,8 +48,8 @@ There is virtual memory but virtual memory is actually useless unless it's backe
 It's useful for remapping things[^memory-map].
 But, it is a figment of imagination.
 It does not exist.
-As [Seymour Cray][cray] used to say, "You cant't simulate what you do
-not have"[^ref-request]. 
+As [Seymour Cray][cray] used to say, "you can't simulate what you do
+not have"[^cray-ref-request]. 
 If your algorithm working set doesn't fit into physical memory,
 it will not just [thrash][thrash], your program will not terminate,
 because your memory starts working at the speed of a disk.
@@ -57,24 +57,34 @@ That's not good enough.
 
 It just shows you how imperfect life is.
 
-[^malloc-info]: `malloc` returns `null` when it fails to allocate,
-    so this function uses that as an indicator that the requested buffer
-    was too large, and continues attempting smaller and smaller buffers.
+[^malloc-return-value]: `malloc` returns `NULL` when it fails to allocate of the requested size.
+    Alex's `get_temporary_buffer` function uses that as an indicator that the requested buffer was too large
+    and continues attempting smaller and smaller buffers.
 
-[^ref-request]: I cannot find a reference to this quotation.
+[^cray-ref-request]: I cannot find a reference to this quotation.
 
-[^virtual-memory]: Virtual memory let's you allocate more memory
-    than is available. Based on my testing on Linux, 
-    the kernel will let you malloc about the total physical memory size.
-    So for any reasonable amount a program asks for 
-    it will just return `malloc(n)`.
-    Try his code out on your machine.
+[^virtual-memory]: Virtual memory allows programs to allocate more memory than is physically available
+    by saving and loading portions of memory to disk as needed.
+    When memory is fully utilized the system starts working slower rather than simply crashing.
 
-[^memory-map]: Memory mapping is one such application.
-    It allows you to read and write to a file with pointers
-    as if it was loaded into memory.
-    I have seen Alex use it in his code before.
+    Even though the total amount of virtual memory available on a system is very large,
+    individual memory allocations are typically limited.
+    For example, when testing this code on Linux, the system only 
+    allows a program to allocate a buffer up to the total physical memory size.
+
+    What this means is that Alex's implementation of `get_temporary_buffer` is not useful.
+    It is equivalent to `malloc(n)` for anything but extremely large allocations.
+
+    **Exercise:** Experiment with `get_temporary_buffer` on your machine. How large of an allocation will it give you?
+
+[^memory-map]: Memory mapping files is a very useful application of virtual memory.
+    When a program wants to interact with a file on disk it can instead request that
+    the system map it to a range in memory.
+    The file can then be manipulated by reading and writing to pointers as if it was a buffer instead of a file.
+    In other words, the program can interact with the file, just like other data.
     See [mmap(2)](https://man7.org/linux/man-pages/man2/mmap.2.html) for details.
+
+    Alex has used memory mapped files in his own code.
 
 [cray]: https://en.wikipedia.org/wiki/Seymour_Cray
 [thrash]: https://en.wikipedia.org/wiki/Thrashing_(computer_science)

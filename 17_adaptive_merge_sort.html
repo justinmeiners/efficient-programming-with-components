@@ -179,7 +179,7 @@ There is virtual memory but virtual memory is actually useless unless it&rsquo;s
 It&rsquo;s useful for remapping things<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
 But, it is a figment of imagination.
 It does not exist.
-As <a href="https://en.wikipedia.org/wiki/Seymour_Cray">Seymour Cray</a> used to say, &ldquo;You cant&rsquo;t simulate what you do
+As <a href="https://en.wikipedia.org/wiki/Seymour_Cray">Seymour Cray</a> used to say, &ldquo;you can&rsquo;t simulate what you do
 not have&rdquo;<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
 If your algorithm working set doesn&rsquo;t fit into physical memory,
 it will not just <a href="https://en.wikipedia.org/wiki/Thrashing_(computer_science)">thrash</a>, your program will not terminate,
@@ -397,22 +397,32 @@ but we are also using about 10x less memory.</p>
 <hr/>
 <ol>
 <li id="fn:1">
-<code>malloc</code> returns <code>null</code> when it fails to allocate,
-so this function uses that as an indicator that the requested buffer
-was too large, and continues attempting smaller and smaller buffers.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<code>malloc</code> returns <code>NULL</code> when it fails to allocate of the requested size.
+Alex&rsquo;s <code>get_temporary_buffer</code> function uses that as an indicator that the requested buffer was too large
+and continues attempting smaller and smaller buffers.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
-Virtual memory let&rsquo;s you allocate more memory
-than is available. Based on my testing on Linux,
-the kernel will let you malloc about the total physical memory size.
-So for any reasonable amount a program asks for
-it will just return <code>malloc(n)</code>.
-Try his code out on your machine.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<p>Virtual memory allows programs to allocate more memory than is physically available
+by saving and loading portions of memory to disk as needed.
+When memory is fully utilized the system starts working slower rather than simply crashing.</p>
+
+<p>Even though the total amount of virtual memory available on a system is very large,
+individual memory allocations are typically limited.
+For example, when testing this code on Linux, the system only
+allows a program to allocate a buffer up to the total physical memory size.</p>
+
+<p>What this means is that Alex&rsquo;s implementation of <code>get_temporary_buffer</code> is not useful.
+It is equivalent to <code>malloc(n)</code> for anything but extremely large allocations.</p>
+
+<p><strong>Exercise:</strong> Experiment with <code>get_temporary_buffer</code> on your machine. How large of an allocation will it give you?</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
-Memory mapping is one such application.
-It allows you to read and write to a file with pointers
-as if it was loaded into memory.
-I have seen Alex use it in his code before.
-See <a href="https://man7.org/linux/man-pages/man2/mmap.2.html">mmap(2)</a> for details.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<p>Memory mapping files is a very useful application of virtual memory.
+When a program wants to interact with a file on disk it can instead request that
+the system map it to a range in memory.
+The file can then be manipulated by reading and writing to pointers as if it was a buffer instead of a file.
+In other words, the program can interact with the file, just like other data.
+See <a href="https://man7.org/linux/man-pages/man2/mmap.2.html">mmap(2)</a> for details.</p>
+
+<p>Alex has used memory mapped files in his own code.</p><a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
 I cannot find a reference to this quotation.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
