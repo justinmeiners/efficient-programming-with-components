@@ -362,14 +362,14 @@ An empty range will melt the computer.</p>
 <p>What is the complexity of <code>std::rotate</code>?
 It&rsquo;s tricky, because it depends on the kind of iterators which you have.
 With <code>RandomAccessIterator</code> the best theoretical algorithm
-does <code>n + gcd(n1, n2)</code> assignments, not swaps.
+does <code>n + gcd(n_1, n_2)</code> assignments, not swaps.
 On average GCD is small, but larger than one.
 So we can get almost to <code>n</code> assignments, which is a lot better than <code>n</code> swaps.
-For <code>ForwardIterator</code> it happens to be <code>n - gcd(n1, n2)</code> swaps.
-It is roughly <code>n</code> for <code>BidirectionalIterator</code>.</p>
+For <code>ForwardIterator</code> it happens to be <code>n - gcd(n_1, n_2)</code> swaps.
+It is roughly <code>n</code> swaps for <code>BidirectionalIterator</code> (<code>3n</code> assignments).</p>
 
 <p>As we will observe, we can use a faster rotate than the rotate in STL because we have this additional storage.
-If you want to rotate and you have enough storage, then you only need <code>n + 1</code> assignments which is for sure less than <code>3n</code>.</p>
+If you want to rotate and you have enough storage, then you only need <code>n + n_1</code> assignments which is for sure less than <code>3n</code>.</p>
 
 <a name="First-steps"></a>
 <h3>First steps</h3>
@@ -377,26 +377,26 @@ If you want to rotate and you have enough storage, then you only need <code>n + 
 <p>There&rsquo;s lots of things to do.
 How should we go about it?
 The problem with programming, specifically designing components
-and decomposing the system is that you do not know what is right in isolation.
+and composing the system, is that you do not know what is right in isolation.
 You never know what the correct interface is
 until you see it in other algorithms,
 and you see how those are used.
-This is why you just have to try things, and ideas start emerging.
-You might think it&rsquo;s an infinite process.
+This is why you just have to try things and ideas start emerging.</p>
+
+<p>You might think it&rsquo;s an infinite process.
 No it&rsquo;s not infinite, that&rsquo;s the wonderful thing about life.
 It sort of terminates (I cannot prove it of course).
-In practice if you start fitting things together you sort of discover what
-you need to return,
+In practice if you start fitting things together you sort of discover what you need to return,
 what you need to pass,
 what is the right thing to do, and that&rsquo;s what
 I am trying to teach.</p>
 
-<p>When should we try insertion point?
+<p>When should we try insertion sort?
 As a rule we want to fix the asymptotic complexity.
 Doing insertion sort at the bottom won&rsquo;t help that.
 Right now we have a problem with our asymptotic complexity.
-It&rsquo;s <code>O(n log^2(n))</code>. We want to get rid of that square
-as fast as possible.</p>
+It&rsquo;s <code>O(n log^2(n))</code>.
+We want to get rid of that square as fast as possible.</p>
 
 <p>I&rsquo;m very lazy.
 So, we saw how fast we can get using no memory.

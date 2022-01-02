@@ -239,40 +239,40 @@ An empty range will melt the computer.
 What is the complexity of `std::rotate`?
 It's tricky, because it depends on the kind of iterators which you have.
 With `RandomAccessIterator` the best theoretical algorithm
-does `n + gcd(n1, n2)` assignments, not swaps.
+does `n + gcd(n_1, n_2)` assignments, not swaps.
 On average GCD is small, but larger than one.
 So we can get almost to `n` assignments, which is a lot better than `n` swaps.
-For `ForwardIterator` it happens to be `n - gcd(n1, n2)` swaps.
-It is roughly `n` for `BidirectionalIterator`.
+For `ForwardIterator` it happens to be `n - gcd(n_1, n_2)` swaps.
+It is roughly `n` swaps for `BidirectionalIterator` (`3n` assignments).
 
 As we will observe, we can use a faster rotate than the rotate in STL because we have this additional storage.
-If you want to rotate and you have enough storage, then you only need `n + 1` assignments which is for sure less than `3n`.
+If you want to rotate and you have enough storage, then you only need `n + n_1` assignments which is for sure less than `3n`.
 
 ### First steps
 
 There's lots of things to do.
 How should we go about it?
 The problem with programming, specifically designing components
-and decomposing the system is that you do not know what is right in isolation.
+and composing the system, is that you do not know what is right in isolation.
 You never know what the correct interface is
 until you see it in other algorithms,
 and you see how those are used.
-This is why you just have to try things, and ideas start emerging.
+This is why you just have to try things and ideas start emerging.
+
 You might think it's an infinite process.
 No it's not infinite, that's the wonderful thing about life.
 It sort of terminates (I cannot prove it of course).
-In practice if you start fitting things together you sort of discover what
-you need to return,
+In practice if you start fitting things together you sort of discover what you need to return,
 what you need to pass,
 what is the right thing to do, and that's what
 I am trying to teach.
 
-When should we try insertion point?
+When should we try insertion sort?
 As a rule we want to fix the asymptotic complexity.
 Doing insertion sort at the bottom won't help that.
 Right now we have a problem with our asymptotic complexity.
-It's `O(n log^2(n))`. We want to get rid of that square
-as fast as possible.
+It's `O(n log^2(n))`.
+We want to get rid of that square as fast as possible.
 
 I'm very lazy.
 So, we saw how fast we can get using no memory.
