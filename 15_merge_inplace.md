@@ -32,7 +32,7 @@ Meanwhile Knuth heard about it from his friend [Vaughan Pratt][pratt] who told h
 So he gives the attribution to his friend, and not the two polish guys[^merge-sort-exercise].
 
 As an algorithm itself, it's utterly useless.
-But, sometimes algorithms published by theoreticians can be used by us after appropriate modification.
+But sometimes algorithms published by theoreticians can be used by us, after appropriate modification.
 
 [^merge-sort-exercise]: See exercise 5.5.3 (Pg. 390) in Volume 3 of "The Art of Computer Programming".
     The algorithm itself and the attirbution to Vaughan Pratt is in the solution (Pg. 701).
@@ -47,9 +47,8 @@ But, sometimes algorithms published by theoreticians can be used by us after app
 
 ## Merging adjacent lists
 
-We got into all of this because we were
-thinking about merge. 
-We already learned to merge linked list.
+We got into all of this because we were thinking about merge. 
+We already learned to merge linked list (chapter 12).
 I introduced this thing called `goto`.
 Today I'm going to teach you some other bad programming practices because it's always
 pleasant to introduce techniques which are known to be bad in general when
@@ -57,9 +56,8 @@ they're good in particular.
 
 We're going to to go about things in a funny way.
 Normally when I teach merge,
-we then realize it can be used for sorting,
-we write merge sort,
-and then we realize that merge sort needs extra memory,
+we then realize it can be used for sorting.
+We write merge sort and then we realize that merge sort needs extra memory,
 and say "oh it's very unfortunate. Couldn't we find merge sort
 that doesn't require extra memory?"
 This time around, I decided to follow a different path.
@@ -69,7 +67,7 @@ Sometimes it's actually good to start with slow code and refine it
 into fast code.
 Especially if it allows you to create something architecturally nice
 and see connections.
-So we are going to look at the much harder problem of in-place merge
+So we are going to look at the much harder problem of in-place merge.
 The problem is actually hard if you think about it.
 
 ### Interface

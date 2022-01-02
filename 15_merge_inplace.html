@@ -162,14 +162,13 @@ Meanwhile Knuth heard about it from his friend <a href="https://en.wikipedia.org
 So he gives the attribution to his friend, and not the two polish guys<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.</p>
 
 <p>As an algorithm itself, it&rsquo;s utterly useless.
-But, sometimes algorithms published by theoreticians can be used by us after appropriate modification.</p>
+But sometimes algorithms published by theoreticians can be used by us, after appropriate modification.</p>
 
 <a name="Merging-adjacent-lists"></a>
 <h2>Merging adjacent lists</h2>
 
-<p>We got into all of this because we were
-thinking about merge.
-We already learned to merge linked list.
+<p>We got into all of this because we were thinking about merge.
+We already learned to merge linked list (chapter 12).
 I introduced this thing called <code>goto</code>.
 Today I&rsquo;m going to teach you some other bad programming practices because it&rsquo;s always
 pleasant to introduce techniques which are known to be bad in general when
@@ -177,9 +176,8 @@ they&rsquo;re good in particular.</p>
 
 <p>We&rsquo;re going to to go about things in a funny way.
 Normally when I teach merge,
-we then realize it can be used for sorting,
-we write merge sort,
-and then we realize that merge sort needs extra memory,
+we then realize it can be used for sorting.
+We write merge sort and then we realize that merge sort needs extra memory,
 and say &ldquo;oh it&rsquo;s very unfortunate. Couldn&rsquo;t we find merge sort
 that doesn&rsquo;t require extra memory?&rdquo;
 This time around, I decided to follow a different path.
@@ -189,7 +187,7 @@ Sometimes it&rsquo;s actually good to start with slow code and refine it
 into fast code.
 Especially if it allows you to create something architecturally nice
 and see connections.
-So we are going to look at the much harder problem of in-place merge
+So we are going to look at the much harder problem of in-place merge.
 The problem is actually hard if you think about it.</p>
 
 <a name="Interface"></a>
