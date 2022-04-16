@@ -74,7 +74,7 @@ It sounds like mystical thing right, two people coming together,
 this is a Vulcan mind-meld (joke).
 
 But, there is something profound there.
-I actually think that it's less amazing then Ken makes it be.
+I actually think that it's less amazing than Ken makes it be.
 That is a central point of what I am trying to teach here.
 I actually had such mind-meld with several of my colleagues after we worked together for a while.
 For example, it's literally true that when [Dave Musser][musser] and I were working together long-distance,
