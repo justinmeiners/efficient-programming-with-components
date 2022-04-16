@@ -32,8 +32,8 @@ I know nothing about parallel computers not now, nor
 ever, but I really want the job.
 So I need to come up with some brilliant idea.
 So I'm floating above the bed in space and thinking.
-Then I suddenly realize how to add four numbers in parallel I said oh I could add them
-in parallel if I add the first two and the second two in parallel:
+Then I suddenly realize how to add four numbers in parallel I said, "oh I could add them
+in parallel if I add the first two and the second two in parallel":
 
          +
         /  \
