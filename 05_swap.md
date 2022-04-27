@@ -71,7 +71,7 @@ as a non-generic non-component written in the same language.
 which could be done on a given machine.
 Basically you know it's as fast as assembly language.
 
-These are two fundamental and different kinds of efficiency.
+These are two fundamental and different kinds of efficiency[^absolute-efficiency-history].
 
 People say, "Alex you use C++ because you sold out to dark forces".
 If I sold out to dark forces, I wouldn't be working at my age.
@@ -83,6 +83,17 @@ I can program as general as I like.
 I can talk about things like [monoids][monoid] and [semi-groups][semi-group][^about-group-theory]. 
 When it compiles I could look at assembly code and see it is good.
 It is absolutely efficient.
+
+[^absolute-efficiency-history]:
+    Bjarne Strousrup:
+    "[Alex] defined **the abstraction penalty** as the ratio of runtime between a templated operation
+    (say, find on a `vector<int>`) and the trivial nontemplated equivalent (say a loop over an array of `int`).
+    An implementation that does all of the easy and obvious optimizations gets a ratio of 1.
+    Poor compilers had an abstraction penalty of 3, though even then good implementations did significantly better.
+    In October 1995, to encourage implementers to do better,
+    Alex wrote the “abstraction penalty benchmark”, which simply measured the abstraction penalty.
+    Compiler and optimizer writers didn’t like their implementations to be obviously poor,
+    so today ratios of 1.02 or so are common." (["Evolving a language in and for the real world: C++ 1991-2006"](papers/evolving-a-language.pdf))
 
 [go]: https://en.wikipedia.org/wiki/Go_(programming_language)
 [scala]: https://en.wikipedia.org/wiki/Scala_(programming_language)

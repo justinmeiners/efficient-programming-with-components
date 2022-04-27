@@ -201,7 +201,7 @@ Basically you know it&rsquo;s as fast as assembly language.</p></li>
 </ol>
 
 
-<p>These are two fundamental and different kinds of efficiency.</p>
+<p>These are two fundamental and different kinds of efficiency<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.</p>
 
 <p>People say, &ldquo;Alex you use C++ because you sold out to dark forces&rdquo;.
 If I sold out to dark forces, I wouldn&rsquo;t be working at my age.
@@ -210,7 +210,7 @@ After all, I didn&rsquo;t start with C++.
 I still program in C++ because as far as I could ascertain it&rsquo;s the only language which allows me
 generality and absolute efficiency.
 I can program as general as I like.
-I can talk about things like <a href="https://en.wikipedia.org/wiki/Monoid">monoids</a> and <a href="https://en.wikipedia.org/wiki/Semigroup">semi-groups</a><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
+I can talk about things like <a href="https://en.wikipedia.org/wiki/Monoid">monoids</a> and <a href="https://en.wikipedia.org/wiki/Semigroup">semi-groups</a><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
 When it compiles I could look at assembly code and see it is good.
 It is absolutely efficient.</p>
 
@@ -276,7 +276,7 @@ sequence, you swap.
 So it is very important practically.
 But it also happens to be very important
 theoretically, because a long time ago when people were starting <a href="https://en.wikipedia.org/wiki/Group_theory">group theory</a>
-they discovered that any permutation of a sequence could be generated out of swap<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
+they discovered that any permutation of a sequence could be generated out of swap<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
 Swap is the most primitive operation.
 The reason is sequence. And any other
 permutation can be constructed out of swap.</p>
@@ -324,14 +324,14 @@ swap(a, b);
 
 <p>It will construct a temporary vector and copy
 every single element into that temporary, and then back
-(several million operations)<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+(several million operations)<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
 
 <p>So we have generic code which works everywhere, except it&rsquo;s very slow.
 What should we do if someone says, &ldquo;I have a wonderful generic solution, very abstract, but it takes a million iterations when there should be three.&rdquo;?
 Throw him out.
 There is no excuse.
 Then he says, &ldquo;Oh, but I could use <a href="https://en.wikipedia.org/wiki/Tropical_semiring">tropical semirings</a>&rdquo;.
-Take tropical semirings and do something to him and them<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
+Take tropical semirings and do something to him and them<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.</p>
 
 <p>If you think about the algorithm that needs to take place,
 it requires <em>knowledge of how vector actually stores data</em>.
@@ -364,7 +364,7 @@ and the <code>T</code> parameter is still generic.</p>
 
 <p>What if we don&rsquo;t have an extra memory location?
 Could we write swap?
-Yes, there is a <a href="https://en.wikipedia.org/wiki/XOR_swap_algorithm">beautiful algorithm</a> using XOR<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.</p>
+Yes, there is a <a href="https://en.wikipedia.org/wiki/XOR_swap_algorithm">beautiful algorithm</a> using XOR<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
 
 <pre><code>template&lt;typename T&gt;
 // T is UnsignedIntegral
@@ -377,7 +377,7 @@ void swap_xor(T&amp; a, T&amp; b) {
 </code></pre>
 
 <p><strong>Exercise:</strong> Prove <code>swap_xor</code> is correct. To do this you will need to discover
-    some basic properties of <code>^</code>. (See solution<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.)</p>
+    some basic properties of <code>^</code>. (See solution<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.)</p>
 
 <p>What are the requirements for this algorithm?
 Specifically, what types have an <code>XOR</code> operator <code>^</code>?
@@ -440,7 +440,7 @@ it will seldom be 5 and you will be doing the check all the time.</p>
 There are certain things in C and C++ which are there because compiler technology was imperfect.
 When I started in C++ in 1986
 I had to write the keyword <a href="https://en.cppreference.com/w/c/language/storage_duration"><code>register</code></a> everywhere because, believe it or
-not, compilers wouldn&rsquo;t use registers<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup> unless you specifically indicated that something goes into the register.
+not, compilers wouldn&rsquo;t use registers<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup> unless you specifically indicated that something goes into the register.
 Of course if it went into
 the register you could never use address operator <code>&amp;</code> because obviously registers do not have addresses.
 It was a very special thing you needed to worry about.
@@ -482,6 +482,16 @@ is a bad sequence.</p>
 <hr/>
 <ol>
 <li id="fn:1">
+<p>Bjarne Strousrup:
+&ldquo;[Alex] defined <strong>the abstraction penalty</strong> as the ratio of runtime between a templated operation
+(say, find on a <code>vector&lt;int&gt;</code>) and the trivial nontemplated equivalent (say a loop over an array of <code>int</code>).
+An implementation that does all of the easy and obvious optimizations gets a ratio of 1.
+Poor compilers had an abstraction penalty of 3, though even then good implementations did significantly better.
+In October 1995, to encourage implementers to do better,
+Alex wrote the “abstraction penalty benchmark”, which simply measured the abstraction penalty.
+Compiler and optimizer writers didn’t like their implementations to be obviously poor,
+so today ratios of 1.02 or so are common.&rdquo; (<a href="papers/evolving-a-language.pdf">&ldquo;Evolving a language in and for the real world: C++ 1991-2006&rdquo;</a>)</p><a href="#fnref:1" rev="footnote">&#8617;</a></li>
+<li id="fn:2">
 <p>Groups, monoids, and rings are a few of the subjects of abstract algebra,
 a field which studies the fundamental properties of mathematical structures.
 The key idea is that many different mathematical objects appear to function similarly.
@@ -510,8 +520,8 @@ Below is a formal definition:</p>
 
 <p>The process of discovering and applying generic concepts is very similar.
 Alex introduces the basics of abstract algebra, from a programmers perspective,
-in his book &ldquo;From Mathematics to Generic Programming&rdquo;.</p><a href="#fnref:1" rev="footnote">&#8617;</a></li>
-<li id="fn:2">
+in his book &ldquo;From Mathematics to Generic Programming&rdquo;.</p><a href="#fnref:2" rev="footnote">&#8617;</a></li>
+<li id="fn:3">
 <p>A <a href="https://en.wikipedia.org/wiki/Permutation_group">permutation</a>
 is a bijection (1-1, onto) map from a set to itself.
 For example we can define the following permutation on the first
@@ -533,8 +543,8 @@ of two swaps:</p>
 
 where g(1) = 3 and g(3) = 1
 and h(1) = 2 and h(2) = 1.
-</code></pre><a href="#fnref:2" rev="footnote">&#8617;</a></li>
-<li id="fn:3">
+</code></pre><a href="#fnref:3" rev="footnote">&#8617;</a></li>
+<li id="fn:4">
 <p>Since C++11 this issue has been addressed by <a href="https://en.cppreference.com/w/cpp/language/move_constructor">move semantics</a>
 and even the swap as we have written it may perform well.</p>
 
@@ -553,12 +563,12 @@ You also have to write move versions of many operators.</p>
 <p>On the other hand, it solves this problem generally, so that one does not need
 to write custom swaps for every data structure.
 It shifts the responsibility to the data structure author,
-instead of every algorithm which might use it.</p><a href="#fnref:3" rev="footnote">&#8617;</a></li>
-<li id="fn:4">
+instead of every algorithm which might use it.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<li id="fn:5">
 Alex himself uses Tropical semi-rings to describe
 several algorithms in his book &ldquo;From Mathematics to Generic Programming&rdquo; (See chapter 8.6).
-So his issue here is not abstraction itself, rather that it can become too costly.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
-<li id="fn:5">
+So his issue here is not abstraction itself, rather that it can become too costly.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
 <p>The <code>^</code> symbol is bitwise <a href="https://en.wikipedia.org/wiki/Exclusive_or">exclusive or</a>.
 The expression <code>a ^ b</code> means <code>a</code> is true, or <code>b</code> is true, but not both.
 It is defined by the following truth table:</p>
@@ -569,8 +579,8 @@ It is defined by the following truth table:</p>
 1   0   1
 0   1   1
 1   1   0
-</code></pre><a href="#fnref:5" rev="footnote">&#8617;</a></li>
-<li id="fn:6">
+</code></pre><a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<li id="fn:7">
 <p>We need to use the fact that XOR is associative and commutative.</p>
 
 <p>Proof:</p>
@@ -585,8 +595,8 @@ It is defined by the following truth table:</p>
      = b ^ (a ^ a)
      = b ^ 0
      = b
-</code></pre><a href="#fnref:6" rev="footnote">&#8617;</a></li>
-<li id="fn:7">
+</code></pre><a href="#fnref:7" rev="footnote">&#8617;</a></li>
+<li id="fn:8">
 <p>In CPU architecture, a register is a slot on the CPU
 that can store a single value (typically 32 or 64 bits).
 Most CPU operations are confined to operating on values in registers.
@@ -597,7 +607,7 @@ are used to move a value between a register and a location in memory.</p>
 
 <p>Typically a CPU has only a handful of registers (fewer than 50), so a large part of the program
 is spent moving values from memory into registers so they can be operated on,
-and then transferring the results back to main memory.</p><a href="#fnref:7" rev="footnote">&#8617;</a></li>
+and then transferring the results back to main memory.</p><a href="#fnref:8" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 
