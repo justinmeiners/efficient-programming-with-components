@@ -85,7 +85,7 @@ When it compiles I could look at assembly code and see it is good.
 It is absolutely efficient.
 
 [^absolute-efficiency-history]:
-    Bjarne Strousrup:
+    Bjarne:
     "[Alex] defined **the abstraction penalty** as the ratio of runtime between a templated operation
     (say, find on a `vector<int>`) and the trivial nontemplated equivalent (say a loop over an array of `int`).
     An implementation that does all of the easy and obvious optimizations gets a ratio of 1.
