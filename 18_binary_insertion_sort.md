@@ -28,13 +28,13 @@ you ever wanted to know.
 First we will review the basic idea of algorithm.
 Always start with a picture:
 
-    |   sorted piece |  unsorted piece |
+    | sorted piece | unsorted piece |
 
 We start with an empty range on the left which is the sorted portion.
 We basically want to grow it, one element at a time,
 while ensuring it stays sorted.
 By repeating it inductively, eventually the whole range is sorted.
-So, main idea is to pick an element in the unsorted piece,
+So, the main idea is to pick an element in the unsorted piece,
 find where the element goes, and insert it there.
 
 ### Insertion sort variations
@@ -45,12 +45,11 @@ Finding where it should go could be done with either:
 1. Linear search
 2. Binary search
 
-There is another version which was invented,
-as was everything else, by [Tony Hoare][hoare].
+There is another version which was invented (as everything else was) by [Tony Hoare][hoare].
 He realized that in the inner loop of
 insertion sort you have to do two things:
 
-1. You have to guard that you're not crossing by size 
+1. Guard that you're not crossing by size 
 2. Guard that you're not crossing the first
 
 This makes the insertion sort do two comparisons per cycle.
@@ -72,24 +71,24 @@ This is an interesting point we should discuss.
 1. We already talked about when `n` is small.
   How small? We already proved it was when `n = 16`.
   Is it the exact? No, it's not.
-  But, it's a good rule of thumb.
+  But it's a good rule of thumb.
 
 2. If we just have a few things
-  to add to a sorted list, that would be good.
-  In other words, most of the list is sorted,
+  to add to a sorted list that would be good.
+  In other words, most of the list is sorted
   but 16 or so elements are out of order.
 
 3. Insertion sort is going to move an element
-  from where it is, to where it should be,
+  from where it is to where it should be,
   one step at a time.
   So another case is when the average distance
-  from where it is, to where it should be,
+  from where it is to where it should be
   is small.
   It's "nearly sorted".
 
 There are some considerations where you want to look at the relative cost but they are not important for asymptotic assessment.
 A quadratic algorithm,
-regardless of the ratio between move and compare
+regardless of the ratio between move and compare,
 is still a quadratic algorithm.
 
 ### Naming insertion sort function
@@ -97,13 +96,13 @@ is still a quadratic algorithm.
 Unfortunately, STL does not have insertion sort.
 Should it?
 Yes, it should.
-But, they threw it out from the public library[^sorts-in-stl].
+But they threw it out from the public library[^sorts-in-stl].
 At least put it in your library.
 It might not be called insertion sort.
 Maybe we should call it something else.
 What's a good name?
 This is not a bogus question.
-Finding a good name is important,
+Finding a good name is important
 because we want to lead people to use it when
 these three conditions are met.
 Maybe, `sort_almost_sorted`.
@@ -115,31 +114,29 @@ So instead we will settle on `binary_insertion_sort`.
 
 Naming is extremely hard, but very important.
 The goal is to name components so people can actually understand
-what they mean, it helps people.
+what they mean. It helps people.
 We have to discuss nomenclature.
 Respectable sciences spend most of their time discussing 
 nomenclature.
 Chemists, physicists, they know what to call things.
 It's only computer science that doesn't.
 
-I have to tell you a story [Sean Parent][parent]
-shared with me.
+I have to tell you a story [Sean Parent][sean-parent] shared with me.
 When STL was introduced, people at Apple decided to try it.
 They tried it and found it absolutely unacceptable because they replaced their `list` with STL
 `std::list` and everything became extremely slow.
-The problem is their list
-was what is still called a vector.
+The problem is their list was what is still called a vector.
 They didn't realize linked lists are called "linked lists".
 It sort of works, you know, slowly.
 
 [insertion-sort]: https://en.wikipedia.org/wiki/Insertion_sort
-[parent]: https://sean-parent.stlab.cc/papers-and-presentations/
+[sean-parent]: https://sean-parent.stlab.cc/papers-and-presentations/
 
 [^sorts-in-stl]:
     Alex: Of course, STL still has insertion sort on the inside.
     It has to.
     What happened during the standardization process,
-    is they took something which was in the library and was used by the library, and threw it out.
+    is they took something which was in the library and was used by the library and threw it out.
     The argument was, "we already have too many sorts".
     Is it a good argument?
     No, you need to have as many sorts as people might need
@@ -148,8 +145,7 @@ It sort of works, you know, slowly.
 
     1. [`std::sort`](https://en.cppreference.com/w/cpp/algorithm/sort) the fastest sort.
     2. [`std::stable_sort`](https://en.cppreference.com/w/cpp/algorithm/stable_sort), this is merge sort, the one we are trying to write.
-    3. [`std::partial_sort`](https://en.cppreference.com/w/cpp/algorithm/partial_sort) sort the first thousand, out of a million,
-        something you frequently do in search engines.
+    3. [`std::partial_sort`](https://en.cppreference.com/w/cpp/algorithm/partial_sort) sort the first thousand, out of a million (something you frequently do in search engines).
     4. [`std::nth_element`](https://en.cppreference.com/w/cpp/algorithm/nth_element).
         Not quite a sort, but it's sort related.
         What it does is pin, for example the 30th percentile
@@ -182,7 +178,6 @@ algorithms.
       return last;
     }
 
-
 (Recall, that we proved 16 was a good cutoff.)
 The standard C convention for old people is that `ALL_CAPS` means it's a macro.
 We will use this for a constant here[^macros-comment].
@@ -199,7 +194,7 @@ Using `ForwardIterator` is actually a piece of cake for the binary search,
 but we have to be careful.
 You might want to use the `upper_bound` we wrote together.
 But, remember it calls `std::distance` which is linear for `ForwardIterator`.
-So let's use `upper_bound_n`
+So let's use `upper_bound_n`.
 
 What we will first write is a function for finding where an element
 goes and placing it there.
@@ -233,7 +228,6 @@ What we want is:
     is_sorted_n(first, i, r) && std::distance(first, current) == i
 
 That's the invariant on which we rely.
-
 
     template <typename I, typename N, typename R>
     // I is ForwardIterator
@@ -291,16 +285,14 @@ The algorithm is called: [`std::copy_backward`][cpp-copy-back].
 
 ### Rotate for forward iterators
 
-For forward iterator we have to shift all the elements up,
+For `ForwardIteratorj we have to shift all the elements up,
 we move one out of the way, to make room,
 and continue up the array until we find an empty place to put it.
 
 I think the problem is quite instructive not just because
-it's a useful algorithm, which it is, but because of the method for
-deriving it.
+it's a useful algorithm, which it is, but because of the method for deriving it.
 Before coding, let us do a bit of mathematics.
-You can always "haircut"
-code, but remember mathematics?
+You can always "haircut" code, but remember mathematics?
 I used to talk about it before they told me to switch to programming.
 Deriving mathematically is a good thing.
 
@@ -311,8 +303,7 @@ If we have a one-element sequence `a_0` and we want to rotate it,
 how do we do it?
 Done.
 That allows us to consider an inductive solution.
-Somehow, by hook or by crook we have an algorithm which knows how to shift
-`n` things,
+Somehow, by hook or by crook, we have an algorithm which knows how to shift `n` things,
 such as the range:
 
     a_{0} ... a_{n-1}
@@ -362,7 +353,7 @@ It might not be the fastest, but it is going to be much more elegant.
     }
 
 Let's write a dispatch for both versions,
-it will compile to no code[^concepts-soon].
+it will compile to no code[^concepts-in-standard-soon].
 
     template <typename I>
     inline
@@ -371,7 +362,7 @@ it will compile to no code[^concepts-soon].
     }
 
 
-[^concepts-soon]: Alex: Someday we will get concepts
+[^concepts-in-standard-soon]: Alex: Someday we will get concepts
     in the C++ standard and not have to write these things.
     But that will be at least 5 years and I won't be programming.
     I'm like an old man planting an apple tree.
@@ -383,8 +374,7 @@ really make sense for this algorithm[^stl-forward-iterators],
 because if we have something like a linked list, we don't need to rotate
 or shift elements around,
 we can just insert it where it belongs.
-That's a good idea, but maybe some measurements
-will show us otherwise.
+That's a good idea, but maybe some measurements will show us otherwise.
 We already implemented optimal linked list sort.
 Later we need to compare whether it's actually
 faster to use our list sort, or to use our method
@@ -392,34 +382,31 @@ we develop.
 
 Why do you think I say that?
 List sort destroys locality.
-If at every `cdr` (next), you get to a different cache
+If at every `cdr` (next) you get to a different cache
 line, that's a problem.
-In our sort we constantly re-link
-next, so eventually you get to a point where everything is scattered
-all over memory.
+In our sort we constantly re-link next, 
+o eventually you get to a point where everything is scattered all over memory.
 
 STL used to have a sentence in the container
 section which the standard committee threw out.
 Use a vector.
 This is a true statement.
 Unless you are absolutely positive
-you need something else, use a vector
-or a C array[^sutter-deque].
+you need something else, use a vector or a C array[^sutter-deque].
 
 [^for-loop]: Alex: Could we use a `for` loop instead of a `while`?
     Yes, but I hate `for` loops.
     Why? Because the semantics have changed about 6 times,
     since I started C++, `while` loops never changed.
 
-
 [^stl-forward-iterators]: Alex:
     I actually drop this requirement in STL and require
-    `RandomAccessIterator`, for all the sorts.
-    It wasn't the standard committee's fault just me.
+    `RandomAccessIterator` for all the sorts.
+    It wasn't the standard committee's fault, just me.
     I am not sure if I agree with myself.
 
     The reasoning went like so.
-    Most people of course, don't know anything.
+    Most people of course don't know anything.
     Therefore if you give them things which sort
     `ForwardIterator`s, they will attempt to use
     them on things like linked lists.
@@ -442,12 +429,12 @@ or a C array[^sutter-deque].
 
 [^sutter-deque]: Alex: Because they threw out that instruction, people like
     [Herb Sutter][sutter] use to recommend to the world
-    to use [`std::deque`][cpp-deque] (see ["Using Vector and Deque"][vector-and-deque]).
+    to use [`std::deque`][cpp-deque] (see ["Using Vector and Deque"][sutter-vector-and-deque]).
     I'm not making it up.
     He thought that it's better because it supports more operations.
     He was wrong and I wrote both `std::vector` and `std::deque`.
 
-[vector-and-deque]: http://www.gotw.ca/gotw/054.htm
+[sutter-vector-and-deque]: http://www.gotw.ca/gotw/054.htm
 [cpp-copy-back]: https://en.cppreference.com/w/cpp/algorithm/copy_backward
 [cpp-deque]: https://en.cppreference.com/w/cpp/container/deque
 [sutter]: https://en.wikipedia.org/wiki/Herb_Sutter

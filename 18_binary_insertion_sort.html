@@ -155,14 +155,14 @@ you ever wanted to know.
 First we will review the basic idea of algorithm.
 Always start with a picture:</p>
 
-<pre><code>|   sorted piece |  unsorted piece |
+<pre><code>| sorted piece | unsorted piece |
 </code></pre>
 
 <p>We start with an empty range on the left which is the sorted portion.
 We basically want to grow it, one element at a time,
 while ensuring it stays sorted.
 By repeating it inductively, eventually the whole range is sorted.
-So, main idea is to pick an element in the unsorted piece,
+So, the main idea is to pick an element in the unsorted piece,
 find where the element goes, and insert it there.</p>
 
 <a name="Insertion-sort-variations"></a>
@@ -177,13 +177,12 @@ Finding where it should go could be done with either:</p>
 </ol>
 
 
-<p>There is another version which was invented,
-as was everything else, by <a href="https://en.wikipedia.org/wiki/Tony_Hoare">Tony Hoare</a>.
+<p>There is another version which was invented (as everything else was) by <a href="https://en.wikipedia.org/wiki/Tony_Hoare">Tony Hoare</a>.
 He realized that in the inner loop of
 insertion sort you have to do two things:</p>
 
 <ol>
-<li>You have to guard that you&rsquo;re not crossing by size</li>
+<li>Guard that you&rsquo;re not crossing by size</li>
 <li>Guard that you&rsquo;re not crossing the first</li>
 </ol>
 
@@ -207,16 +206,16 @@ This is an interesting point we should discuss.</p>
 <li><p>We already talked about when <code>n</code> is small.
 How small? We already proved it was when <code>n = 16</code>.
 Is it the exact? No, it&rsquo;s not.
-But, it&rsquo;s a good rule of thumb.</p></li>
+But it&rsquo;s a good rule of thumb.</p></li>
 <li><p>If we just have a few things
-to add to a sorted list, that would be good.
-In other words, most of the list is sorted,
+to add to a sorted list that would be good.
+In other words, most of the list is sorted
 but 16 or so elements are out of order.</p></li>
 <li><p>Insertion sort is going to move an element
-from where it is, to where it should be,
+from where it is to where it should be,
 one step at a time.
 So another case is when the average distance
-from where it is, to where it should be,
+from where it is to where it should be
 is small.
 It&rsquo;s &ldquo;nearly sorted&rdquo;.</p></li>
 </ol>
@@ -224,7 +223,7 @@ It&rsquo;s &ldquo;nearly sorted&rdquo;.</p></li>
 
 <p>There are some considerations where you want to look at the relative cost but they are not important for asymptotic assessment.
 A quadratic algorithm,
-regardless of the ratio between move and compare
+regardless of the ratio between move and compare,
 is still a quadratic algorithm.</p>
 
 <a name="Naming-insertion-sort-function"></a>
@@ -233,13 +232,13 @@ is still a quadratic algorithm.</p>
 <p>Unfortunately, STL does not have insertion sort.
 Should it?
 Yes, it should.
-But, they threw it out from the public library<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
+But they threw it out from the public library<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
 At least put it in your library.
 It might not be called insertion sort.
 Maybe we should call it something else.
 What&rsquo;s a good name?
 This is not a bogus question.
-Finding a good name is important,
+Finding a good name is important
 because we want to lead people to use it when
 these three conditions are met.
 Maybe, <code>sort_almost_sorted</code>.
@@ -251,20 +250,18 @@ So instead we will settle on <code>binary_insertion_sort</code>.</p>
 
 <p>Naming is extremely hard, but very important.
 The goal is to name components so people can actually understand
-what they mean, it helps people.
+what they mean. It helps people.
 We have to discuss nomenclature.
 Respectable sciences spend most of their time discussing
 nomenclature.
 Chemists, physicists, they know what to call things.
 It&rsquo;s only computer science that doesn&rsquo;t.</p>
 
-<p>I have to tell you a story <a href="https://sean-parent.stlab.cc/papers-and-presentations/">Sean Parent</a>
-shared with me.
+<p>I have to tell you a story <a href="https://sean-parent.stlab.cc/papers-and-presentations/">Sean Parent</a> shared with me.
 When STL was introduced, people at Apple decided to try it.
 They tried it and found it absolutely unacceptable because they replaced their <code>list</code> with STL
 <code>std::list</code> and everything became extremely slow.
-The problem is their list
-was what is still called a vector.
+The problem is their list was what is still called a vector.
 They didn&rsquo;t realize linked lists are called &ldquo;linked lists&rdquo;.
 It sort of works, you know, slowly.</p>
 
@@ -312,7 +309,7 @@ Using <code>ForwardIterator</code> is actually a piece of cake for the binary se
 but we have to be careful.
 You might want to use the <code>upper_bound</code> we wrote together.
 But, remember it calls <code>std::distance</code> which is linear for <code>ForwardIterator</code>.
-So let&rsquo;s use <code>upper_bound_n</code></p>
+So let&rsquo;s use <code>upper_bound_n</code>.</p>
 
 <p>What we will first write is a function for finding where an element
 goes and placing it there.
@@ -396,16 +393,14 @@ void rotate_right_by_one(I first, I last, std::bidirectional_iterator_tag) {
 <a name="Rotate-for-forward-iterators"></a>
 <h3>Rotate for forward iterators</h3>
 
-<p>For forward iterator we have to shift all the elements up,
+<p>For `ForwardIteratorj we have to shift all the elements up,
 we move one out of the way, to make room,
 and continue up the array until we find an empty place to put it.</p>
 
 <p>I think the problem is quite instructive not just because
-it&rsquo;s a useful algorithm, which it is, but because of the method for
-deriving it.
+it&rsquo;s a useful algorithm, which it is, but because of the method for deriving it.
 Before coding, let us do a bit of mathematics.
-You can always &ldquo;haircut&rdquo;
-code, but remember mathematics?
+You can always &ldquo;haircut&rdquo; code, but remember mathematics?
 I used to talk about it before they told me to switch to programming.
 Deriving mathematically is a good thing.</p>
 
@@ -416,8 +411,7 @@ If we have a one-element sequence <code>a_0</code> and we want to rotate it,
 how do we do it?
 Done.
 That allows us to consider an inductive solution.
-Somehow, by hook or by crook we have an algorithm which knows how to shift
-<code>n</code> things,
+Somehow, by hook or by crook, we have an algorithm which knows how to shift <code>n</code> things,
 such as the range:</p>
 
 <pre><code>a_{0} ... a_{n-1}
@@ -491,8 +485,7 @@ really make sense for this algorithm<sup id="fnref:5"><a href="#fn:5" rel="footn
 because if we have something like a linked list, we don&rsquo;t need to rotate
 or shift elements around,
 we can just insert it where it belongs.
-That&rsquo;s a good idea, but maybe some measurements
-will show us otherwise.
+That&rsquo;s a good idea, but maybe some measurements will show us otherwise.
 We already implemented optimal linked list sort.
 Later we need to compare whether it&rsquo;s actually
 faster to use our list sort, or to use our method
@@ -500,19 +493,17 @@ we develop.</p>
 
 <p>Why do you think I say that?
 List sort destroys locality.
-If at every <code>cdr</code> (next), you get to a different cache
+If at every <code>cdr</code> (next) you get to a different cache
 line, that&rsquo;s a problem.
-In our sort we constantly re-link
-next, so eventually you get to a point where everything is scattered
-all over memory.</p>
+In our sort we constantly re-link next,
+o eventually you get to a point where everything is scattered all over memory.</p>
 
 <p>STL used to have a sentence in the container
 section which the standard committee threw out.
 Use a vector.
 This is a true statement.
 Unless you are absolutely positive
-you need something else, use a vector
-or a C array<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
+you need something else, use a vector or a C array<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
 
 <a name="Code"></a>
 <h2>Code</h2>
@@ -529,7 +520,7 @@ or a C array<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
 <p>Alex: Of course, STL still has insertion sort on the inside.
 It has to.
 What happened during the standardization process,
-is they took something which was in the library and was used by the library, and threw it out.
+is they took something which was in the library and was used by the library and threw it out.
 The argument was, &ldquo;we already have too many sorts&rdquo;.
 Is it a good argument?
 No, you need to have as many sorts as people might need
@@ -539,8 +530,7 @@ How many sorts are in STL?</p>
 <ol>
 <li><a href="https://en.cppreference.com/w/cpp/algorithm/sort"><code>std::sort</code></a> the fastest sort.</li>
 <li><a href="https://en.cppreference.com/w/cpp/algorithm/stable_sort"><code>std::stable_sort</code></a>, this is merge sort, the one we are trying to write.</li>
-<li><a href="https://en.cppreference.com/w/cpp/algorithm/partial_sort"><code>std::partial_sort</code></a> sort the first thousand, out of a million,
- something you frequently do in search engines.</li>
+<li><a href="https://en.cppreference.com/w/cpp/algorithm/partial_sort"><code>std::partial_sort</code></a> sort the first thousand, out of a million (something you frequently do in search engines).</li>
 <li><a href="https://en.cppreference.com/w/cpp/algorithm/nth_element"><code>std::nth_element</code></a>.
  Not quite a sort, but it&rsquo;s sort related.
  What it does is pin, for example the 30th percentile
@@ -570,12 +560,12 @@ I&rsquo;m like an old man planting an apple tree.<a href="#fnref:4" rev="footnot
 <li id="fn:5">
 <p>Alex:
 I actually drop this requirement in STL and require
-<code>RandomAccessIterator</code>, for all the sorts.
-It wasn&rsquo;t the standard committee&rsquo;s fault just me.
+<code>RandomAccessIterator</code> for all the sorts.
+It wasn&rsquo;t the standard committee&rsquo;s fault, just me.
 I am not sure if I agree with myself.</p>
 
 <p>The reasoning went like so.
-Most people of course, don&rsquo;t know anything.
+Most people of course don&rsquo;t know anything.
 Therefore if you give them things which sort
 <code>ForwardIterator</code>s, they will attempt to use
 them on things like linked lists.
