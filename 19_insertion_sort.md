@@ -74,7 +74,7 @@ How do you make code beautiful?
 We find the main loop invariant.
 In order to be able to do the right thing, we need to see what we need to accomplish.
 
-Our goal (like binary insert) is to 
+Our goal, like binary insert, is to 
 insert an element into the portion
 at the front of the range.
 We first copy the element `value` out to insert,
@@ -87,19 +87,16 @@ as far left as possible (requiring `BidirectionalIterator`).
     first        hole
 
 When are we allowed to move the hole?
-What is the condition?
-The first is that `hole != first`.
-If this happens, we cannot move any further.
-The other condition is:
+What are the conditions?
 
-    prev(hole) < value
+1. `hole != first1`. If this happens, we cannot move any further.
+2. `prev(hold) < value`.
 
 If both hold, we continue to move left.
 Eventually, one of the conditions will not hold.
 We can even prove it.
 There are only finitely many things in the range,
-so after so many iterations it will be exhausted.
-These termination proofs are not usually very profound.
+so after so many iterations it will be exhausted (these termination proofs are not usually very profound).
 
 In our code we will call `hole`, `current`:
 
@@ -130,7 +127,7 @@ Of course, we need to define predecessor:
     inline
     I predecessor(I x) { return --x; }
 
-### Insertion sort
+### Traditional insertion sort
 
 Now linear insertion sort is about identical to binary insertion sort,
 we just use `linear_insert`, instead of `binary_insert`.
@@ -170,22 +167,22 @@ element range, are both sorted.
     }
 
 
-## Sentinel version
+## Sentinel insertion sort
 
 I think we can optimize it further.
 You might argue we don't need to.
 But, let me tell you one of the most humiliating times in my life.
-I was giving a talk at [Stanford][stanford] and a certain professor walked into the talk
-and when I showed my code, roughly like what we just wrote.
-It was a little different, but same idea.
-I said, it's obviously optimal.
+I was giving a talk at [Stanford][stanford].
+A certain professor walked into the talk
+and when I showed my code, roughly like what we just wrote (it was a little different, but same idea), I said, "it's obviously optimal".
 This professor interrupted
-and said, no it's not.
+and said, "no it's not".
 The trouble is his name was Donald Knuth.
-When somebody like Don Knuth says that your code is not optimal you are in a difficult situation.
+When somebody like Don Knuth says that your code is not optimal,
+you are in a difficult situation.
 His argument was that we do this conditional check:
 
-    while (first != current ...)
+    first != current
 
 `n` times, when we don't need to.
 If you're really into performance you have to put a [sentinel][sentinel] in the back.
@@ -193,8 +190,8 @@ I was using sentinels before, but from that point on I decided
 to make an effort to use them more.
 
 This is a valid argument.
-We are not here to impose some theoretical conditions on algorithms, we are here to
-take existing efficient algorithms and find how to express them.
+We are not here to impose some theoretical conditions on algorithms.
+We are here to take existing efficient algorithms and find how to express them.
 We have to write whatever we write to enable this code to work.
 What this means is that we sometimes have to reject or ignore
 other notions of "good software engineering" in order to get
@@ -238,7 +235,7 @@ Now we can remove the condition:
 
 [stanford]: https://en.wikipedia.org/wiki/Stanford_University
 
-### Insertion sort in quicksort
+### Application to quicksort
 
 Now we need to write a new insertion sort
 which guarantees this condition.
@@ -249,10 +246,10 @@ Eventually we hope to study a very important algorithm called quicksort.
 A long time ago the person who invented it, [Tony Hoare][hoare]
 observed that quicksort becomes inefficient towards the end
 of recursion, when you start doing partitions of very small things.
-He suggested that we run insertion sort, down there at the lower
+He suggested that we run insertion sort down there, at the lower
 levels of recursion.
-Originally, people thought they would just wait for the range
-to get small, and then call insertion sort every time.
+Originally people thought they would just wait for the range to get small,
+and then call insertion sort every time.
 But, Hoare observed you really don't need to call insertion sort many times.
 You can just stop the recursion when quicksort sorts things up to a certain size,
 and then run one pass of insertion sort, over the whole thing.
@@ -302,6 +299,8 @@ and contains a sentinel.
       }
     }
 
+### Optimized insertion sort
+
 So let us copy `linear_insertion_sort` and make our definitive `insertion_sort`.
 
     template <typename I, typename R>
@@ -344,8 +343,7 @@ we will discover it.
 
 What's the idea of selection sort?
 You find the min, put him in the first place.
-You find the min of the remaining range, put him in the next place,
-and so on.
+You find the min of the remaining range, put him in the next place, and so on.
 Could we write it?
 
     template <typename I, typename R>
@@ -372,9 +370,8 @@ The problem is swap might skip over lots of equal guys.
     }
 
 Comparison is typically fast, but swap we tend to think of as slow.
-Imagine they are big buildings that need to be carried.
-The unstable is actually amazing in that it just does `n - 1` swaps,
-always.
+Imagine the elements are big buildings that need to be carried.
+The unstable is actually amazing in that it just does `n - 1` swaps, always.
 Merge sort, quicksort, they do like `n log(n)`.
 Is it practically important? No.
 Not once have I needed it.
@@ -397,11 +394,11 @@ totally broken.
 Obviously, because it brings Google down.
 Let's argue why he shouldn't do what he did. 
 
-1. There is an algorithm in stl called [`std::random_shuffle`][cpp-random-shuffle].
+1. There is an algorithm in STL called [`std::random_shuffle`][cpp-random-shuffle].
    Why not use that?
 
 2. Somebody more advanced, would say, even if it worked, it wouldn't
-   be a uniform random shuffle.
+   be a uniform random shuffle[^uniform-shuffle].
    It is screwed up, but it requires probability theory or Knuth.
    These people at Google just don't read.
    The brightest people do not need to read (joke).
@@ -452,4 +449,9 @@ It's a competition! Consider teaming up and sharing ideas.
 
 [cpp-random-shuffle]: https://en.cppreference.com/w/cpp/algorithm/random_shuffle
 
+[^uniform-shuffle]: A uniform shuffle of a range of elements `x1 ... xn`
+    is an algorithm which produces a random permutation of the elements,
+    in a manner such that all possible permutations are equally likely.
+    Since there are `n!` permutations, each permutation should occur
+    with probablilty `1/n!` (See "The Art of Computer Programming" 3.4.2).
 

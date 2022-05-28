@@ -200,7 +200,7 @@ It&rsquo;s one comparison per element.</p>
 We find the main loop invariant.
 In order to be able to do the right thing, we need to see what we need to accomplish.</p>
 
-<p>Our goal (like binary insert) is to
+<p>Our goal, like binary insert, is to
 insert an element into the portion
 at the front of the range.
 We first copy the element <code>value</code> out to insert,
@@ -214,20 +214,19 @@ first        hole
 </code></pre>
 
 <p>When are we allowed to move the hole?
-What is the condition?
-The first is that <code>hole != first</code>.
-If this happens, we cannot move any further.
-The other condition is:</p>
+What are the conditions?</p>
 
-<pre><code>prev(hole) &lt; value
-</code></pre>
+<ol>
+<li><code>hole != first1</code>. If this happens, we cannot move any further.</li>
+<li><code>prev(hold) &lt; value</code>.</li>
+</ol>
+
 
 <p>If both hold, we continue to move left.
 Eventually, one of the conditions will not hold.
 We can even prove it.
 There are only finitely many things in the range,
-so after so many iterations it will be exhausted.
-These termination proofs are not usually very profound.</p>
+so after so many iterations it will be exhausted (these termination proofs are not usually very profound).</p>
 
 <p>In our code we will call <code>hole</code>, <code>current</code>:</p>
 
@@ -260,8 +259,8 @@ inline
 I predecessor(I x) { return --x; }
 </code></pre>
 
-<a name="Insertion-sort"></a>
-<h3>Insertion sort</h3>
+<a name="Traditional-insertion-sort"></a>
+<h3>Traditional insertion sort</h3>
 
 <p>Now linear insertion sort is about identical to binary insertion sort,
 we just use <code>linear_insert</code>, instead of <code>binary_insert</code>.</p>
@@ -302,23 +301,23 @@ void linear_insertion_sort(I first, I last, R r) {
 }
 </code></pre>
 
-<a name="Sentinel-version"></a>
-<h2>Sentinel version</h2>
+<a name="Sentinel-insertion-sort"></a>
+<h2>Sentinel insertion sort</h2>
 
 <p>I think we can optimize it further.
 You might argue we don&rsquo;t need to.
 But, let me tell you one of the most humiliating times in my life.
-I was giving a talk at <a href="https://en.wikipedia.org/wiki/Stanford_University">Stanford</a> and a certain professor walked into the talk
-and when I showed my code, roughly like what we just wrote.
-It was a little different, but same idea.
-I said, it&rsquo;s obviously optimal.
+I was giving a talk at <a href="https://en.wikipedia.org/wiki/Stanford_University">Stanford</a>.
+A certain professor walked into the talk
+and when I showed my code, roughly like what we just wrote (it was a little different, but same idea), I said, &ldquo;it&rsquo;s obviously optimal&rdquo;.
 This professor interrupted
-and said, no it&rsquo;s not.
+and said, &ldquo;no it&rsquo;s not&rdquo;.
 The trouble is his name was Donald Knuth.
-When somebody like Don Knuth says that your code is not optimal you are in a difficult situation.
+When somebody like Don Knuth says that your code is not optimal,
+you are in a difficult situation.
 His argument was that we do this conditional check:</p>
 
-<pre><code>while (first != current ...)
+<pre><code>first != current
 </code></pre>
 
 <p><code>n</code> times, when we don&rsquo;t need to.
@@ -327,8 +326,8 @@ I was using sentinels before, but from that point on I decided
 to make an effort to use them more.</p>
 
 <p>This is a valid argument.
-We are not here to impose some theoretical conditions on algorithms, we are here to
-take existing efficient algorithms and find how to express them.
+We are not here to impose some theoretical conditions on algorithms.
+We are here to take existing efficient algorithms and find how to express them.
 We have to write whatever we write to enable this code to work.
 What this means is that we sometimes have to reject or ignore
 other notions of &ldquo;good software engineering&rdquo; in order to get
@@ -372,8 +371,8 @@ I linear_insert_with_sentinel(I first, I current, R r) {
 }
 </code></pre>
 
-<a name="Insertion-sort-in-quicksort"></a>
-<h3>Insertion sort in quicksort</h3>
+<a name="Application-to-quicksort"></a>
+<h3>Application to quicksort</h3>
 
 <p>Now we need to write a new insertion sort
 which guarantees this condition.
@@ -384,10 +383,10 @@ make 1 or 2 additional components out of it that will help us sort.</p>
 A long time ago the person who invented it, <a href="https://en.wikipedia.org/wiki/Tony_Hoare">Tony Hoare</a>
 observed that quicksort becomes inefficient towards the end
 of recursion, when you start doing partitions of very small things.
-He suggested that we run insertion sort, down there at the lower
+He suggested that we run insertion sort down there, at the lower
 levels of recursion.
-Originally, people thought they would just wait for the range
-to get small, and then call insertion sort every time.
+Originally people thought they would just wait for the range to get small,
+and then call insertion sort every time.
 But, Hoare observed you really don&rsquo;t need to call insertion sort many times.
 You can just stop the recursion when quicksort sorts things up to a certain size,
 and then run one pass of insertion sort, over the whole thing.
@@ -440,6 +439,9 @@ void insertion_sort_suffix(I first, I last, R r) {
 }
 </code></pre>
 
+<a name="Optimized-insertion-sort"></a>
+<h3>Optimized insertion sort</h3>
+
 <p>So let us copy <code>linear_insertion_sort</code> and make our definitive <code>insertion_sort</code>.</p>
 
 <pre><code>template &lt;typename I, typename R&gt;
@@ -482,8 +484,7 @@ we will discover it.</p>
 
 <p>What&rsquo;s the idea of selection sort?
 You find the min, put him in the first place.
-You find the min of the remaining range, put him in the next place,
-and so on.
+You find the min of the remaining range, put him in the next place, and so on.
 Could we write it?</p>
 
 <pre><code>template &lt;typename I, typename R&gt;
@@ -512,9 +513,8 @@ void stable_selection_sort(I first, I last, R r) {
 </code></pre>
 
 <p>Comparison is typically fast, but swap we tend to think of as slow.
-Imagine they are big buildings that need to be carried.
-The unstable is actually amazing in that it just does <code>n - 1</code> swaps,
-always.
+Imagine the elements are big buildings that need to be carried.
+The unstable is actually amazing in that it just does <code>n - 1</code> swaps, always.
 Merge sort, quicksort, they do like <code>n log(n)</code>.
 Is it practically important? No.
 Not once have I needed it.
@@ -539,10 +539,10 @@ Obviously, because it brings Google down.
 Let&rsquo;s argue why he shouldn&rsquo;t do what he did.</p>
 
 <ol>
-<li><p>There is an algorithm in stl called <a href="https://en.cppreference.com/w/cpp/algorithm/random_shuffle"><code>std::random_shuffle</code></a>.
+<li><p>There is an algorithm in STL called <a href="https://en.cppreference.com/w/cpp/algorithm/random_shuffle"><code>std::random_shuffle</code></a>.
 Why not use that?</p></li>
 <li><p>Somebody more advanced, would say, even if it worked, it wouldn&rsquo;t
-be a uniform random shuffle.
+be a uniform random shuffle<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
 It is screwed up, but it requires probability theory or Knuth.
 These people at Google just don&rsquo;t read.
 The brightest people do not need to read (joke).</p></li>
@@ -594,6 +594,18 @@ It&rsquo;s a competition! Consider teaming up and sharing ideas.</p>
 <li><a href="code/insertion_sort.h">insertion_sort.h</a></li>
 <li><a href="code/test_insertion_sort.cpp">test_insertion_sort.cpp</a></li>
 </ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+A uniform shuffle of a range of elements <code>x1 ... xn</code>
+is an algorithm which produces a random permutation of the elements,
+in a manner such that all possible permutations are equally likely.
+Since there are <code>n!</code> permutations, each permutation should occur
+with probablilty <code>1/n!</code> (See &ldquo;The Art of Computer Programming&rdquo; 3.4.2).<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+</ol>
+</div>
 
 
 <span style="float: right">
