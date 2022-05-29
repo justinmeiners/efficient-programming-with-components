@@ -248,18 +248,18 @@ observed that quicksort becomes inefficient towards the end
 of recursion, when you start doing partitions of very small things.
 He suggested that we run insertion sort down there, at the lower
 levels of recursion.
-Originally people thought they would just wait for the range to get small,
-and then call insertion sort every time.
+Originally people thought they would go down recursively and call insertion
+sort every time we reach a small subrange.
 But, Hoare observed you really don't need to call insertion sort many times.
 You can just stop the recursion when quicksort sorts things up to a certain size,
-and then run one pass of insertion sort, over the whole thing.
-Remember, we talked about how insertion sort is good when things are
-almost where they should be.
+and then, at the end, run one pass of insertion sort, over the whole thing.
+Because when things are almost where they should be, insertion sort is effective.
+Quicksort can guarantee that eventually everyone will be within some threshold of their final destination.
 
 Let's assume we are sorting a million elements.
 After we are done with quicksort we have a threshold,
-say `k`, and all the elements are partitioned
-into blocks, or sub ranges of this size.
+say `k`, and all the elements are partitioned.
+The first partition will be somewhere within the first k elements,
 
     [      |            ...            ]
     ^      ^                        
