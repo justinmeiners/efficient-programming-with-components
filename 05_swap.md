@@ -120,7 +120,7 @@ programs are:
 
 1. `swap`: takes two things and swaps them.
 2. `min`: takes two things and figure out which one is smaller.
-2. `linear search`. goes through a bunch of stuff and finds the one you want.
+2. `linear search`: goes through a bunch of stuff and finds the one you want.
 
 Aren't these too simple?
 If we cannot do simple things, it is very unlikely we will be able to do hard things.
@@ -133,8 +133,7 @@ I claim exciting things tend to be very simple and basic.
 So you say, "Alex, why don't we use a new language?"
 Go try implementing these three program in your favorite language.
 Do them in a general way.
-If they're at least relatively efficient, that is, they are not slower than specific things 
-written in the language, then let us talk.
+If they're at least relatively efficient, that is, they are not slower than specific things  written in the language, then let us talk.
 If you cannot do it, let us stick with C++.
 I'm just explaining the reasoning behind my choice of C++.
 

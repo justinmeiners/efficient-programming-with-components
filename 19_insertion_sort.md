@@ -274,12 +274,15 @@ For example, when we stop quicksort early we might have:
 
     [ 1, 3, 5 | 2, 11, 17 ... ]
 
-How can we have 2 on the right side? We don't know exactly
-where quicksort stopped, just that it's in some threshold.
 5 is not a sentinel for the right side, because 2 is smaller.
 1 is the sentinel.
-Now that is quicksort, but we will design our components in a way to support it.
+The line drawn in that range is not necessarily a quicksort partition.
+If it were, we couldn't have 2 on the right side.
+We have absoutely no idea where the real quicksort partitions are.
+But, we know that there is a partition boundary within some threshold
+(say left of the line).
 
+Now that is quicksort, but we will design our components in a way to support it.
 Let's write a function that assumes we have a prefix that is sorted
 and contains a sentinel.
 

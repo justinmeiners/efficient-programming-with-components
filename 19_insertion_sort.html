@@ -305,13 +305,16 @@ But, then we can take the smallest and use it as a sentinel for all past it.</p>
 <pre><code>[ 1, 3, 5 | 2, 11, 17 ... ]
 </code></pre>
 
-<p>How can we have 2 on the right side? We don&rsquo;t know exactly
-where quicksort stopped, just that it&rsquo;s in some threshold.
-5 is not a sentinel for the right side, because 2 is smaller.
+<p>5 is not a sentinel for the right side, because 2 is smaller.
 1 is the sentinel.
-Now that is quicksort, but we will design our components in a way to support it.</p>
+The line drawn in that range is not necessarily a quicksort partition.
+If it were, we couldn&rsquo;t have 2 on the right side.
+We have absoutely no idea where the real quicksort partitions are.
+But, we know that there is a partition boundary within some threshold
+(say left of the line).</p>
 
-<p>Let&rsquo;s write a function that assumes we have a prefix that is sorted
+<p>Now that is quicksort, but we will design our components in a way to support it.
+Let&rsquo;s write a function that assumes we have a prefix that is sorted
 and contains a sentinel.</p>
 
 <pre><code>template &lt;typename I, typename R&gt;
