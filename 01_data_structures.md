@@ -87,7 +87,7 @@ not be a miracle.
 We should be writing basic code, character by character, identical.
 Imagine how wonderful it would be if you could understand what someone else wrote.
 
-[^minsky]: Alex recommended to me Marvin Minsky's ["Computation: Finite and Infinite Machines"](minsky-computation) 
+[^minsky]: Alex recommended to me Marvin Minsky's ["Computation: Finite and Infinite Machines"][minsky-computation] 
     to learn more about these topics. 
     It is a fantastic book which explores theory of computation, including finite state machines, neural networks,
     and Turing machines from a philosophical and mathematical perspective.
