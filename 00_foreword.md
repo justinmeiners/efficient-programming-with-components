@@ -80,8 +80,7 @@ and assemble them into applications.
 To understand these catalogs and make contributions of their own,
 programmers must be educated in basic mathematics
 and computer science
-in the same way that engineers require
-physics and calculus.
+in the same way that engineers require physics and calculus.
 
 -- Justin Meiners
 
@@ -94,20 +93,21 @@ Original course by Alexander. A. Stepanov.
 
 ![alex](img/alex.jpg)
 
-Course notes assembled from videos, course materials, interviews,
+Course notes were assembled from videos, course materials, interviews,
 and books by [Justin Meiners](https://github.com/justinmeiners) in 2021.
 The lectures were given in 2013 at [A9](https://en.wikipedia.org/wiki/A9.com).
-These notes are intended 
-to share scientific information for educational and historical purposes. 
-This is a non-commercial project.
-Most of the code comes from [Ryan Ernst's repo](https://github.com/rjernst),
-who attended the lectures.
+These notes are intended to share scientific information for educational and historical purposes. This is a non-commercial project.
+Most of the code comes from [Ryan Ernst's repo](https://github.com/rjernst), who attended the lectures.
 
-Special thanks to [Alastair Harrison][aharrison], [Petter Holmberg][petter], and [Ryan Pendleton][ryanp] for help with editing.
+Special thanks to [Alastair Harrison][aharrison] for his significant efforts editing and providing feedback.
+
+The following people also helped provide corrections:
+[Petter Holmberg][petter], [Ryan Pendleton][ryanp], Frank Ettwein, [Yuri Valentini][yuroller].
 
 [aharrison]: https://github.com/aharrison24
 [ryanp]: https://github.com/rpendleton
 [petter]: https://github.com/petter-holmberg
+[yuroller]: https://github.com/yuroller
 
 # FAQ
 
@@ -119,15 +119,14 @@ and working code.
 The videos are often hard to watch due to the slow pace and interaction with the audience.
 Sometimes a mistake is made, and they go back and fix it.
 Alex may introduce a story and then finish it days later.
-Consequently, some videos have fewer than 800 views,
-and at least 10 of those views are mine.
+Consequently, some videos have fewer than 800 views, and at least 10 of those views are mine.
 
 [videos]: https://www.youtube.com/watch?v=aIHAEYyoTUc&list=PLHxtyCq_WDLXryyw91lahwdtpZsmo4BGD
 
 **Is all this information available in his books?**
 
-A majority, but not all of the code, is available in other forms.
-In the lectures, you get history, opinions, motivation, practical tips, applications, and responses to criticism, all at once.
+A majority of the information, but not the code, is available in other forms.
+In these lectures, you get history, opinions, motivation, practical tips, applications, and responses to criticism, all at once.
 This is not present in the books, especially "Elements of Programming" which is very formal.
 Having this rich context makes the books much more approachable and meaningful.
 
@@ -178,13 +177,11 @@ comes from the speaker and is intentionally preserved.
 
 **How accurate is this text?**
 
-These are course notes, not a transcript.
+The goal of this project is to provide course notes, not a transcript.
 I try to discern and communicate his intended message,
 not necessarily make a historical record of the conversation.
 
 If Alex is sharing a strong opinion or giving a speech,
-it is likely an exact quote (minus grammar and filler words).
-The technical exposition is where 
-I have rearranged and filled in missing parts
-for educational purposes.
+I usually quote him exactly (with corrections to grammar) to avoid misinterpreting him.
+The technical exposition is where significant rearrangements and have been made for educational purposes.
 
