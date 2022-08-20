@@ -222,7 +222,7 @@ Then write code inside out.</p>
 // P is a unary predicate
 I find_if(I first, I last, P pred) {
   // [first, last) is a valid range.
-  while (first != last &amp;&amp; !pred(first)) ++first;
+  while (first != last &amp;&amp; !pred(*first)) ++first;
   return first;
 }
 </code></pre>
