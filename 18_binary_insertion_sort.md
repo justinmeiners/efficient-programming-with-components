@@ -9,7 +9,7 @@ I'll just occasionally share a song or something like that
 which would indicate what mood I'm in.
 This is a very great song by [Franz Schubert][schubert] but it also
 perfectly reflects what will go on with the course in how I feel.
-The song is called ["The Organ Grinder"][winter-journey] (Der Liermann).
+The song is called ["The Organ Grinder"][winter-journey] (Der Leiermann).
 The singer is [Dietrich fischer-dieskau][dietrich] maybe the greatest
 leader, or art song singer of the last 50, 60, or 70 years.
 He started singing in the late forties.

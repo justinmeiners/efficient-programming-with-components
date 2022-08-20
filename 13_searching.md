@@ -209,7 +209,7 @@ Now write the signature:
     // P is a unary predicate
     I find_if(I first, I last, P pred) {
       // [first, last) is a valid range.
-      while (first != last && !pred(first)) ++first;
+      while (first != last && !pred(*first)) ++first;
       return first;
     }
 

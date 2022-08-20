@@ -75,7 +75,7 @@ template <typename I>
 inline
 typename std::iterator_traits<I>::difference_type 
 distance(I first, I last) {
-  // [first, n) is a valid range
+  // [first, last) is a valid range
   return distance(first, last, 
 		  std::iterator_traits<I>::iterator_category());
 }
@@ -85,7 +85,7 @@ template <typename I>
 inline
 typename std::iterator_traits<I>::difference_type 
 distance(I first, I last, std::input_iterator_tag) {
-  // [first, n) is a valid range
+  // [first, last) is a valid range
   typename std::iterator_traits<I>::difference_type n(0);
   while (first != last) { 
     ++n; 
@@ -99,7 +99,7 @@ template <typename I>
 inline
 typename std::iterator_traits<I>::difference_type 
 distance(I first, I last, std::random_access_iterator_tag) {
-  // [first, n) is a valid range
+  // [first, last) is a valid range
   return last - first; 
 }
 
