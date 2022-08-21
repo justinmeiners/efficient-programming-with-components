@@ -12,9 +12,7 @@ The first is [Bernard Bolzano][bolzano]
 the second is [Augustin-Louis Cauchy][cauchy].
 They both invented the very famous theorem which is called [bisection][bisection].
 Where does it appear in mathematics?
-The [intermediate value theorem][ivt].
-If you have a function `f` which goes from negative to positive,
-it has to cross zero.
+The [intermediate value theorem][ivt], if you have a [continuous function][continuous-function] `f` which goes from negative to positive, it has to cross zero.
 
                     ____f(b) > 0
                    /
@@ -41,7 +39,7 @@ It is a great idea.
 [bisection]: https://en.wikipedia.org/wiki/Bisection_method
 [bolzano-theorem]: https://en.wikipedia.org/wiki/Bolzano%E2%80%93Weierstrass_theorem
 [ivt]: https://en.wikipedia.org/wiki/Intermediate_value_theorem
-
+[continuous-function]: https://en.wikipedia.org/wiki/Continuous_function
 
 ## Partitions
 
@@ -57,9 +55,7 @@ In order to write it correctly we need to reduce it to a simpler problem.
 Even simpler than the notion of a sorted sequence
 is a **partitioned sequence**.
 A sequence is partitioned based on a predicate.
-A sequence is partitioned if the predicate
-is true for some sub range of items,
-and then false for the rest[^order].
+A sequence is partitioned if the predicate is true for some sub range of items, and then false for the rest[^order].
 
 ### Is partitioned
 
@@ -75,7 +71,7 @@ Don't you want satisfying things?
 But it's wrong.
 We want partition sequence to be sorted on the boolean values and since STL
 assumes that ascending order is natural,
-The right thing to do is make partition consistent[^changing-standard], false values go first.
+The right thing to do is make partition consistent[^changing-standard-difficult], false values go first.
 But, for our course we will follow the standard.
 
     template<typename I, typename P>
@@ -104,22 +100,19 @@ Now for bounded ranges:
     }
 
 
-[^changing-standard]: Alex: Changing something in this standard is impossible,
+[^changing-standard-difficult]: Alex: Changing something in this standard is impossible,
     because they just don't listen to arguments.
     Whatever arguments you give them, they just say, "It's the standard".
 
 ### Partition point
 
-When we partition we will have true guys
-followed by false:
+When we partition we will have true guys followed by false:
 
     T T T F F F
           ^
 
-There is only one special thing,
-the partition point.
-If we understand the partition
-point everything else will be very simple and there is no ambiguity.
+There is only one special thing, the partition point.
+If we understand the partition point everything else will be very simple and there is no ambiguity.
 `find_if` actually finds the partition point.
 But, it does too many predicate applications.
 We could do better if our range is at least forward iterable.
@@ -131,19 +124,15 @@ you still could reduce the number of tests to `log(n)`.
 As we shall see we have a very good bound on the number of traversal
 operations which is literally `n`, not order of `n`.
 So we can get it so it works for everything.
-Then it works on arrays much much faster
-than linked lists. 
+Then it works on arrays much much faster than linked lists. 
 
-A distinguished computer scientist recently
-asked me, "what if we just make it linear. will it really affect practical algorithms".
-The answer is yes,
-very badly.
+A distinguished computer scientist recently asked me, "what if we just make it linear. will it really affect practical algorithms".
+The answer is yes, very badly.
 
 The algorithm to find it faster is to test the middle.
 How do we go to the middle?
 Divide by 2.
-Dividing numbers is easier
-so we will start with a counted range, instead of bounded.
+Dividing numbers is easier so we will start with a counted range, instead of bounded.
 
     template<typename I, typename N, typename P>
     // I is InputIterator
@@ -167,16 +156,16 @@ so we will start with a counted range, instead of bounded.
       return first;
     }
 
-Why a shift (`n >> 1`)? We know it's non-negative.
+Why did I use a shift (`n >> 1`)? We know it's non-negative.
 I'm a penny pincher.
-Maybe the compiler will automatically do it for `n / 2`
-maybe it will not.
+Maybe the compiler will automatically do it for `n / 2` maybe it will not.
 Now it will.
 
 How many `++` operations do we do?
-`n /2 + n/4 + ... + = n`.
-We are traversing more than linear
-search on the average case.
+
+    n/2 + n/4 + ... + = n.
+
+We are traversing more than linear search on the average case.
 We are also not trying to be lucky and find equal.
 
     template<typename I, typename I, typename P>
@@ -190,17 +179,17 @@ We are also not trying to be lucky and find equal.
     }
 
 
-[^pauls-friend]: Alex: Paul McJones has a good friend [Butler Lampson][lampson] who is a Turing award
-    winner. We went to lunch and he told us binary search is the 
+[^pauls-friend]: Alex: Paul McJones has a good friend [Butler Lampson][lampson] who is a Turing award winner.
+    We went to lunch and he told us binary search is the 
     only algorithm a programmer needs to know.
     I think sort should be there too, but we'll take his opinion.
  
-[^slow-comparison-example]: In writing my masters thesis
+[^slow-comparison-example]: In writing my Master's thesis
     I actually came across a comparison operator which is very expensive to evaluate,
     called the Dehornoy ordering for [braid groups][braid-research].
-    This is a total ordering which I used for sorting, removing duplicates,
-    and other algorithms in a very similar style to STL.
-    Optimizing the number of comparisons made a significant difference in performance.
+    This provides a total ordering which I used for sorting, removing duplicates, and other algorithms in STL style.
+    In this case having
+    algorithms that carefully optimized the number of comparisons made a significant different in performance.
 
 [lampson]: https://en.wikipedia.org/wiki/Butler_Lampson
 [braid-research]: https://github.com/justinmeiners/braid-rank-thesis
