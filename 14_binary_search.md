@@ -135,8 +135,8 @@ Divide by 2.
 Dividing numbers is easier so we will start with a counted range, instead of bounded.
 
     template<typename I, typename N, typename P>
-    // I is InputIterator
-    // P is unary predicate 
+    // I is ForwardIterator
+    // P is UnaryPredicate 
     // N is integral type
     // value_type of I == argument_type of P
     inline
@@ -169,12 +169,12 @@ We are traversing more than linear search on the average case.
 We are also not trying to be lucky and find equal.
 
     template<typename I, typename I, typename P>
-    // I is InputIterator
-    // P is unary predicate 
+    // I is ForwardIterator
+    // P is UnaryPredicate 
     // N is integral type
     // value_type of I == argument_type of P
     inline
-    I partitioned_point_n(I first, I last, P pred) {
+    I partition_point_n(I first, I last, P pred) {
       return partition_point_n(first, std::distance(first, last), pred);
     }
 
