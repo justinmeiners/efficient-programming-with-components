@@ -25,7 +25,7 @@ template <typename I, typename N, typename P>
 // value type of I is the same as argument type of P
 std::pair<I, N> find_if_n(I first, N n, P pred) {
   while (n && !pred(*first)) {--n; ++first;}
-  return std::make_pair<I, N> (first, n);
+  return std::make_pair(first, n);
 }
 
 template <typename I, typename N, typename P>
