@@ -81,7 +81,7 @@ But, for our course we will follow the standard.
     inline
     bool is_partitioned(I first, I last, P pred) {
       first = find_if_not(first, last, pred);
-      find_if(first, last, pred);
+      first = find_if(first, last, pred);
       return first == last;
     }
 
@@ -140,17 +140,17 @@ Dividing numbers is easier so we will start with a counted range, instead of bou
     // N is integral type
     // value_type of I == argument_type of P
     inline
-    I partitioned_point_n(I first, N n, P pred) {
+    I partition_point_n(I first, N n, P pred) {
       while (n) {
         N half = n >> 1;
         I middle = first;
         std::advance(middle, half);
         if (pred(*middle)) {
-          n = half;
-        } else {
           ++middle;
           first = middle;
           n -= (half + 1);
+        } else {
+          n = half;
         }
       }
       return first;
