@@ -11,7 +11,7 @@ template <typename I>
 void rotate_right_by_one(I first, I last, std::forward_iterator_tag) {
   if (first == last) return;
   I current = first; 
-  while (++current != last) std::swap(first, current);
+  while (++current != last) std::swap(*first, *current);
 }
 
 template <typename I>

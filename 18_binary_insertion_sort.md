@@ -10,7 +10,7 @@ which would indicate what mood I'm in.
 This is a very great song by [Franz Schubert][schubert] but it also
 perfectly reflects what will go on with the course in how I feel.
 The song is called ["The Organ Grinder"][winter-journey] (Der Leiermann).
-The singer is [Dietrich fischer-dieskau][dietrich] maybe the greatest
+The singer is [Dietrich Fischer-Dieskau][dietrich] maybe the greatest
 leader, or art song singer of the last 50, 60, or 70 years.
 He started singing in the late forties.
 Let us spend a couple of minutes and listen to it... ([Video here][organ-grinder])
@@ -263,25 +263,23 @@ That's the invariant on which we rely.
 
 ### Rotate for bidirectional iterators
 
-Once we find where it goes, how do we make room for it?
+Once we find where it goes (the element to insert), how do we make room for it?
 We "rotate" to the right by one.
-If it was a bidirectional iterator there is a beautiful algorithm.
-Copy is the wrong thing, because it will overwrite everything
-with the same value.
-What we want is copying from the back.
+If it is a bidirectional iterator there is a beautiful algorithm, copying from the back.
 The algorithm is called: [`std::copy_backward`][cpp-copy-back].
 
     template <typename I>
     // I is BidirectionalIterator
     void rotate_right_by_one(I first, I last, std::bidirectional_iterator_tag) {
       typedef typename std::iterator_traits<I>::value_type T;
-      T butlast = last;
+      I butlast = last;
       --butlast;
       T x = *butlast; 
       std::copy_backward(first, butlast, last);
       *first = x;
     }
 
+Note that forward copy is the wrong thing, because it will overwrite everything with the same value (namely the first value).
 
 ### Rotate for forward iterators
 
@@ -349,7 +347,7 @@ It might not be the fastest, but it is going to be much more elegant.
     void rotate_right_by_one(I first, I last, std::forward_iterator_tag) {
         if (first == last) return;
         I current = first;
-        while (++current != last) std::swap(first, current);
+        while (++current != last) std::swap(*first, *current);
     }
 
 Let's write a dispatch for both versions,
@@ -357,8 +355,8 @@ it will compile to no code[^concepts-in-standard-soon].
 
     template <typename I>
     inline
-    void rotate_right_by_one(I first, I butlast, I last) {
-      rotate_right_by_one(first, butlast, last, typename std::iterator_traits<I>::iterator_category());
+    void rotate_right_by_one(I first, I last) {
+      rotate_right_by_one(first, last, typename std::iterator_traits<I>::iterator_category());
     }
 
 
