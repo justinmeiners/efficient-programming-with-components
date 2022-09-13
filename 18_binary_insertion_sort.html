@@ -33,7 +33,7 @@ which would indicate what mood I&rsquo;m in.
 This is a very great song by <a href="https://en.wikipedia.org/wiki/Franz_Schubert">Franz Schubert</a> but it also
 perfectly reflects what will go on with the course in how I feel.
 The song is called <a href="https://www.britannica.com/topic/Winterreise">&ldquo;The Organ Grinder&rdquo;</a> (Der Leiermann).
-The singer is <a href="https://en.wikipedia.org/wiki/Dietrich_Fischer-Dieskau">Dietrich fischer-dieskau</a> maybe the greatest
+The singer is <a href="https://en.wikipedia.org/wiki/Dietrich_Fischer-Dieskau">Dietrich Fischer-Dieskau</a> maybe the greatest
 leader, or art song singer of the last 50, 60, or 70 years.
 He started singing in the late forties.
 Let us spend a couple of minutes and listen to it&hellip; (<a href="https://www.youtube.com/watch?v=sIIS-UgixGE">Video here</a>)</p>
@@ -262,25 +262,24 @@ I binary_insertion_sort_n(I first, N n, R r) {
 <a name="Rotate-for-bidirectional-iterators"></a>
 <h3>Rotate for bidirectional iterators</h3>
 
-<p>Once we find where it goes, how do we make room for it?
+<p>Once we find where it goes (the element to insert), how do we make room for it?
 We &ldquo;rotate&rdquo; to the right by one.
-If it was a bidirectional iterator there is a beautiful algorithm.
-Copy is the wrong thing, because it will overwrite everything
-with the same value.
-What we want is copying from the back.
+If it is a bidirectional iterator there is a beautiful algorithm, copying from the back.
 The algorithm is called: <a href="https://en.cppreference.com/w/cpp/algorithm/copy_backward"><code>std::copy_backward</code></a>.</p>
 
 <pre><code>template &lt;typename I&gt;
 // I is BidirectionalIterator
 void rotate_right_by_one(I first, I last, std::bidirectional_iterator_tag) {
   typedef typename std::iterator_traits&lt;I&gt;::value_type T;
-  T butlast = last;
+  I butlast = last;
   --butlast;
   T x = *butlast; 
   std::copy_backward(first, butlast, last);
   *first = x;
 }
 </code></pre>
+
+<p>Note that forward copy is the wrong thing, because it will overwrite everything with the same value (namely the first value).</p>
 
 <a name="Rotate-for-forward-iterators"></a>
 <h3>Rotate for forward iterators</h3>
@@ -355,7 +354,7 @@ It might not be the fastest, but it is going to be much more elegant.</p>
 void rotate_right_by_one(I first, I last, std::forward_iterator_tag) {
     if (first == last) return;
     I current = first;
-    while (++current != last) std::swap(first, current);
+    while (++current != last) std::swap(*first, *current);
 }
 </code></pre>
 
@@ -364,8 +363,8 @@ it will compile to no code<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a>
 
 <pre><code>template &lt;typename I&gt;
 inline
-void rotate_right_by_one(I first, I butlast, I last) {
-  rotate_right_by_one(first, butlast, last, typename std::iterator_traits&lt;I&gt;::iterator_category());
+void rotate_right_by_one(I first, I last) {
+  rotate_right_by_one(first, last, typename std::iterator_traits&lt;I&gt;::iterator_category());
 }
 </code></pre>
 
