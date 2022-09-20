@@ -3,7 +3,7 @@
 
 ## Thank you, noble art.
 
-Last time we started with ["The Organ Grinder"][organ-grinder] (Der Liermann)
+Last time we started with ["The Organ Grinder"][organ-grinder] (Der Leiermann)
 which explains how it feels to stand outside in the cold with an empty tray
 being barked at by stray dogs.
 That's how it feels when I start here (joke).
@@ -20,7 +20,7 @@ In this video the words will be first introduced by a great English pianist [Ger
 She is also a beautiful woman.
 Let us proceed... ([Video here][to-music]).
 
-Shubert was 18 years old when he composed it.
+Schubert was 18 years old when he composed it.
 *If I had a choice between founding Facebook or writing this song, as my lifetime
 accomplishment, I would not hesitate one second, and it's not going to be the
 Facebook*.
