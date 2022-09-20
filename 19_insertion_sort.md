@@ -89,12 +89,12 @@ as far left as possible (requiring `BidirectionalIterator`).
 When are we allowed to move the hole?
 What are the conditions?
 
-1. `hole != first1`. If this happens, we cannot move any further.
-2. `prev(hold) < value`.
+1. `hole != first`. If this happens, we cannot move any further.
+2. `value < prev(hold)`.
 
 If both hold, we continue to move left.
 Eventually, one of the conditions will not hold.
-We can even prove it.
+We can even prove it:
 There are only finitely many things in the range,
 so after so many iterations it will be exhausted (these termination proofs are not usually very profound).
 
@@ -115,9 +115,10 @@ In our code we will call `hole`, `current`:
       return current;
     }
 
-When `first == current` at the start, it will swap.
-Would a check be better?
-As we have talked about it before, this is a case that seldom happens
+When `first == current` at the start, it will copy `*current` to a temporary
+variable and put it right back.
+Would a check be better to avoid this?
+As we have talked about before, this is a case that seldom happens
 whereas adding an explicit check would slow down every other case.
 
 Of course, we need to define predecessor:
@@ -341,8 +342,7 @@ by replacing rotate with swap.
 ## Selection sort
 
 This leads us to another classical sort,
-it's very slow, but since it's classical and takes only a few lines
-we will discover it.
+it's very slow, but since it's classical and takes only a few lines we will discover it.
 
 What's the idea of selection sort?
 You find the min, put him in the first place.
@@ -360,7 +360,7 @@ Could we write it?
     }
 
 It's not stable, but it's not hard to fix.
-The problem is swap might skip over lots of equal guys.
+The problem is `std::swap` might skip over lots of equal guys.
 
     template <typename I, typename R>
     // I is ForwardIterator
@@ -372,13 +372,14 @@ The problem is swap might skip over lots of equal guys.
       }
     }
 
-Comparison is typically fast, but swap we tend to think of as slow.
-Imagine the elements are big buildings that need to be carried.
-The unstable is actually amazing in that it just does `n - 1` swaps, always.
-Merge sort, quicksort, they do like `n log(n)`.
+Comparison is typically fast, but `swap` we tend to think of as slow.
+Imagine the elements are buildings that need to be lifted up and carried to swap places.
+The unstable `selection_sort` is actually amazing in that it just does `n - 1` swaps, always.
+Merge sort, quicksort, they do like `n log(n)` swaps.
 Is it practically important? No.
-Not once have I needed it.
-However, it shows us how to create a sentinel.
+Not once have I needed selection sort.
+So why do I talk about it?
+It shows us how to create a sentinel.
 
 ## Preconditions are essential
 
@@ -392,8 +393,7 @@ Then take `std::sort` and pass this function to it,
 because it will obviously create a randomly shuffled thing.
 Low and behold to everybody's amazement it caused
 segmentation fault.
-There were messages throughout Google saying STL is
-totally broken.
+There were messages throughout Google saying STL is totally broken.
 Obviously, because it brings Google down.
 Let's argue why he shouldn't do what he did. 
 
