@@ -26,7 +26,7 @@
 <a name="Thank-you-2c--noble-art."></a>
 <h2>Thank you, noble art.</h2>
 
-<p>Last time we started with <a href="https://www.youtube.com/watch?v=sIIS-UgixGE">&ldquo;The Organ Grinder&rdquo;</a> (Der Liermann)
+<p>Last time we started with <a href="https://www.youtube.com/watch?v=sIIS-UgixGE">&ldquo;The Organ Grinder&rdquo;</a> (Der Leiermann)
 which explains how it feels to stand outside in the cold with an empty tray
 being barked at by stray dogs.
 That&rsquo;s how it feels when I start here (joke).</p>
@@ -43,7 +43,7 @@ In this video the words will be first introduced by a great English pianist <a h
 She is also a beautiful woman.
 Let us proceed&hellip; (<a href="https://www.youtube.com/watch?v=Bm_AKMV0ME0">Video here</a>).</p>
 
-<p>Shubert was 18 years old when he composed it.
+<p>Schubert was 18 years old when he composed it.
 <em>If I had a choice between founding Facebook or writing this song, as my lifetime
 accomplishment, I would not hesitate one second, and it&rsquo;s not going to be the
 Facebook</em>.
@@ -109,14 +109,14 @@ first        hole
 What are the conditions?</p>
 
 <ol>
-<li><code>hole != first1</code>. If this happens, we cannot move any further.</li>
-<li><code>prev(hold) &lt; value</code>.</li>
+<li><code>hole != first</code>. If this happens, we cannot move any further.</li>
+<li><code>value &lt; prev(hold)</code>.</li>
 </ol>
 
 
 <p>If both hold, we continue to move left.
 Eventually, one of the conditions will not hold.
-We can even prove it.
+We can even prove it:
 There are only finitely many things in the range,
 so after so many iterations it will be exhausted (these termination proofs are not usually very profound).</p>
 
@@ -138,9 +138,10 @@ I linear_insert(I first, I current, R r) {
 }
 </code></pre>
 
-<p>When <code>first == current</code> at the start, it will swap.
-Would a check be better?
-As we have talked about it before, this is a case that seldom happens
+<p>When <code>first == current</code> at the start, it will copy <code>*current</code> to a temporary
+variable and put it right back.
+Would a check be better to avoid this?
+As we have talked about before, this is a case that seldom happens
 whereas adding an explicit check would slow down every other case.</p>
 
 <p>Of course, we need to define predecessor:</p>
@@ -374,8 +375,7 @@ void insertion_sort_unstable(I first, I last, R r) {
 <h2>Selection sort</h2>
 
 <p>This leads us to another classical sort,
-it&rsquo;s very slow, but since it&rsquo;s classical and takes only a few lines
-we will discover it.</p>
+it&rsquo;s very slow, but since it&rsquo;s classical and takes only a few lines we will discover it.</p>
 
 <p>What&rsquo;s the idea of selection sort?
 You find the min, put him in the first place.
@@ -394,7 +394,7 @@ void selection_sort(I first, I last, R r) {
 </code></pre>
 
 <p>It&rsquo;s not stable, but it&rsquo;s not hard to fix.
-The problem is swap might skip over lots of equal guys.</p>
+The problem is <code>std::swap</code> might skip over lots of equal guys.</p>
 
 <pre><code>template &lt;typename I, typename R&gt;
 // I is ForwardIterator
@@ -407,13 +407,14 @@ void stable_selection_sort(I first, I last, R r) {
 }
 </code></pre>
 
-<p>Comparison is typically fast, but swap we tend to think of as slow.
-Imagine the elements are big buildings that need to be carried.
-The unstable is actually amazing in that it just does <code>n - 1</code> swaps, always.
-Merge sort, quicksort, they do like <code>n log(n)</code>.
+<p>Comparison is typically fast, but <code>swap</code> we tend to think of as slow.
+Imagine the elements are buildings that need to be lifted up and carried to swap places.
+The unstable <code>selection_sort</code> is actually amazing in that it just does <code>n - 1</code> swaps, always.
+Merge sort, quicksort, they do like <code>n log(n)</code> swaps.
 Is it practically important? No.
-Not once have I needed it.
-However, it shows us how to create a sentinel.</p>
+Not once have I needed selection sort.
+So why do I talk about it?
+It shows us how to create a sentinel.</p>
 
 <a name="Preconditions-are-essential"></a>
 <h2>Preconditions are essential</h2>
@@ -428,8 +429,7 @@ Then take <code>std::sort</code> and pass this function to it,
 because it will obviously create a randomly shuffled thing.
 Low and behold to everybody&rsquo;s amazement it caused
 segmentation fault.
-There were messages throughout Google saying STL is
-totally broken.
+There were messages throughout Google saying STL is totally broken.
 Obviously, because it brings Google down.
 Let&rsquo;s argue why he shouldn&rsquo;t do what he did.</p>
 
