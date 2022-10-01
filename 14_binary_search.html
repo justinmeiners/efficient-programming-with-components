@@ -189,10 +189,9 @@ We are also not trying to be lucky and find equal.</p>
 <pre><code>template&lt;typename I, typename I, typename P&gt;
 // I is ForwardIterator
 // P is UnaryPredicate 
-// N is integral type
 // value_type of I == argument_type of P
 inline
-I partition_point_n(I first, I last, P pred) {
+I partition_point(I first, I last, P pred) {
   return partition_point_n(first, std::distance(first, last), pred);
 }
 </code></pre>
@@ -438,11 +437,11 @@ This provides a total ordering which I used for sorting, removing duplicates, an
 In this case having
 algorithms that carefully optimized the number of comparisons made a significant different in performance.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
-<p>Choosing predicates as the basis of binary search solves an important problem.
-One thing you might want to do is search an array of records by a particular field.
+<p>Framing binary search as finding the partition point solves an important theoretical problem.
+Suppose you want to search an array of records by a particular field.
 You can of course make a record having arbitrary values for all the other
 fields besides the one you care about,
-but it would be nice to just provide the one you want.
+but it would be nice to provide just the key you want.
 For example:</p>
 
 <pre><code>binary_search(
@@ -453,16 +452,14 @@ For example:</p>
 );
 </code></pre>
 
-<p>This does not fit with the traditional theory of <code>StrictWeakOrdering</code> as
-<code>Name</code> and <code>Person</code> are not elements of the same domain.
-In this case the comparison function is no longer an ordering
-at all, or even an operation.</p>
+<p>But what is the theoretical basis for a function comparing a key to a person record?
+It&rsquo;s not a <code>StrictWeakOrdering</code> as  <code>Name</code> and <code>Person</code> are not elements of the same domain.
+In this case the comparison function is no longer an ordering at all, or even an operation.
+If we condense the key and comparison into a predicate, and find the partition point, then this problem goes away.</p>
 
-<p>By defining binary search as a partition point then this problem goes away.
-It appears the standard committee had some confusion about this for some
-time
-(see <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2001/n1313.html">&ldquo;Binary Search with Heterogeneous Comparison&rdquo;</a>
-and <a href="https://cplusplus.github.io/LWG/issue270">&ldquo;Binary search requirements overly strict&rdquo;</a>).</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
+<p>It appears the C++ standards committee was confused about this for some time.
+See <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2001/n1313.html">&ldquo;Binary Search with Heterogeneous Comparison&rdquo;</a>
+and <a href="https://cplusplus.github.io/LWG/issue270">&ldquo;Binary search requirements overly strict&rdquo;</a> for further discussion.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
 Alex: If you remember there was this
 grand review one day where the committee threw out a bunch of useful functions.
