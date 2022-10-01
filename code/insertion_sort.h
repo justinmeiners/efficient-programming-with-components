@@ -37,7 +37,8 @@ template <typename I, typename R>
 // R is WeakStrictOrdering on the value type of I 
 void selection_sort(I first, I last, R r) {
   while (first != last) {
-    std::swap(*first, *std::min_element(first, last, r));
+    I min = std::min_element(first, last, r);
+    std::swap(*first, *min);
     ++first;
   }
 }
@@ -47,7 +48,8 @@ template <typename I, typename R>
 // R is WeakStrictOrdering on the value type of I 
 void stable_selection_sort(I first, I last, R r) {
   while (first != last) {
-    rotate_right_by_one(first, ++std::min_element(first, last, r));
+    I min = std::min_element(first, last, r);
+    rotate_right_by_one(first, ++min);
     ++first;
   }
 }
@@ -96,7 +98,8 @@ void insertion_sort(I first, I last, R r) {
   ++current;
   if (current == last) return;
   // create a sentinel 
-  rotate_right_by_one(first, ++std::min_element(first, last, r));
+  I min = std::min_element(first, last, r);
+  rotate_right_by_one(first, ++min);
   insertion_sort_suffix(current, last, r);
 }
 
@@ -109,7 +112,8 @@ void insertion_sort_unstable(I first, I last, R r) {
   ++current;
   if (current == last) return;
   // create a sentinel 
-  std::swap(*first, *std::min_element(first, last, r));
+  I min = std::min_element(first, last, r);
+  std::swap(*first, *min);
   insertion_sort_suffix(current, last, r);
 }
 

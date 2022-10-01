@@ -316,7 +316,8 @@ So let us copy `linear_insertion_sort` and make our definitive `insertion_sort`.
       ++current;
       if (current == last) return;
       // create a sentinel 
-      rotate_right_by_one(first, ++std::min_element(first, last, r));
+      I min = std::min_element(first, last, r);
+      rotate_right_by_one(first, ++min);
       insertion_sort_suffix(current, last, r);
     }
 
@@ -332,7 +333,8 @@ by replacing rotate with swap.
       ++current;
       if (current == last) return;
       // create a sentinel 
-      std::swap(*first, *std::min_element(first, last, r));
+      I min = std::min_element(first, last, r);
+      std::swap(*first, *min);
       insertion_sort_suffix(current, last, r);
     }
 
@@ -354,7 +356,8 @@ Could we write it?
     // R is WeakStrictOrdering on the value type of I 
     void selection_sort(I first, I last, R r) {
       while (first != last) {
-        std::swap(*first, *std::min_element(first, last, r));
+        I min = std::min_element(first, last, r);
+        std::swap(*first, *min);
         ++first;
       }
     }
@@ -367,7 +370,8 @@ The problem is `std::swap` might skip over lots of equal guys.
     // R is WeakStrictOrdering on the value type of I 
     void stable_selection_sort(I first, I last, R r) {
       while (first != last) {
-        rotate_right_by_one(first, ++std::min_element(first, last, r));
+        I min = std::min_element(first, last, r);
+        rotate_right_by_one(first, ++min);
         ++first;
       }
     }
