@@ -171,10 +171,9 @@ We are also not trying to be lucky and find equal.
     template<typename I, typename I, typename P>
     // I is ForwardIterator
     // P is UnaryPredicate 
-    // N is integral type
     // value_type of I == argument_type of P
     inline
-    I partition_point_n(I first, I last, P pred) {
+    I partition_point(I first, I last, P pred) {
       return partition_point_n(first, std::distance(first, last), pred);
     }
 
@@ -317,11 +316,11 @@ a little faster, than separately.
 There is a function [`std::equal_range`][cpp-equal-range]
 which does that.
 
-[^partition-point]: Choosing predicates as the basis of binary search solves an important problem.
-    One thing you might want to do is search an array of records by a particular field.
+[^partition-point]: Framing binary search as finding the partition point solves an important theoretical problem.
+    Suppose you want to search an array of records by a particular field.
     You can of course make a record having arbitrary values for all the other
     fields besides the one you care about,
-    but it would be nice to just provide the one you want.
+    but it would be nice to provide just the key you want.
     For example:
 
         binary_search(
@@ -331,19 +330,17 @@ which does that.
             [](Person a, const char* name){ a.name < name }
         );
 
-    This does not fit with the traditional theory of `StrictWeakOrdering` as 
-    `Name` and `Person` are not elements of the same domain.
-    In this case the comparison function is no longer an ordering
-    at all, or even an operation.
+    But what is the theoretical basis for a function comparing a key to a person record?
+    It's not a `StrictWeakOrdering` as  `Name` and `Person` are not elements of the same domain.
+    In this case the comparison function is no longer an ordering at all, or even an operation.
+    If we condense the key and comparison into a predicate, and find the partition point, then this problem goes away.
 
-    By defining binary search as a partition point then this problem goes away.
-    It appears the standard committee had some confusion about this for some
-    time 
-    (see ["Binary Search with Heterogeneous Comparison"][standards-1]
-    and ["Binary search requirements overly strict"][standards-2]).
+    It appears the C++ standards committee was confused about this for some time.
+    See ["Binary Search with Heterogeneous Comparison"][binary-search-standards-1]
+    and ["Binary search requirements overly strict"][binary-search-standards-2] for further discussion.
 
-[standards-1]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2001/n1313.html
-[standards-2]: https://cplusplus.github.io/LWG/issue270
+[binary-search-standards-1]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2001/n1313.html
+[binary-search-standards-2]: https://cplusplus.github.io/LWG/issue270
 [cpp-equal-range]: https://en.cppreference.com/w/cpp/algorithm/equal_range
 [cpp-binary-search]: https://en.cppreference.com/w/cpp/algorithm/binary_search
 
