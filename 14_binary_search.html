@@ -458,8 +458,10 @@ If we condense the key and comparison into a predicate, and find the partition p
 See <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2001/n1313.html">&ldquo;Binary Search with Heterogeneous Comparison&rdquo;</a>
 and <a href="https://cplusplus.github.io/LWG/issue270">&ldquo;Binary search requirements overly strict&rdquo;</a> for further discussion.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
-<p>First find the lower bound in the range <code>[first, last)</code>.
-Then find the upper bound in the range <code>[lower, last)</code>.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<p>Here is one improvement.
+First find the lower bound in the range <code>[first, last)</code>.
+Then find the upper bound in the range <code>[lower, last)</code>.
+Further optimization is possible.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
 Alex: If you remember there was this
 grand review one day where the committee threw out a bunch of useful functions.

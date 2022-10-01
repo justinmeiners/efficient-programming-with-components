@@ -314,8 +314,10 @@ You can actually find them both together a little faster, than you can separatel
 There is a function [`std::equal_range`][cpp-equal-range] which does that.
 
 [^clarify-equal-range]:
+    Here is one improvement.
     First find the lower bound in the range `[first, last)`.
     Then find the upper bound in the range `[lower, last)`.
+    Further optimization is possible.
 
 [^partition-point]: Framing binary search as finding the partition point solves an important problem.
     Suppose you want to search an array of records by a particular field.
