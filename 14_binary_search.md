@@ -301,22 +301,23 @@ As far as I could ascertain, these names are invented by me but I think they're 
 `upper_bound` and `lower_bound`, there are two.
 So what property does the upper bound have?
 It is the first element which is greater.
-Both lower bound and upper
-bound split our range into two ranges.
+Both lower bound and upper bound split our range into two ranges.
 So in some sense we actually have 3 ranges:
 
     [first [lower)   [upper)  last)
 
      1. [first, lower)
      2. [lower, upper)
-     3. [uppper, last)
+     3. [upper, last)
 
-You can actually find them both together
-a little faster, than separately.
-There is a function [`std::equal_range`][cpp-equal-range]
-which does that.
+You can actually find them both together a little faster, than you can separately[^clarify-equal-range].
+There is a function [`std::equal_range`][cpp-equal-range] which does that.
 
-[^partition-point]: Framing binary search as finding the partition point solves an important theoretical problem.
+[^clarify-equal-range]:
+    First find the lower bound in the range `[first, last)`.
+    Then find the upper bound in the range `[lower, last)`.
+
+[^partition-point]: Framing binary search as finding the partition point solves an important problem.
     Suppose you want to search an array of records by a particular field.
     You can of course make a record having arbitrary values for all the other
     fields besides the one you care about,

@@ -307,21 +307,18 @@ because they only look for <code>5</code>.</p>
 <code>upper_bound</code> and <code>lower_bound</code>, there are two.
 So what property does the upper bound have?
 It is the first element which is greater.
-Both lower bound and upper
-bound split our range into two ranges.
+Both lower bound and upper bound split our range into two ranges.
 So in some sense we actually have 3 ranges:</p>
 
 <pre><code>[first [lower)   [upper)  last)
 
  1. [first, lower)
  2. [lower, upper)
- 3. [uppper, last)
+ 3. [upper, last)
 </code></pre>
 
-<p>You can actually find them both together
-a little faster, than separately.
-There is a function <a href="https://en.cppreference.com/w/cpp/algorithm/equal_range"><code>std::equal_range</code></a>
-which does that.</p>
+<p>You can actually find them both together a little faster, than you can separately<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
+There is a function <a href="https://en.cppreference.com/w/cpp/algorithm/equal_range"><code>std::equal_range</code></a> which does that.</p>
 
 <p>First let&rsquo;s implement a function object
 which is our predicate for partitioning.
@@ -343,7 +340,7 @@ class lower_bound_predicate
 </code></pre>
 
 <p>Now we can write <code>lower_bound</code>, which is the version
-of &ldquo;binary search&rdquo; that we want<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>:</p>
+of &ldquo;binary search&rdquo; that we want<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>:</p>
 
 <pre><code>template &lt;typename I, typename N, typename R&gt;
 // I is ForwardIterator
@@ -437,7 +434,7 @@ This provides a total ordering which I used for sorting, removing duplicates, an
 In this case having
 algorithms that carefully optimized the number of comparisons made a significant different in performance.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
-<p>Framing binary search as finding the partition point solves an important theoretical problem.
+<p>Framing binary search as finding the partition point solves an important problem.
 Suppose you want to search an array of records by a particular field.
 You can of course make a record having arbitrary values for all the other
 fields besides the one you care about,
@@ -461,6 +458,9 @@ If we condense the key and comparison into a predicate, and find the partition p
 See <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2001/n1313.html">&ldquo;Binary Search with Heterogeneous Comparison&rdquo;</a>
 and <a href="https://cplusplus.github.io/LWG/issue270">&ldquo;Binary search requirements overly strict&rdquo;</a> for further discussion.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
+<p>First find the lower bound in the range <code>[first, last)</code>.
+Then find the upper bound in the range <code>[lower, last)</code>.</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
 Alex: If you remember there was this
 grand review one day where the committee threw out a bunch of useful functions.
 Well they inserted some too.
@@ -471,7 +471,7 @@ to him,
 and he said, &ldquo;but, where is binary search?&rdquo;.
 So, I did it for him.
 Who can argue with a best friend.
-Will I ever use it? No.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+Will I ever use it? No.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 
