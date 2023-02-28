@@ -11,8 +11,7 @@ It's the only outside hook which STL will use.
 But, it is vendor specific, you cannot do it as a client.
 There is actually no call in UNIX which tells you how much physical memory
 you have, how much is used, it's just impossible. 
-But, I needed to ship it, and in order to do that, I couldn't just
-require them to add a hook.
+But, I needed to ship it, and in order to do that, I couldn't just require them to add a hook.
 So I wrote the following thing:
 
     // ask for n, system gives you as much as it can, but not more than n.
@@ -26,7 +25,7 @@ So I wrote the following thing:
       return std::make_pair(buffer, n);
     }
 
-So it binary searches for a buffer small enough to fit[^malloc-return-value].
+So it binary searches for a buffer small enough to fit[^malloc-fail-return].
 Is it a useful piece of code? No.
 But, I had to ship.
 Guess what happened after that.
@@ -48,8 +47,7 @@ There is virtual memory but virtual memory is actually useless unless it's backe
 It's useful for remapping things[^memory-map].
 But, it is a figment of imagination.
 It does not exist.
-As [Seymour Cray][cray] used to say, "you can't simulate what you do
-not have"[^cray-ref-request]. 
+As [Seymour Cray][cray] used to say, "you can't simulate what you do not have"[^cray-ref-request]. 
 If your algorithm working set doesn't fit into physical memory,
 it will not just [thrash][thrash], your program will not terminate,
 because your memory starts working at the speed of a disk.
@@ -57,7 +55,7 @@ That's not good enough.
 
 It just shows you how imperfect life is.
 
-[^malloc-return-value]: `malloc` returns `NULL` when it fails to allocate of the requested size.
+[^malloc-fail-return]: `malloc` returns `NULL` when it fails to allocate of the requested size.
     Alex's `get_temporary_buffer` function uses that as an indicator that the requested buffer was too large
     and continues attempting smaller and smaller buffers.
 
@@ -287,6 +285,5 @@ but we are also using about 10x less memory.
 - [test_sort.cpp](code/test_sort.cpp)
 - [test_sort.h](code/test_sort.h)
 - [test_temp_buffer.cpp](code/test_temp_buffer.cpp)
-
 
 

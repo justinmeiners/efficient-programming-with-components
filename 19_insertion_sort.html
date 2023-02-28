@@ -431,47 +431,40 @@ you implement a comparison function which throws a coin.
 It randomly generates true or false.
 Then take <code>std::sort</code> and pass this function to it,
 because it will obviously create a randomly shuffled thing.
-Low and behold to everybody&rsquo;s amazement it caused
-segmentation fault.
-There were messages throughout Google saying STL is totally broken.
+Lo and behold to everybody&rsquo;s amazement it caused a segmentation fault.
+There were messages throughout Google saying, &ldquo;STL is totally broken&rdquo;.
 Obviously, because it brings Google down.
 Let&rsquo;s argue why he shouldn&rsquo;t do what he did.</p>
 
 <ol>
 <li><p>There is an algorithm in STL called <a href="https://en.cppreference.com/w/cpp/algorithm/random_shuffle"><code>std::random_shuffle</code></a>.
 Why not use that?</p></li>
-<li><p>Somebody more advanced, would say, even if it worked, it wouldn&rsquo;t
-be a uniform random shuffle<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
-It is screwed up, but it requires probability theory or Knuth.
+<li><p>Somebody more advanced, would say, even if it worked, it wouldn&rsquo;t be a uniform random shuffle<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
+What he did is screwed up.
+But knowing that requires probability theory or Knuth.
 These people at Google just don&rsquo;t read.
-The brightest people do not need to read (joke).</p></li>
-<li><p>My dear friend Dave Musser who was on sabbatical at Google ventured to post
-that he did not satisfy the preconditions.
-Random true/false is not a weak strict ordering,
-or any ordering whatsoever.
+The brightest people do not <em>need</em> to read (joke).</p></li>
+<li><p>My dear friend Dave Musser who was on sabbatical at Google ventured to post that he did not satisfy the preconditions.
+Randomly returning true or false is not a weak strict ordering, or any ordering whatsoever.
 He tried to explain, but they said no.
 It should work with whatever I pass to it.</p></li>
 </ol>
 
 
-<p>As you can imagine, we cannot rely on any properties, like sentinel with this
-going on.
+<p>As you can imagine, we cannot rely on any properties, like sentinel with this going on.
 For a while there were a bunch of postings on the internet saying,
 do not use <code>std::sort</code> because it requires <code>WeakStrictOrdering</code>.
 It&rsquo;s provably the weakest possible requirement.
 I thought it was good, but they turned it around and said no.
 Use <code>std::stable_sort</code>.
-I still see this in code, people use it when they don&rsquo;t need
-stability because they read these discussions.</p>
+I still see this in code, people use it when they don&rsquo;t need stability because they read these discussions.</p>
 
-<p>Apparently it is an expectation of a modern
-programmer that you don&rsquo;t have to satisfy any precondition.
+<p>Apparently it is an expectation of a modern programmer that you don&rsquo;t have to satisfy any precondition.
 Things should do something and never cause a segmentation fault.
 It is a tricky thing.
 Nowadays I wonder.
 What should we do when we build components?
-Should we assume that we build them the fastest way and carefully
-specify preconditions?
+Should we assume that we build them the fastest way and carefully specify preconditions?
 Or should we build idiot-proof (Google quality) components?
 This is a difficult question.
 I do not know the answer.</p>

@@ -34,8 +34,7 @@ It&rsquo;s the only outside hook which STL will use.
 But, it is vendor specific, you cannot do it as a client.
 There is actually no call in UNIX which tells you how much physical memory
 you have, how much is used, it&rsquo;s just impossible.
-But, I needed to ship it, and in order to do that, I couldn&rsquo;t just
-require them to add a hook.
+But, I needed to ship it, and in order to do that, I couldn&rsquo;t just require them to add a hook.
 So I wrote the following thing:</p>
 
 <pre><code>// ask for n, system gives you as much as it can, but not more than n.
@@ -72,8 +71,7 @@ There is virtual memory but virtual memory is actually useless unless it&rsquo;s
 It&rsquo;s useful for remapping things<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
 But, it is a figment of imagination.
 It does not exist.
-As <a href="https://en.wikipedia.org/wiki/Seymour_Cray">Seymour Cray</a> used to say, &ldquo;you can&rsquo;t simulate what you do
-not have&rdquo;<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
+As <a href="https://en.wikipedia.org/wiki/Seymour_Cray">Seymour Cray</a> used to say, &ldquo;you can&rsquo;t simulate what you do not have&rdquo;<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.
 If your algorithm working set doesn&rsquo;t fit into physical memory,
 it will not just <a href="https://en.wikipedia.org/wiki/Thrashing_(computer_science)">thrash</a>, your program will not terminate,
 because your memory starts working at the speed of a disk.
