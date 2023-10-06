@@ -32,10 +32,8 @@ Of course, you have never heard of him.
 He was the guy who invented first general purpose computer, but we
 don&rsquo;t remember people like that.
 In 1946 he gave a brilliant series of
-lectures at the <a href="https://en.wikipedia.org/wiki/Moore_School_of_Electrical_Engineering">Moore School</a> at <a href="https://en.wikipedia.org/wiki/University_of_Pennsylvania">Pennsylvania University</a>
-on programming.
-For the first time,
-he described things like merge, merge sort, and binary search.
+lectures at the <a href="https://en.wikipedia.org/wiki/Moore_School_of_Electrical_Engineering">Moore School</a> at <a href="https://en.wikipedia.org/wiki/University_of_Pennsylvania">Pennsylvania University</a> on programming.
+For the first time, he described things like merge, merge sort, and binary search.
 This is not a bad thing to be the first person to describe.
 He designed <a href="https://en.wikipedia.org/wiki/ENIAC">ENIAC</a> which should make him very famous.
 Indeed, he did some very fundamental work.</p>
@@ -43,24 +41,18 @@ Indeed, he did some very fundamental work.</p>
 <p>Then comes this interesting fact (from &ldquo;The Art of Computer Programming&rdquo;)
 It takes about 15 years for people to come up with binary search
 which sort of works for all possible inputs.
-Apparently people didn&rsquo;t have trouble coding binary search when the length is
-of the form <code>2^(n-1)</code>.
-Because it&rsquo;s easy, you take the middle element and
-then both sides will be of the same form
-and you can keep dividing.
+Apparently people didn&rsquo;t have trouble coding binary search when the length is of the form <code>2^(n-1)</code>.
+Because it&rsquo;s easy, you take the middle element and then both sides will be of the same form and you can keep dividing.
 Apparently people couldn&rsquo;t do it.
-Knuth claims that the first correct implementation was done by
-<a href="https://en.wikipedia.org/wiki/D._H._Lehmer">D.H. Lehmer</a>.
-He is someone you should know about
-as a very great computer scientist.
+Knuth claims that the first correct implementation was done by <a href="https://en.wikipedia.org/wiki/D._H._Lehmer">D.H. Lehmer</a>.
+He is someone you should know about as a very great computer scientist.
 He did amazing amount of work on computational number theory,
-things like sieves for discovering large primes and many other important things.
+like sieves for discovering large primes and many other important things.
 Among other things, he published a binary search which at least always terminated.</p>
 
 <p>I actually disagree with Knuth slightly
 and claim that the first correct binary search was published roughly at the same time,
-but a couple of years after,
-by a German computer scientist.
+but a couple of years after, by a German computer scientist.
 Once again, he is unjustly forgotten.
 He does not appear on Wikipedia<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
 His name is <a href="https://en.wikipedia.org/wiki/Hermann_Bottenbruch">Herman Bottenbruch</a>.
@@ -78,28 +70,23 @@ We will be actually studying his version.</p>
 <h2>bsearch is wrong</h2>
 
 <p>If we think about merging two sequences of roughly the same length,
-or rather exactly the same length <code>n</code>, the expected number of comparisons
-is going to be <code>2n - 1</code>.
+or rather exactly the same length <code>n</code>, the expected number of comparisons is going to be <code>2n - 1</code>.
 From which follows a conjecture.
-If we have sequences
-of size <code>n</code> and size <code>m</code> the number of comparisons should be <code>n + m - 1</code>.
-Not every conjecture is true however, this one is definitely false.
-Here is a simple counter example.
-Take a sequence of length 1000
-and a sequence of length 1.
-We only need <code>log(1000)</code> because
-we can binary search for its index.</p>
+If we have sequences of size <code>n</code> and size <code>m</code> the number of comparisons should be <code>n + m - 1</code>.
+Not every conjecture is true however.
+This one is definitely false.
+Here is a simple counterexample.
+Take a sequence of length 1000 and a sequence of length 1.
+We only need <code>log(1000)</code> because we can binary search for its index.</p>
 
 <p>So there is a fundamental possibility
 for using binary search for merging, dramatically reducing the number of comparisons.
 <code>log(n)</code> is much smaller than <code>n</code>.</p>
 
-<p>You might think we can just use binary search from
-a standard library, such as C <a href="https://man7.org/linux/man-pages/man3/bsearch.3.html"><code>bsearch(3)</code></a>.
+<p>You might think we can just use binary search from a standard library, such as C <a href="https://man7.org/linux/man-pages/man3/bsearch.3.html"><code>bsearch(3)</code></a>.
 Sounds like a plausible idea.
 It was written by great UNIX guys.
-They know something about programming, so let us see what they provide us with,
-by quoting the man page:</p>
+They know something about programming, so let us see what they provide us with (see <code>man 3 bsearch</code>):</p>
 
 <pre><code>void* bsearch(
     const void* key,
@@ -110,8 +97,7 @@ by quoting the man page:</p>
 );
 </code></pre>
 
-<p>Notice it takes all these parameters,
-and it&rsquo;s a little messy because it&rsquo;s C.
+<p>Notice it takes all these parameters, and it&rsquo;s a little messy because it&rsquo;s C.
 Components are hard for them<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
 Nevermind what it takes.
 What&rsquo;s interesting is what it returns.</p>
@@ -120,12 +106,10 @@ What&rsquo;s interesting is what it returns.</p>
 
 <p>So for our merge, it will most often return <code>NULL</code>.
 At which point, you will have to do linear search.
-So observe, ancient interface,
-done by brilliant people,
-in the standard library and it&rsquo;s utterly useless.</p>
+So observe, ancient interface, done by brilliant people, in the standard library, and it&rsquo;s utterly useless.</p>
 
-<p>Even if, we are so fortunte as to get a pointer to an element back.
-Does it help with merge? Especially if we want to make it stable?
+<p>Even if we are so fortunate as to get a pointer to an element back, does it help with merge?
+Especially if we want to make it stable?
 No.</p>
 
 <blockquote><p>If there are multiple elements that match the key, the element returned is unspecified.</p></blockquote>
@@ -135,32 +119,27 @@ It&rsquo;s a typical story for binary search.
 Even when the book is written by famous people.
 I&rsquo;ll show you how to write it.</p>
 
-<p>  This makes it difficult to write reusable components in the way Alex teaches.
-  As a workaround, one can use <code>void*</code> as a pointer to any type.
-  This is the method used by <code>bsearch</code> and <code>qsort</code>.</p>
-
 <a name="What-is-correct-code-3f-"></a>
 <h3>What is correct code?</h3>
 
 <p>Here comes another philosophical point.
 <em>What does wrong mean?</em>
 <em>What does incorrect mean?</em>
-At school they told you that the program is incorrect when <em>it doesn&rsquo;t satisfy its specifications</em>.
-Well, then <code>bsearch</code> is a correct program.
+At school they told you that the program is incorrect when <em>it doesn&rsquo;t satisfy its specifications</em>.</p>
+
+<p>Well then <code>bsearch</code> is a correct program.
 I looked at the source, it does do what it promises to do.
 It will return <code>NULL</code>.
 I wish it were not correct.
-I wished it returned something useful.</p>
+I wish it returned something useful.</p>
 
-<p>Correctness is a deeper concept than
-just satisfying specification.
-Well in reality, as you guys know,
-it must be deeper
-because you haven&rsquo;t got any specifications.
+<p>Correctness is a deeper concept than just satisfying specification.
+Well in reality, as you guys know, it must be deeper because you haven&rsquo;t got any specifications.
 When you write code, it&rsquo;s not that you are given specifications and need to encode them.
 I suspect that has never happened in your life, nor will it happen in any foreseeable future.
-But you still have to attempt to do something which is correct.
-Of course the people who advocate writing specifications will say yes, first
+But you still have to attempt to do something which is correct.</p>
+
+<p>Of course the people who advocate writing specifications will say yes, first
 you will write specification, and then implement specification.
 But, it&rsquo;s not going to help.
 Because, if you write wrong specification, you are the same guy who is going to write the implementation.
@@ -172,45 +151,37 @@ You have to establish correctness from more fundamental principles.
 if it does what it&rsquo;s supposed to do in some absolute sense.
 It&rsquo;s very hard to prove it.</p>
 
-<p>I think one of the lessons of this particular lecture is
-how hard simple things are.
-lots of very bright people cannot give it a correct interface.
-same with <code>bsearch</code>.</p>
+<p>I think one of the lessons of this particular lecture is how hard simple things are.
+lots of very bright people cannot give it a correct interface. Same with <code>bsearch</code>.</p>
 
 <p>You might say, &ldquo;Alex just talks about his beef with the standard committee.&rdquo;
 No.
-What I&rsquo;m trying to tell you is that
-when you write things like that in your code,
+What I&rsquo;m trying to tell you is that when you write things like that in your code,
 There will be some other guy using your code.
 Always think about that other guy.
-The great flaw in most code I see is there is no consideration
-for the other guy.
+The great flaw in most code I see is there is no consideration for the other guy.
 People think, &ldquo;oh it works, so it&rsquo;s done.&rdquo;
 My dream is that we all write code thinking about other people.
 Then you say, &ldquo;well, then I have to do more work.&rdquo;
 This is the beauty of sharing.
-You might have attended kindergarten
-and had a teacher that taught you it&rsquo;s good to share toys.
+You might have attended kindergarten and had a teacher that taught you it&rsquo;s good to share toys.
 She was right.</p>
 
 <a name="Linear-search"></a>
 <h2>Linear search</h2>
 
-<p>It would be very contrary to the way I do things to
-start with binary search.
+<p>It would be very contrary to the way I do things to start with binary search.
 How could we do binary search if we cannot do linear search?
-In STL it is called <a href="https://en.cppreference.com/w/cpp/algorithm/find"><code>std::find</code></a> or <code>std::find_if</code><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
-Let&rsquo;s see how to write it.
-We can assume we know how to do it,
-and start from the top,
+In STL it is called <a href="https://en.cppreference.com/w/cpp/algorithm/find"><code>std::find</code></a> or <code>std::find_if</code><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+
+<p>Let&rsquo;s see how to write it.
+We can assume we know how to do it, and start from the top,
 or we could assume we don&rsquo;t know what we are doing,
 which is usually the case when starting new things.
 I seldom start writing code from the signature.
 I don&rsquo;t know what the signature is.
-I typically have some algorithmic idea,
-so I start with that,
-often an inner loop.
-Then write code inside out.</p>
+I typically have some algorithmic idea, often an inner loop, so I start with that,
+Then write code inside out:</p>
 
 <pre><code>while (first != last &amp;&amp; ... find the element...) ++first;
 </code></pre>
@@ -233,16 +204,13 @@ because it is single pass.</p>
 <a name="Trimming-the-standard"></a>
 <h3>Trimming the standard</h3>
 
-<p>One of the mistakes which frequently happens is people
-use the principle of <a href="https://en.wikipedia.org/wiki/Occam%27s_razor">Occam&rsquo;s Razor</a>
-and say, &ldquo;we need to only have one <code>find_if</code>&rdquo;.
+<p>One of the mistakes which frequently happens is people use the principle of <a href="https://en.wikipedia.org/wiki/Occam%27s_razor">Occam&rsquo;s Razor</a> and say, &ldquo;we need to only have one <code>find_if</code>&rdquo;.
 That&rsquo;s what happened.
 After I submitted STL it had many fine functions,
 but Bjarne was very afraid that STL was too large and would not be accepted, as is.
 (It wasn&rsquo;t that enormous at that point.)
 He said, &ldquo;why don&rsquo;t I come to Palo Alto (I was at HP Labs)
-and bring along bunch of other standard committee people and we
-will trim it&rdquo;.
+and bring along bunch of other standard committee people and we will trim it&rdquo;.
 Trimming was a sad thing.
 Imagine somebody coming with a knife and cutting pieces of your flesh.
 One of the things he said was there should be only one <code>find_if</code>.</p>
@@ -367,8 +335,7 @@ std::pair&lt;I, N&gt; find_if_n(I first, N n, P pred) {
 <h2>Advance and distance functions</h2>
 
 <p>How does <a href="https://en.cppreference.com/w/cpp/iterator/advance"><code>std::advance</code></a> work?
-It was introduced by me to allow
-us to do long or fast thing depending on iterator type.
+It was introduced by me to allow us to do long or fast thing depending on iterator type.
 For a pointer it will translate to one instruction.
 It&rsquo;s going to be fast.
 In the case of a linked list, it&rsquo;s going to be linear time.
@@ -439,21 +406,22 @@ typename std::iterator_traits&lt;I&gt;::difference_type distance(I&amp; first, I
 <hr/>
 <ol>
 <li id="fn:1">
-He does <a href="https://en.wikipedia.org/wiki/Hermann_Bottenbruch">now</a>!<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+He has a Wikipedia page <a href="https://en.wikipedia.org/wiki/Hermann_Bottenbruch">now</a>!<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
-C does not have <code>template</code> or any other type safe form of generics.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
+C does not have a type safe form of generics like <code>template</code>.
+This makes it difficult to write reusable components in the way Alex teaches.
+The workaround used by <code>bsearch</code> and <code>qsort</code> is to return <code>void *</code> which is a pointer to any type.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
-Alex: &ldquo;The name is stolen from Common Lisp <a href="http://clhs.lisp.se/Body/f_find_.htm"><code>find</code></a>.
+Alex: The name is stolen from Common Lisp <a href="http://clhs.lisp.se/Body/f_find_.htm"><code>find</code></a>.
 Always try to borrow from some place.
 Originality is frowned upon,
 especially for naming.
-Everyone loves to make non-standard names.&rdquo;<a href="#fnref:3" rev="footnote">&#8617;</a></li>
+Everyone loves to make non-standard names.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 <li id="fn:4">
-This is an amusing comment because
-Alex just got done talking about why <code>find_if_not</code>
-was such a helpful contribution
-and how we should consider the needs of the user
-and give them various convenience interfaces for algorithms.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+I find this comment amusing because
+Alex just got done talking about why <code>find_if_not</code>was such a helpful contribution
+It&rsquo;s not clear how to reconcile his advice to carefully considering convenience of user,
+with this comment about not wanting to provide convenient interfaces for algorithms.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
 These two kinds of ranges are discussed in depth in &ldquo;Elements of Programming&rdquo; chapter 6.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">

@@ -9,10 +9,8 @@ Of course, you have never heard of him.
 He was the guy who invented first general purpose computer, but we
 don't remember people like that.
 In 1946 he gave a brilliant series of
-lectures at the [Moore School][moore-school] at [Pennsylvania University][penn] 
-on programming.
-For the first time,
-he described things like merge, merge sort, and binary search.
+lectures at the [Moore School][moore-school] at [Pennsylvania University][penn] on programming.
+For the first time, he described things like merge, merge sort, and binary search.
 This is not a bad thing to be the first person to describe.
 He designed [ENIAC][eniac] which should make him very famous.
 Indeed, he did some very fundamental work.
@@ -20,24 +18,18 @@ Indeed, he did some very fundamental work.
 Then comes this interesting fact (from "The Art of Computer Programming")
 It takes about 15 years for people to come up with binary search
 which sort of works for all possible inputs.
-Apparently people didn't have trouble coding binary search when the length is
-of the form `2^(n-1)`.
-Because it's easy, you take the middle element and
-then both sides will be of the same form
-and you can keep dividing.
+Apparently people didn't have trouble coding binary search when the length is of the form `2^(n-1)`.
+Because it's easy, you take the middle element and then both sides will be of the same form and you can keep dividing.
 Apparently people couldn't do it.
-Knuth claims that the first correct implementation was done by 
-[D.H. Lehmer][lehmer].
-He is someone you should know about
-as a very great computer scientist.
+Knuth claims that the first correct implementation was done by [D.H. Lehmer][lehmer].
+He is someone you should know about as a very great computer scientist.
 He did amazing amount of work on computational number theory,
-things like sieves for discovering large primes and many other important things.
+like sieves for discovering large primes and many other important things.
 Among other things, he published a binary search which at least always terminated.
 
 I actually disagree with Knuth slightly
 and claim that the first correct binary search was published roughly at the same time,
-but a couple of years after,
-by a German computer scientist.
+but a couple of years after, by a German computer scientist.
 Once again, he is unjustly forgotten.
 He does not appear on Wikipedia[^bottenbruch-not-on-wiki].
 His name is [Herman Bottenbruch][bottenbruch].
@@ -51,7 +43,7 @@ They didn't know how to do stacks.
 But sadly enough he doesn't get much credit, especially credit for correct binary search.
 We will be actually studying his version.
 
-[^bottenbruch-not-on-wiki]: He does [now][bottenbruch]!
+[^bottenbruch-not-on-wiki]: He has a Wikipedia page [now][bottenbruch]!
 
 [mauchly]: https://en.wikipedia.org/wiki/John_Mauchly
 [moore-school]: https://en.wikipedia.org/wiki/Moore_School_of_Electrical_Engineering
@@ -66,28 +58,23 @@ We will be actually studying his version.
 ## bsearch is wrong
 
 If we think about merging two sequences of roughly the same length,
-or rather exactly the same length `n`, the expected number of comparisons
-is going to be `2n - 1`.
+or rather exactly the same length `n`, the expected number of comparisons is going to be `2n - 1`.
 From which follows a conjecture.
-If we have sequences
-of size `n` and size `m` the number of comparisons should be `n + m - 1`.
-Not every conjecture is true however, this one is definitely false.
-Here is a simple counter example.
-Take a sequence of length 1000
-and a sequence of length 1.
-We only need `log(1000)` because
-we can binary search for its index.
+If we have sequences of size `n` and size `m` the number of comparisons should be `n + m - 1`.
+Not every conjecture is true however.
+This one is definitely false.
+Here is a simple counterexample.
+Take a sequence of length 1000 and a sequence of length 1.
+We only need `log(1000)` because we can binary search for its index.
 
 So there is a fundamental possibility
 for using binary search for merging, dramatically reducing the number of comparisons.
 `log(n)` is much smaller than `n`.
 
-You might think we can just use binary search from
-a standard library, such as C [`bsearch(3)`][bsearch].
+You might think we can just use binary search from a standard library, such as C [`bsearch(3)`][bsearch].
 Sounds like a plausible idea.
 It was written by great UNIX guys.
-They know something about programming, so let us see what they provide us with,
-by quoting the man page:
+They know something about programming, so let us see what they provide us with (see `man 3 bsearch`):
 
     void* bsearch(
         const void* key,
@@ -97,8 +84,7 @@ by quoting the man page:
         int (*compare)(const void*, const void*)
     );
 
-Notice it takes all these parameters,
-and it's a little messy because it's C.
+Notice it takes all these parameters, and it's a little messy because it's C.
 Components are hard for them[^bsearch-generics-hard].
 Nevermind what it takes.
 What's interesting is what it returns.
@@ -107,12 +93,10 @@ What's interesting is what it returns.
 
 So for our merge, it will most often return `NULL`.
 At which point, you will have to do linear search.
-So observe, ancient interface,
-done by brilliant people,
-in the standard library and it's utterly useless.
+So observe, ancient interface, done by brilliant people, in the standard library, and it's utterly useless.
 
-Even if, we are so fortunte as to get a pointer to an element back.
-Does it help with merge? Especially if we want to make it stable?
+Even if we are so fortunate as to get a pointer to an element back, does it help with merge?
+Especially if we want to make it stable?
 No.
 
 > If there are multiple elements that match the key, the element returned is unspecified.
@@ -122,10 +106,9 @@ It's a typical story for binary search.
 Even when the book is written by famous people.
 I'll show you how to write it.
 
-[^bsearch-generics-hard]: C does not have `template` or any other type safe form of generics.
-  This makes it difficult to write reusable components in the way Alex teaches.
-  As a workaround, one can use `void*` as a pointer to any type.
-  This is the method used by `bsearch` and `qsort`.
+[^bsearch-generics-hard]: C does not have a type safe form of generics like `template`.
+    This makes it difficult to write reusable components in the way Alex teaches.
+    The workaround used by `bsearch` and `qsort` is to return `void *` which is a pointer to any type.
 
 ### What is correct code?
 
@@ -133,20 +116,19 @@ Here comes another philosophical point.
 *What does wrong mean?*
 *What does incorrect mean?*
 At school they told you that the program is incorrect when *it doesn't satisfy its specifications*.
-Well, then `bsearch` is a correct program.
+
+Well then `bsearch` is a correct program.
 I looked at the source, it does do what it promises to do.
 It will return `NULL`.
 I wish it were not correct.
-I wished it returned something useful.
+I wish it returned something useful.
 
-Correctness is a deeper concept than
-just satisfying specification.
-Well in reality, as you guys know,
-it must be deeper 
-because you haven't got any specifications.
+Correctness is a deeper concept than just satisfying specification.
+Well in reality, as you guys know, it must be deeper because you haven't got any specifications.
 When you write code, it's not that you are given specifications and need to encode them.
 I suspect that has never happened in your life, nor will it happen in any foreseeable future.
 But you still have to attempt to do something which is correct.
+
 Of course the people who advocate writing specifications will say yes, first 
 you will write specification, and then implement specification.
 But, it's not going to help.
@@ -159,46 +141,38 @@ You have to establish correctness from more fundamental principles.
 if it does what it's supposed to do in some absolute sense.
 It's very hard to prove it.
 
-I think one of the lessons of this particular lecture is
-how hard simple things are.
-lots of very bright people cannot give it a correct interface.
-same with `bsearch`.
+I think one of the lessons of this particular lecture is how hard simple things are.
+lots of very bright people cannot give it a correct interface. Same with `bsearch`.
 
 You might say, "Alex just talks about his beef with the standard committee."
 No.
-What I'm trying to tell you is that
-when you write things like that in your code,
+What I'm trying to tell you is that when you write things like that in your code,
 There will be some other guy using your code.
 Always think about that other guy.
-The great flaw in most code I see is there is no consideration
-for the other guy.
+The great flaw in most code I see is there is no consideration for the other guy.
 People think, "oh it works, so it's done."
 My dream is that we all write code thinking about other people.
 Then you say, "well, then I have to do more work."
 This is the beauty of sharing.
-You might have attended kindergarten
-and had a teacher that taught you it's good to share toys.
+You might have attended kindergarten and had a teacher that taught you it's good to share toys.
 She was right.
 
 [bsearch]: https://man7.org/linux/man-pages/man3/bsearch.3.html
 
 ## Linear search
 
-It would be very contrary to the way I do things to
-start with binary search.
+It would be very contrary to the way I do things to start with binary search.
 How could we do binary search if we cannot do linear search?
-In STL it is called [`std::find`][cpp-find] or `std::find_if`[^name].
+In STL it is called [`std::find`][cpp-find] or `std::find_if`[^name-of-find-function].
+
 Let's see how to write it.
-We can assume we know how to do it,
-and start from the top,
+We can assume we know how to do it, and start from the top,
 or we could assume we don't know what we are doing,
 which is usually the case when starting new things.
 I seldom start writing code from the signature.
 I don't know what the signature is.
-I typically have some algorithmic idea,
-so I start with that,
-often an inner loop.
-Then write code inside out.
+I typically have some algorithmic idea, often an inner loop, so I start with that,
+Then write code inside out:
 
     while (first != last && ... find the element...) ++first;
 
@@ -218,16 +192,13 @@ because it is single pass.
 
 ### Trimming the standard
 
-One of the mistakes which frequently happens is people
-use the principle of [Occam's Razor][razor]
-and say, "we need to only have one `find_if`".
+One of the mistakes which frequently happens is people use the principle of [Occam's Razor][razor] and say, "we need to only have one `find_if`".
 That's what happened.
 After I submitted STL it had many fine functions,
 but Bjarne was very afraid that STL was too large and would not be accepted, as is.
 (It wasn't that enormous at that point.)
 He said, "why don't I come to Palo Alto (I was at HP Labs)
-and bring along bunch of other standard committee people and we
-will trim it". 
+and bring along bunch of other standard committee people and we will trim it". 
 Trimming was a sad thing.
 Imagine somebody coming with a knife and cutting pieces of your flesh.
 One of the things he said was there should be only one `find_if`.
@@ -344,17 +315,16 @@ So let's try writing `find_if_n`
       return std::make_pair(first, n);
     }
 
-[^name]: Alex: "The name is stolen from Common Lisp [`find`][clhs-find].
+[^name-of-find-function]: Alex: The name is stolen from Common Lisp [`find`][clhs-find].
     Always try to borrow from some place.
     Originality is frowned upon,
     especially for naming.
-    Everyone loves to make non-standard names."
+    Everyone loves to make non-standard names.
 
-[^wrapper]: This is an amusing comment because
-    Alex just got done talking about why `find_if_not`
-    was such a helpful contribution
-    and how we should consider the needs of the user
-    and give them various convenience interfaces for algorithms.
+[^wrapper]: I find this comment amusing because
+    Alex just got done talking about why `find_if_not`was such a helpful contribution
+    It's not clear how to reconcile his advice to carefully considering convenience of user,
+    with this comment about not wanting to provide convenient interfaces for algorithms.
 
 [^eop-range-kinds]: These two kinds of ranges are discussed in depth in "Elements of Programming" chapter 6.
 
@@ -367,8 +337,7 @@ So let's try writing `find_if_n`
 ## Advance and distance functions
 
 How does [`std::advance`][cpp-advance] work?
-It was introduced by me to allow
-us to do long or fast thing depending on iterator type.
+It was introduced by me to allow us to do long or fast thing depending on iterator type.
 For a pointer it will translate to one instruction.
 It's going to be fast.
 In the case of a linked list, it's going to be linear time.
