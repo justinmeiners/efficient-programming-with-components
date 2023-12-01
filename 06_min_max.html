@@ -200,9 +200,9 @@ orderings and equivalence relations on a type.</p>
 inline
 const T&amp; min(const T&amp; a, const T&amp; b, Compare cmp) {
   if (cmp(b, a)) {
-    return a;
+    return b;
   } else {
-    return b; 
+    return a; 
   }
 }
 </code></pre>
