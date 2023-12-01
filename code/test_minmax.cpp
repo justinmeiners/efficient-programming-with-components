@@ -49,19 +49,21 @@ std::pair<double, double> minmax_comparisons(I first, I last) {
   typedef typename std::iterator_traits<I>::value_type T;
   std::pair<double, double> result;
   std::pair<I, I> m0, m1;
+
+  std::vector<T> seq(first, last);
   {
-    std::vector<T> seq(first, last);
     comparisons = 0;
     m0 = ::minmax_element_simple(seq.begin(), seq.end(), counting_less);
     result.first = comparisons;
   }
   {
-    std::vector<T> seq(first, last);
     comparisons = 0;
     m1 = ::minmax_element(seq.begin(), seq.end(), counting_less);
     result.second = comparisons;
   }
-  if (m0 != m1) std::cout << "Failed: different mins or maxs\n";
+  if (m0 != m1) { 
+      std::cout << "Failed: different mins or maxs\n";
+  }
   return result;
 }
 
