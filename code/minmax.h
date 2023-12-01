@@ -23,7 +23,7 @@ struct less {
 
 template <typename T>
 const T& min(const T& a, const T& b) {
-  return min(a, b, std::less<T>());
+  return min(a, b, less<T>());
 }
 
 template<typename T, typename Compare>
@@ -37,6 +37,10 @@ const T& max(const T& a, const T& b, Compare cmp) {
   }
 }
 
+template <typename T>
+const T& max(const T& a, const T& b) {
+  return max(a, b, less<T>());
+}
 
 template<typename T, typename Compare>
 // requires Compare is a StrictWeakOrdering on T
