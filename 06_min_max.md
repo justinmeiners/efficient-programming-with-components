@@ -48,7 +48,7 @@ It's guaranteed.
 
 **Axiom 3:** Anti-symmetric: If `a < b` then `!(b < a)`.
 
-**Axiom 4:** If `a != b` then `a < b` or ` b > a`.
+**Axiom 4:** If `a != b` then `a < b` or `b > a`.
 
 This is also called the trichotomy law,
 because for all elements, exactly one of three things must be true[^eop-ordering]:
@@ -97,7 +97,7 @@ Because for `TotallyOrdered` we need to be able to know
 
 The `==` is equality, not another equivalence relation.
 We can't conclude that with a weak ordering.
-We must overloaded symbols for what they commonly mean.
+We must overload symbols for what they commonly mean.
 
 [^eop-ordering]: Alex recommends chapter 4 of "Elements of Programming"
     to learn more about this subject.
@@ -344,7 +344,7 @@ Every time I talk to one member of the standard
 committee he always says, "Alex you are too theoretical".
 I guess I am because I pay attention to
 these little details.
-But I claim to be able to to show you that
+But I claim to be able to show you that
 things like that will matter. 
 
 Later we will generalize it on a bunch of things.

@@ -283,7 +283,7 @@ Note that forward copy is the wrong thing, because it will overwrite everything 
 
 ### Rotate for forward iterators
 
-For `ForwardIteratorj we have to shift all the elements up,
+For `ForwardIterator` we have to shift all the elements up,
 we move one out of the way, to make room,
 and continue up the array until we find an empty place to put it.
 
@@ -383,7 +383,7 @@ List sort destroys locality.
 If at every `cdr` (next) you get to a different cache
 line, that's a problem.
 In our sort we constantly re-link next, 
-o eventually you get to a point where everything is scattered all over memory.
+so eventually you get to a point where everything is scattered all over memory.
 
 STL used to have a sentence in the container
 section which the standard committee threw out.

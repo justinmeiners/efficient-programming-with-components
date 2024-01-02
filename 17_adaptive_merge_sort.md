@@ -146,7 +146,7 @@ No because it is recursive.
 Note we put the buffer argument at the end, because
 we are extending the interface of the previous sort.
 
-Now to use it in our framework we need a more convienent interface.
+Now to use it in our framework we need a more convenient interface.
 We have too many parameters, so we need to somehow get rid of all of them.
 We write a wrapper.
 

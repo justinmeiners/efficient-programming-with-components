@@ -186,7 +186,7 @@ So it must be a `ForwardIterator`.
 
 ## Finding min and max together
 
-How many comparisons do we need to to find the min of five elements?
+How many comparisons do we need to find the min of five elements?
 Four.
 In general why do we need `n - 1` comparisons.
 Why no more? We don't need to compare an element with itself.

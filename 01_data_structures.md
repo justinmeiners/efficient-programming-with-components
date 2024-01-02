@@ -135,7 +135,7 @@ Whomever really wants to learn, will learn, and that is a challenge because it i
 a room of programmers know it's going to be an empty set. 
 That doesn't mean that you as an individual person doesn't know things, but intersection is going to be relatively small.
 
-Unfortunatly we've got to a point where nobody teaches programming.
+Unfortunately we've got to a point where nobody teaches programming.
 Because there's no professor of computer science who has any idea how to program[^teaching-programming].
 Part of what I am trying to do here is to start discussing
 little things like, how do we name variables?
@@ -159,7 +159,7 @@ C++ treats `main` as a special function; meaning when the control goes
 through the last brace, zero is returned.
 Because the standard UNIX convention, which became Universal
 convention, that on success you return zero. 
-The language actually allows you to do things things like that.
+The language actually allows you to do things like that.
 
 One warning, [`cout`][cout] stuff works pretty much like how you think it works.
 However a friend of mine wrote something like:
@@ -209,7 +209,7 @@ When we narrowed things down we always found something
 pertaining to incorrect use of STL[^about-stl].
 It's usually a one liner and the most egregious.
 
-The most most amazing thing is the following one liner which I will start in the
+The most amazing thing is the following one liner which I will start in the
 beginning of the course, because it was just so important.
 We could weave the whole fabric of the course around this one little example.
 There was a range of integers. For example:
@@ -251,7 +251,7 @@ Equality gives us linear search while sorting gives us binary search so we can f
 One of the amazing things which we will discover is that ordering is very important.
 Things which we could do with ordering cannot be effectively done just with equality[^cl-mistake].
 
-If we are going by the book we we will say sorting is good as long it does approximately `O(n log(n))` operations.
+If we are going by the book we will say sorting is good as long it does approximately `O(n log(n))` operations.
 This is good for the books.
 It's actually not good for our code, because Big O
 could have an arbitrary coefficient.
@@ -464,7 +464,7 @@ specific type.
 This is very good, we have to have that.
 But then we also need to have times for specific commonly used types.
 So these are two things which we need to do.
-Our goal is to to be able to measure this problem with `set` and with sort.
+Our goal is to be able to measure this problem with `set` and with sort.
 But, first we need to learn more about C++.
 
 [red-black]: https://en.wikipedia.org/wiki/Red%E2%80%93black_tree

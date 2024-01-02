@@ -170,7 +170,7 @@ What is the complexity of merge sort, in terms of comparisons?
 `O(n log(n))`.
 What is the specific coefficient for insertion sort?
 The sorted portion is on average half the length of the original input.
-In addition, on average when we an insert an element we
+In addition, on average when we insert an element we
 only have to go half the length before finding its location.
 Therefore the complexity
 is roughly: `n^2/4`.

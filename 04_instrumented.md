@@ -324,7 +324,7 @@ Everything has its place, Dijkstra's strictures not withstanding[^goto].
 
 
 [^goto]: Goto used to be the primary way to do control flow in programs,
-    because it closely resembles how how machines and their languages work.
+    because it closely resembles  how machines and their languages work.
 
     For example, to implement a `while` loop, you might write:
 
