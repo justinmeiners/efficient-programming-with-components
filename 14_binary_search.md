@@ -85,7 +85,7 @@ But, for our course we will follow the standard.
       return first == last;
     }
 
-Now for bounded ranges:
+Now for counted ranges:
 
     template<typename I, typename N, typename P>
     // I is InputIterator

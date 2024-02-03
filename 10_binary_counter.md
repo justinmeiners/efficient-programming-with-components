@@ -230,7 +230,7 @@ we're just rebalancing parentheses[^min-not-commutative].
     We distinguish between the left and right argument.
 
 [^associativity]: A binary function `f` is [associative](https://en.wikipedia.org/wiki/Associative_property)
-    if the the following holds for all `a, b, c` in its domain:
+    if the following holds for all `a, b, c` in its domain:
 
         f(f(a, b), c)) = f(a, f(b, c))
 
@@ -265,7 +265,7 @@ we're just rebalancing parentheses[^min-not-commutative].
         * * * * *     * * *
                       * * *
 
-    Or as [Dirchlet][dirichlet] put it: "Whether you arrange soldiers in rows or columns, you still have the same number of soldiers".
+    Or as [Dirichlet][dirichlet] put it: "Whether you arrange soldiers in rows or columns, you still have the same number of soldiers".
 
     An example of an operation which is not commutative is string concatenation. 
 
@@ -281,7 +281,7 @@ They should have taught it in high school.
 But, they want to publish papers themselves and not tell you the general mechanism.
 
 Let us assume we have elements of type `T` that need to be paired or combined in some way,
-whether with `min`, `+`, `merge`, or any other assocative operation on `T`.
+whether with `min`, `+`, `merge`, or any other associative operation on `T`.
 What we can do is create an array called a "counter".
 
        index: 0  1  ...   31
@@ -323,12 +323,12 @@ Otherwise `x` wins:
 
 What if the index `1` slot was non-zero, after comparing `x` and `y`?
 Then the guy there already won one game.
-So, we must **carry propogate**[^adder-circuit].
+So, we must **carry propagate**[^adder-circuit].
 Repeat the same process all the way up the counter, until we find a slot which is zero.
 What if the counter is full, and has no zero slots?
 That's called an **overflow**.
 
-We borrow terminology from binary integer arithemtic because
+We borrow terminology from binary integer arithmetic because
 our counter works just like a binary integer counting up:
 
     0 0 0
@@ -340,7 +340,7 @@ our counter works just like a binary integer counting up:
     0 1 1
     1 1 1
 
-But instead of 0 and 1 in each slot or "bit" we have arbitary elements that are combined with an associative operation.
+But instead of 0 and 1 in each slot or "bit" we have arbitrary elements that are combined with an associative operation.
 
 ### Handling overflow
 
@@ -363,7 +363,7 @@ on type `T` and what we discovered is if we have associativity,
 we can make this counter and it will work for us.
 
 [^adder-circuit]: The terms **carry** and **overflow**
-    are closely associated the implementation of binary counting
+    are closely associated with the implementation of binary counting
     or addition as an electrical circuit, called an [adder][adder].
 
     A single bit adder has two inputs `a` and `b` for
@@ -383,7 +383,7 @@ we can make this counter and it will work for us.
         1  1 | 1  0
 
     This adds a single digit, but we want to add entire numbers.
-    To, do so we add an additional input `l` for carried digits
+    To do so we add an additional input `l` for carried digits
     from lower place values.
 
         a  b  l    c  s
@@ -405,7 +405,7 @@ we can make this counter and it will work for us.
 
     An **overflow** is when the last adder has a non-zero carry.
 
-[^errors]: Floating point arithemetic can involve many tricky details,
+[^errors]: Floating point arithmetic can involve many tricky details,
     but the basic issue Alex is referring to is straightforward.
     We often use scientific notation to write larger numbers as a decimal to a power,
     when they would otherwise be very long to write out.
@@ -573,8 +573,8 @@ We could compete with Steve Jobs for elegance of our design[^alex-apple-joke].
 
 **Exercise:** Rewrite `min_element` using this code (just `min_element`, don't worry about second best).
 
-**Exercise:**  If you want to implement [merge sort][merge-sort] you can use exactly the same device, since merge is associative. The idea with merge sort, is you only want to merge lists if they are roughly the same length and this helps you do it (see Chapter 12).
-    Write the associtative binary operation `merge` which can combine two sorted arrays into a sorted array.
+**Exercise:** If you want to implement [merge sort][merge-sort] you can use exactly the same device, since merge is associative. The idea with merge sort, is you only want to merge lists if they are roughly the same length and this helps you do it (see Chapter 12).
+    Write the associative binary operation `merge` which can combine two sorted arrays into a sorted array.
 
 **Exercise:** When we become grownups we learn about advanced data structures, such as [binomial forest][binomial]. They use the same idea. Learn about this data structure and try to figure out where
     the counter could be used. 

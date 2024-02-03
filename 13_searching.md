@@ -271,7 +271,7 @@ Once upon a time I believed ranges come in two kinds[^eop-range-kinds].
 
 1. **Bounded ranges**: Ranges bounded by a first and last iterator/pointer.
 2. **Counted ranges**: Ranges constructed from a first pointer/iterator and an 
-    interger `N`.
+    integer `N`.
 
 Which one is better?
 Both are good, and both are different.
@@ -322,7 +322,7 @@ So let's try writing `find_if_n`
     Everyone loves to make non-standard names.
 
 [^wrapper]: I find this comment amusing because
-    Alex just got done talking about why `find_if_not`was such a helpful contribution
+    Alex just got done talking about why `find_if_not` was such a helpful contribution
     It's not clear how to reconcile his advice to carefully considering convenience of user,
     with this comment about not wanting to provide convenient interfaces for algorithms.
 

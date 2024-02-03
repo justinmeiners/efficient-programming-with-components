@@ -18,7 +18,7 @@ I wanted this job really badly.
 A friend of mine who
 worked at this Institute recommended me to this group.
 I knew I was going to go
-there for for an interview and I'd have to say some wonderful things or they
+there for an interview and I'd have to say some wonderful things or they
 would not give me a job.
 Right before my interview, terrible thing happened.
 I ate some raw fish and it was very tasty but within
@@ -56,8 +56,8 @@ there is this thing called associativity.
 I realized that this idea will work as long as the operation is associative.
 
 This became my central theme.
-how could I talk about associative operations?
-how could I write algorithms like that?
+How could I talk about associative operations?
+How could I write algorithms like that?
 When I came to United States somewhere along the way,
 maybe in Austria, I realized that merge was associative
 It was a very big deal because I never even thought about merge in terms of `+` and `*`, but merge is associative.
@@ -141,13 +141,13 @@ There are several [iterator concepts][cpp-iterator-concepts] in STL[^sgi],
 all of which we have mentioned before:
 
 - [`InputIterator`][cpp-input-iterator]: can only advance forward and once advanced, iterators pointing to previous elements become invalid. 
-- [`ForwardIterator`][cpp-forward-iteartor]: can advance forward and have iterators pointing to previous elements.
+- [`ForwardIterator`][cpp-forward-iterator]: can advance forward and have iterators pointing to previous elements.
 - [`BidirectionalIterator`][cpp-bi-iterator]: can move iterators forward and backward.
 - [`RandomAccessIterator`][cpp-random-iterator]: can advance iterators by arbitrary steps in constant time (like pointers).
 
 [cpp-iterator-concepts]: https://en.cppreference.com/w/cpp/iterator
 [cpp-input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-[cpp-forward-iteartor]: https://en.cppreference.com/w/cpp/named_req/ForwardIterator
+[cpp-forward-iterator]: https://en.cppreference.com/w/cpp/named_req/ForwardIterator
 [cpp-bi-iterator]: https://en.cppreference.com/w/cpp/named_req/BidirectionalIterator 
 [cpp-random-iterator]: https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator 
 
@@ -220,9 +220,9 @@ on a built-in type instead of a class.
 
         foo(x,y)
 
-    However Alex doesn't follow this convention:
+    However Alex doesn't follow this convention.
 
-[^member-functions-on-primtives]: Other programming languages, such as Swift, allow you to extend primitive types like `int` with additional member functions.
+[^member-functions-on-primitives]: Other programming languages, such as Swift, allow you to extend primitive types like `int` with additional member functions.
 
 [iterators-must-go]: https://accu.org/conf-docs/PDFs_2009/AndreiAlexandrescu_iterators-must-go.pdf
 
@@ -338,7 +338,7 @@ inheritance, smart pointers, or read certain books.
 Now I'm going to teach you to use `goto`.
 The greatest authority in computer science wrote a famous letter to
 communications of ACM called, ["Go To Statement Considered Harmful"][harmful].
-There is is nothing harmful in the computer.
+There is nothing harmful in the computer.
 The computer is good.
 It has an instruction called [JMP][jump] (or branch).
 If it's there, why not use it?
@@ -475,7 +475,7 @@ Modern processors try to predict which
 way a condition is going to go.
 If you look at our branches, the probability
 of going one way or the other is 50 percent.
-That's literally the worst thing which which could happen.
+That's literally the worst thing which could happen.
 I'm entering the territory where I haven't done work yet.
 I haven't tried see whether some kind of predication avoidance of `goto`
 could be done.
@@ -498,7 +498,7 @@ There is no code, it's just a way of invoking our merge function.
 It has 5 arguments, and we need a binary function.
 
     template <typename I, typename Compare>
-    // I is Linked Iteratork
+    // I is Linked Iterator
     struct mergesort_linked_operation
     {
       typedef I argument_type;

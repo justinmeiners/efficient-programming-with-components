@@ -26,7 +26,7 @@ So, I'm not even going to mention Yahoo (joke).
 I did interview at Facebook and let me tell you what I saw of that place... 
 That was five years ago.
 Maybe they improved but I don't think so.
-Places tend to to decline.
+Places tend to decline.
 
 You might say: "Who are you to tell us?"
 I am as guilty as any of you. 
@@ -261,7 +261,7 @@ to `TotallyOrdered`.
 
 **Axiom 3:** Anti-symmetric: If `a < b` then `!(b < a)`.
 
-**Axiom 4:** If `a != b` then `a < b` or ` b > a`.
+**Axiom 4:** If `a != b` then `a < b` or `b > a`.
 
 In the same way that the semantics of `==` is related to `!=`,
 we can see the semantics of `<` must be totally bound to the semantics of equality.

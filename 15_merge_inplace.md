@@ -35,7 +35,7 @@ As an algorithm itself, it's utterly useless.
 But sometimes algorithms published by theoreticians can be used by us, after appropriate modification.
 
 [^merge-sort-exercise]: See exercise 5.5.3 (Pg. 390) in Volume 3 of "The Art of Computer Programming".
-    The algorithm itself and the attirbution to Vaughan Pratt is in the solution (Pg. 701).
+    The algorithm itself and the attribution to Vaughan Pratt is in the solution (Pg. 701).
 
 [^on-a-stable-minimum-storage-merge]: ["On a Stable Minimum Storage Merging Algorithm"](papers/on-stable-merge.pdf). Information Processing Letters. 1981.
 
@@ -54,7 +54,7 @@ Today I'm going to teach you some other bad programming practices because it's a
 pleasant to introduce techniques which are known to be bad in general when
 they're good in particular.
 
-We're going to to go about things in a funny way.
+We're going to go about things in a funny way.
 Normally when I teach merge,
 we then realize it can be used for sorting.
 We write merge sort and then we realize that merge sort needs extra memory,
@@ -308,7 +308,7 @@ I guess, I did not see it.
 
 I'm just emphasizing a very important naming principle
 which is to think about indexing. 
-think about indexing things you you know like
+think about indexing things you know like
 `find_if`, not `if_find`.
 Suffixes should be sorted in the order of importance.
 

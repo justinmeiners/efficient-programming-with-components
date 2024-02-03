@@ -279,7 +279,7 @@ For example, when we stop quicksort early we might have:
 1 is the sentinel.
 The line drawn in that range is not necessarily a quicksort partition.
 If it were, we couldn't have 2 on the right side.
-We have absoutely no idea where the real quicksort partitions are.
+We have absolutely no idea where the real quicksort partitions are.
 But, we know that there is a partition boundary within some threshold
 (say left of the line).
 
@@ -453,5 +453,5 @@ It's a competition! Consider teaming up and sharing ideas.
     is an algorithm which produces a random permutation of the elements,
     in a manner such that all possible permutations are equally likely.
     Since there are `n!` permutations, each permutation should occur
-    with probablilty `1/n!` (See "The Art of Computer Programming" 3.4.2).
+    with probability `1/n!` (See "The Art of Computer Programming" 3.4.2).
 
