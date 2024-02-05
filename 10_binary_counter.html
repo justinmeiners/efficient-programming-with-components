@@ -228,7 +228,7 @@ They should have taught it in high school.
 But, they want to publish papers themselves and not tell you the general mechanism.</p>
 
 <p>Let us assume we have elements of type <code>T</code> that need to be paired or combined in some way,
-whether with <code>min</code>, <code>+</code>, <code>merge</code>, or any other assocative operation on <code>T</code>.
+whether with <code>min</code>, <code>+</code>, <code>merge</code>, or any other associative operation on <code>T</code>.
 What we can do is create an array called a &ldquo;counter&rdquo;.</p>
 
 <pre><code>   index: 0  1  ...   31
@@ -275,12 +275,12 @@ x 0  ...   0     --&gt;    0 x  ...   0
 
 <p>What if the index <code>1</code> slot was non-zero, after comparing <code>x</code> and <code>y</code>?
 Then the guy there already won one game.
-So, we must <strong>carry propogate</strong><sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup>.
+So, we must <strong>carry propagate</strong><sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup>.
 Repeat the same process all the way up the counter, until we find a slot which is zero.
 What if the counter is full, and has no zero slots?
 That&rsquo;s called an <strong>overflow</strong>.</p>
 
-<p>We borrow terminology from binary integer arithemtic because
+<p>We borrow terminology from binary integer arithmetic because
 our counter works just like a binary integer counting up:</p>
 
 <pre><code>0 0 0
@@ -293,7 +293,7 @@ our counter works just like a binary integer counting up:</p>
 1 1 1
 </code></pre>
 
-<p>But instead of 0 and 1 in each slot or &ldquo;bit&rdquo; we have arbitary elements that are combined with an associative operation.</p>
+<p>But instead of 0 and 1 in each slot or &ldquo;bit&rdquo; we have arbitrary elements that are combined with an associative operation.</p>
 
 <a name="Handling-overflow"></a>
 <h3>Handling overflow</h3>
@@ -469,8 +469,8 @@ We could compete with Steve Jobs for elegance of our design<sup id="fnref:11"><a
 
 <p><strong>Exercise:</strong> Rewrite <code>min_element</code> using this code (just <code>min_element</code>, don&rsquo;t worry about second best).</p>
 
-<p><strong>Exercise:</strong>  If you want to implement <a href="https://en.wikipedia.org/wiki/Merge_sort">merge sort</a> you can use exactly the same device, since merge is associative. The idea with merge sort, is you only want to merge lists if they are roughly the same length and this helps you do it (see Chapter 12).
-    Write the associtative binary operation <code>merge</code> which can combine two sorted arrays into a sorted array.</p>
+<p><strong>Exercise:</strong> If you want to implement <a href="https://en.wikipedia.org/wiki/Merge_sort">merge sort</a> you can use exactly the same device, since merge is associative. The idea with merge sort, is you only want to merge lists if they are roughly the same length and this helps you do it (see Chapter 12).
+    Write the associative binary operation <code>merge</code> which can combine two sorted arrays into a sorted array.</p>
 
 <p><strong>Exercise:</strong> When we become grownups we learn about advanced data structures, such as <a href="https://en.wikipedia.org/wiki/Binomial_heap">binomial forest</a>. They use the same idea. Learn about this data structure and try to figure out where
     the counter could be used.</p>
@@ -535,7 +535,7 @@ Alex: What do we mean when we say lots of memory?
 See the definition of &ldquo;in-place memory usage&rdquo; at the end of the chapter.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
 <li id="fn:7">
 <p>A binary function <code>f</code> is <a href="https://en.wikipedia.org/wiki/Associative_property">associative</a>
-if the the following holds for all <code>a, b, c</code> in its domain:</p>
+if the following holds for all <code>a, b, c</code> in its domain:</p>
 
 <pre><code>f(f(a, b), c)) = f(a, f(b, c))
 </code></pre>
@@ -576,7 +576,7 @@ a neat visual proof of this fact for integer multiplication:</p>
               * * *
 </code></pre>
 
-<p>Or as <a href="https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet)">Dirchlet</a> put it: &ldquo;Whether you arrange soldiers in rows or columns, you still have the same number of soldiers&rdquo;.</p>
+<p>Or as <a href="https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet)">Dirichlet</a> put it: &ldquo;Whether you arrange soldiers in rows or columns, you still have the same number of soldiers&rdquo;.</p>
 
 <p>An example of an operation which is not commutative is string concatenation.</p>
 
@@ -590,7 +590,7 @@ But because we want to preserve stability, it is not.
 We distinguish between the left and right argument.<a href="#fnref:9" rev="footnote">&#8617;</a></li>
 <li id="fn:10">
 <p>The terms <strong>carry</strong> and <strong>overflow</strong>
-are closely associated the implementation of binary counting
+are closely associated with the implementation of binary counting
 or addition as an electrical circuit, called an <a href="https://en.wikipedia.org/wiki/Adder_(electronics)">adder</a>.</p>
 
 <p>A single bit adder has two inputs <code>a</code> and <code>b</code> for
@@ -611,7 +611,7 @@ higher place value.</p>
 </code></pre>
 
 <p>This adds a single digit, but we want to add entire numbers.
-To, do so we add an additional input <code>l</code> for carried digits
+To do so we add an additional input <code>l</code> for carried digits
 from lower place values.</p>
 
 <pre><code>a  b  l    c  s
@@ -640,7 +640,7 @@ That&rsquo;s a necessary prerequisite for beautiful design.
 <a href="https://signalvnoise.com/posts/2710-designed-by-apple-in-california">Designed in Cupertino</a>, assembled in China.
 So let&rsquo;s try to assemble our machine in Palo Alto.<a href="#fnref:11" rev="footnote">&#8617;</a></li>
 <li id="fn:12">
-<p>Floating point arithemetic can involve many tricky details,
+<p>Floating point arithmetic can involve many tricky details,
 but the basic issue Alex is referring to is straightforward.
 We often use scientific notation to write larger numbers as a decimal to a power,
 when they would otherwise be very long to write out.

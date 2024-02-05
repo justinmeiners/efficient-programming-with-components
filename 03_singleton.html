@@ -258,7 +258,7 @@ people think invented C++ are idealized in books like &ldquo;Effective C++&rdquo
 He tells you always declare destructor as virtual<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.
 OK, he&rsquo;s wrong. Simple as that.</p>
 
-<p>What we do we want to create? Take type <code>T</code>, put it in a struct. Will the size of the thing increase?
+<p>What do we want to create? Take type <code>T</code>, put it in a struct. Will the size of the thing increase?
 No. It has no overhead.
 Singleton is the same size as <code>T</code>.
 It&rsquo;s the wonderful thing about singleton, and lets you pack them in arrays.
@@ -349,7 +349,7 @@ They were not copyable and you couldn&rsquo;t pass them as arguments.
 Then they fixed it.
 They said, &ldquo;we&rsquo;ll just copy the bits&rdquo; and things would work.</p>
 
-<p>Equality is defined for all built-in types; <code>int</code>, <code>double</code>, <code>short</code>, <code>char</code>, pointers, etc.
+<p>Equality is defined for all built-in types: <code>int</code>, <code>double</code>, <code>short</code>, <code>char</code>, pointers, etc.
 So, if you have a struct, why can&rsquo;t you generate an equality that uses those?
 Two things are equal if all their members are equal.
 It&rsquo;s a sensible rule a compiler could do.</p>

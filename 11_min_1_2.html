@@ -55,20 +55,20 @@ for your future work.
 I pick this algorithm because it allows us to learn how to do decomposition
 and learn these components like <code>list_pool</code> and <code>binary_counter</code> along the way.</p>
 
-<p>Let me sketch the grand plan of the whole alogorithm.</p>
+<p>Let me sketch the grand plan of the whole algorithm.</p>
 
 <ol>
-<li><p>We already showed that we want to arrange our comparisons like a tennis tournmant,
+<li><p>We already showed that we want to arrange our comparisons like a tennis tournament,
 and <code>binary_counter</code> helps us do this.
 Instead of comparing by left reduction, we compare by balanced reduction.</p></li>
 <li><p>We also want to keep a history for each element of all
 the other elements which they have beat.
 This history will be used to determine the second-place guy.</p>
 
-<p> We will store this history in a list (using <code>list_pool</code>)
- along with each element in the binary counter.
- Note that the counter works on generic elements, so it doesn&rsquo;t
- need to be modified to know about this history tracking.</p></li>
+<p>We will store this history in a list (using <code>list_pool</code>)
+along with each element in the binary counter.
+Note that the counter works on generic elements, so it doesn&rsquo;t
+need to be modified to know about this history tracking.</p></li>
 </ol>
 
 
@@ -132,7 +132,7 @@ Do the lazy thing, call it <code>op_type</code>.</p>
 <p>Notice that we use <code>std::min_element</code> on our list pool.
 Will that work?
 Yes, because we added iterators to our list pool.
-Define our <code>iterator</code> type;</p>
+Define our <code>iterator</code> type:</p>
 
 <pre><code>typedef typename list_pool&lt;I, std::size_t&gt;::iterator iterator;
 </code></pre>
@@ -230,7 +230,7 @@ std::pair&lt;I, I&gt; min_element1_2(I first, I last, Compare cmp) {
 
   typedef op_min1_2&lt;I, size_t, compare_type&gt; op_type;
   typedef binary_counter&lt;op_type&gt; counter_type;
-  typedef typename op_type::argument_type  result_type;
+  typedef typename op_type::argument_type result_type;
 
   // ...
 }
@@ -262,7 +262,7 @@ class foo {
 
 <p>Obviously what you are trying to do is extract <code>T</code>&rsquo;s <code>value_type</code>
 and use it here.
-Let us try to to follow the committees logic.
+Let us try to follow the committees logic.
 The logic says maybe <code>T::value_type</code> refers to a static variable
 in <code>T</code>, which it could be of course.
 But, don&rsquo;t you know from the context that it&rsquo;s supposed to be a type?

@@ -284,7 +284,7 @@ void rotate_right_by_one(I first, I last, std::bidirectional_iterator_tag) {
 <a name="Rotate-for-forward-iterators"></a>
 <h3>Rotate for forward iterators</h3>
 
-<p>For `ForwardIteratorj we have to shift all the elements up,
+<p>For <code>ForwardIterator</code> we have to shift all the elements up,
 we move one out of the way, to make room,
 and continue up the array until we find an empty place to put it.</p>
 
@@ -387,7 +387,7 @@ List sort destroys locality.
 If at every <code>cdr</code> (next) you get to a different cache
 line, that&rsquo;s a problem.
 In our sort we constantly re-link next,
-o eventually you get to a point where everything is scattered all over memory.</p>
+so eventually you get to a point where everything is scattered all over memory.</p>
 
 <p>STL used to have a sentence in the container
 section which the standard committee threw out.

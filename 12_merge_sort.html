@@ -41,7 +41,7 @@ I wanted this job really badly.</p>
 <p>A friend of mine who
 worked at this Institute recommended me to this group.
 I knew I was going to go
-there for for an interview and I&rsquo;d have to say some wonderful things or they
+there for an interview and I&rsquo;d have to say some wonderful things or they
 would not give me a job.
 Right before my interview, terrible thing happened.
 I ate some raw fish and it was very tasty but within
@@ -80,8 +80,8 @@ there is this thing called associativity.
 I realized that this idea will work as long as the operation is associative.</p>
 
 <p>This became my central theme.
-how could I talk about associative operations?
-how could I write algorithms like that?
+How could I talk about associative operations?
+How could I write algorithms like that?
 When I came to United States somewhere along the way,
 maybe in Austria, I realized that merge was associative
 It was a very big deal because I never even thought about merge in terms of <code>+</code> and <code>*</code>, but merge is associative.
@@ -199,7 +199,7 @@ we simply add the following function:</p>
 
 <p>We want it to be a function not a member
 because primitive/built-in
-types don&rsquo;t have member functions[^member-functions-on-primitives].
+types don&rsquo;t have member functions<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
 Furthermore, in the case of an iterator,
 it might be a pointer, not a class.
 In general, I don&rsquo;t like member functions.
@@ -214,7 +214,7 @@ If you have the option of:</p>
 </code></pre>
 
 <p>There is at least one provable advantage.
-It has one fewer character<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
+It has one fewer character<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.
 But, since we think generically, a better
 question is whether the function could operate
 on a built-in type instead of a class.</p>
@@ -341,7 +341,7 @@ inheritance, smart pointers, or read certain books.
 Now I&rsquo;m going to teach you to use <code>goto</code>.
 The greatest authority in computer science wrote a famous letter to
 communications of ACM called, <a href="papers/goto-harmful.pdf">&ldquo;Go To Statement Considered Harmful&rdquo;</a>.
-There is is nothing harmful in the computer.
+There is nothing harmful in the computer.
 The computer is good.
 It has an instruction called <a href="https://en.wikipedia.org/wiki/JMP_(x86_instruction)">JMP</a> (or branch).
 If it&rsquo;s there, why not use it?</p>
@@ -429,10 +429,10 @@ If they want to ignore it, ignore it.</p>
 
 <p>Note that it assumes the lists are nonempty,
 which is perfectly fine for our sort,
-which is not going to merge empty lists<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
+which is not going to merge empty lists<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.</p>
 
 <p>Can you write it without <code>goto</code>?
-Not as efficiently<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.</p>
+Not as efficiently<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.</p>
 
 <a name="Is-it-worth-it-3f-"></a>
 <h3>Is it worth it?</h3>
@@ -442,7 +442,7 @@ One of them is oh so very simple.
 The other one is elegant, but long and does a minimal number of operations.
 Which one should we use in practice?
 We need to do a lot of experiments to establish certainty
-of what we are doing<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.</p>
+of what we are doing<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.</p>
 
 <p><strong>Exercise:</strong> Measure and determine whether it&rsquo;s actually faster than our simple merge.</p>
 
@@ -453,7 +453,7 @@ Modern processors try to predict which
 way a condition is going to go.
 If you look at our branches, the probability
 of going one way or the other is 50 percent.
-That&rsquo;s literally the worst thing which which could happen.
+That&rsquo;s literally the worst thing which could happen.
 I&rsquo;m entering the territory where I haven&rsquo;t done work yet.
 I haven&rsquo;t tried see whether some kind of predication avoidance of <code>goto</code>
 could be done.</p>
@@ -471,7 +471,7 @@ There is no code, it&rsquo;s just a way of invoking our merge function.
 It has 5 arguments, and we need a binary function.</p>
 
 <pre><code>template &lt;typename I, typename Compare&gt;
-// I is Linked Iteratork
+// I is Linked Iterator
 struct mergesort_linked_operation
 {
   typedef I argument_type;
@@ -502,7 +502,7 @@ I mergesort_linked(I first, I last, Compare cmp) {
 }
 </code></pre>
 
-<p>It is very efficient, and doesn&rsquo;t do any kind of list splitting<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.
+<p>It is very efficient, and doesn&rsquo;t do any kind of list splitting<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup>.
 If you don&rsquo;t find it&rsquo;s beautiful I have nothing to teach you.
 We aren&rsquo;t on the same wavelength.
 In the modern world, you meet somebody and
@@ -555,6 +555,8 @@ can be a better resource.<a href="#fnref:3" rev="footnote">&#8617;</a></li>
 Alex is likely referring to <a href="https://en.wikipedia.org/wiki/Andrei_Alexandrescu">Andrei Alexandrescu</a> who gave a talk
 <a href="https://accu.org/conf-docs/PDFs_2009/AndreiAlexandrescu_iterators-must-go.pdf">&ldquo;Iterators must Go&rdquo;</a>.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
+Other programming languages, such as Swift, allow you to extend primitive types like <code>int</code> with additional member functions.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
+<li id="fn:6">
 <p>This argument doesn&rsquo;t hold if the function requires more than one argument.
 These two forms both require 8 characters to type:</p>
 
@@ -566,8 +568,8 @@ These two forms both require 8 characters to type:</p>
 <pre><code>foo(x,y)
 </code></pre>
 
-<p>However Alex doesn&rsquo;t follow this convention:</p><a href="#fnref:5" rev="footnote">&#8617;</a></li>
-<li id="fn:6">
+<p>However Alex doesn&rsquo;t follow this convention.</p><a href="#fnref:6" rev="footnote">&#8617;</a></li>
+<li id="fn:7">
 In &ldquo;Elements of Programming&rdquo;, Alex often follows the pattern
 of creating a function which requires strict assumptions
 (such as the list being nonempty).
@@ -576,8 +578,8 @@ which does additional checks or work to ensure the assumptions
 are met.
 This makes the algorithm more modular and faster
 for those other components which can guarantee the assumptions,
-without doing extra work.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
-<li id="fn:7">
+without doing extra work.<a href="#fnref:7" rev="footnote">&#8617;</a></li>
+<li id="fn:8">
 Alex: I have this in code going back to 1985.
 I wrote it then in Scheme without <code>goto</code>,
 but it had other efficiency problems.
@@ -586,12 +588,12 @@ The first is in my <a href="https://en.wikipedia.org/wiki/Ada_(programming_langu
 (&ldquo;The Ada Generic Library Linear List Processing Packages&rdquo;).
 I got such angry letters, especially from Holland,
 saying, &ldquo;don&rsquo;t you know that <code>goto</code> is harmful?&rdquo;.
-I couldn&rsquo;t find another solution.<a href="#fnref:7" rev="footnote">&#8617;</a></li>
-<li id="fn:8">
+I couldn&rsquo;t find another solution.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
+<li id="fn:9">
 In my test (Intel i5, 4 core, g++ 9.3.0)
 I noticed about a 15-20% improvement
-sorting one million integers.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
-<li id="fn:9">
+sorting one million integers.<a href="#fnref:9" rev="footnote">&#8617;</a></li>
+<li id="fn:10">
 <p>Alex: If you want to see a really bad program
 see <a href="http://people.csail.mit.edu/phw/index.html">Patrick Henry Winston</a>&rsquo;s
 book <a href="http://people.csail.mit.edu/phw/Books/LISPBACK.HTML">&ldquo;LISP 1st Edition&rdquo;</a>.
@@ -601,7 +603,7 @@ It shouldn&rsquo;t need any extra storage.
 It&rsquo;s also slow.
 Good example of a famous person at a respectable school
 publishing something terrible.
-Published does not mean good.</p><a href="#fnref:9" rev="footnote">&#8617;</a></li>
+Published does not mean good.</p><a href="#fnref:10" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 
