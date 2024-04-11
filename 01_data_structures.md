@@ -5,7 +5,7 @@
 
 [Ken Thompson][ken] did many wonderful things. Probably more
 than any programmer, he influenced the programming style which we have right
-now. While he did not invent C, that was done by his friend [Dennis Ritchie][dennis],
+now. While he did not invent C (that was done by his friend [Dennis Ritchie][dennis]),
 he invented the programming style which underlies C.
 Dealing with pointers,
 knowing how pointers are subtracted, and stuff like that, all comes from Ken Thompson.
