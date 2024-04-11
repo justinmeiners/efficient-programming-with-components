@@ -271,7 +271,7 @@ we're just rebalancing parentheses[^min-not-commutative].
 
         "Hello, " + "World!" != "World!" + "Hello, "
 
-[dirichlet]: https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet)
+[dirichlet]: https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet
 
 ## Binary counting and reduction
 
@@ -405,24 +405,24 @@ we can make this counter and it will work for us.
 
     An **overflow** is when the last adder has a non-zero carry.
 
-[^errors]: Floating point arithmetic can involve many tricky details,
-    but the basic issue Alex is referring to is straightforward.
-    We often use scientific notation to write larger numbers as a decimal to a power,
-    when they would otherwise be very long to write out.
-    For example `1,450,000,000 == 1.45 * 10^9`.
-    However, adding two numbers in this form can only be done accurately if they are roughly of the same power,
-    otherwise the larger of the two is still the best representation:
-    `1.45 * 10^9 + 1 ~= 1.45 * 10^9`. 
+[^floating-point-error]: Alex is referring to the following issue:
+    When floating point numbers become very large they can no longer represent small nearby increments.
+    So if many small numbers are accumulated in order, the sum may grow large enough to ignore the contribution of any particular element. 
+    To see for yourself, observe that:
 
-    `float` and `double` have very similar limitations, and give the best results
-    when operations are applied to values of similar magnitudes.
-    To try for yourself, compare these two expressions in a program:
+        double x = 1.45 * pow(2, 60);
+        assert(x == x + 1.0);
 
-        double x = (152500.0 * 5000.0);
-        double y = (152500.0 * 5000.0) + 0.01;
+    This is because floats are represented as a base and exponent, and the magnitude of the exponent constrains the precision.
+
+    If we forget about computers, and think about science or engineeing, it's natural to consider:
+
+        1.45 * 2^60 + 1 ~= 1.45 * 2^60
+
+    because the `1` is not very significant to the overall magnitutde.
+    
 
 [adder]: https://en.wikipedia.org/wiki/Adder_(electronics)
-[numerics]: https://en.wikipedia.org/wiki/Numerical_analysis
 [merge-sort]: https://en.wikipedia.org/wiki/Merge_sort
 [binomial]: https://en.wikipedia.org/wiki/Binomial_heap
 
@@ -565,10 +565,8 @@ for members, then you overwrite all the work with an assignment.
 I think it is very beautiful.
 We could compete with Steve Jobs for elegance of our design[^alex-apple-joke].
 
-**Exercise:** In [numerical analysis][numerics],
-    whenever you sum up large number you don't really want to
-    add small quantities to big quantities.
-    Bad things happen to the errors[^errors].
+**Exercise:** In numerical analysis, whenever you sum up large numbers you don't really want to add small quantities to big quantities.
+    Bad things happen to the errors[^floating-point-error].
     Use this code to write a function which sums arrays of `double`.
 
 **Exercise:** Rewrite `min_element` using this code (just `min_element`, don't worry about second best).

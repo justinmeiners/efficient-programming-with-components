@@ -461,9 +461,7 @@ for members, then you overwrite all the work with an assignment.</p>
 <p>I think it is very beautiful.
 We could compete with Steve Jobs for elegance of our design<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup>.</p>
 
-<p><strong>Exercise:</strong> In <a href="https://en.wikipedia.org/wiki/Numerical_analysis">numerical analysis</a>,
-    whenever you sum up large number you don&rsquo;t really want to
-    add small quantities to big quantities.
+<p><strong>Exercise:</strong> In numerical analysis, whenever you sum up large numbers you don&rsquo;t really want to add small quantities to big quantities.
     Bad things happen to the errors<sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup>.
     Use this code to write a function which sums arrays of <code>double</code>.</p>
 
@@ -576,7 +574,7 @@ a neat visual proof of this fact for integer multiplication:</p>
               * * *
 </code></pre>
 
-<p>Or as <a href="https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet)">Dirichlet</a> put it: &ldquo;Whether you arrange soldiers in rows or columns, you still have the same number of soldiers&rdquo;.</p>
+<p>Or as <a href="https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet">Dirichlet</a> put it: &ldquo;Whether you arrange soldiers in rows or columns, you still have the same number of soldiers&rdquo;.</p>
 
 <p>An example of an operation which is not commutative is string concatenation.</p>
 
@@ -640,22 +638,23 @@ That&rsquo;s a necessary prerequisite for beautiful design.
 <a href="https://signalvnoise.com/posts/2710-designed-by-apple-in-california">Designed in Cupertino</a>, assembled in China.
 So let&rsquo;s try to assemble our machine in Palo Alto.<a href="#fnref:11" rev="footnote">&#8617;</a></li>
 <li id="fn:12">
-<p>Floating point arithmetic can involve many tricky details,
-but the basic issue Alex is referring to is straightforward.
-We often use scientific notation to write larger numbers as a decimal to a power,
-when they would otherwise be very long to write out.
-For example <code>1,450,000,000 == 1.45 * 10^9</code>.
-However, adding two numbers in this form can only be done accurately if they are roughly of the same power,
-otherwise the larger of the two is still the best representation:
-<code>1.45 * 10^9 + 1 ~= 1.45 * 10^9</code>.</p>
+<p>Alex is referring to the following issue:
+When floating point numbers become very large they can no longer represent small nearby increments.
+So if many small numbers are accumulated in order, the sum may grow large enough to ignore the contribution of any particular element.
+To see for yourself, observe that:</p>
 
-<p><code>float</code> and <code>double</code> have very similar limitations, and give the best results
-when operations are applied to values of similar magnitudes.
-To try for yourself, compare these two expressions in a program:</p>
+<pre><code>double x = 1.45 * pow(2, 60);
+assert(x == x + 1.0);
+</code></pre>
 
-<pre><code>double x = (152500.0 * 5000.0);
-double y = (152500.0 * 5000.0) + 0.01;
-</code></pre><a href="#fnref:12" rev="footnote">&#8617;</a></li>
+<p>This is because floats are represented as a base and exponent, and the magnitude of the exponent constrains the precision.</p>
+
+<p>If we forget about computers, and think about science or engineeing, it&rsquo;s natural to consider:</p>
+
+<pre><code>1.45 * 2^60 + 1 ~= 1.45 * 2^60
+</code></pre>
+
+<p>because the <code>1</code> is not very significant to the overall magnitutde.</p><a href="#fnref:12" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
 
