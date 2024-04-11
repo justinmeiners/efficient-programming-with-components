@@ -337,7 +337,7 @@ I tell you not to use
 inheritance, smart pointers, or read certain books.
 Now I'm going to teach you to use `goto`.
 The greatest authority in computer science wrote a famous letter to
-communications of ACM called, ["Go To Statement Considered Harmful"][harmful].
+communications of ACM called, ["Go To Statement Considered Harmful"][goto-harmful].
 There is nothing harmful in the computer.
 The computer is good.
 It has an instruction called [JMP][jump] (or branch).
@@ -425,14 +425,14 @@ If they want to ignore it, ignore it.
 
 Note that it assumes the lists are nonempty,
 which is perfectly fine for our sort,
-which is not going to merge empty lists[^non-empty].
+which is not going to merge empty lists[^non-empty-pattern].
 
 Can you write it without `goto`?
 Not as efficiently[^without-goto].
 
 
 [jump]: https://en.wikipedia.org/wiki/JMP_(x86_instruction)
-[harmful]: papers/goto-harmful.pdf
+[goto-harmful]: papers/goto-harmful.pdf
 
 
 [^without-goto]: Alex: I have this in code going back to 1985.
@@ -445,16 +445,13 @@ Not as efficiently[^without-goto].
     saying, "don't you know that `goto` is harmful?".
     I couldn't find another solution.
 
-[^non-empty]: In "Elements of Programming", Alex often follows the pattern
-    of creating a function which requires strict assumptions
-    (such as the list being nonempty).
-    Then he creates a wrapper
-    which does additional checks or work to ensure the assumptions
-    are met.
-    This makes the algorithm more modular and faster
-    for those other components which can guarantee the assumptions,
-    without doing extra work.
-    
+[^non-empty-pattern]: In "Elements of Programming", Alex often follows this pattern.
+    First he writes a function requiring many strict preconditions, for example a list must be nonempty.
+    Then he creates a wrapper function which does additional work to guarantee the preconditions are met.
+
+    Removing all the special cases allows the core algorithm to be expressed concisely.
+    And it also becomes more modular, as other components can often guarantee a subset of the preconditions without doing extra work.
+
 [ada]: https://en.wikipedia.org/wiki/Ada_(programming_language)
 
 ### Is it worth it?
@@ -553,15 +550,12 @@ There is absolutely no indication that getting it will make you rich.
     counter works.
 
 [^bad-code]: 
-    Alex: If you want to see a really bad program
-    see [Patrick Henry Winston][winston]'s
-    book ["LISP 1st Edition"][lisp-book].
+    Alex: If you want to see a really bad program see [Patrick Henry Winston][winston]'s book ["LISP 1st Edition"][lisp-book].
     Look at his sorting algorithm for lists: [radix_sort.lisp](code/other/radix_sort.lisp).
     It possesses many remarkable properties including using `n log(n)` extra storage.
     It shouldn't need any extra storage.
     It's also slow.
-    Good example of a famous person at a respectable school
-    publishing something terrible.
+    Good example of a famous person at a respectable school publishing something terrible.
     Published does not mean good.
 
 [lisp-book]: http://people.csail.mit.edu/phw/Books/LISPBACK.HTML

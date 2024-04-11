@@ -570,15 +570,12 @@ These two forms both require 8 characters to type:</p>
 
 <p>However Alex doesn&rsquo;t follow this convention.</p><a href="#fnref:6" rev="footnote">&#8617;</a></li>
 <li id="fn:7">
-In &ldquo;Elements of Programming&rdquo;, Alex often follows the pattern
-of creating a function which requires strict assumptions
-(such as the list being nonempty).
-Then he creates a wrapper
-which does additional checks or work to ensure the assumptions
-are met.
-This makes the algorithm more modular and faster
-for those other components which can guarantee the assumptions,
-without doing extra work.<a href="#fnref:7" rev="footnote">&#8617;</a></li>
+<p>In &ldquo;Elements of Programming&rdquo;, Alex often follows this pattern.
+First he writes a function requiring many strict preconditions, for example a list must be nonempty.
+Then he creates a wrapper function which does additional work to guarantee the preconditions are met.</p>
+
+<p>Removing all the special cases allows the core algorithm to be expressed concisely.
+And it also becomes more modular, as other components can often guarantee a subset of the preconditions without doing extra work.</p><a href="#fnref:7" rev="footnote">&#8617;</a></li>
 <li id="fn:8">
 Alex: I have this in code going back to 1985.
 I wrote it then in Scheme without <code>goto</code>,
@@ -594,15 +591,12 @@ In my test (Intel i5, 4 core, g++ 9.3.0)
 I noticed about a 15-20% improvement
 sorting one million integers.<a href="#fnref:9" rev="footnote">&#8617;</a></li>
 <li id="fn:10">
-<p>Alex: If you want to see a really bad program
-see <a href="http://people.csail.mit.edu/phw/index.html">Patrick Henry Winston</a>&rsquo;s
-book <a href="http://people.csail.mit.edu/phw/Books/LISPBACK.HTML">&ldquo;LISP 1st Edition&rdquo;</a>.
+<p>Alex: If you want to see a really bad program see <a href="http://people.csail.mit.edu/phw/index.html">Patrick Henry Winston</a>&rsquo;s book <a href="http://people.csail.mit.edu/phw/Books/LISPBACK.HTML">&ldquo;LISP 1st Edition&rdquo;</a>.
 Look at his sorting algorithm for lists: <a href="code/other/radix_sort.lisp">radix_sort.lisp</a>.
 It possesses many remarkable properties including using <code>n log(n)</code> extra storage.
 It shouldn&rsquo;t need any extra storage.
 It&rsquo;s also slow.
-Good example of a famous person at a respectable school
-publishing something terrible.
+Good example of a famous person at a respectable school publishing something terrible.
 Published does not mean good.</p><a href="#fnref:10" rev="footnote">&#8617;</a></li>
 </ol>
 </div>
