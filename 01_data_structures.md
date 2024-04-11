@@ -104,9 +104,8 @@ Imagine how wonderful it would be if you could understand what someone else wrot
 
 [^hoare-speech]: From the 1980 Turing award lecture ["The Emperor's New Clothes"][hoare-speech].
 
-[^regex-algorithm]: Ken's algorithm generates a finite state machine 
-   which can recognize a given regular expression.
-   See ["Regular Expression Matching Can Be Simple And Fast"][regex-fast].
+[^regex-algorithm]: Ken's brilliant algorithm is to generate a finite state machine to recognize a given expression.
+    See ["Regular Expression Matching Can Be Simple And Fast"][regex-fast] or Ken's original paper ["Regular Expression Search Algorithm"][regex-paper]
 
 [fortune]: https://en.wikipedia.org/wiki/Fortune_(Unix)
 [dennis]: https://en.wikipedia.org/wiki/Dennis_Ritchie
@@ -126,8 +125,8 @@ Imagine how wonderful it would be if you could understand what someone else wrot
 [hoare]: https://en.wikipedia.org/wiki/Tony_Hoare
 [hoare-speech]: https://www.cs.fsu.edu/~engelen/courses/COP4610/hoare.pdf
 [wirth]: https://en.wikipedia.org/wiki/Niklaus_Wirth
-
 [access-types]: http://goanna.cs.rmit.edu.au/dale/ada/aln/13_access_types.html
+[regex-paper]: papers/regular-expressions.pdf
 
 ## Hello, World
 
