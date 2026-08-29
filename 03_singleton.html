@@ -26,11 +26,11 @@
 <a name="Learning-C-2b--2b--isn-27-t-as-hard-as-it-appears"></a>
 <h2>Learning C++ isn&rsquo;t as hard as it appears</h2>
 
-<p>I talked to someone and he said &ldquo;I have been programming in C++ for about eight years, but I never learned C++&rdquo;.
+<p>I talked to someone, and he said, &ldquo;I have been programming in C++ for about eight years, but I never learned C++.&rdquo;
 That is a very common thing.
 He was just honestly admitting something which happens to be the case for most people.
 Most of us never learn programming languages.
-I never learned C++ I was just very
+I never learned C++; I was just very
 fortunate that I worked next door to the guy who designed C++ so I could
 ask questions about why it was doing things.
 We learn by osmosis.
@@ -38,11 +38,11 @@ We ask each other questions.
 I will assume for a second that my friend was right and I will generalize from him to the rest of the class.
 Let us figure out together some basic things about C++.</p>
 
-<p>Of course C++ looks very scary if you look at the language description.
+<p>Of course, C++ looks very scary if you look at the language description.
 It&rsquo;s about 2,000 pages long and written in incomprehensible legalese.
-You stand no chance to ever understand this, it&rsquo;s just way too long.
+You stand no chance to ever understand this; it&rsquo;s just way too long.
 I claim that you could write wonderful C++ if you learn about five pages of basic code, not 2,000,
-but five and anybody can.</p>
+but five, and anybody can.</p>
 
 <p>My goal is to make everybody a C++ expert, not to prove that experts are experts.</p>
 
@@ -63,8 +63,8 @@ because any other class will have all these things and more.
 When you make any other class, you can start by taking this class and replace
 the name <code>singleton</code> and then you just need to fix two or three things.</p>
 
-<a name="Not-the-object-oriented-pattern"></a>
-<h3>Not the object oriented pattern</h3>
+<a name="Not-the-object-2d-oriented-pattern"></a>
+<h3>Not the object-oriented pattern</h3>
 
 <p>Some of you might be confused by the name singleton.
 All the people
@@ -73,8 +73,8 @@ might think that&rsquo;s what I&rsquo;m talking about.
 No, I wouldn&rsquo;t do that, would I?
 What I&rsquo;m talking about is not a pattern, but a very simple class.
 It&rsquo;s similar to a class called <a href="https://en.cppreference.com/w/cpp/utility/pair"><code>std::pair</code></a>.
-If you go and check a dictionary it says: singleton, pair, triple, quadruple, etc.
-A pair has two things, well singleton has just one thing.</p>
+If you go and check a dictionary, it says: singleton, pair, triple, quadruple, etc.
+A pair has two things; well, singleton has just one thing.</p>
 
 <a name="Template-and-type-functions"></a>
 <h3>Template and type functions</h3>
@@ -88,12 +88,12 @@ A pair has two things, well singleton has just one thing.</p>
 Why do I need template? Because we want to write something which takes one type and returns
 another type.
 Let&rsquo;s forget C++ for a second.
-Mathematically speaking we want to write a type function: a thing which takes a type in
+Mathematically speaking, we want to write a type function: a thing which takes a type in
 and generates new types.
 The <code>template</code> is the mechanism in C++ for doing just that.</p>
 
-<p>There are of course other type functions, even type functions in C.
-For example, we want to take a type we want to take an <code>int</code> and convert it to some other type.
+<p>There are, of course, other type functions, even type functions in C.
+For example, we want to take a type—we want to take an <code>int</code>—and convert it to some other type.
 Can you think of one?
 What about <a href="https://en.cppreference.com/w/cpp/language/sizeof"><code>sizeof</code></a>?
 No, this does not return a type.
@@ -104,11 +104,11 @@ Macro for sure has now no effects on type system<sup id="fnref:3"><a href="#fn:3
 What about pointer?
 Yes. The pointer star is a type function.</p>
 
-<pre><code>int* 
+<pre><code>int*
 </code></pre>
 
-<p>It takes type int, double, etc and returns another type.
-You write it postfix but it is logically a type function.</p>
+<p>It takes type int, double, etc., and returns another type.
+You write it postfix, but it is logically a type function.</p>
 
 <a name="Guidelines-for-writing-classes"></a>
 <h3>Guidelines for writing classes</h3>
@@ -125,11 +125,11 @@ struct singleton
 <p>What is the difference between a class and a struct?
 The only difference is how they treat public and private.
 They&rsquo;re fundamentally the same.
-If I say <code>struct</code> the default field accessibility is public. If I say <code>class</code> the default is private.</p>
+If I say <code>struct</code>, the default field accessibility is public. If I say <code>class</code>, the default is private.</p>
 
-<p>Some would say, &ldquo;let us make value private because
-that&rsquo;s object-oriented way&rdquo;.
-&ldquo;We will provide people with two functions: set value, and get value.&rdquo;
+<p>Some would say, &ldquo;Let us make value private because
+that&rsquo;s object-oriented way.&rdquo;
+&ldquo;We will provide people with two functions: set value and get value.&rdquo;
 That is good because it makes your productivity go up.
 You could report that you wrote two more lines of code (joke).
 On the other hand, it is idiotic because the only reason you want that is to read and write in a peculiar way,
@@ -150,15 +150,15 @@ There is some condition we need to assure that the values cannot change.</p>
 <p>For <code>singleton</code>, we pick <code>struct</code> because it&rsquo;s less typing.
 <em>We should find the most minimal way of saying what we want to say</em>.</p>
 
-<a name="Semi-2d-regular-singleton"></a>
-<h2>Semi-regular singleton</h2>
+<a name="Semiregular-singleton"></a>
+<h2>Semiregular singleton</h2>
 
 <p>When we implement this class, we want people to feel as good about it as they feel about <code>int</code>.
 It has to be natural, so all the functions they would normally write for <code>int</code> would just work for this class.
-Not of course plus, minus, divide, etc but the basic fundamental stuff should work the same.
+Not, of course, plus, minus, divide, etc., but the basic fundamental stuff should work the same.
 Even people who don&rsquo;t understand logic behind STL still
- manage to use <code>std::vector</code> because
-vector behaves in somewhat natural way.</p>
+manage to use <code>std::vector</code> because
+<code>vector</code> behaves in somewhat natural way.</p>
 
 <p>For example, we want to be able to support conditional initialization:</p>
 
@@ -173,7 +173,7 @@ else a = c;
 a = b;
 </code></pre>
 
-<p>to be identical (hopefully even in performance), to:</p>
+<p>to be identical (hopefully even in performance) to:</p>
 
 <pre><code>T a(b);
 </code></pre>
@@ -184,7 +184,7 @@ We will start with constructors:</p>
 <pre><code>// semiregular
 singleton(const singleton&amp; x) : value(x.value) {}
 // could be implicitly declared
-singleton()  {}
+singleton() {}
 ~singleton() {}
 
 singleton&amp; operator=(const singleton&amp; x) {
@@ -194,12 +194,12 @@ singleton&amp; operator=(const singleton&amp; x) {
 </code></pre>
 
 <p>What are the semantics of the default constructor?
-In this case you want whatever the default value of <code>T</code> is, to be constructed.
+In this case, you want whatever the default value of <code>T</code> is to be constructed.
 The compiler will do this for us.</p>
 
 <p>What will the default value of <code>T</code> be when it&rsquo;s a pointer type?
 Just some random address, which is fine.
-The two properties of default constructed value of <code>T</code> on which you
+The two properties of default-constructed value of <code>T</code> on which you
 can rely are:</p>
 
 <ol>
@@ -218,20 +218,20 @@ You put additional constructor, and bam whole bunch of stuff stops compiling, ve
 <a name="Optimize-the-common-case"></a>
 <h3>Optimize the common case</h3>
 
-<p>In the assignment operator do we need to do anything special when assigning a value to itself (<code>x = x</code>)?
+<p>In the assignment operator, do we need to do anything special when assigning a value to itself (<code>x = x</code>)?
 It&rsquo;s a thing <a href="https://en.wikipedia.org/wiki/Scott_Meyers">Scott Meyers</a> says you should check for with <code>if (x == x)</code><sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>,
 but you don&rsquo;t need to check, just consider what will happen if they are equal.
 It will just assign back to itself.
 It might do extra work.
 But, you don&rsquo;t want to optimize the case which is once in a blue moon while slowing every other case.
-Believe it or not when we do timing experiments we will learn conditionals are very very expensive and getting to be more and more expensive.
+Believe it or not, when we do timing experiments, we will learn conditionals are very, very expensive and getting to be more and more expensive.
 Assignments are getting to be free.
 The processor could schedule them in parallel.
-There is just enough hardware to do that so don&rsquo;t break the pipeline.</p>
+There is just enough hardware to do that, so don&rsquo;t break the pipeline.</p>
 
 <p>Compiler writers don&rsquo;t read Scott Meyers, fortunately for us.
 You have to learn to think because he doesn&rsquo;t.
-He just gives you this rule, number 173.
+He just gives you this rule number 173.
 If you follow the rule the code will be good.
 No.
 You have to think.
@@ -250,20 +250,20 @@ nothing at all about programming or C++, what is the one question he asks you?
 &ldquo;Why should you always make a destructor virtual?&rdquo;<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>
 This is frightening thing for me because I lived my life
 until now, without ever making a single destructor virtual.
-Believe it or not most of my destructors are part of the standard library.</p>
+Believe it or not, most of my destructors are part of the standard library.</p>
 
-<p>All the great authorities on C++ such as <a href="https://en.wikipedia.org/wiki/Scott_Meyers">Scott Meyers</a> who
-people think invented C++ are idealized in books like &ldquo;Effective C++&rdquo;,
-&ldquo;Effective STL&rdquo;, &ldquo;effective everything&rdquo;.
-He tells you always declare destructor as virtual<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.
+<p>All the great authorities on C++, such as <a href="https://en.wikipedia.org/wiki/Scott_Meyers">Scott Meyers</a>, who
+people think invented C++, are idealized in books like &ldquo;Effective C++,&rdquo;
+&ldquo;Effective STL,&rdquo; &ldquo;Effective Everything.&rdquo;
+He tells you: always declare destructor as virtual<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.
 OK, he&rsquo;s wrong. Simple as that.</p>
 
 <p>What do we want to create? Take type <code>T</code>, put it in a struct. Will the size of the thing increase?
 No. It has no overhead.
 Singleton is the same size as <code>T</code>.
-It&rsquo;s the wonderful thing about singleton, and lets you pack them in arrays.
+It&rsquo;s the wonderful thing about <code>singleton</code>, and lets you pack them in arrays.
 If you add <code>virtual</code> to the destructor, the size will dramatically grow.
-Why would I put virtual? Because some really crazy person would want to
+Why would I put <code>virtual</code>? Because some really crazy person would want to
 inherit something virtually from this? He needs counseling.
 Not a single class in the standard library does it.</p>
 
@@ -271,16 +271,15 @@ Not a single class in the standard library does it.</p>
 What it means is once upon a time it was an object-oriented language.
 Then some people chased it away and said you could program differently.
 I am showing you how you could program differently.
-If you program in an object-oriented way then many good things might happen.
-I don&rsquo;t know what they are but you are not going to be efficient.
-Bjarne used to joke that object
-oriented systems are those that have slow graphics.</p>
+If you program in an object-oriented way, then many good things might happen.
+I don&rsquo;t know what they are, but you are not going to be efficient.
+Bjarne used to joke that object-oriented systems are those that have slow graphics.</p>
 
-<p>As time progresses, <code>++</code> is getting faster and faster and virtual function is getting slower and slower.
+<p>As time progresses, <code>C++</code> is getting faster and faster and virtual function is getting slower and slower.
 Their spread is growing and we&rsquo;re not going to address
 any parts of C++ in this course which slow the computations.</p>
 
-<p>If you want to learn about virtual I&rsquo;m sure there are lots
+<p>If you want to learn about <code>virtual</code>, I&rsquo;m sure there are lots
 of people here who would clearly advocate object-oriented programming,
 but I&rsquo;m not one of them.
 I destroyed my career by becoming this sworn enemy of object-oriented a long time ago.
@@ -307,19 +306,19 @@ bool operator!=(const singleton&amp; x, const singleton&amp; y) {
 <p>Recall that we decided not to define these as member functions, because they are symmetric.
 <code>friend</code> functions inside the class declaration are not member functions,
 but still have all the access to all the members (not that we care here).
-More importantly this signature is nice.
+More importantly, this signature is nice.
 If you put it outside you discover you have to write an ugly thing.</p>
 
 <a name="Equality-and-the-three-laws-of-thought"></a>
 <h3>Equality and the three laws of thought</h3>
 
-<p>We have to define what equality is
+<p>We have to define what equality is,
 and it has to satisfy some very basic rules.
 There is one great law on which the entire edifice of civilization
 is based. It is called the <strong>law of identity</strong>
-and goes with two other fundamental laws of thought <sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>:</p>
+and goes with two other fundamental laws of thought<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>:</p>
 
-<p><strong>The law of identity</strong>: a == a. Popeye the Sailor used to say, &ldquo;I am, what I am&rdquo;.</p>
+<p><strong>The law of identity</strong>: <code>a == a</code>. Popeye the Sailor used to say, &ldquo;I am what I am.&rdquo;</p>
 
 <p>Computers do not obey such law.
 There is a fundamental case which breaks and has consequences.</p>
@@ -328,22 +327,22 @@ There is a fundamental case which breaks and has consequences.</p>
 
 <p><strong>The law of non-contradiction</strong>: You cannot have a predicate <code>P</code> be true and <code>!P</code> be true at the same time.</p>
 
-<p><strong>The law of excluded middle</strong>: Every predicate <code>P</code> must be either true, or false.</p>
+<p><strong>The law of excluded middle</strong>: Every predicate <code>P</code> must be either true or false.</p>
 
 <p>Everybody from Plato all the way up to <a href="https://en.wikipedia.org/wiki/Ayn_Rand">Ayn Rand</a>, the greatest American mind (joke).
-Whatever her political views, even she, <a href="https://plato.stanford.edu/entries/ayn-rand/supplement.html#ExisIdenCons">supported</a> the law of identity.
+Whatever her political views, even she <a href="https://plato.stanford.edu/entries/ayn-rand/supplement.html#ExisIdenCons">supported</a> the law of identity.
 There is a lot to figure out.
 There is deep stuff about equality<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.</p>
 
-<a name="Why-can-27-t-the-compiler-generate--3d--3d--and--21--3d--3f-"></a>
-<h3>Why can&rsquo;t the compiler generate == and !=?</h3>
+<a name="Why-can-27-t-the-compiler-generate--3c-code-3e--3d--3d--3c--2f-code-3e--and--3c-code-3e--21--3d--3c--2f-code-3e--3f-"></a>
+<h3>Why can&rsquo;t the compiler generate <code>==</code> and <code>!=</code>?</h3>
 
 <p>Equality should be implicitly declared by the compiler, but it isn&rsquo;t.
 It&rsquo;s not in C++11 or C++14.
 This goes back to problems C++ inherited from C.
-C is a very great language in some respects but
+C is a very great language in some respects, but
 it also was a homegrown thing without some particularly deep thinking.
-Initially they didn&rsquo;t have structs.
+Initially, they didn&rsquo;t have structs.
 Then they had structs, but they couldn&rsquo;t pass them.
 They were not copyable and you couldn&rsquo;t pass them as arguments.
 Then they fixed it.
@@ -357,8 +356,8 @@ It&rsquo;s a sensible rule a compiler could do.</p>
 <p>I never managed to ask Dennis Ritchie about it.
 But, I asked probably the second best person on the subject, <a href="https://en.wikipedia.org/wiki/Stephen_C._Johnson">Steve Johnson</a>, because
 he actually implemented all these assignments for structures and things like that.
-Steve told me, &ldquo;it was very hard because the bits in the padding might not be equal.
-If you compare bit by bit things which have equal members, but not equal bits in the padding, it will not work&rdquo;<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup>.</p>
+Steve told me, &ldquo;It was very hard because the bits in the padding might not be equal.
+If you compare bit by bit things which have equal members, but not equal bits in the padding, it will not work.&rdquo;<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup></p>
 
 <p>But, why should you compare bit by bit?
 You should do recursive member by member as we discovered.
@@ -372,16 +371,16 @@ Not equality. Could there be any other meaning?</p>
 
 <p>In 1994 I proposed such a thing to the standard committee.
 I even proposed bunch of templates which will automatically do it.
-They threw them out because there were people who said, &ldquo;but we want to have the freedom to make the
+They threw them out because there were people who said, &ldquo;But we want to have the freedom to make the
 glyph <code>!=</code> do something else.&rdquo;
 I literally have no words because that is not freedom.
-It&rsquo;s like saying I want to have freedom to run on the street with no pants!
+It&rsquo;s like saying, &ldquo;I want to have freedom to run on the street with no pants!&rdquo;
 The semantics must be fixed, you have no right
 to define inequality which will do a semantically different thing.</p>
 
 <p>What if you determine something is unequal faster?
-I don&rsquo;t know such examples but supposing there was, that is fine.
-in 99% of the cases it should just be defined (and optionally manually defined).</p>
+I don&rsquo;t know such examples, but supposing there was, that is fine.
+In 99% of the cases it should just be defined (and optionally manually defined).</p>
 
 <p>Notice that we didn&rsquo;t define <code>!=</code> as:</p>
 
@@ -394,7 +393,7 @@ it can always stay the way it is, even if we copy it to other classes.</p>
 <a name="Totally-ordered-singleton"></a>
 <h2>Totally ordered singleton</h2>
 
-<p>To make <code>singleton</code> <code>TotallyOrdered</code> we need to define <code>&lt;</code> and
+<p>To make <code>singleton</code> <code>TotallyOrdered</code>, we need to define <code>&lt;</code> and
 related operators.</p>
 
 <pre><code>// totally ordered
@@ -423,12 +422,12 @@ bool operator&gt;=(const singleton&amp; x, const singleton&amp; y) {
 Considering comparison applied to sorting, you could sort in ascending order or in descending order.
 It seems to be natural to pick ascending.
 If I asked you to name a bunch of numbers, you would say &ldquo;one, two, three, four, five&rdquo;.
-Only strange people will say &ldquo;five, four, three, two, one&rdquo;.
+Only strange people will say, &ldquo;five, four, three, two, one.&rdquo;
 Natural numbers go from one up.</p>
 
-<p>Even though most of the STL algorithms only use <code>&lt;</code> you should still define all the others.
+<p>Even though most of the STL algorithms only use <code>&lt;</code>, you should still define all the others.
 I&rsquo;m not going to use the others, but I will provide them for other people to use.
-There is a rule used in the <a href="https://en.wikipedia.org/wiki/Robustness_principle">internet protocol</a> that you should assume to do everything for your clients,
+There is a rule used in the <a href="https://en.wikipedia.org/wiki/Robustness_principle">Internet Protocol</a> that you should assume to do everything for your clients,
 but expect nothing from them.</p>
 
 <p>Understand how all the other operators are defined in terms of <code>&lt;</code>.
@@ -441,7 +440,7 @@ It is mathematics, but that&rsquo;s mathematics every programmer should be able 
 
 <p>Now let&rsquo;s talk about what kind of type <code>T</code> could be.
 Because we implemented all these operators,
-<code>T</code> could be <code>SemiRegular</code>, <code>Regular</code>, or <code>TotallyOrdered</code>.
+<code>T</code> could be <code>Semiregular</code>, <code>Regular</code>, or <code>TotallyOrdered</code>.
 These are requirements on the type <code>T</code>, otherwise known
 as <strong>concepts</strong>.</p>
 
@@ -450,19 +449,19 @@ So, we use comments to communicate them.</p>
 
 <p>In <code>singleton</code> we add a comment to describe this:</p>
 
-<pre><code>// T is semiregular, or regular, or totally-ordered.
+<pre><code>// T is semiregular, regular, or totally ordered.
 </code></pre>
 
 <p>It&rsquo;s a good example of a <strong>disjunctive concept</strong>.
 <code>T</code> could be any of them.</p>
 
-<p>You might wonder how <code>==</code> will work, if you plug-in only a type <code>T</code>
-which is only <code>SemiRegular</code>.
+<p>You might wonder how <code>==</code> will work if you plug in only a type <code>T</code>
+which is only <code>Semiregular</code>.
 In C++, things don&rsquo;t have to be defined unless they are used.
 This is a wonderful property on which we are relying.
 If you give me <code>T</code> which has no equality, it is fine.
-It will give me singleton of <code>T</code>
-which will have copy constructor and assignment but will not have equality.
+It will give me <code>singleton</code> of <code>T</code>
+which will have copy constructor and assignment, but will not have equality.
 If <code>T</code> has an equality, then singleton will have equality.
 Same for total ordering, etc.</p>
 
@@ -471,7 +470,7 @@ Same for total ordering, etc.</p>
 <a name="Implicit-type-conversion"></a>
 <h2>Implicit type conversion</h2>
 
-<p>Since we wrote a few constructors for <code>singleton</code> we should
+<p>Since we wrote a few constructors for <code>singleton</code>, we should
 talk a bit about implicit type conversions.</p>
 
 <p>Once upon a time people invented strong typing.
@@ -479,22 +478,22 @@ When they did, they said everything has to have a type.
 If you want to make it into a different type you have to convert it, by calling a function.
 Makes sense, right?
 But, our friends at <a href="https://en.wikipedia.org/wiki/Bell_Labs">Bell Labs</a> thought it was a bad idea.
-They said, &ldquo;I don&rsquo;t want to write the conversion functions&rdquo;.
+They said, &ldquo;I don&rsquo;t want to write the conversion functions.&rdquo;
 Therefore they invented something called implicit conversions.</p>
 
-<p>In C it converts integers to float.
+<p>In C, it converts integers to <code>float</code>.
 Why did these Bell Labs guys introduce such a thing?
 Were they mad?
 It was because they were lazy.
 They couldn&rsquo;t do it elegantly because they didn&rsquo;t
 have <a href="https://en.cppreference.com/w/cpp/language/overload_resolution">function overloading</a>.</p>
 
-<p>In C++ we have <code>sqrt(int)</code>, <code>sqrt(double)</code>, etc
+<p>In C++ we have <code>sqrt(int)</code>, <code>sqrt(double)</code>, etc.
 You can pass <code>int</code>, or <code>double</code> and it does the right thing.
 Without overloading they had two choices.</p>
 
 <ol>
-<li>Introduce <code>sqrt_double</code>, <code>sqrt_float</code>, <code>sqrt_int</code>, etc
+<li>Introduce <code>sqrt_double</code>, <code>sqrt_float</code>, <code>sqrt_int</code>, etc.
 (and implement them all separately).</li>
 <li>Introduce a palliative (a solution which sort of works).
 We will just promote everything to the highest
@@ -502,32 +501,32 @@ possible type and obviously it&rsquo;s <code>double</code>.</li>
 </ol>
 
 
-<p>When C++ came about they couldn&rsquo;t just reject the legacy of C.
+<p>When C++ came about, they couldn&rsquo;t just reject the legacy of C.
 One of the deals was that the C++ compiler had to compile the entire
 UNIX codebase and there was only one place where it broke.
-In UNIX there is a system call <a href="https://linux.die.net/man/2/stat"><code>stat</code></a> which returns a struct <code>stat</code>.
+In UNIX, there is a system call <a href="https://linux.die.net/man/2/stat"><code>stat</code></a> which returns a struct <code>stat</code>.
 But, in C++ structs and functions live in the
-same namespace the function <code>stat</code> is a constructor for structure <code>stat</code> which it isn&rsquo;t.
+same namespace; the function <code>stat</code> is a constructor for structure <code>stat</code>, which it isn&rsquo;t.
 So they had to find workarounds.</p>
 
-<p>But, generally they had this wonderful goal of retaining full compatibility with C.
-They said, &ldquo;we will keep implicit conversions.&rdquo;
-I wish they just did keep them the way they were in C but then
-they said, &ldquo;oh but we have to extend them. This is a wonderful thing which we need
-to make work for any other type&rdquo;.
-So, implicit conversions work for all types and the rules are <a href="https://en.cppreference.com/w/cpp/language/implicit_conversion">extremely complicated</a> so this is the only time I&rsquo;m going to mention them.</p>
+<p>But, generally, they had this wonderful goal of retaining full compatibility with C.
+They said, &ldquo;We will keep implicit conversions.&rdquo;
+I wish they just did keep them the way they were in C, but then
+they said, &ldquo;Oh, but we have to extend them. This is a wonderful thing which we need
+to make work for any other type.&rdquo;
+So, implicit conversions work for all types and the rules are <a href="https://en.cppreference.com/w/cpp/language/implicit_conversion">extremely complicated</a>, so this is the only time I&rsquo;m going to mention them.</p>
 
 <p>Here are the rules:
-If you have a conversion from one user defined type to another,
-the compiler will look for all the one-step user defined conversions.
-Fortunately it is not going to look for
-two, three, four, five steps because you know there is combinatorial explosion.</p>
+If you have a conversion from one user-defined type to another,
+the compiler will look for all the one-step user-defined conversions.
+Fortunately, it is not going to look for
+two, three, four, five steps because, you know, there is combinatorial explosion.</p>
 
 <p>But, it doesn&rsquo;t stop there.
-On top of user-defined conversion you could put one more layer of built-in conversions.
+On top of user-defined conversion, you could put one more layer of built-in conversions.
 If you have a class which is convertible to <code>int</code> and a function
-which takes <code>double</code>.
-You could give me the element of a class and it will work.
+which takes <code>double</code>,
+you could give me the element of a class and it will work.
 It seems not to be a big deal,
 but then people started writing code like</p>
 
@@ -556,8 +555,8 @@ they are in <code>while</code>, <code>if</code>, and other conditions which peop
 So, the entire type system is screwed up (technical term), to work around some
 ancient design feature.
 The end of the story is avoid implicit conversions.
-Never rely on them, it&rsquo;s impossible to avoid them.
-Even if you declare everything explicit there is still a
+Never rely on them; it&rsquo;s impossible to avoid them.
+Even if you declare everything explicit, there is still a
 context in C++ where implicit conversion will be done.
 You should never rely on one type
 automatically becoming another.</p>
@@ -578,12 +577,12 @@ is false. Of course it handles implicit conversions, what else could it do?</p>
 <hr/>
 <ol>
 <li id="fn:1">
-&ldquo;Gang of four&rdquo; is a nickname for an influential text in object oriented programming called <a href="https://en.wikipedia.org/wiki/Design_Patterns">&ldquo;Design Patterns&rdquo;</a>
+&ldquo;Gang of Four&rdquo; is a nickname for an influential text in object-oriented programming called <a href="https://en.wikipedia.org/wiki/Design_Patterns">&ldquo;Design Patterns&rdquo;</a>
 by Gamma, Helm, Johnson, and Vlissides.
 As the name suggests, the book studies patterns of ways to organize code and objects to solve common problems
 while aiming to preserve modularity and flexibility.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
-A <a href="https://www.oodesign.com/singleton-pattern.html">singleton</a> in object oriented programming is a class which is intended to have one instance,
+A <a href="https://www.oodesign.com/singleton-pattern.html">singleton</a> in object-oriented programming is a class which is intended to have one instance,
 or at least one canonical instance, which all code can reference.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
 Macro systems typically manipulate only the text of the code itself, and thus have no
@@ -601,7 +600,7 @@ Objects are important because they own things.</p>
 
 <p>This same person made a million dollars selling my code.
 I&rsquo;m not making it up.
-I worked for <a href="https://en.wikipedia.org/wiki/HP_Labs">HP labs</a>.
+I worked for <a href="https://en.wikipedia.org/wiki/HP_Labs">HP Labs</a>.
 But, HP couldn&rsquo;t use code from research,
 because researchers don&rsquo;t know anything.
 So, they bought it from this guy.
@@ -610,7 +609,7 @@ which made it unreadable.
 I didn&rsquo;t get a kickback.
 My income from STL is about $750.
 I got $250 for writing an <a href="http://stepanovpapers.com/BYTE_com.htm">article</a> for BYTE magazine.
-I got $500 for an invited keynote at <a href="https://en.wikipedia.org/wiki/OOPSLA">oopsla</a>.
+I got $500 for an invited keynote at <a href="https://en.wikipedia.org/wiki/OOPSLA">OOPSLA</a>.
 I paid taxes from both.</p><a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
 See item 17 in &ldquo;Effective C++&rdquo;.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
@@ -619,10 +618,10 @@ Making a destructor virtual ensures that if a class
 inherits virtually and is destructed, then the base class destructor is called too.<a href="#fnref:6" rev="footnote">&#8617;</a></li>
 <li id="fn:7">
 <p>In &ldquo;Effective C++&rdquo;, Scott Meyers does not say to use <code>virtual</code>
-on every destructor, he specifies &ldquo;make sure base classes have virtual destructors&rdquo;
-and clarifies &ldquo;gratuitously declaring all destructors virtual is just as wrong
-as never declaring them virtual&rdquo;.
-He provides a heuristic, &ldquo;declare a virtual destructor in a class
+on every destructor, he specifies, &ldquo;Make sure base classes have virtual destructors,&rdquo;
+and clarifies, &ldquo;Gratuitously declaring all destructors virtual is just as wrong
+as never declaring them virtual.&rdquo;
+He provides a heuristic: &ldquo;Declare a virtual destructor in a class
 if and only if that class contains at least one virtual function.&rdquo;</p>
 
 <p>Alex is wrong about Scott&rsquo;s recommendation.
@@ -645,9 +644,9 @@ but if there are things of which one should not demand demonstration, these pers
 <li id="fn:9">
 There is a branch of logic
 called <a href="https://en.wikipedia.org/wiki/Intuitionistic_logic">intuitionism</a>,
-closely associated with <a href="https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_mathematics)">constructivism</a> which
+closely associated with <a href="https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_mathematics)">constructivism</a>, which
 denies the Law of excluded middle.
-Specifically, it takes issue with the idea that <code>!(!P)</code>, is the same as <code>P</code>.
+Specifically, it takes issue with the idea that <code>!(!P)</code> is the same as <code>P</code>.
 Modern <a href="https://plato.stanford.edu/entries/dialetheism/">philosophers</a> have even questioned the law of non-contradiction.
 But, I know of no serious mathematical or philosophical
 movements denying the law of identity.<a href="#fnref:9" rev="footnote">&#8617;</a></li>

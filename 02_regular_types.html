@@ -29,26 +29,26 @@
 <p>The field grew very fast.
 We never had time to stop and think.
 It used to be that people who were computer scientists were programmers.
-When <a href="https://en.wikipedia.org/wiki/Edsger_W._Dijkstra">Dijkstra</a><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> gave his <a href="https://www.cs.utexas.edu/users/EWD/ewd03xx/EWD340.PDF">Turing award speech</a>
-he called himself a &ldquo;humble programmer&rdquo;.
+When <a href="https://en.wikipedia.org/wiki/Edsger_W._Dijkstra">Dijkstra</a><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> gave his <a href="https://www.cs.utexas.edu/users/EWD/ewd03xx/EWD340.PDF">Turing Award speech</a>,
+he called himself a &ldquo;humble programmer.&rdquo;
 When Ken Thompson, in his
-lecture &ldquo;Reflection on Trusting Trust&rdquo;, talks of himself he says, &ldquo;I am a programmer&rdquo;.</p>
+lecture &ldquo;Reflections on Trusting Trust,&rdquo; talks of himself, he says, &ldquo;I am a programmer.&rdquo;</p>
 
 <p>Then programmers disappeared.
 Everybody became a computer scientist or an architect.
-People say, &ldquo;no I&rsquo;m not a programmer, I&rsquo;m an architect&rdquo;.
+People say, &ldquo;No, I&rsquo;m not a programmer, I&rsquo;m an architect.&rdquo;
 I guess they build buildings like <a href="https://en.wikipedia.org/wiki/Frank_Lloyd_Wright">Frank Lloyd Wright</a> (joke).
 What it means is they don&rsquo;t have any idea how to write code.
-(Clearly, I just insulted several communities).</p>
+(Clearly, I just insulted several communities.)</p>
 
 <p>A couple of years ago I was at a party with
 <a href="https://en.wikipedia.org/wiki/Michael_Burrows">Mike Burrows</a> who did the original <a href="https://en.wikipedia.org/wiki/AltaVista">AltaVista</a> search engine and
 is now at Google.
-He told me, he cannot imagine how the guys at Google write anything at all.
+He told me he cannot imagine how the guys at Google write anything at all.
 So, I&rsquo;m not even going to mention Yahoo (joke).
 I did interview at Facebook and let me tell you what I saw of that place&hellip;
 That was five years ago.
-Maybe they improved but I don&rsquo;t think so.
+Maybe they improved, but I don&rsquo;t think so.
 Places tend to decline.</p>
 
 <p>You might say: &ldquo;Who are you to tell us?&rdquo;
@@ -60,21 +60,21 @@ That is very helpful.</p>
 
 <p>From early on I actually had this idea that
 programming is a very great discipline.
-I don&rsquo;t mean that I&rsquo;m very great, or anything like that.
+I don&rsquo;t mean that I&rsquo;m very great or anything like that.
 It&rsquo;s that the discipline is a great discipline.
 I always wanted to learn to write ultimate code and I still think it&rsquo;s possible.
 I disagree with many of
 the luminaries in the field who claim it&rsquo;s an art, meaning that there are some
 gifted people like Mozart,
 and others who are just like us.
-I actually claim no, it&rsquo;s a discipline.</p>
+I actually claim: no, it&rsquo;s a discipline.</p>
 
 <p>This is why I want to discuss everything I write with you.
-If we together agree on it and we start practicing it maybe it will turn into a
+If we together agree on it and we start practicing it, maybe it will turn into a
 discipline.
-You say, &ldquo;well, Alex what chance is there?
-There is the world and there is you&rdquo;.
-Yes, there are no chances but you still have to do
+You say, &ldquo;Well, Alex, what chance is there?
+There is the world and there is you.&rdquo;
+Yes, there are no chances, but you still have to do
 what you believe is right.</p>
 
 <p>Well, plus they pay me (joke).</p>
@@ -86,13 +86,13 @@ what you believe is right.</p>
 The fact that they actually work is kind of amazing<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
 It&rsquo;s a testament to how flexible they are.
 You might think you can just put any type in a map,
-but actually there are requirements on the type,
+but actually there are requirements on the type:
 certain properties which are required for these containers to function.</p>
 
 <p>Let us think about what my task was when I started working on the C++ STL.
 It was to define standard data structures which will work for any reasonable subset of types.
 What is a reasonable subset of types?
-This is a little bit tricky but it&rsquo;s of paramount importance.</p>
+This is a little bit tricky, but it&rsquo;s of paramount importance.</p>
 
 <p>My duty was to discover what will make
 a type work with any standard container.
@@ -143,26 +143,26 @@ All <code>Semiregular</code> types must have the following operations:</p>
 
 <p>We should be able to write:</p>
 
-<pre><code>T a(b); 
+<pre><code>T a(b);
 </code></pre>
 
-<p>Or equivalently</p>
+<p>Or, equivalently:</p>
 
 <pre><code>T a = b;
 </code></pre>
 
-<p>They are not the same in general but they are the same if <code>b</code> is of type <code>T</code>.</p>
+<p>They are not the same in general, but they are the same if <code>b</code> is of type <code>T</code>.</p>
 
 <p>How do we define the semantics of this operation?
 Could we use an <a href="https://mathworld.wolfram.com/EquivalenceRelation.html">equivalence relation</a>?
 Consider the relation that always returns true.
 It is an equivalence relation.
-In other words, the relation R(a, b) = t, satisfies:</p>
+In other words, the relation <code>R(a, b) = t</code> satisfies:</p>
 
 <ul>
 <li>symmetric: <code>R(a, b) &lt;=&gt; R(b, a)</code></li>
 <li>reflexive: <code>R(a, a)</code></li>
-<li>transitive <code>R(a, b) and R(b, c) =&gt; R(a, c)</code></li>
+<li>transitive: <code>R(a, b) and R(b, c) =&gt; R(a, c)</code></li>
 </ul>
 
 
@@ -179,13 +179,13 @@ Whatever our meaning of equality.</p>
 It is something which is <em>equal to the original, but
 not identical to it</em>.</p>
 
-<p><strong>Axiom:</strong> After <code>a</code> is copy constructed from <code>b</code> they
+<p><strong>Axiom:</strong> After <code>a</code> is copy constructed from <code>b</code>, they
 have distinct identity markers.
-In C++ the identity marker is usually address: <code>&amp;a != &amp;n</code>.</p>
+In C++ the identity marker is usually address: <code>&amp;a != &amp;b</code>.</p>
 
 <p>All copy constructors must behave this way.
-If somebody clever comes and says, &ldquo;oh we&rsquo;re going
-to have a semantics where we&rsquo;re going to have this shared thing&rdquo;<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
+If somebody clever comes and says, &ldquo;Oh, we&rsquo;re going
+to have a semantics where we&rsquo;re going to have this shared thing.&rdquo;<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>
 Will it work? No.
 Copy has to construct a different thing.</p>
 
@@ -197,7 +197,7 @@ Copy has to construct a different thing.</p>
 
 <p><strong>Axiom:</strong> Constructing and assignment are equivalent: <code>T a(b) &lt;=&gt; T a; a = b</code>.</p>
 
-<p>So, in order to for these operations to have correct semantics, they have to have equality defined.</p>
+<p>So, in order for these operations to have correct semantics, they have to have equality defined.</p>
 
 <a name="Destructor"></a>
 <h3>Destructor</h3>
@@ -210,7 +210,7 @@ Copy has to construct a different thing.</p>
 <a name="Regular-types"></a>
 <h2>Regular types</h2>
 
-<p>The concept <code>Regular</code>  extends <code>Semiregular</code> with equality operators
+<p>The concept <code>Regular</code> extends <code>Semiregular</code> with equality operators
 which are <code>==</code> and <code>!=</code>.</p>
 
 <a name="Equality-operator"></a>
@@ -232,7 +232,7 @@ Because nobody will ever figure out why your code works or doesn&rsquo;t work.</
 
 <p>Many of these operations will be member functions. But what about equality?
 No, it shouldn&rsquo;t.
-Because fundamentally equal is a symmetric function.
+Because, fundamentally, equal is a symmetric function.
 It compares two things.
 So even the paradigm of a member is the wrong paradigm.
 They are symmetric.</p>
@@ -242,10 +242,10 @@ They are symmetric.</p>
 
 <p>The concept <code>TotallyOrdered</code> extends <code>Regular</code> by adding a comparison operator <code>&lt;</code>.
 This is actually something that Bjarne<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup> disagrees with me on.
-I say that <code>&lt;</code>, the total ordering of the type is
+I say that <code>&lt;</code>, the total ordering of the type, is
 fundamental, and should be required.
 He says it&rsquo;s too much to ask, and <code>Regular</code> types should be less strict.
-However we will follow his and the standard C++ convention by
+However, we will follow his and the standard C++ convention by
 using a weaker <code>Regular</code> and limiting the requirement of ordering
 to <code>TotallyOrdered</code>.</p>
 
@@ -256,15 +256,15 @@ to <code>TotallyOrdered</code>.</p>
 
 <p><strong>Axiom 1:</strong> Anti-reflexive: <code>!(a &lt; a)</code>.</p>
 
-<p><strong>Axiom 2:</strong> Transitive: If <code>a &lt; b</code> and <code>b &lt; c</code> then <code>a &lt; c</code>.</p>
+<p><strong>Axiom 2:</strong> Transitive: If <code>a &lt; b</code> and <code>b &lt; c</code>, then <code>a &lt; c</code>.</p>
 
-<p><strong>Axiom 3:</strong> Anti-symmetric: If <code>a &lt; b</code> then <code>!(b &lt; a)</code>.</p>
+<p><strong>Axiom 3:</strong> Anti-symmetric: If <code>a &lt; b</code>, then <code>!(b &lt; a)</code>.</p>
 
-<p><strong>Axiom 4:</strong> If <code>a != b</code> then <code>a &lt; b</code> or <code>b &gt; a</code>.</p>
+<p><strong>Axiom 4:</strong> If <code>a != b</code>, then <code>a &lt; b</code> or <code>b &lt; a</code>.</p>
 
 <p>In the same way that the semantics of <code>==</code> is related to <code>!=</code>,
 we can see the semantics of <code>&lt;</code> must be totally bound to the semantics of equality.
-But furthermore, <code>&lt;</code> is related to three other operations which must also be defined:</p>
+But, furthermore, <code>&lt;</code> is related to three other operations which must also be defined:</p>
 
 <ol>
 <li><code>&lt;</code> less than</li>
@@ -274,8 +274,8 @@ But furthermore, <code>&lt;</code> is related to three other operations which mu
 </ol>
 
 
-<p>If you provide them then they have to have natural meaning.
-For example, <code>!(a &lt; b)</code> should be <code>a &gt;= b</code> otherwise the world
+<p>If you provide them, then they have to have natural meaning.
+For example, <code>!(a &lt; b)</code> should be <code>a &gt;= b</code>; otherwise, the world
 perishes.</p>
 
 <p>Later we will talk more about orderings, and define several different
@@ -304,15 +304,15 @@ Closed is a term from math that has various but similar meanings
 depending on context. In the context of abstract algebra, from which generic programming
 is inspired, closure means that applying an operation to an element in a domain <code>D</code> gives
 you something back in the same domain.
-For example the integers <code>Z</code> are closed under the operation of multiplication.
-Multiply two integers, you get an integer.
+For example, the integers <code>Z</code> are closed under the operation of multiplication.
+Multiply two integers; you get an integer.
 However, it is not closed under division.
 <code>1 / 2</code> is not an integer.
 Applying this to Alex&rsquo;s quote, he means that containers should preserve properties
 of the base types they are constructed from.
 Containers of <code>Regular</code> types should be <code>Regular</code>.<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
-This is likely a reference to how <a href="https://en.cppreference.com/w/cpp/memory/shared_ptr"><code>std::shared_ptr</code></a> behaves
+This is likely a reference to how <a href="https://en.cppreference.com/w/cpp/memory/shared_ptr"><code>std::shared_ptr</code></a> behaves,
 which provides a form of automatic memory management.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
 <li id="fn:6">
 <a href="https://www.stroustrup.com/">Bjarne Stroustrup</a> is the creator of C++, author of many C++ books,

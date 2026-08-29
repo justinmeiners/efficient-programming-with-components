@@ -35,14 +35,14 @@ knowing how pointers are subtracted, and stuff like that, all comes from Ken Tho
 
 <p>Believe it or not, the best and brightest at that time were heavily on the
 march to get rid of pointers. Absolutely brilliant people who would give
-<a href="https://en.wikipedia.org/wiki/Turing_Award">Turing award</a> speeches.
+<a href="https://en.wikipedia.org/wiki/Turing_Award">Turing Award</a> speeches.
 <a href="https://en.wikipedia.org/wiki/Tony_Hoare">Tony Hoare</a> is the case in point saying that pointers
 have to be abolished<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.
 The idea was that pointer is illegitimate thing.
 Language designers were fully convinced that
-even if you provide pointers nobody should call them pointers.
+even if you provide pointers, nobody should call them pointers.
 They would call them something like <a href="http://goanna.cs.rmit.edu.au/dale/ada/aln/13_access_types.html">access types</a>.
-They have to prohibit iterations, like you could never subtract pointers.
+They have to prohibit iteration, like you could never subtract pointers.
 <a href="https://en.wikipedia.org/wiki/Niklaus_Wirth">Niklaus Wirth</a>, the designer of Pascal, was very certain that you should never allow
 subtraction between pointers.
 We still have it at least in some languages.
@@ -54,11 +54,11 @@ But, pointers are still at least partially with us.</p>
 His career started, not with UNIX, but when he was freshly out of
 school coming up with the brilliant practical algorithm for matching regular expressions<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>.
 Every time you write <a href="https://linux.die.net/man/1/grep">grep</a> or something like that you&rsquo;re most likely
-exercising code written by Ken in the late 60s.</p>
+exercising code written by Ken in the late &lsquo;60s.</p>
 
 <p>There is so much practical reliance on regular expressions.
-But they were invented
-believe it or not by theoreticians, specifically <a href="https://en.wikipedia.org/wiki/Stephen_Cole_Kleene">Stephen Kleene II</a> who was a logician.
+But they were invented,
+believe it or not, by theoreticians, specifically <a href="https://en.wikipedia.org/wiki/Stephen_Cole_Kleene">Stephen Cole Kleene</a>, who was a logician.
 So Ken made them practical<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
 
 <p>Then he did UNIX, this totally brilliant operating system on which we all rely.
@@ -71,29 +71,29 @@ We have to remember that.</p>
 people how to play <a href="https://www.bell-labs.com/usr/dmr/www/ken-games.html">computer chess</a>.
 Mind it, at that point as far as I know he
 barely knew the moves.
-There was total dominance by Russian chess playing
+There was total dominance by Russian chess-playing
 program <a href="https://en.wikipedia.org/wiki/Kaissa">Kaissa</a> and two or three years he builds this specialized hardware,
 totally revolutionizes the approach to just playing.
-Of course nobody remembers
+Of course, nobody remembers
 what Kaissa was.
 He is a guy who could enter in a
 totally new field and do something beyond, not just world class, but beyond
 world class in a short period of time.</p>
 
-<p>In 1984 he was given the Turing award.
+<p>In 1984 he was given the Turing Award.
 It was shared with Dennis and he gave a beautiful speech which I highly
 recommend that you read called <a href="papers/trusting-trust-thompson.pdf">&ldquo;Reflections on Trusting Trust&rdquo;</a> which talks
 about many things. But, I&rsquo;ll use just one little episode in the beginning which is
 very important from my point of view.
-He says that he was very blessed with collaborators specifically with Dennis<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
+He says that he was very blessed with collaborators, specifically with Dennis<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>.
 Then he continues that during many
-years of their collaboration not once they would attempt to do the same thing.
+years of their collaboration, not once they would attempt to do the same thing.
 They had this good sense to work on complementary things.
 Except once.
 Both of them needed to write an assembly program with about
 20 lines of code and continues Ken, &ldquo;I checked, it was character by character
-identical&rdquo;.
-It sounds like mystical thing right, two people coming together,
+identical.&rdquo;
+It sounds like mystical thing, right? Two people coming together—
 this is a Vulcan mind-meld (joke).</p>
 
 <p>But, there is something profound there.
@@ -105,7 +105,7 @@ we would write the same thing.
 It was invariably, character by character, identical (even though we were not as good as Ken and Dennis).</p>
 
 <p>I claim that if we are really turning
-programming into professional discipline then the story of Ken and Dennis will
+programming into professional discipline, then the story of Ken and Dennis will
 not be a miracle.
 We should be writing basic code, character by character, identical.
 Imagine how wonderful it would be if you could understand what someone else wrote.</p>
@@ -113,20 +113,20 @@ Imagine how wonderful it would be if you could understand what someone else wrot
 <a name="Hello-2c--World"></a>
 <h2>Hello, World</h2>
 
-<p>Whomever really wants to learn, will learn, and that is a challenge because it is my experience that if we take the intersection of what
-a room of programmers know it&rsquo;s going to be an empty set.
+<p>Whomever really wants to learn will learn, and that is a challenge because it is my experience that if we take the intersection of what
+a room of programmers know—it&rsquo;s going to be an empty set.
 That doesn&rsquo;t mean that you as an individual person doesn&rsquo;t know things, but intersection is going to be relatively small.</p>
 
-<p>Unfortunately we&rsquo;ve got to a point where nobody teaches programming.
+<p>Unfortunately, we&rsquo;ve got to a point where nobody teaches programming.
 Because there&rsquo;s no professor of computer science who has any idea how to program<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.
 Part of what I am trying to do here is to start discussing
-little things like, how do we name variables?
+little things like: how do we name variables?
 Why is it important? We want to get to the point where
 everybody writes a consistent code, recognizable code.
 This is why I want to go slow and develop so that we
 all agree<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.</p>
 
-<p>We have to start with a very very simple program. Most of you recognize it, right? <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">Hello World</a>.</p>
+<p>We have to start with a very, very simple program. Most of you recognize it, right? <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">Hello World</a>.</p>
 
 <pre><code>#include &lt;iostream&gt;
 
@@ -140,17 +140,17 @@ Do you think it will compile?
 It does.
 C++ treats <code>main</code> as a special function; meaning when the control goes
 through the last brace, zero is returned.
-Because the standard UNIX convention, which became Universal
+Because the standard UNIX convention, which became universal
 convention, that on success you return zero.
 The language actually allows you to do things like that.</p>
 
-<p>One warning, <a href="https://en.cppreference.com/w/cpp/io/cout"><code>cout</code></a> stuff works pretty much like how you think it works.
-However a friend of mine wrote something like:</p>
+<p>One warning: <a href="https://en.cppreference.com/w/cpp/io/cout"><code>cout</code></a> stuff works pretty much like how you think it works.
+However, a friend of mine wrote something like:</p>
 
 <pre><code>std::cout &lt;&lt; f() &lt;&lt; g();
 </code></pre>
 
-<p>Lo and behold depending on the compiler, different results were printed.
+<p>Lo and behold, depending on the compiler, different results were printed.
 The order of evaluation of arguments to a function <a href="https://en.cppreference.com/w/cpp/language/eval_order">is not defined</a>
 and the operator <code>&lt;&lt;</code> is just a function call<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>.
 Never depend on the arguments to a function
@@ -166,9 +166,9 @@ Compilers do have bugs but they are not as common as people believe.</p>
 investigating problems and involved very long queries.
 When we narrowed things down we always found something
 pertaining to incorrect use of STL<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>.
-It&rsquo;s usually a one liner and the most egregious.</p>
+It&rsquo;s usually a one-liner and the most egregious.</p>
 
-<p>The most amazing thing is the following one liner which I will start in the
+<p>The most amazing thing is the following one-liner, which I will start in the
 beginning of the course, because it was just so important.
 We could weave the whole fabric of the course around this one little example.
 There was a range of integers. For example:</p>
@@ -194,7 +194,7 @@ But it is actually very slow.</p>
 <a name="Equality-vs-ordering"></a>
 <h3>Equality vs ordering</h3>
 
-<p>The algorithm for <a href="https://en.cppreference.com/w/cpp/container/set"><code>set</code></a> <sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup> is <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">red black tree</a> which is
+<p>The algorithm for <a href="https://en.cppreference.com/w/cpp/container/set"><code>set</code></a><sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup> is <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">red-black tree</a>, which is
 universally stated in every book to be one of the best implementation of sets.
 Do we have to believe textbooks? We will see.
 In any case, we&rsquo;ll learn to count number of operations.
@@ -213,13 +213,13 @@ Equality gives us linear search while sorting gives us binary search so we can f
 One of the amazing things which we will discover is that ordering is very important.
 Things which we could do with ordering cannot be effectively done just with equality<sup id="fnref:13"><a href="#fn:13" rel="footnote">13</a></sup>.</p>
 
-<p>If we are going by the book we will say sorting is good as long it does approximately <code>O(n log(n))</code> operations.
+<p>If we are going by the book, we will say sorting is good as long it does approximately <code>O(n log(n))</code> operations.
 This is good for the books.
 It&rsquo;s actually not good for our code, because Big O
 could have an arbitrary coefficient.
-It could be <code>50(n log(n))</code><sup id="fnref:14"><a href="#fn:14" rel="footnote">14</a></sup>,
+It could be <code>50(n log(n))</code><sup id="fnref:14"><a href="#fn:14" rel="footnote">14</a></sup>.
 The effective coefficient, not just in terms of number of operations,
-but in terms of time for this is very very
+but in terms of time for this is very, very
 large. How large? We will be doing measurements together of this very problem.
 But, let me tell you, it slows down between factor of 22 and a factor of 50 on large data sets.
 That is a lot.</p>
@@ -239,14 +239,14 @@ It will just not eliminate all equal elements.
 It returns a pointer to the element past the last element of the range.
 This is a standard STL convention, that we will study.</p>
 
-<p>For example given:</p>
+<p>For example, given:</p>
 
 <pre><code>1 2 2 2
     ^
 </code></pre>
 
 <p>The returned pointer is indicated.
-So let&rsquo;s use it</p>
+So let&rsquo;s use it:</p>
 
 <pre><code>std::sort(a, a + 6);
 std::cout &lt;&lt; std::unique(a, a + 6) - a &lt;&lt; std::endl;
@@ -260,7 +260,7 @@ of subtracting the pointer <code>a</code> from the result of <code>std::unique</
 
 <p>There is no need.
 Never use a function which is intended to be used in a
-general case, when you sit deeper inside some specific case.</p>
+general case when you sit deeper inside some specific case.</p>
 
 <a name="Use-the-correct-STL-data-structures"></a>
 <h3>Use the correct STL data structures</h3>
@@ -274,7 +274,7 @@ The most common thing is something like map of maps:</p>
 
 <p>You sit there and you wonder. Before STL, nobody in his right mind
 would dare to say &ldquo;I&rsquo;m going to have a self-balancing tree which at every node
-has a self-balancing tree&rdquo;, because it will take them five
+has a self-balancing tree,&rdquo; because it will take them five
 years to implement it.</p>
 
 <p>It&rsquo;s maybe one of STL&rsquo;s strong points, that such a construction is so trivial.
@@ -296,7 +296,7 @@ structures do.
 These problems are going to get worse and worse.
 You&rsquo;re going to get a <a href="https://www.cs.cornell.edu/courses/cs3110/2014sp/lectures/26/memory.html">cache miss</a> on every step through the set.</p>
 
-<p>As our computers become faster and faster and faster they&rsquo;re getting slower and
+<p>As our computers become faster and faster and faster, they&rsquo;re getting slower and
 slower and slower<sup id="fnref:16"><a href="#fn:16" rel="footnote">16</a></sup>.
 Meaning that going to the main memory is very slow.
 You want to have locality of reference. You want all your
@@ -321,7 +321,7 @@ wrote their books, are no longer all right now.
 Computers change so much.
 Things no longer work.</p>
 
-<p>If <code>set</code> is bad? Why is it in the standard?
+<p>If <code>set</code> is bad, why is it in the standard?
 Think about it.
 If you do all of your insertions first, and then start searching,
 you do not need a <code>set</code>.
@@ -343,8 +343,8 @@ It&rsquo;s a very useful thing except most people do not use set for that.</p>
 <p>There is a great book all of you should have and all of you should aspire to read
 (but actual reading that we don&rsquo;t know&hellip;)
 The book I am referring to (there&rsquo;s only one book
-like that in computer science) <a href="https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming">Art of Computer Programming</a>, written by <a href="https://www-cs-faculty.stanford.edu/~knuth/">Donald Knuth</a>.
-It&rsquo;s a very imperfect book but it&rsquo;s the greatest book we got.</p>
+like that in computer science) <a href="https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming">&ldquo;The Art of Computer Programming&rdquo;</a>, written by <a href="https://www-cs-faculty.stanford.edu/~knuth/">Donald Knuth</a>.
+It&rsquo;s a very imperfect book, but it&rsquo;s the greatest book we got.</p>
 
 <p>One of the things which I want to convince
 you of is that we want to be professionals.
@@ -357,12 +357,12 @@ We put Knuth on the shelf.</p>
 
 <p>When we started reading Knuth we observed
 that even a very long time ago, Knuth started doing measuring operations.
-That is, when he would describe an algorithm he would not just say Big O, that came later
+That is, when he would describe an algorithm, he would not just say Big O, that came later
 (in spite of the fact that he introduced Big O into analysis of
 algorithms) but in his book he would carefully annotate how many operations.</p>
 
 <p>I want to get us to a point where we start learning how to
-measure things and when we measure algorithms there are two ways we could
+measure things, and when we measure algorithms, there are two ways we could
 measure:</p>
 
 <ol>
@@ -372,7 +372,7 @@ measure:</p>
 
 
 <p>Both of them are important.
-Because if you count operations you could have
+Because if you count operations, you could have
 analysis of algorithm in terms of abstract operations not depending on the
 specific type.
 This is very good, we have to have that.
@@ -393,10 +393,10 @@ But, first we need to learn more about C++.</p>
 <hr/>
 <ol>
 <li id="fn:1">
-From the 1980 Turing award lecture <a href="https://www.cs.fsu.edu/~engelen/courses/COP4610/hoare.pdf">&ldquo;The Emperor&rsquo;s New Clothes&rdquo;</a>.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
+From the 1980 Turing Award lecture <a href="https://www.cs.fsu.edu/~engelen/courses/COP4610/hoare.pdf">&ldquo;The Emperor&rsquo;s New Clothes&rdquo;</a>.<a href="#fnref:1" rev="footnote">&#8617;</a></li>
 <li id="fn:2">
 Ken&rsquo;s brilliant algorithm is to generate a finite state machine to recognize a given expression.
-See <a href="https://swtch.com/~rsc/regexp/regexp1.html">&ldquo;Regular Expression Matching Can Be Simple And Fast&rdquo;</a> or Ken&rsquo;s original paper <a href="papers/regular-expressions.pdf">&ldquo;Regular Expression Search Algorithm&rdquo;</a><a href="#fnref:2" rev="footnote">&#8617;</a></li>
+See <a href="https://swtch.com/~rsc/regexp/regexp1.html">&ldquo;Regular Expression Matching Can Be Simple And Fast&rdquo;</a> or Ken&rsquo;s original paper <a href="papers/regular-expressions.pdf">&ldquo;Regular Expression Search Algorithm&rdquo;</a>.<a href="#fnref:2" rev="footnote">&#8617;</a></li>
 <li id="fn:3">
 Alex recommended to me Marvin Minsky&rsquo;s <a href="https://dl.acm.org/doi/book/10.5555/1095587">&ldquo;Computation: Finite and Infinite Machines&rdquo;</a>
 to learn more about these topics.
@@ -406,7 +406,7 @@ and Turing machines from a philosophical and mathematical perspective.<a href="#
 I have been unable to find any reference to this quote.
 Some older fortune files
 such as <a href="http://fortunes.cat-v.org/plan_9/">this file</a> from plan-9 contain similar quotes,
-such as &ldquo;Maybe I should have screwed up&rdquo;<a href="#fnref:4" rev="footnote">&#8617;</a></li>
+such as &ldquo;Maybe I should have screwed up.&rdquo;<a href="#fnref:4" rev="footnote">&#8617;</a></li>
 <li id="fn:5">
 Alex: In my opinion Dennis wasn&rsquo;t a genius like Ken,
  but obviously first class.<a href="#fnref:5" rev="footnote">&#8617;</a></li>
@@ -417,28 +417,28 @@ Alex clarifies in later lectures that he is somewhat convention neutral.
 Whenever he works with a new group, he wants to reach consensus about style
 as quickly as possible.
 The organization and team should follow the same conventions.
-Clearly some conventions he has an argument for (when to use classes vs structs)
+Clearly, some conventions he has an argument for (when to use classes vs structs),
 but others he say doesn&rsquo;t matter at all, as long as it&rsquo;s consistent
 (which line to put the brace on).<a href="#fnref:7" rev="footnote">&#8617;</a></li>
 <li id="fn:8">
 Alex: <code>&lt;&lt;</code> is not some <a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-10.html#%_sec_1.1.6">special form</a> (like the notion in Lisp), it is just a function call.<a href="#fnref:8" rev="footnote">&#8617;</a></li>
 <li id="fn:9">
-<p><a href="https://en.wikipedia.org/wiki/Standard_Template_Library">STL</a> (standard template library) was of course originally written by the teacher Alex Stepanov.
+<p><a href="https://en.wikipedia.org/wiki/Standard_Template_Library">STL</a> (Standard Template Library) was of course originally written by the teacher Alex Stepanov.
 The original library was written for SGI, but then later integrated into the standard library.
 However, the version available in most implementations is much more complex and less consistent than Alex&rsquo;s original work.
-I have archived the <a href="https://github.com/justinmeiners/sgi-stl">SGI STL code</a> which probably contains more of Alex' original code than other that is available.</p>
+I have archived the <a href="https://github.com/justinmeiners/sgi-stl">SGI STL code</a>, which probably contains more of Alex&rsquo;s original code than other that is available.</p>
 
 <p>The <a href="https://www.boost.org/sgi/stl/">SGI STL documentation</a> has also been archived and is a very useful reference alongside modern references,
 especially for understanding concepts.</p><a href="#fnref:9" rev="footnote">&#8617;</a></li>
 <li id="fn:10">
 Alex: You didn&rsquo;t use to need <code>#include &lt;set&gt;</code> when I first did STL.
-I had one gigantic file called <code>stl.h</code>
+I had one gigantic file called <code>stl.h</code>.
 At that time people said it&rsquo;s utterly unacceptable, you have twenty thousand lines of code.
 If you think about it nowadays it appears to be very funny. Twenty thousand is nothing.
 That&rsquo;s why <code>stl.h</code> was replaced with a gazillion little headers.
 Sometimes I have no idea what they are.<a href="#fnref:10" rev="footnote">&#8617;</a></li>
 <li id="fn:11">
-The set data structure is inspired by <a href="https://mathworld.wolfram.com/Set.html">mathematical sets</a>, which contain elements (all of which are distinct) in no-particular order.<a href="#fnref:11" rev="footnote">&#8617;</a></li>
+The set data structure is inspired by <a href="https://mathworld.wolfram.com/Set.html">mathematical sets</a>, which contain elements (all of which are distinct) in no particular order.<a href="#fnref:11" rev="footnote">&#8617;</a></li>
 <li id="fn:12">
 Alex alludes to there being a linear time solution if we have extra memory available.
 One possible algorithm is using a lookup table.
@@ -457,10 +457,10 @@ In Lisp you usually have a list with 5 elements so it works just fine.
 The moment you go to larger lists things stop working.
 Quadratic algorithms are slow.<a href="#fnref:13" rev="footnote">&#8617;</a></li>
 <li id="fn:14">
-<p>To say a function <code>f</code> is <code>O(g)</code> it&rsquo;s only required that <code>f</code> be bounded
+<p>To say a function <code>f</code> is <code>O(g)</code>, it&rsquo;s only required that <code>f</code> be bounded
 by a constant multiple for all inputs beyond some point.
 Formally, if <code>f(x) &lt;= Ag(x)</code> for all <code>x &gt; M</code>, where <code>A</code> and <code>M</code> are constant real numbers
-(see &ldquo;The Art of Computer Programming&rdquo; 1.2.11).</p>
+(see &ldquo;The Art of Computer Programming,&rdquo; 1.2.11).</p>
 
 <p>Alex will tend to say &ldquo;order of&rdquo; to distinguish <code>O(f)</code> from exactly <code>f</code>.
 In this section, Alex is observing that there is no requirement for <code>A</code> to be small.</p><a href="#fnref:14" rev="footnote">&#8617;</a></li>
@@ -469,11 +469,11 @@ Alex: Ken Thompson changed the spelling of unique (<a href="https://man7.org/lin
 My great contribution to computer science was to restore it (joke).<a href="#fnref:15" rev="footnote">&#8617;</a></li>
 <li id="fn:16">
 <p>This performance description is based on several trends in computer architecture.
-The first is that memory, especially <a href="http://gec.di.uminho.pt/discip/minf/ac0102/1000gap_proc-mem_speed.pdf">main memory</a> hasn&rsquo;t increased
+The first is that memory, especially <a href="http://gec.di.uminho.pt/discip/minf/ac0102/1000gap_proc-mem_speed.pdf">main memory</a>, hasn&rsquo;t increased
 in read/write speed relative to the increase in processor speed.
 So reading and writing to memory is relatively expensive.</p>
 
-<p>Second, and related is that to compensate CPUs now have many layers of caches
+<p>Second, and related is that, to compensate, CPUs now have many layers of caches
 with layers increasing in speed and decreasing in size as they get closer to the
 CPU.
 The CPU does a lot of guessing to anticipate what data needs to be in the cache
