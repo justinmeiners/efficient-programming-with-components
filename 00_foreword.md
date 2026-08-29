@@ -9,7 +9,7 @@ it's an ecosystem for a *theory of programming*
 championed by Alex called **generic programming**.
 For those not familiar with the ideas of generic programming, the STL
 can be a confusing and verbose mess.
-But with just a short introduction to generic 
+But with just a short introduction to generic
 programming
 principles, its thoughtful design and capability
 for writing reusable and correct code become clear.
@@ -24,7 +24,7 @@ don't make functions "too long," hide "unnecessary" details
 in abstractions, group "similar" functionality,
 don't use global variables,
 avoid duplicating code.
-While these hint at some truly good ideas, they also 
+While these hint at some truly good ideas, they also
 suggest that perhaps the field's underlying principles
 have yet to be understood.
 
@@ -51,36 +51,36 @@ as opposed to traditional black-box layering
 which merely hides information.
 Programs written this way also tend to be fast,
 which contributes to their reusability.
-If a component doesn't perform, 
+If a component doesn't perform,
 there will always be some performance-sensitive application
 that can't use it.
 Of course, not every algorithm is the best choice for all needs,
 but those limitations should be imposed by the algorithm,
 not the implementation.
 
-Alex's work makes an additional contribution 
-to the question, what does developing software look like in the future?
+Alex's work makes an additional contribution
+to the question: What does developing software look like in the future?
 Will we scavenge for snippets to piece together from the GitHub junkyard?
 Will programs be carefully specified and verified with formal proof systems?
-Can you `npm install banking-app-starter-template` and 
+Can you `npm install banking-app-starter-template` and
 start customizing?
 Are all programs written by hobbyist C artisans? (the vision I'm most partial to)
 
 Alex derives a different model from generic programming,
 resembling engineering as done in other fields.
 Mathematicians and computer scientists discover algorithms.
-Software engineers work together as an industry to implement these as 
+Software engineers work together as an industry to implement these as
 standard components with a high degree of professionalism.
-These are distributed as standardized catalogs.
+These are distributed in standardized catalogs.
 Each component is documented in detail, with references to academic literature.
 They specify their requirements and complexity in mathematical terms.
-It displays graphs of their performance on various data sets.
+The catalogs display graphs of their performance on various data sets.
 Programmers carefully select components that fit their needs
 and assemble them into applications.
 To understand these catalogs and make contributions of their own,
 programmers must be educated in basic mathematics
 and computer science
-in the same way that engineers require physics and calculus.
+in the same way that engineers are required to study physics and calculus.
 
 -- Justin Meiners
 
@@ -89,7 +89,7 @@ in the same way that engineers require physics and calculus.
 
 # Acknowledgments
 
-Original course by Alexander. A. Stepanov.
+Original course by Alexander A. Stepanov.
 
 ![alex](img/alex.jpg)
 
@@ -125,15 +125,15 @@ Consequently, some videos have fewer than 800 views, and at least 10 of those vi
 
 **Is all this information available in his books?**
 
-A majority of the information, but not the code, is available in other forms.
+Most of the information—but not the code—is available in other forms.
 In these lectures, you get history, opinions, motivation, practical tips, applications, and responses to criticism, all at once.
-This is not present in the books, especially "Elements of Programming" which is very formal.
+This is not present in the books, especially "Elements of Programming," which is very formal.
 Having this rich context makes the books much more approachable and meaningful.
 
 **This is ten years old. Is it relevant for a C++ programmer today?**
 
 Absolutely. He will almost certainly teach you applicable things about
-current-day C++ and STL you did not know.
+current-day C++ and the STL that you did not know.
 
 **Is this relevant for a non-C++ programmer?**
 
@@ -155,24 +155,24 @@ It's important to emphasize that this is not a style guide,
 but a theory of programming.
 The C++ style is then one way of representing this theory in C++.
 
-In my opinion, (somewhat supported by various comments made by Alex),
-most developments since C++11 seemed to have missed the point of STL.
+In my opinion (somewhat supported by various comments made by Alex),
+most developments since C++11 seem to have missed the point of STL.
 A lot of it has been partially understood and remixed in strange and inconsistent ways.
-Things which were understood, are no longer (see [std::find is broken][find-broken]).
+Things which were understood are no longer understood (see [std::find is broken][find-broken]).
 
-If you study these notes, you will find that Alex outlined much cleaner solutions to many of the problems which later C++ versions attempt to address. 
+If you study these notes, you will find that Alex outlined much cleaner solutions to many of the problems which later C++ versions attempt to address.
 The most baffling of these to me are three-way comparison and ranges.
 I am unsure of his opinion on move semantics.
-I am unable to comment on whether the Concepts which made it into C++20
+I am unable to comment on whether the concepts which made it into C++20
 are anything like his original vision.
 
 [find-broken]: https://sean-parent.stlab.cc/papers-and-presentations/#warning-stdfind-is-broken
 
-**I have a correction, additional reference, or other helpful idea.**
+**I have a correction, an additional reference, or another helpful idea.**
 
-Please, make a [pull request](https://github.com/justinmeiners/efficient-programming-with-components).
+Please make a [pull request](https://github.com/justinmeiners/efficient-programming-with-components).
 Corrections are welcome and needed.
-However, be aware that some of the awkwardness of grammar
+However, be aware that some of the awkward grammar
 comes from the speaker and is intentionally preserved.
 
 **How accurate is this text?**
@@ -183,5 +183,5 @@ not necessarily make a historical record of the conversation.
 
 If Alex is sharing a strong opinion or giving a speech,
 I usually quote him exactly (with corrections to grammar) to avoid misinterpreting him.
-The technical exposition is where significant rearrangements and have been made for educational purposes.
+The technical exposition is where significant rearrangements have been made for educational purposes.
 
